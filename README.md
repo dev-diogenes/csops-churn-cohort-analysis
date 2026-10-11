@@ -89,6 +89,19 @@ O ícone **i** ao lado de cada título resume como a análise é feita; clicando
 
 As tabelas de churn classificado e ativos em risco podem ser copiadas como CSV.
 
+## Dados lembrados e teste no tempo
+
+- **Lembrar neste navegador** (ligado por padrão): os CSVs e os ajustes (colunas, filtros, nível, cortes) ficam no IndexedDB do navegador e voltam ao reabrir a página. **Esquecer dados** apaga. Nada é enviado para fora.
+- **Teste no tempo do score**: recalcula o score com as leituras de KPI de 90 dias atrás, só para quem estava ativo naquela data, e mede quantos dos marcados cancelaram depois. Aparece em *Ativos em risco* e na página *O score funciona?* do painel. A direção e o peso dos KPIs vêm da base inteira, então o teste tende a ser um pouco otimista.
+
+## Testes
+
+```bash
+node tools/testar.mjs
+```
+
+Roda o motor do `index.html` no Node com os dados de exemplo e confere leitura de números e datas, contagens, churn, score, AUC e o teste no tempo. Rode antes de publicar mudanças no cálculo.
+
 ## Rodar localmente
 
 Abrir o arquivo direto funciona. Para servir:

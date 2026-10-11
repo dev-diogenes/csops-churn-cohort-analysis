@@ -249,6 +249,17 @@ th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); 
 .tab-link { text-decoration: none; margin-left: auto; color: var(--accent); }
 @media (max-width: 560px) { .driver-popover.csops-tour { max-width: calc(100vw - 24px); } }
 
+/* lembrar dados e teste no tempo */
+.remember { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-left: auto; }
+.switch { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; cursor: pointer; color: var(--ink); font-size: 0.84rem; padding: 4px 2px; min-height: 32px; }
+.switch span { width: 34px; height: 20px; border-radius: 99px; background: var(--ctl); position: relative; transition: background .15s; flex: none; }
+.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); transition: transform .15s; }
+.switch[aria-checked="true"] span { background: var(--accent); }
+.switch[aria-checked="true"] span::after { transform: translateX(14px); }
+.bt { border-left: 3px solid var(--accent); background: var(--bg); padding: 10px 12px; border-radius: 0 8px 8px 0; font-size: 0.88rem; color: var(--muted); margin-bottom: 10px; }
+.bt b { color: var(--ink); }
+.bt .note { display: block; margin-top: 4px; }
+
 /* interações dos gráficos */
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .seg { display: inline-flex; border: 1px solid var(--ctl); border-radius: 8px; overflow: hidden; }
@@ -284,7 +295,7 @@ nav.topics { position: sticky; padding-top: 2px; top: env(safe-area-inset-top, 0
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 .tab:hover { color: var(--ink); }
 nav.topics .toc { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; padding-block: 10px; }
-nav.topics .toc a { color: var(--muted); text-decoration: none; }
+nav.topics .toc a { color: var(--muted); text-decoration: none; padding-block: 4px; display: inline-block; }
 nav.topics .toc a:hover { color: var(--accent); }
 section.rep { display: grid; gap: 16px; scroll-margin-top: 140px; }
 .sec-head { display: grid; gap: 6px; }
@@ -618,6 +629,7 @@ function loadText(src, text, fromUser = true) {
   }
   try {
     const p = parseCSV(text);
+    p.text = String(text);
     if (!p.fields.length || !p.rows.length) throw new Error("Nenhuma linha encontrada. Confira se a primeira linha tem os nomes das colunas.");
     state.raw[src] = p;
     autoMap(src);
@@ -675,7 +687,8 @@ function renderInputs() {
     return `<span class="srcchip ${raw && raw.rows.length ? (raw.error ? "err" : "ok") : ""}"><b>${s.title}</b> ${raw && raw.rows.length ? `${fmtInt(raw.rows.length)} linhas${raw.error ? " · revisar" : " ✓"}` : s.optional ? "opcional" : "faltando"}</span>`;
   }).join("");
   host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2></div>
-    <div class="srcbar">${summaryChips}<button type="button" class="btn sm" id="btnSources" aria-expanded="${open}">${open ? "Recolher" : "Ver e trocar arquivos"}</button></div>
+    <div class="srcbar">${summaryChips}<button type="button" class="btn sm" id="btnSources" aria-expanded="${open}">${open ? "Recolher" : "Ver e trocar arquivos"}</button>
+      ${state.isSample ? "" : `<span class="remember"><button type="button" role="switch" id="rememberToggle" aria-checked="${rememberOn}" class="switch"><span aria-hidden="true"></span>Lembrar neste navegador</button>${restoredAt ? `<span class="note">restaurado de ${new Date(restoredAt).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</span>` : ""}${rememberOn ? `<button type="button" class="btn sm ghost" id="btnForget">Esquecer dados</button>` : ""}</span>`}</div>
     <div class="inputs" ${open ? "" : "hidden"}>${cards}</div>`;
   $("#sampleBanner").hidden = !state.isSample;
 }
@@ -753,7 +766,16 @@ const NOT_DIM = /^(status|id_legacy|cnpj|cpf|name_contract|customer_sponsor.*|sp
 const NUMERIC_DIM = /(owner|csm|responsavel|group|grupo|size|porte|stage|etapa|segment|industry|setor|plano|plan|tier|regiao|region|state|uf|carteira)/;
 const isTrue = v => /^(t|true|1|sim|s|y|yes|verdadeiro)$/i.test(String(v ?? "").trim());
 
+// build() só depende dos arquivos e do mapeamento de colunas; cortes, filtros e nível reaproveitam o resultado
+let BUILD_CACHE = null;
 function build() {
+  const key = JSON.stringify(state.map);
+  if (BUILD_CACHE && BUILD_CACHE.c === state.raw.clientes && BUILD_CACHE.k === state.raw.kpis && BUILD_CACHE.x === state.raw.cancel && BUILD_CACHE.map === key) return BUILD_CACHE.M0;
+  const M0 = buildFresh();
+  BUILD_CACHE = { c: state.raw.clientes, k: state.raw.kpis, x: state.raw.cancel, map: key, M0 };
+  return M0;
+}
+function buildFresh() {
   const C = state.raw.clientes, K = state.raw.kpis, X = state.raw.cancel;
   const mC = state.map.clientes, mK = state.map.kpis, mX = state.map.cancel;
   const okC = C && C.rows.length && mC.id, okK = K && K.rows.length && mK.id, okX = X && X.rows.length && mX.id;
@@ -1134,6 +1156,7 @@ function renderReport() {
     </nav>` + topic.sections.map(([, , fn]) => fn(ctx)).join("");
   if (state.xp) renderExplain();
   renderCompany();
+  saveSession();
 }
 
 // Tópicos do relatório. Cada tópico tem seu submenu de seções; novos tópicos entram aqui.
@@ -1141,7 +1164,7 @@ const TOPICS = [
   { id: "churn", label: "Churn", sections: [
     ["resumo", "Resumo", ctx => summary(ctx.M, ctx)],
     ["mercado", "Mercado", ({ M }) => market(M)],
-    ["risco", "Ativos em risco", ({ M, sig }) => atRisk(M, sig)],
+    ["risco", "Ativos em risco", ctx => atRisk(ctx.M, ctx.sig, ctx)],
     ["coortes", "Retenção por coorte", ({ M }) => cohort(M)],
     ["perfil", "Churn por perfil", ({ M }) => profile(M)],
     ["indicadores", "Indicadores", ({ M, stats }) => indicators(M, stats)],
@@ -1319,6 +1342,7 @@ function indicators(M, stats) {
   const body = `<div class="panel">
     <div class="legend" style="margin-bottom:10px"><span><span class="sw" style="background:var(--s-ativo)"></span>Ativos</span><span><span class="sw" style="background:var(--s-canc)"></span>Cancelados</span><span>barra grossa = 50% do meio · círculo = mediana · traço fino = 10% a 90% · clique no nome do KPI para ver a distribuição completa</span></div>
     <div class="scroll"><table>
+      <caption class="sr">Indicadores de ativos e cancelados</caption>
       <thead><tr><th>Indicador</th><th>Distribuição</th><th class="n">Mediana ativos</th><th class="n">Mediana cancel.</th><th class="n">Efeito (d)</th><th>Sinal de churn</th></tr></thead>
       <tbody>${sorted.map(s => {
         const all = s.a.concat(s.b).sort((x, y) => x - y), lo = quantile(all, 0.05), hi = quantile(all, 0.95);
@@ -1369,7 +1393,7 @@ function tableRows(list, key, cols, limit = 15) {
   const all = state.showAll[key];
   const shown = all ? rows : rows.slice(0, limit);
   return `<div class="tsearch"><input type="search" id="q-${key}" data-q="${key}" value="${esc(state.q[key] || "")}" placeholder="Buscar cliente, motivo ou perfil" aria-label="Buscar na tabela"><span class="note">${fmtInt(rows.length)} de ${fmtInt(list.length)} · clique no título da coluna para ordenar</span></div>
-    <div class="scroll"><table class="dense"><thead><tr>${cols.map((c, i) => `<th class="${c.n ? "n" : ""}${c.s ? " sort" : ""}" ${c.s ? `aria-sort="${so && so.i === i ? (so.dir > 0 ? "ascending" : "descending") : "none"}"` : ""}>${c.s ? `<button type="button" class="thbtn" data-tsort="${key}:${i}">${c.h}</button>` : c.h}</th>`).join("")}</tr></thead>
+    <div class="scroll"><table class="dense"><caption class="sr">${{ churn: "Cancelados classificados pelo score", risk: "Clientes ativos em risco" }[key] || "Tabela"}</caption><thead><tr>${cols.map((c, i) => `<th class="${c.n ? "n" : ""}${c.s ? " sort" : ""}" ${c.s ? `aria-sort="${so && so.i === i ? (so.dir > 0 ? "ascending" : "descending") : "none"}"` : ""}>${c.s ? `<button type="button" class="thbtn" data-tsort="${key}:${i}">${c.h}</button>` : c.h}</th>`).join("")}</tr></thead>
     <tbody>${shown.map(r => `<tr>${cols.map(c => `<td class="${c.n ? "n" : ""}${c.one ? " one" : ""}"${c.one && c.t ? ` title="${esc(c.t(r))}"` : ""}>${c.f(r)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${cols.length}" class="note">Nada encontrado.</td></tr>`}</tbody></table></div>
     ${rows.length > limit ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-more="${key}">${all ? "Mostrar menos" : `Mostrar todos (${rows.length})`}</button></div>` : ""}`;
 }
@@ -1423,7 +1447,7 @@ function anomaly(M, sig) {
   return sec("anormal", "Diagnóstico", "Churn esperado x anormal", `Cada cliente recebe um score de risco de 0 a 100 que diz o quanto seus indicadores se parecem com os de quem cancela, comparado aos clientes ativos ${peer ? `do mesmo ${esc(pretty(peer).toLowerCase())}` : "da base"}. Cancelado com score baixo é churn <b>anormal</b>: os números diziam que estava tudo bem. Vale investigar esses casos um a um.`, body);
 }
 
-function atRisk(M, sig) {
+function atRisk(M, sig, ctx) {
   const act = M.clients.filter(c => !c.churned && c.risk != null);
   if (!sig.length || !act.length) return sec("risco", "Ação", "Ativos em risco", "", `<div class="empty">Com o arquivo de Indicadores, esta seção lista os clientes ativos cujos números se parecem com os de quem cancelou.</div>`);
   const list = act.filter(c => c.cls !== "ok").sort((a, b) => b.risk - a.risk);
@@ -1433,6 +1457,7 @@ function atRisk(M, sig) {
   const body = `<div class="panel">
     <div class="tablebar"><p>${chip("alto")} <b>${hi.length}</b> clientes${mrr ? `, ${fmtBRL(mrr)} de MRR` : ""} &nbsp; ${chip("atencao")} <b>${list.length - hi.length}</b></p><button type="button" class="btn sm" data-copy="risk">Copiar como CSV</button></div>
     <div class="cuts" role="group" aria-label="Cortes do score para ativos">${cutSlider("atencao", "Atenção a partir de", 30, 89)}${cutSlider("alto", "Alto risco a partir de", 40, 95)}</div>
+    ${ctx ? backtestNote(scoreBacktest(ctx.M0, M, sig), M.noun[1].toLowerCase()) : ""}
     ${list.length ? tableRows(list, "risk", [
       { h: "Cliente", f: clientCell, s: c => c.nome || c.label, one: 1, t: c => c.nome || c.label },
       { h: "Pares", f: c => esc(c.peerLabel), s: c => c.peerLabel },
@@ -1474,7 +1499,8 @@ function method() {
     <p><b>Retenção por coorte.</b> Para cada safra e cada mês M, só entram clientes com pelo menos M meses desde o início, para que safras novas não pareçam melhores do que são.</p>
     <p><b>Churn mensal médio.</b> Total de cancelamentos dividido pela soma de meses que cada cliente passou na base.</p>
     <p><b>Score de risco.</b> Para cada indicador com efeito (d) de pelo menos 0,2, o relatório calcula o percentil do cliente entre os ativos do seu grupo de pares, invertido quando valores menores indicam risco. O score é a média desses percentis, ponderada pelo efeito. Grupos com menos de 8 ativos usam a base inteira como referência.</p>
-    <p><b>Classificação.</b> Cancelados: abaixo de 50 é anormal, de 50 a 65 tem sinais fracos, 65 ou mais era esperado. Ativos: 70 ou mais é alto risco, de 55 a 70 pede atenção.</p>
+    <p><b>Classificação.</b> Cancelados: abaixo de ${state.cut.anormal} é anormal, de ${state.cut.anormal} a ${state.cut.esperado} tem sinais fracos, ${state.cut.esperado} ou mais era esperado. Ativos: ${state.cut.alto} ou mais é alto risco, de ${state.cut.atencao} a ${state.cut.alto} pede atenção. Os cortes mudam nos controles das seções Churn anormal e Ativos em risco.</p>
+    <p><b>Teste no tempo.</b> Recalcula o score com as leituras de KPI de 90 dias atrás, só para quem estava ativo naquela data, e mede quantos dos marcados cancelaram depois. É a forma de saber se o score antecipa o churn, e não só descreve quem já saiu.</p>
     <p><b>Indicadores com histórico.</b> Quando há data de referência, vale a última leitura antes do cancelamento. Sem data, vale a média das linhas do cliente.</p>
   </div>`);
 }
@@ -1803,7 +1829,7 @@ function diagnosticData(isSample) {
   };
 
   const out = {
-    generatedAt: new Date().toISOString().slice(0, 10), isSample: !!isSample, filters: filtersDesc, level: M.noun[1], levelOne: M.noun[0], peerDim: state.dimPeer ? pretty(state.dimPeer) : null, segDim: state.dimBar ? pretty(state.dimBar) : null,
+    generatedAt: new Date().toISOString().slice(0, 10), isSample: !!isSample, filters: filtersDesc, cuts: { ...state.cut }, backtest: (() => { const b = scoreBacktest(M0, M, sig); return b ? { ...b, date: iso(b.date) } : null; })(), level: M.noun[1], levelOne: M.noun[0], peerDim: state.dimPeer ? pretty(state.dimPeer) : null, segDim: state.dimBar ? pretty(state.dimBar) : null,
     kpis, cohorts, survival, profiles, kpiStats: kpiStatsOut, trajectory, quality, anomalies, atRisk, reasons, tenureBuckets, csm, hierarchy, dataQuality
   };
   const round = v => typeof v === "number" ? (Number.isFinite(v) ? Math.round(v * 10000) / 10000 : null) : Array.isArray(v) ? v.map(round) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, round(x)])) : v;
@@ -1820,6 +1846,122 @@ function openDiagnostic() {
     Object.assign(state, keep); renderReport();
   }
 }
+
+
+/* ---------- teste no tempo do score ----------
+   Recalcula o score com as leituras de KPI de N dias atrás, só para quem estava ativo naquela data,
+   e confere quem cancelou depois. Direção e peso dos KPIs vêm da base inteira (aviso no texto). */
+let BT_CACHE = null;
+function scoreBacktest(M0, M, sig, days = 90) {
+  const K = state.raw.kpis, mK = state.map.kpis;
+  if (!K || !K.rows.length || !mK.id || !mK.data || !sig.length) return null;
+  const ck = [M0, M.level, JSON.stringify(state.filters), state.dimPeer, state.cut.alto, days].map(String).join("|");
+  if (BT_CACHE && BT_CACHE.key === ck && BT_CACHE.M0 === M0) return BT_CACHE.res;
+  const T = M.ref - days * 864e5, tcol = mK.tipo || mK.nomeKpi, cols = new Set(sig.map(x => x.col));
+  const typeToCol = {}; for (const [name, meta] of Object.entries(M0.kpiMeta)) if (meta.type != null) typeToCol[meta.type] = name;
+  const ids = new Set(M.lines.map(c => c.id)), val = new Map();
+  const put = (id, d, col, v) => { if (!cols.has(col) || !Number.isFinite(v)) return; let o = val.get(id); if (!o) val.set(id, o = {}); if (!o[col] || d >= o[col][0]) o[col] = [d, v]; };
+  for (const r of K.rows) {
+    const id = String(r[mK.id] ?? "").trim().toLowerCase(); if (!ids.has(id)) continue;
+    const d = toDate(r[mK.data]); if (d == null || d > T) continue;
+    if (tcol && mK.valor) put(id, d, typeToCol[String(r[tcol] ?? "").trim()] || String(r[tcol] ?? "").trim(), toNum(r[mK.valor]));
+    else for (const col of cols) put(id, d, col, toNum(r[col]));
+  }
+  const keyOf = c => M.level === "grupo" && c.h && c.h.grupo ? "g:" + c.h.grupo : M.level !== "linha" && c.h && c.h.org ? "o:" + c.h.org : "c:" + c.id;
+  const groups = new Map();
+  for (const c of M.lines) {
+    if (c.inicio == null || c.inicio > T || (c.churned && c.dataCanc != null && c.dataCanc <= T)) continue;
+    const k = keyOf(c); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(c);
+  }
+  const ents = [];
+  for (const arr of groups.values()) {
+    const kpi = {};
+    for (const col of cols) { const v = arr.map(c => (val.get(c.id) || {})[col]).filter(Boolean).map(x => x[1]); if (v.length) kpi[col] = mean(v); }
+    if (!Object.keys(kpi).length) continue;
+    ents.push({ kpi, churned: arr.every(c => c.churned && c.dataCanc != null && c.dataCanc > T), peer: state.dimPeer ? arr[0].attrs[state.dimPeer] : "*", mrr: sumF(arr.map(c => c.mrr)) });
+  }
+  const pos = ents.filter(e => e.churned).length;
+  let res = null;
+  if (ents.length >= 20 && pos >= 5 && pos < ents.length) {
+    const pack = list => { const o = { n: list.length }; for (const x of sig) o[x.col] = list.map(e => e.kpi[x.col]).filter(Number.isFinite).sort((a, b) => a - b); return o; };
+    const all = pack(ents), byPeer = new Map();
+    if (state.dimPeer) { const g = new Map(); for (const e of ents) { if (!g.has(e.peer)) g.set(e.peer, []); g.get(e.peer).push(e); } for (const [k, arr] of g) if (arr.length >= 8) byPeer.set(k, pack(arr)); }
+    for (const e of ents) {
+      const g = byPeer.get(e.peer) || all; let sw = 0, sc = 0;
+      for (const x of sig) { const v = e.kpi[x.col], arr = g[x.col]; if (!Number.isFinite(v) || !arr || arr.length < 5) continue; const pr = pctRank(arr, v), comp = x.d < 0 ? 1 - pr : pr, w = Math.min(Math.abs(x.d), 2); sw += w; sc += w * comp; }
+      e.score = sw ? sc / sw : null;
+    }
+    const sc = ents.filter(e => e.score != null).sort((a, b) => a.score - b.score);
+    const P = sc.filter(e => e.churned).length, N = sc.length - P;
+    if (P >= 5 && N >= 5) {
+      // AUC pelo posto médio (empates contam meio)
+      let i = 0, rankSum = 0;
+      while (i < sc.length) { let j = i; while (j + 1 < sc.length && sc[j + 1].score === sc[i].score) j++; const r = (i + j + 2) / 2; for (let k = i; k <= j; k++) if (sc[k].churned) rankSum += r; i = j + 1; }
+      const auc = (rankSum - P * (P + 1) / 2) / (P * N);
+      const desc = sc.slice().reverse(), top = desc.slice(0, Math.max(1, Math.round(desc.length / 10)));
+      const fl = desc.filter(e => e.score >= state.cut.alto / 100);
+      res = { days, date: T, n: sc.length, pos: P, base: P / sc.length, auc, top: { n: top.length, ch: top.filter(e => e.churned).length }, alto: { cut: state.cut.alto, flagged: fl.length, tp: fl.filter(e => e.churned).length, mrr: sumF(fl.filter(e => e.churned).map(e => e.mrr)) } };
+    }
+  }
+  BT_CACHE = { key: ck, M0, res };
+  return res;
+}
+const backtestNote = (bt, noun) => !bt ? "" : `<div class="bt"><b>Teste no tempo.</b> Com os indicadores de ${bt.days} dias atrás (${fmtDate(bt.date)}), o score marcaria <b>${fmtInt(bt.alto.flagged)}</b> ${noun} com ${bt.alto.cut} ou mais; <b>${fmtInt(bt.alto.tp)}</b> delas cancelaram desde então (${fmtPct(bt.alto.flagged ? bt.alto.tp / bt.alto.flagged : NaN, 0)}, contra ${fmtPct(bt.base, 0)} da base). AUC ${bt.auc.toFixed(2).replace(".", ",")}. <span class="note">Direção e peso dos KPIs vêm da base inteira; o teste mede se o score antecipa, não se o peso foi escolhido sem olhar o futuro.</span></div>`;
+
+
+/* ---------- lembrar dados neste navegador ----------
+   Guarda os CSVs e os ajustes (mapeamento, filtros, nível, cortes) no IndexedDB deste navegador.
+   Nada é enviado para fora; "Esquecer dados" apaga. */
+const SESSION_DB = "csops-churn", SESSION_KEY = "session";
+let rememberOn = (() => { try { return localStorage.getItem("csops-remember") !== "0"; } catch (e) { return true; } })();
+let restoredAt = null;
+function idb(mode, fn) {
+  return new Promise((resolve, reject) => {
+    let req;
+    try { req = indexedDB.open(SESSION_DB, 1); } catch (e) { reject(e); return; }
+    req.onupgradeneeded = () => req.result.createObjectStore("s");
+    req.onerror = () => reject(req.error);
+    req.onsuccess = () => {
+      const db = req.result, tx = db.transaction("s", mode), q = fn(tx.objectStore("s"));
+      tx.oncomplete = () => { resolve(q && q.result); db.close(); };
+      tx.onerror = () => { reject(tx.error); db.close(); };
+    };
+  });
+}
+let saveTimer = 0;
+function saveSession() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    if (!rememberOn || state.isSample || !state.raw.clientes) return;
+    const raw = {}; for (const k of Object.keys(state.raw)) if (state.raw[k] && state.raw[k].text) raw[k] = state.raw[k].text;
+    const snap = { raw, map: state.map, level: state.level, filters: state.filters, cut: state.cut, dimBar: state.dimBar, dimPeer: state.dimPeer, at: Date.now() };
+    idb("readwrite", st => st.put(snap, SESSION_KEY)).catch(() => {});
+  }, 500);
+}
+async function restoreSession() {
+  if (!rememberOn) return false;
+  let snap = null;
+  try { snap = await idb("readonly", st => st.get(SESSION_KEY)); } catch (e) { return false; }
+  if (!snap || !snap.raw || !snap.raw.clientes) return false;
+  for (const k of Object.keys(snap.raw)) { const p = parseCSV(snap.raw[k]); p.text = snap.raw[k]; state.raw[k] = p; }
+  Object.assign(state, { map: { ...EMPTY_MAP(), ...snap.map }, level: snap.level || "linha", filters: snap.filters || [], cut: { ...state.cut, ...(snap.cut || {}) }, dimBar: snap.dimBar || null, dimPeer: snap.dimPeer ?? null, isSample: false });
+  restoredAt = snap.at;
+  renderInputs(); renderReport();
+  return true;
+}
+async function forgetSession() {
+  try { await idb("readwrite", st => st.delete(SESSION_KEY)); } catch (e) {}
+  restoredAt = null;
+}
+document.addEventListener("click", async e => {
+  if (e.target.id === "btnForget") { await forgetSession(); toast("Dados apagados deste navegador. O relatório continua aberto até você recarregar a página."); renderInputs(); }
+  if (e.target.id === "rememberToggle") {
+    rememberOn = e.target.getAttribute("aria-checked") !== "true";
+    try { localStorage.setItem("csops-remember", rememberOn ? "1" : "0"); } catch (err) {}
+    if (!rememberOn) await forgetSession(); else saveSession();
+    renderInputs();
+  }
+});
 
 /* ---------- explicação passo a passo ---------- */
 let LAST = null;
@@ -1939,7 +2081,7 @@ const INFO = {
       ];
     }
   },
-  anormal: { title: "Churn esperado x anormal", short: "Score de 0 a 100: média ponderada dos percentis do cliente em cada KPI, comparado com ativos do mesmo perfil. Cancelado com score baixo é churn anormal.", steps: ctx => riskSteps(ctx, true) },
+  anormal: { title: "Churn esperado x anormal", get short() { return `Score de 0 a 100: média ponderada dos percentis do cliente em cada KPI, comparado com ativos do mesmo perfil. Cancelado com score abaixo de ${state.cut.anormal} é churn anormal.`; }, steps: ctx => riskSteps(ctx, true) },
   mercado: {
     title: "Seu churn x mercado",
     short: "Compara o churn mensal de logos e a retenção de receita dos seus dados com faixas de mercado para B2B SaaS do mesmo segmento e ticket.",
@@ -1956,7 +2098,7 @@ GRR = 1 − ${fmtBRL(g.lost)} ÷ ${fmtBRL(g.base)} = ${fmtPct(g.grr, 1)}` : "sem
       ];
     }
   },
-  risco: { title: "Ativos em risco", short: "O mesmo score aplicado aos clientes ativos. De 70 para cima é alto risco; de 55 a 70, atenção.", steps: ctx => riskSteps(ctx, false) },
+  risco: { title: "Ativos em risco", get short() { return `O mesmo score aplicado aos clientes ativos. De ${state.cut.alto} para cima é alto risco; de ${state.cut.atencao} a ${state.cut.alto}, atenção.`; }, steps: ctx => riskSteps(ctx, false) },
   motivos: {
     title: "Motivos e momento do cancelamento",
     short: "Conta os cancelamentos por motivo (cancel_tag) e por faixa de tempo de casa (dt_cancel − dt_register).",
@@ -2455,9 +2597,12 @@ function loadSample() {
   renderInputs(); renderReport();
 }
 
-loadSample();
-// primeira visita: oferece o tour depois que a página assenta
-if (!getTour()) setTimeout(() => { if (!getTour() && $("#tourWelcome").hidden && $("#pm").hidden) openWelcome(); }, 900);
+// abre com os dados lembrados neste navegador; sem eles, com o exemplo
+restoreSession().then(ok => {
+  if (!ok) loadSample();
+  // primeira visita: oferece o tour depois que a página assenta
+  if (!getTour()) setTimeout(() => { if (!getTour() && $("#tourWelcome").hidden && $("#pm").hidden) openWelcome(); }, 900);
+});
 </script>
 </body>
 </html>
