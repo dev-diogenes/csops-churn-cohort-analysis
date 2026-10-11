@@ -110,7 +110,7 @@
     const deciles = Array.from({ length: 10 }, (_, i) => { const part = sorted.slice(Math.floor(i * sorted.length / 10), Math.floor((i + 1) * sorted.length / 10)); return { n: part.length, ch: part.filter(c => c.churned).length, min: part.length ? part[part.length - 1].risk : null }; });
     const cut = t => { const above = scored.filter(c => c.risk >= t); return { t, flagged: above.length, churnedFlagged: above.filter(c => c.churned).length, recall: above.filter(c => c.churned).length / P, precision: above.length ? above.filter(c => c.churned).length / above.length : null }; };
     const hist = grp => { const h = Array(10).fill(0); for (const c of scored.filter(c => c.churned === grp)) h[Math.min(9, Math.floor(c.risk * 10))]++; return h; };
-    quality = { auc, roc: rocS, deciles, cuts: [cut(.5), cut(.65), cut(.7)], histActive: hist(false), histChurned: hist(true), P, N };
+    quality = { auc, roc: rocS, deciles, cuts: [cut(.5), cut(.65), cut(.7)], histActive: hist(false), histChurned: hist(true), P, N, scores: sorted.map(c => [Math.round(c.risk * 1000) / 1000, c.churned ? 1 : 0]) };
   }
 
   // casos

@@ -71,6 +71,15 @@ O menu **Churn** agrupa as seções (novos tópicos entram como abas ao lado):
 
 O ícone **i** ao lado de cada título resume como a análise é feita; clicando nele, abre um painel móvel com o passo a passo calculado com os dados carregados (escolha a coorte, o grupo, o KPI ou o cliente de exemplo).
 
+### Interações
+
+- **Cortes do score**: controles deslizantes em Churn anormal e Ativos em risco reclassificam tudo na hora (contagens, histograma, tabelas e achados).
+- **Retenção por coorte**: mira de linha e coluna ao passar o mouse ou navegar com Tab; clique na célula para ver quem saiu antes daquele mês; alterna entre retenção e churn acumulado.
+- **Churn por perfil**: ordene por taxa, cancelados ou MRR perdido; clique numa barra para filtrar o relatório inteiro por aquele grupo.
+- **Indicadores**: clique no nome do KPI para abrir a distribuição completa de ativos e cancelados.
+- **Motivos**: clique num motivo para ver os cancelamentos dele na tabela.
+- **Painel de diagnóstico**: corte do score ajustável (ponto na curva ROC, precisão e acerto ao vivo), hover sincronizado nas trajetórias, ordenação e destaque nos perfis, e "Ver como tabela" em todos os gráficos.
+
 As tabelas de churn classificado e ativos em risco podem ser copiadas como CSV.
 
 ## Rodar localmente

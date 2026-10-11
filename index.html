@@ -17,6 +17,7 @@
   --ink: #13201b;
   --muted: #56645e;
   --faint: #6b7872;
+  --ctl: #858f8a;
   --line: #d9e0dc;
   --accent: #1d6b57;
   --accent-ink: #ffffff;
@@ -34,13 +35,13 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993;
+    --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993; --ctl: #73807a;
     --line: #2f3935; --accent: #4fb596; --accent-ink: #0d1512; --s-ativo: #3987e5; --s-canc: #d95926; --focus: #4fb596;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993;
+  --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993; --ctl: #73807a;
   --line: #2f3935; --accent: #4fb596; --accent-ink: #0d1512; --s-ativo: #3987e5; --s-canc: #d95926; --focus: #4fb596;
   color-scheme: dark;
 }
@@ -211,11 +212,38 @@ table.dense td { padding-block: 6px; }
 td.n { white-space: nowrap; }
 td.one { white-space: nowrap; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
 td.one .sub { overflow: hidden; text-overflow: ellipsis; }
-th.sort { cursor: pointer; user-select: none; }
-th.sort:hover { color: var(--ink); }
+th.sort { user-select: none; }
 th.sort[aria-sort="ascending"]::after { content: " ▲"; color: var(--accent); }
 th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); }
 .muted { color: var(--muted); }
+
+/* interações dos gráficos */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.seg { display: inline-flex; border: 1px solid var(--ctl); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: var(--surface); padding: 5px 12px; cursor: pointer; font-size: 0.84rem; color: var(--muted); min-height: 32px; }
+.seg button + button { border-left: 1px solid var(--ctl); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.cuts { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; font-size: 0.86rem; color: var(--muted); padding: 10px 12px; border: 1px dashed var(--line); border-radius: 8px; margin-bottom: 10px; }
+.cut { display: inline-flex; align-items: center; gap: 8px; }
+.cut input[type=range] { width: 140px; accent-color: var(--accent); }
+.cut output { font-family: var(--f-mono); font-weight: 600; color: var(--ink); min-width: 2ch; }
+table.heat td.cell[tabindex] { cursor: pointer; transition: opacity .15s, outline-color .15s; }
+table.heat.focusing td.cell:not(.on):not(.na) { opacity: .45; }
+table.heat th.on, table.heat td.lbl.on { color: var(--ink); background: var(--sunken); }
+table.heat td.cell.picked { outline: 2px solid var(--ink); outline-offset: -2px; }
+.heat-detail { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 8px; background: var(--bg); }
+.heat-detail .lost { margin: 0; padding-left: 18px; columns: 2 220px; font-size: 0.86rem; }
+.bar-row.drill { cursor: pointer; border-radius: 6px; }
+.bar-row.drill:hover { background: var(--sunken); }
+.bar-row:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.sig { font-style: normal; color: var(--crit); margin-right: 4px; font-size: 0.75em; }
+.kpibtn { border: 0; background: none; padding: 0; cursor: pointer; font-weight: 500; color: var(--ink); text-align: left; display: inline-flex; gap: 6px; align-items: baseline; }
+.kpibtn:hover { color: var(--accent); }
+.caret { color: var(--muted); font-size: 0.8em; width: 1ch; }
+tr.kpi-x td { background: var(--bg); }
+.thbtn { border: 0; background: none; padding: 0; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+.thbtn:hover { color: var(--ink); }
+select, textarea, input:not([type=checkbox]):not([type=range]):not([type=file]):not([type=radio]) { border-color: var(--ctl) !important; }
 
 /* relatório */
 nav.topics { position: sticky; padding-top: 2px; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); display: grid; }
@@ -238,7 +266,7 @@ section.rep { display: grid; gap: 16px; scroll-margin-top: 140px; }
 .controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 0.88rem; color: var(--muted); }
 .controls > *, .controls .legend { min-width: 0; max-width: 100%; }
 .controls select { max-width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
-.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; }
 .empty { color: var(--muted); font-size: 0.9rem; padding: 18px; border: 1px dashed var(--line); border-radius: 10px; }
 .scroll { overflow-x: auto; }
 .note { font-size: 0.8rem; color: var(--muted); }
@@ -509,6 +537,8 @@ const state = {
   filters: [],
   showAll: { churn: false, risk: false },
   q: {}, sort: {},
+  cut: { anormal: 50, esperado: 65, atencao: 55, alto: 70 },
+  heatMetric: "ret", heatSel: null, barSort: "r", kpiOpen: null,
   srcOpen: null,
   company: (() => { try { return JSON.parse(localStorage.getItem("csops-company") || "null"); } catch (e) { return null; } })()
 };
@@ -919,8 +949,8 @@ function computeRisk(M, stats, peerDim) {
     c.drivers = drv.filter(d => d.comp >= 0.75).sort((a, b) => b.comp * b.w - a.comp * a.w).slice(0, 3);
     c.healthy = drv.filter(d => d.comp <= 0.35).sort((a, b) => a.comp * b.w - b.comp * a.w).slice(0, 2);
     if (c.risk == null) c.cls = "na";
-    else if (c.churned) c.cls = c.risk < 0.5 ? "anormal" : c.risk < 0.65 ? "fraco" : "esperado";
-    else c.cls = c.risk >= 0.7 ? "alto" : c.risk >= 0.55 ? "atencao" : "ok";
+    else if (c.churned) c.cls = c.risk < state.cut.anormal / 100 ? "anormal" : c.risk < state.cut.esperado / 100 ? "fraco" : "esperado";
+    else c.cls = c.risk >= state.cut.alto / 100 ? "alto" : c.risk >= state.cut.atencao / 100 ? "atencao" : "ok";
   }
   return sig;
 }
@@ -1125,6 +1155,7 @@ function summary(M, ctx) {
   return sec("resumo", "Visão geral", "Resumo", "", highlights(M, ctx) + `<div class="tiles">${tiles.map(([k, v, s, hl]) => `<div class="tile${hl && scored ? " hl" : ""}"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${esc(s)}</span></div>`).join("")}</div>`);
 }
 
+const RAMP_CANC = ["#fde4d6", "#fbcfb6", "#f8b896", "#f5a177", "#f08a58", "#eb6834", "#d95926", "#c24c1f", "#a84019", "#8e3514", "#742a10", "#5b210c"];
 const RAMP = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281"];
 function cohortData(M) {
   const L = M.clients.filter(c => c.inicio != null && !(c.churned && !c.dataCanc));
@@ -1155,15 +1186,31 @@ function cohort(M) {
   const D = cohortData(M);
   if (!D) return sec("coortes", "Retenção", "Retenção por coorte", "", `<div class="empty">Para ver as coortes, o arquivo de Clientes precisa de uma coluna de data de início.</div>`);
   const { byMonth, steps, rows, lo } = D;
-  const colorOf = r => { const t = Math.max(0, Math.min(1, (r - lo) / (1 - lo || 1))); const i = Math.round(t * (RAMP.length - 1)); return [RAMP[i], i >= 6 ? "#ffffff" : "#13201b"]; };
-  const body = `<div class="panel">
+  const churnView = state.heatMetric === "churn", ramp = churnView ? RAMP_CANC : RAMP;
+  // retenção: mais escuro = mais retido; churn acumulado: mais escuro = mais perdido
+  const colorOf = r => { const t = Math.max(0, Math.min(1, (r - lo) / (1 - lo || 1))); const i = churnView ? Math.round((1 - t) * (ramp.length - 1)) : Math.round(t * (ramp.length - 1)); return [ramp[i], i >= 6 ? "#ffffff" : "#13201b"]; };
+  const sel = state.heatSel && rows.find(r => r.k === state.heatSel.k), si = sel ? steps.indexOf(state.heatSel.s) : -1, sc = sel && si >= 0 ? sel.cells[si] : null;
+  let detail = "";
+  if (sc) {
+    const lostL = sel.members.filter(c => monthsBetween(c.inicio, M.ref) >= state.heatSel.s && c.churned && c.tenure < state.heatSel.s).sort((a, b) => a.tenure - b.tenure);
+    detail = `<div class="heat-detail" role="region" aria-label="Detalhe da célula selecionada">
+      <div class="tablebar" style="margin:0"><h3>Coorte ${esc(sel.k)} · M${state.heatSel.s}</h3><button type="button" class="fx" data-heat="${esc(sel.k)}|${state.heatSel.s}" aria-label="Fechar detalhe">×</button></div>
+      <p><b>${fmtPct(sc.r)}</b> de retenção: ${sc.n} de ${sel.n} ${M.noun[1].toLowerCase()} já tinham ${state.heatSel.s} meses na data de corte, e ${sc.lost} cancelaram antes disso.</p>
+      ${lostL.length ? `<ul class="lost">${lostL.slice(0, 12).map(c => `<li>${esc(c.nome || c.label)} <span class="note">· ${nf1.format(c.tenure)} m${c.motivo ? " · " + esc(c.motivo) : ""}</span></li>`).join("")}${lostL.length > 12 ? `<li class="note">e mais ${lostL.length - 12}</li>` : ""}</ul>` : `<p class="note">Nenhum cancelamento antes de M${state.heatSel.s} nesta coorte.</p>`}
+    </div>`;
+  }
+  const val = c => churnView ? 1 - c.r : c.r;
+  const body = `<div class="panel" style="display:grid;gap:12px">
+    <div class="controls"><span>Mostrar</span><div class="seg" role="group" aria-label="Métrica do mapa"><button type="button" data-heatmetric="ret" aria-pressed="${!churnView}">Retenção</button><button type="button" data-heatmetric="churn" aria-pressed="${churnView}">Churn acumulado</button></div><span class="note">Passe o mouse ou use Tab para ler a célula; clique para ver quem saiu.</span></div>
     <div class="scroll"><table class="heat">
-      <thead><tr><th>Coorte</th><th class="n">Clientes</th><th class="n">Cancel.</th>${steps.map(s => `<th class="n">M${s}</th>`).join("")}</tr></thead>
-      <tbody>${rows.map(r => `<tr><td class="lbl mono">${r.k}</td><td class="n">${r.n}</td><td class="n">${r.ch}</td>${r.cells.map((c, i) => c
-        ? (() => { const [bg, fg] = colorOf(c.r); return `<td class="cell" style="background:${bg};color:${fg}" data-tip="Coorte ${r.k} · mês ${steps[i]}\nRetenção ${fmtPct(c.r)}\n${c.lost} de ${c.n} cancelaram até aqui">${Math.round(c.r * 100)}</td>`; })()
-        : `<td class="cell na">·</td>`).join("")}</tr>`).join("")}</tbody>
+      <caption class="sr">Retenção por coorte de início e mês de vida</caption>
+      <thead><tr><th>Coorte</th><th class="n">Clientes</th><th class="n">Cancel.</th>${steps.map((s, i) => `<th class="n" data-c="${i}">M${s}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map((r, ri) => `<tr><td class="lbl mono" data-r="${ri}">${r.k}</td><td class="n">${r.n}</td><td class="n">${r.ch}</td>${r.cells.map((c, i) => c
+        ? (() => { const [bg, fg] = colorOf(c.r), on = sel === r && si === i; return `<td class="cell${on ? " picked" : ""}" tabindex="0" role="button" data-r="${ri}" data-c="${i}" data-heat="${esc(r.k)}|${steps[i]}" style="background:${bg};color:${fg}" aria-label="Coorte ${r.k}, mês ${steps[i]}: ${churnView ? "churn acumulado" : "retenção"} ${fmtPct(val(c))}, ${c.lost} de ${c.n} cancelaram" data-tip="Coorte ${r.k} · mês ${steps[i]}\n${churnView ? "Churn acumulado" : "Retenção"} ${fmtPct(val(c))}\n${c.lost} de ${c.n} cancelaram até aqui\nClique para ver quem saiu">${Math.round(val(c) * 100)}</td>`; })()
+        : `<td class="cell na" aria-label="sem dado">·</td>`).join("")}</tr>`).join("")}</tbody>
     </table></div>
-    <div class="legend" style="margin-top:12px"><span>Retenção de logos (%)</span><span class="mono">${Math.round(lo * 100)}</span><span class="ramp" style="background:linear-gradient(90deg,${RAMP.join(",")})"></span><span class="mono">100</span><span>· vazio = coorte ainda não chegou nesse mês ou tem menos de 3 clientes</span></div>
+    <div class="legend"><span>${churnView ? "Churn acumulado" : "Retenção de logos"} (%)</span><span class="mono">${churnView ? 0 : Math.round(lo * 100)}</span><span class="ramp" style="background:linear-gradient(90deg,${churnView ? RAMP_CANC.slice().reverse().join(",") : RAMP.join(",")})"></span><span class="mono">${churnView ? Math.round((1 - lo) * 100) : 100}</span><span>· vazio = coorte ainda não chegou nesse mês ou tem menos de 3 clientes</span></div>
+    ${detail}
   </div>`;
   return sec("coortes", "Retenção", "Retenção por coorte", `Cada linha agrupa os clientes pelo ${byMonth ? "mês" : "trimestre"} em que entraram. M6 mostra quantos ainda estavam ativos seis meses depois. Leia na vertical para comparar safras no mesmo ponto da vida do cliente.`, body);
 }
@@ -1173,21 +1220,23 @@ function profile(M) {
   const dim = state.dimBar, n = M.clients.length, p = M.clients.filter(c => c.churned).length / n;
   const g = new Map();
   for (const c of M.clients) { const k = c.attrs[dim]; if (!g.has(k)) g.set(k, { k, n: 0, ch: 0, mrr: 0 }); const o = g.get(k); o.n++; if (c.churned) { o.ch++; o.mrr += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; } }
-  let rows = [...g.values()].map(o => ({ ...o, r: o.ch / o.n, z: p > 0 && p < 1 ? (o.ch / o.n - p) / Math.sqrt(p * (1 - p) / o.n) : 0 })).sort((a, b) => b.r - a.r);
+  const sortKey = { r: o => o.r, ch: o => o.ch, mrr: o => o.mrr }[state.barSort] || (o => o.r);
+  let rows = [...g.values()].map(o => ({ ...o, r: o.ch / o.n, z: p > 0 && p < 1 ? (o.ch / o.n - p) / Math.sqrt(p * (1 - p) / o.n) : 0 })).sort((a, b) => sortKey(b) - sortKey(a) || b.r - a.r);
   if (rows.length > 12) { const rest = rows.slice(11); const o = rest.reduce((a, b) => ({ k: `Outros (${rest.length})`, n: a.n + b.n, ch: a.ch + b.ch, mrr: a.mrr + b.mrr }), { n: 0, ch: 0, mrr: 0 }); rows = rows.slice(0, 11).concat([{ ...o, r: o.ch / o.n, z: 0 }]); }
   const max = Math.max(...rows.map(r => r.r), p) * 1.08 || 1;
   const flag = z => z >= 1.96 ? chip("anormal").replace("Anormal", "Acima do esperado") : z <= -1.96 ? chip("ok").replace("Saudável", "Abaixo do esperado") : "";
   const body = `<div class="panel" style="display:grid;gap:14px">
     <div class="controls"><label for="selDimBar">Agrupar por</label>
       <select id="selDimBar">${M.dims.map(d => `<option value="${esc(d)}" ${d === dim ? "selected" : ""}>${esc(pretty(d))}</option>`).join("")}</select>
+      <span>Ordenar por</span><div class="seg" role="group" aria-label="Ordenar barras">${[["r", "Taxa"], ["ch", "Cancelados"], ["mrr", "MRR perdido"]].map(([k, l]) => `<button type="button" data-barsort="${k}" aria-pressed="${(state.barSort || "r") === k}">${l}</button>`).join("")}</div>
       <span class="legend"><span><span class="sw" style="background:var(--s-canc)"></span>Taxa de churn do grupo</span><span><span class="sw" style="border-left:1.5px dashed var(--muted);border-radius:0;width:2px"></span>Média da base ${fmtPct(p)}</span></span>
     </div>
-    <div class="bars">${rows.map(r => `<div class="bar-row" data-tip="${esc(r.k)}\n${r.ch} de ${r.n} cancelaram (${fmtPct(r.r)})${r.mrr ? `\nMRR perdido ${fmtBRL(r.mrr)}` : ""}\nDesvio vs. base: z = ${r.z.toFixed(1).replace(".", ",")}">
-        <span class="lab" title="${esc(r.k)}">${esc(r.k)}</span>
+    <div class="bars">${rows.map(r => { const drill = !/^Outros \(/.test(r.k); return `<div class="bar-row${drill ? " drill" : ""}" ${drill ? `role="button" tabindex="0" data-drill="${esc(r.k)}" aria-label="${esc(r.k)}: ${fmtPct(r.r)} de churn, ${r.ch} de ${r.n}${r.z >= 1.96 ? ", acima do esperado" : ""}. Filtrar o relatório por este grupo"` : ""} data-tip="${esc(r.k)}\n${r.ch} de ${r.n} cancelaram (${fmtPct(r.r)})${r.mrr ? `\nMRR perdido ${fmtBRL(r.mrr)}` : ""}\nDesvio vs. base: z = ${r.z.toFixed(1).replace(".", ",")}${drill ? "\nClique para filtrar o relatório" : ""}">
+        <span class="lab" title="${esc(r.k)}">${r.z >= 1.96 ? `<i class="sig" aria-hidden="true">▲</i>` : ""}${esc(r.k)}</span>
         <span class="bar-track"><span class="bar-fill" style="width:${(r.r / max) * 100}%;background:var(--s-canc)"></span><span class="bar-ref" style="left:${(p / max) * 100}%"></span></span>
         <span class="val">${fmtPct(r.r)} <small>${r.ch}/${r.n}</small> ${flag(r.z)}</span>
-      </div>`).join("")}</div>
-    <p class="note">"Acima do esperado" marca grupos cuja taxa está a mais de 1,96 desvios-padrão da média da base, considerando o tamanho do grupo. Grupos pequenos raramente recebem a marca, mesmo com taxa alta.</p>
+      </div>`; }).join("")}</div>
+    <p class="note">Clique numa barra para filtrar o relatório inteiro por aquele grupo. "Acima do esperado" (▲) marca grupos cuja taxa está a mais de 1,96 desvios-padrão da média da base, considerando o tamanho do grupo. Grupos pequenos raramente recebem a marca, mesmo com taxa alta.</p>
   </div>`;
   return sec("perfil", "Segmentação", "Churn por perfil", "Qual recorte da base cancela mais do que a média, e se a diferença é grande o bastante para não ser acaso.", body);
 }
@@ -1201,12 +1250,30 @@ function strip(lo, hi, rows) {
         <circle cx="${x(q2)}" cy="${y}" r="4.5" fill="var(--surface)" stroke="${col}" stroke-width="2"/>`; }).join("")}
   </svg>`;
 }
+
+// histograma sobreposto de um KPI: ativos x cancelados, em % de cada grupo
+function kpiHist(s) {
+  const all = s.a.concat(s.b).sort((x, y) => x - y);
+  if (all.length < 5) return `<p class="note">Poucos valores para desenhar a distribuição.</p>`;
+  let lo = quantile(all, .02), hi = quantile(all, .98); if (hi <= lo) { lo = all[0]; hi = all[all.length - 1] || lo + 1; }
+  const bins = 18, step = (hi - lo) / bins || 1, W = 640, H = 170, pl = 36, pb = 26, bw = (W - pl - 8) / bins;
+  const h = arr => { const c = Array(bins).fill(0); for (const v of arr) c[Math.max(0, Math.min(bins - 1, Math.floor((v - lo) / step)))]++; return c.map(x => arr.length ? x / arr.length : 0); };
+  const ha = h(s.a), hb = h(s.b), top = Math.max(...ha, ...hb, .05), y = v => 8 + (1 - v / top) * (H - pb - 8), x = v => pl + (v - lo) / (hi - lo || 1) * bins * bw;
+  const ma = quantile(s.a, .5), mb = quantile(s.b, .5);
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto" role="img" aria-label="Distribuição de ${esc(pretty(s.col))}: mediana ${fmtN(ma)} nos ativos e ${fmtN(mb)} nos cancelados">
+    ${[0, top / 2, top].map(t => `<line x1="${pl}" x2="${W - 8}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${pl - 6}" y="${y(t) + 4}" text-anchor="end">${Math.round(t * 100)}%</text>`).join("")}
+    ${ha.map((v, i) => `<rect x="${pl + i * bw + 1}" y="${y(v)}" width="${bw / 2 - 1.5}" height="${Math.max(0, y(0) - y(v))}" rx="2" fill="var(--s-ativo)"><title>${fmtN(lo + i * step)}–${fmtN(lo + (i + 1) * step)}: ${fmtPct(v)} dos ativos</title></rect>`).join("")}
+    ${hb.map((v, i) => `<rect x="${pl + i * bw + bw / 2 + .5}" y="${y(v)}" width="${bw / 2 - 1.5}" height="${Math.max(0, y(0) - y(v))}" rx="2" fill="var(--s-canc)"><title>${fmtN(lo + i * step)}–${fmtN(lo + (i + 1) * step)}: ${fmtPct(v)} dos cancelados</title></rect>`).join("")}
+    ${[[ma, "var(--s-ativo)", "mediana ativos"], [mb, "var(--s-canc)", "mediana cancel."]].map(([m, c, l], i) => `<line x1="${x(m)}" x2="${x(m)}" y1="6" y2="${H - pb}" stroke="${c}" stroke-width="2" stroke-dasharray="4 3"/><text x="${x(m) + 4}" y="${16 + i * 12}" style="fill:var(--ink);font-size:10px">${l} ${fmtN(m)}</text>`).join("")}
+    ${[0, .25, .5, .75, 1].map(t => `<text x="${pl + t * bins * bw}" y="${H - 8}" text-anchor="middle">${fmtN(lo + t * (hi - lo))}</text>`).join("")}
+  </svg>`;
+}
 function indicators(M, stats) {
   if (!stats.length) return sec("indicadores", "Indicadores", "Ativos x cancelados", "", `<div class="empty">Anexe o arquivo de Indicadores com colunas numéricas (health score, NPS, adoção, tickets) para comparar ativos e cancelados.</div>`);
   const sorted = [...stats].sort((a, b) => (Math.abs(b.d) || 0) - (Math.abs(a.d) || 0));
   const force = d => !Number.isFinite(d) ? ["neu", "○", "Sem dados"] : Math.abs(d) >= 0.8 ? ["crit", "▲", "Forte"] : Math.abs(d) >= 0.5 ? ["warn", "◆", "Moderado"] : Math.abs(d) >= 0.2 ? ["neu", "●", "Fraco"] : ["neu", "○", "Sem sinal"];
   const body = `<div class="panel">
-    <div class="legend" style="margin-bottom:10px"><span><span class="sw" style="background:var(--s-ativo)"></span>Ativos</span><span><span class="sw" style="background:var(--s-canc)"></span>Cancelados</span><span>barra grossa = 50% do meio · círculo = mediana · traço fino = 10% a 90%</span></div>
+    <div class="legend" style="margin-bottom:10px"><span><span class="sw" style="background:var(--s-ativo)"></span>Ativos</span><span><span class="sw" style="background:var(--s-canc)"></span>Cancelados</span><span>barra grossa = 50% do meio · círculo = mediana · traço fino = 10% a 90% · clique no nome do KPI para ver a distribuição completa</span></div>
     <div class="scroll"><table>
       <thead><tr><th>Indicador</th><th>Distribuição</th><th class="n">Mediana ativos</th><th class="n">Mediana cancel.</th><th class="n">Efeito (d)</th><th>Sinal de churn</th></tr></thead>
       <tbody>${sorted.map(s => {
@@ -1214,9 +1281,10 @@ function indicators(M, stats) {
         const [k, i, t] = s.contrary ? ["warn", "◆", "Contrário ao configurado"] : force(s.d);
         const cfg = s.inv == null ? "" : s.inv ? "configurado: menor é melhor" : "configurado: maior é melhor";
         const dir = cfg || (Number.isFinite(s.d) && Math.abs(s.d) >= 0.2 ? (s.d < 0 ? "quanto menor, mais churn" : "quanto maior, mais churn") : "");
-        return `<tr><td>${esc(pretty(s.col))}${s.unit ? ` <span class="mono" style="color:var(--faint)">${esc(s.unit)}</span>` : ""}<span class="sub">${dir}</span></td><td>${strip(lo, hi, [[s.a, "var(--s-ativo)"], [s.b, "var(--s-canc)"]])}</td>
+        const open = state.kpiOpen === s.col;
+        return `<tr class="${open ? "kpi-open" : ""}"><td><button type="button" class="kpibtn" data-kpiopen="${esc(s.col)}" aria-expanded="${open}"><span class="caret" aria-hidden="true">${open ? "▾" : "▸"}</span>${esc(pretty(s.col))}</button>${s.unit ? ` <span class="mono" style="color:var(--faint)">${esc(s.unit)}</span>` : ""}<span class="sub">${dir}</span></td><td>${strip(lo, hi, [[s.a, "var(--s-ativo)"], [s.b, "var(--s-canc)"]])}</td>
           <td class="n">${fmtN(quantile(s.a, .5))}<span class="sub">n=${s.a.length}</span></td><td class="n">${fmtN(quantile(s.b, .5))}<span class="sub">n=${s.b.length}</span></td>
-          <td class="n">${Number.isFinite(s.d) ? s.d.toFixed(2).replace(".", ",") : "—"}</td><td><span class="chip ${k}"><i aria-hidden="true">${i}</i>${t}</span></td></tr>`;
+          <td class="n">${Number.isFinite(s.d) ? s.d.toFixed(2).replace(".", ",") : "—"}</td><td><span class="chip ${k}"><i aria-hidden="true">${i}</i>${t}</span></td></tr>${open ? `<tr class="kpi-x"><td colspan="6">${kpiHist(s)}<p class="note">Barras azuis: % dos ativos em cada faixa; laranja: % dos cancelados. Quanto menos as duas distribuições se sobrepõem, mais o KPI separa quem fica de quem sai.</p></td></tr>` : ""}`;
       }).join("")}</tbody>
     </table></div>
     <p class="note" style="margin-top:10px">Efeito (d de Cohen) mede a distância entre as médias de cancelados e ativos em desvios-padrão. Acima de 0,5 o indicador separa bem os dois grupos e pesa mais no score de risco. "Contrário ao configurado" quer dizer que os cancelados se saíram melhor nesse KPI do que o <span class="mono">inv_proportional</span> do kpi_type prevê. Esse KPI fica fora do score e vale revisar a configuração dele.</p>
@@ -1237,13 +1305,13 @@ function histo(M) {
     const ticks = [0, yTop / 2, yTop];
     return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="Distribuição do score de risco - ${name}">
       ${ticks.map(t => `<line x1="${padL}" x2="${W - 8}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${padL - 6}" y="${y(t) + 4}" text-anchor="end">${Math.round(t * 100)}%</text>`).join("")}
-      ${[0.5, 0.65].map(t => `<line x1="${padL + t * bins * bw}" x2="${padL + t * bins * bw}" y1="6" y2="${H - padB}" stroke="var(--muted)" stroke-dasharray="3 3"/>`).join("")}
+      ${(gi ? [state.cut.anormal, state.cut.esperado] : [state.cut.atencao, state.cut.alto]).map(t => `<line x1="${padL + t / 100 * bins * bw}" x2="${padL + t / 100 * bins * bw}" y1="6" y2="${H - padB}" stroke="var(--ink)" stroke-opacity=".55" stroke-dasharray="3 3"/><text x="${padL + t / 100 * bins * bw + 3}" y="20" style="font-size:10px">${t}</text>`).join("")}
       ${hist[gi].map((v, i) => v > 0 ? `<rect x="${padL + i * bw + 1}" y="${y(v)}" width="${bw - 2}" height="${Math.max(1, y(0) - y(v))}" rx="2" fill="${col}"><title>Score ${i * 5}–${i * 5 + 5}: ${fmtPct(v)} dos ${name.toLowerCase()}</title></rect>` : "").join("")}
-      ${[0, 25, 50, 65, 75, 100].map(t => `<text x="${padL + (t / 100) * bins * bw}" y="${H - 6}" text-anchor="middle">${t}</text>`).join("")}
+      ${[0, 25, 50, 75, 100].map(t => `<text x="${padL + (t / 100) * bins * bw}" y="${H - 6}" text-anchor="middle">${t}</text>`).join("")}
       <text x="${padL + 4}" y="12" style="fill:var(--ink);font-weight:600">${name} · ${arr.length}</text>
     </svg>`;
   };
-  return `<div style="display:grid;gap:6px">${panel(0)}${panel(1)}<p class="note">Score de risco (0–100) no eixo horizontal; % do grupo no vertical. Linhas tracejadas em 50 e 65 separam as faixas dos cancelados.</p></div>`;
+  return `<div style="display:grid;gap:6px">${panel(0)}${panel(1)}<p class="note">Score de risco (0–100) no eixo horizontal; % do grupo no vertical. Linhas tracejadas: cortes de atenção e alto risco (ativos) e de anormal e esperado (cancelados).</p></div>`;
 }
 
 function tableRows(list, key, cols, limit = 15) {
@@ -1257,7 +1325,7 @@ function tableRows(list, key, cols, limit = 15) {
   const all = state.showAll[key];
   const shown = all ? rows : rows.slice(0, limit);
   return `<div class="tsearch"><input type="search" id="q-${key}" data-q="${key}" value="${esc(state.q[key] || "")}" placeholder="Buscar cliente, motivo ou perfil" aria-label="Buscar na tabela"><span class="note">${fmtInt(rows.length)} de ${fmtInt(list.length)} · clique no título da coluna para ordenar</span></div>
-    <div class="scroll"><table class="dense"><thead><tr>${cols.map((c, i) => `<th class="${c.n ? "n" : ""}${c.s ? " sort" : ""}" ${c.s ? `data-tsort="${key}:${i}" tabindex="0" aria-sort="${so && so.i === i ? (so.dir > 0 ? "ascending" : "descending") : "none"}"` : ""}>${c.h}</th>`).join("")}</tr></thead>
+    <div class="scroll"><table class="dense"><thead><tr>${cols.map((c, i) => `<th class="${c.n ? "n" : ""}${c.s ? " sort" : ""}" ${c.s ? `aria-sort="${so && so.i === i ? (so.dir > 0 ? "ascending" : "descending") : "none"}"` : ""}>${c.s ? `<button type="button" class="thbtn" data-tsort="${key}:${i}">${c.h}</button>` : c.h}</th>`).join("")}</tr></thead>
     <tbody>${shown.map(r => `<tr>${cols.map(c => `<td class="${c.n ? "n" : ""}${c.one ? " one" : ""}"${c.one && c.t ? ` title="${esc(c.t(r))}"` : ""}>${c.f(r)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${cols.length}" class="note">Nada encontrado.</td></tr>`}</tbody></table></div>
     ${rows.length > limit ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-more="${key}">${all ? "Mostrar menos" : `Mostrar todos (${rows.length})`}</button></div>` : ""}`;
 }
@@ -1267,6 +1335,9 @@ const clientCell = c => {
 };
 const hierOut = (M, c) => { const o = {}; if (M.hier.grupo) o.grupo_economico = c.f[M.hier.grupo]; if (M.hier.org) o.organizacao = c.f[M.hier.org]; if (M.level !== "linha") { o.linhas = c.lines; o.linhas_canceladas = c.linesCanc; } return o; };
 
+
+// controles de corte do score: mudar reclassifica tudo na hora
+const cutSlider = (k, label, min, max) => `<label class="cut" for="cut-${k}">${label}<input type="range" id="cut-${k}" data-cut="${k}" min="${min}" max="${max}" step="1" value="${state.cut[k]}" aria-valuetext="${state.cut[k]} pontos"><output for="cut-${k}">${state.cut[k]}</output></label>`;
 function anomaly(M, sig) {
   const ch = M.clients.filter(c => c.churned);
   if (!sig.length || !ch.some(c => c.risk != null)) return sec("anormal", "Diagnóstico", "Churn esperado x anormal", "", `<div class="empty">Esta análise precisa do arquivo de Indicadores com pelo menos um indicador que diferencie ativos de cancelados, e de alguns cancelamentos.</div>`);
@@ -1290,6 +1361,7 @@ function anomaly(M, sig) {
       <select id="selDimPeer"><option value="" ${!peer ? "selected" : ""}>Base inteira</option>${M.dims.map(d => `<option value="${esc(d)}" ${d === peer ? "selected" : ""}>${esc(pretty(d))}</option>`).join("")}</select>
       <span>${chip("anormal")} ${counts.anormal} &nbsp; ${chip("fraco")} ${counts.fraco} &nbsp; ${chip("esperado")} ${counts.esperado}${counts.na ? ` &nbsp; ${chip("na")} ${counts.na}` : ""}</span>
     </div>
+    <div class="cuts" role="group" aria-label="Cortes do score para cancelados">${cutSlider("anormal", "Anormal abaixo de", 20, 64)}${cutSlider("esperado", "Esperado a partir de", 40, 90)}<span class="note">Arraste para testar outros cortes; contagens, gráfico e tabelas mudam juntos.</span></div>
     <div class="two"><div class="panel">${histo(M)}</div>${byDim || `<div class="panel"><p class="note">Adicione colunas de perfil em Clientes para ver o churn anormal por grupo.</p></div>`}</div>
     <div class="panel">
       <div class="tablebar"><h3>Cancelados, do mais surpreendente ao mais previsível</h3><button type="button" class="btn sm" data-copy="churn">Copiar como CSV</button></div>
@@ -1316,6 +1388,7 @@ function atRisk(M, sig) {
   EXPORTS.risk = { name: "ativos-em-risco", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr: c.mrr, meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: drvText(c) })) };
   const body = `<div class="panel">
     <div class="tablebar"><p>${chip("alto")} <b>${hi.length}</b> clientes${mrr ? `, ${fmtBRL(mrr)} de MRR` : ""} &nbsp; ${chip("atencao")} <b>${list.length - hi.length}</b></p><button type="button" class="btn sm" data-copy="risk">Copiar como CSV</button></div>
+    <div class="cuts" role="group" aria-label="Cortes do score para ativos">${cutSlider("atencao", "Atenção a partir de", 30, 89)}${cutSlider("alto", "Alto risco a partir de", 40, 95)}</div>
     ${list.length ? tableRows(list, "risk", [
       { h: "Cliente", f: clientCell, s: c => c.nome || c.label, one: 1, t: c => c.nome || c.label },
       { h: "Pares", f: c => esc(c.peerLabel), s: c => c.peerLabel },
@@ -1324,7 +1397,7 @@ function atRisk(M, sig) {
       { h: "Score", f: c => scoreCell(c.risk), s: c => c.risk },
       { h: "Classificação", f: c => chip(c.cls), s: c => CHIP[c.cls][2] },
       { h: "Sinais", f: c => esc(drvText(c) || "piora distribuída em vários indicadores"), one: 1, t: c => drvText(c), s: c => drvText(c) }
-    ]) : `<p class="note">Nenhum cliente ativo acima de 55 no score.</p>`}
+    ]) : `<p class="note">Nenhum cliente ativo com score de ${state.cut.atencao} ou mais.</p>`}
   </div>`;
   return sec("risco", "Ação", "Ativos em risco", "Clientes ativos com indicadores parecidos com os de quem já cancelou. O percentil (p) compara o cliente com os ativos do mesmo grupo de pares: p8 em adoção significa que 92% dos pares têm adoção maior.", body);
 }
@@ -1337,7 +1410,7 @@ function reasons(M) {
     const g = new Map();
     for (const c of ch) { const k = c.motivo || "(não informado)"; if (!g.has(k)) g.set(k, { k, n: 0, mrr: 0, an: 0 }); const o = g.get(k); o.n++; o.mrr += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; if (c.cls === "anormal") o.an++; }
     const rows = [...g.values()].sort((a, b) => b.n - a.n).slice(0, 12), max = Math.max(...rows.map(r => r.n));
-    mot = `<div class="panel"><h3 style="margin-bottom:12px">Motivo declarado</h3><div class="bars">${rows.map(r => `<div class="bar-row" data-tip="${esc(r.k)}\n${r.n} cancelamento(s) · ${fmtPct(r.n / ch.length)}${r.mrr ? `\nMRR perdido ${fmtBRL(r.mrr)}` : ""}\n${r.an} classificado(s) como anormal">
+    mot = `<div class="panel"><h3 style="margin-bottom:4px">Motivo declarado</h3><p class="note" style="margin-bottom:10px">Clique num motivo para ver os cancelamentos dele na tabela de cancelados.</p><div class="bars">${rows.map(r => `<div class="bar-row drill" role="button" tabindex="0" data-motivo="${esc(r.k === "(não informado)" ? "" : r.k)}" aria-label="${esc(r.k)}: ${r.n} cancelamentos. Ver na tabela" data-tip="${esc(r.k)}\n${r.n} cancelamento(s) · ${fmtPct(r.n / ch.length)}${r.mrr ? `\nMRR perdido ${fmtBRL(r.mrr)}` : ""}\n${r.an} classificado(s) como anormal\nClique para ver na tabela">
       <span class="lab" title="${esc(r.k)}">${esc(r.k)}</span><span class="bar-track"><span class="bar-fill" style="width:${(r.n / max) * 100}%;background:var(--s-canc)"></span></span><span class="val">${r.n} <small>${fmtPct(r.n / ch.length, 0)}</small></span></div>`).join("")}</div></div>`;
   }
   let ten = "";
@@ -1345,7 +1418,7 @@ function reasons(M) {
   if (t.length) {
     const B = [[0, 3, "0–3 m"], [3, 6, "3–6 m"], [6, 12, "6–12 m"], [12, 18, "12–18 m"], [18, 24, "18–24 m"], [24, 36, "24–36 m"], [36, Infinity, "36+ m"]];
     const rows = B.map(([a, b, l]) => ({ l, n: t.filter(x => x >= a && x < b).length })), max = Math.max(...rows.map(r => r.n), 1);
-    ten = `<div class="panel"><h3 style="margin-bottom:12px">Tempo de casa ao cancelar</h3><div class="bars">${rows.map(r => `<div class="bar-row" data-tip="${r.l} de casa\n${r.n} cancelamento(s)"><span class="lab mono">${r.l}</span><span class="bar-track"><span class="bar-fill" style="width:${(r.n / max) * 100}%;background:var(--s-canc)"></span></span><span class="val">${r.n} <small>${fmtPct(r.n / t.length, 0)}</small></span></div>`).join("")}</div>
+    ten = `<div class="panel"><h3 style="margin-bottom:12px">Tempo de casa ao cancelar</h3><div class="bars">${rows.map(r => `<div class="bar-row" tabindex="0" aria-label="${r.l} de casa: ${r.n} cancelamentos" data-tip="${r.l} de casa\n${r.n} cancelamento(s)"><span class="lab mono">${r.l}</span><span class="bar-track"><span class="bar-fill" style="width:${(r.n / max) * 100}%;background:var(--s-canc)"></span></span><span class="val">${r.n} <small>${fmtPct(r.n / t.length, 0)}</small></span></div>`).join("")}</div>
     <p class="note" style="margin-top:10px">Concentração nos primeiros meses aponta para onboarding. Concentração perto de 12 ou 24 meses costuma coincidir com renovação de contrato.</p></div>`;
   }
   return sec("motivos", "Cancelamentos", "Motivos e momento do cancelamento", "", `<div class="two">${mot || `<div class="panel"><p class="note">Sem coluna de motivo no arquivo de Cancelamentos.</p></div>`}${ten || `<div class="panel"><p class="note">Sem data de início, não dá para calcular o tempo de casa.</p></div>`}</div>`);
@@ -1519,7 +1592,7 @@ function riskSteps({ M, sig }, isChurn) {
     ["Definir os pares", peer ? `${esc(who(c))} é comparado com os ativos do mesmo ${esc(pretty(peer).toLowerCase())}: <b>${esc(c.peerLabel)}</b>. Grupos com menos de 8 ativos usam a base inteira. Troque o critério em "Comparar cada cliente com pares do mesmo".` : `${esc(who(c))} é comparado com todos os ativos da base.`, `${fmtInt(c.peerN)} ativos de referência`],
     ["Posicionar o cliente em cada KPI", `O ${term("percentil", "Posição do valor entre os ativos pares: p20 quer dizer que 20% deles têm valor menor.")} mostra onde o valor cai entre os pares. O ${term("risco do KPI", "É o próprio percentil quando valor maior é pior, e 100 menos o percentil quando valor menor é pior. Vai de 0 (melhor que todos os pares) a 100 (pior que todos).")} vira o percentil para o lado em que o KPI indica churn. O ${term("peso", "O d de Cohen do KPI, limitado a 2. KPIs que separam melhor ativos e cancelados pesam mais.")} vem da seção Indicadores.`, null, table],
     ["Fazer a média ponderada", "Score = soma das contribuições (peso × risco) ÷ soma dos pesos.", `${n2(sc)} ÷ ${n2(sw)} = ${n3(sc / sw)}  →  score ${Math.round(c.risk * 100)}`],
-    ["Classificar", isChurn ? "Cancelados: abaixo de 50 é anormal (os números pareciam saudáveis), de 50 a 65 tem sinais fracos e de 65 para cima era esperado." : "Ativos: de 70 para cima é alto risco, de 55 a 70 pede atenção e abaixo de 55 é saudável.", null,
+    ["Classificar", isChurn ? `Cancelados: abaixo de ${state.cut.anormal} é anormal (os números pareciam saudáveis), de ${state.cut.anormal} a ${state.cut.esperado} tem sinais fracos e de ${state.cut.esperado} para cima era esperado.` : `Ativos: de ${state.cut.alto} para cima é alto risco, de ${state.cut.atencao} a ${state.cut.alto} pede atenção e abaixo de ${state.cut.atencao} é saudável.`, null,
       `${chip(c.cls)} <span class="note">${esc(isChurn && c.cls === "anormal" ? (healthyText(c) || "indicadores na média dos ativos") : (drvText(c) || "piora distribuída em vários KPIs"))}</span>`]
   ];
 }
@@ -1748,9 +1821,9 @@ function openPaste(src, opener, view = false) {
     pm.viewing = true;
   }
   $("#pmTitle").textContent = `${pm.viewing ? "Dados carregados · " : ""}${SOURCES[src].title} · ${SOURCES[src].table || "cancelamentos"}`;
-  $("#pm").hidden = false; renderPaste(); $("#pmGrid").focus();
+  $("#pm").hidden = false; $(".wrap").inert = true; renderPaste(); $("#pmGrid").focus();
 }
-function closePaste() { $("#pm").hidden = true; if (pm.opener && document.body.contains(pm.opener)) pm.opener.focus(); }
+function closePaste() { $("#pm").hidden = true; $(".wrap").inert = false; if (pm.opener && document.body.contains(pm.opener)) pm.opener.focus(); }
 function onPasteText(text) {
   const res = Papa.parse(String(text).replace(/^﻿/, "").replace(/\s+$/, ""), { skipEmptyLines: "greedy", delimitersToGuess: ["\t", ";", ",", "|"] });
   let rows = res.data.map(r => r.map(v => String(v ?? "").trim())).filter(r => r.some(Boolean));
@@ -1823,6 +1896,58 @@ document.addEventListener("change", e => {
 });
 $("#pm").addEventListener("mousedown", e => { if (e.target.id === "pm") closePaste(); });
 
+
+/* ---------- interações dos gráficos ---------- */
+function refocus(sel) { const el = document.querySelector(sel); if (el) el.focus({ preventScroll: true }); }
+function activate(el) {
+  if (el.dataset.heat) {
+    const [k, s] = el.dataset.heat.split("|"), same = state.heatSel && state.heatSel.k === k && state.heatSel.s === +s;
+    state.heatSel = same ? null : { k, s: +s }; renderReport();
+    refocus(`td.cell[data-heat="${CSS.escape(el.dataset.heat)}"]`);
+  } else if (el.dataset.drill != null) {
+    const dim = state.dimBar, v = el.dataset.drill, f = state.filters.find(x => x.dim === dim);
+    if (f) f.values = [v]; else state.filters.push({ dim, values: [v] });
+    renderReport(); toast(`Filtro aplicado: ${pretty(dim)} = ${v}. Remova em Filtros, no topo do relatório.`);
+  } else if (el.dataset.motivo != null) {
+    state.q.churn = el.dataset.motivo; state.showAll.churn = false; renderReport();
+    const t = $("#q-churn"); if (t) { t.scrollIntoView({ block: "center" }); t.focus({ preventScroll: true }); }
+  }
+}
+document.addEventListener("click", e => {
+  const el = e.target.closest && e.target.closest("[data-heat],[data-drill],[data-motivo]"); if (el) { activate(el); return; }
+  const b = e.target.closest && e.target.closest("button"); if (!b) return;
+  if (b.dataset.heatmetric) { state.heatMetric = b.dataset.heatmetric; renderReport(); refocus(`[data-heatmetric="${b.dataset.heatmetric}"]`); }
+  else if (b.dataset.barsort) { state.barSort = b.dataset.barsort; renderReport(); refocus(`[data-barsort="${b.dataset.barsort}"]`); }
+  else if (b.dataset.kpiopen) { state.kpiOpen = state.kpiOpen === b.dataset.kpiopen ? null : b.dataset.kpiopen; renderReport(); refocus(`[data-kpiopen="${CSS.escape(b.dataset.kpiopen)}"]`); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const el = e.target.closest && e.target.closest("[data-heat]:not(button),[data-drill],[data-motivo]"); if (!el || el.tagName === "BUTTON") return;
+  e.preventDefault(); activate(el);
+});
+let cutRaf = 0;
+document.addEventListener("input", e => {
+  const r = e.target; if (!r.dataset || !r.dataset.cut) return;
+  const k = r.dataset.cut, v = +r.value, c = state.cut;
+  c[k] = v;
+  if (k === "anormal" && c.esperado <= v) c.esperado = v + 1;
+  if (k === "esperado" && c.anormal >= v) c.anormal = v - 1;
+  if (k === "atencao" && c.alto <= v) c.alto = v + 1;
+  if (k === "alto" && c.atencao >= v) c.atencao = v - 1;
+  cancelAnimationFrame(cutRaf);
+  cutRaf = requestAnimationFrame(() => { renderReport(); refocus(`#cut-${k}`); });
+});
+// mira no mapa de coortes: destaca a linha e a coluna da célula sob o mouse ou o foco
+function heatHover(cell) {
+  document.querySelectorAll("table.heat .on").forEach(x => x.classList.remove("on"));
+  document.querySelectorAll("table.heat.focusing").forEach(x => x.classList.remove("focusing"));
+  if (!cell) return;
+  const t = cell.closest("table.heat"); t.classList.add("focusing");
+  t.querySelectorAll(`[data-r="${cell.dataset.r}"],[data-c="${cell.dataset.c}"]`).forEach(x => x.classList.add("on"));
+}
+document.addEventListener("mouseover", e => heatHover(e.target.closest && e.target.closest("table.heat td.cell[data-c]")));
+document.addEventListener("focusin", e => heatHover(e.target.closest && e.target.closest("table.heat td.cell[data-c]")));
+
 /* ---------- export ---------- */
 function toCSV(rows) {
   if (!rows.length) return "";
@@ -1875,8 +2000,7 @@ function sortBy(th) {
   renderReport();
   const el = document.querySelector(`[data-tsort="${th.dataset.tsort}"]`); if (el) el.focus();
 }
-document.addEventListener("click", e => { const th = e.target.closest && e.target.closest("th[data-tsort]"); if (th) sortBy(th); });
-document.addEventListener("keydown", e => { const th = e.target.closest && e.target.closest("th[data-tsort]"); if (th && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); sortBy(th); } });
+document.addEventListener("click", e => { const th = e.target.closest && e.target.closest("[data-tsort]"); if (th) sortBy(th); });
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
   if (!$("#pm").hidden) closePaste(); else if (state.xp) closeExplain();
