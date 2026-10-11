@@ -88,14 +88,43 @@ header.top .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; j
 .map { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; align-items: center; font-size: 0.85rem; }
 .map label { color: var(--muted); }
 .map select { width: 100%; min-width: 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); font-size: 0.82rem; }
+.col { display: inline-block; font-family: var(--f-mono); font-size: 0.78rem; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
+.col.req { background: color-mix(in srgb, var(--crit) 24%, var(--surface)); border-color: color-mix(in srgb, var(--crit) 45%, transparent); }
+.col.imp { background: color-mix(in srgb, var(--warn) 38%, var(--surface)); border-color: color-mix(in srgb, var(--warn) 60%, transparent); }
+.tcols { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tcols b { min-width: 120px; font-family: var(--f-mono); font-size: 0.85rem; }
+a.btn { text-decoration: none; color: var(--ink); display: inline-block; }
+a.btn.primary { color: var(--accent-ink); }
 details > summary { cursor: pointer; color: var(--muted); font-size: 0.85rem; }
 details[open] > summary { margin-bottom: 8px; }
 
+/* visão */
+.viewbar { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.vb-row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 0.88rem; color: var(--muted); }
+.vb-row select { padding: 5px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); }
+.fchip { display: inline-flex; align-items: flex-start; gap: 2px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); color: var(--ink); position: relative; }
+.fchip summary { list-style: none; padding: 4px 8px; cursor: pointer; color: var(--ink); font-size: 0.85rem; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fchip summary::-webkit-details-marker { display: none; }
+.fchip details[open] > summary { margin: 0; }
+.fx { border: 0; background: none; cursor: pointer; color: var(--muted); padding: 4px 8px; font-size: 1rem; line-height: 1; }
+.fpop { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; width: min(320px, 80vw); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 8px; box-shadow: 0 8px 24px color-mix(in srgb, var(--ink) 18%, transparent); }
+.fpop input[type=search] { width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); }
+.fopts { max-height: 240px; overflow: auto; display: grid; gap: 2px; }
+.fopts label { display: flex; gap: 6px; align-items: center; font-size: 0.85rem; padding: 2px 4px; border-radius: 4px; cursor: pointer; }
+.fopts label:hover { background: var(--sunken); }
+.fopts label span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fopts small { color: var(--faint); font-variant-numeric: tabular-nums; }
+
 /* relatório */
-nav.toc { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; border-block: 1px solid var(--line); padding-block: 10px; }
-nav.toc a { color: var(--muted); text-decoration: none; }
-nav.toc a:hover { color: var(--accent); }
-section.rep { display: grid; gap: 16px; scroll-margin-top: 16px; }
+nav.topics { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); display: grid; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { border: 0; background: none; padding: 10px 14px 9px; font-family: var(--f-display); font-weight: 600; font-size: 1rem; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab:hover { color: var(--ink); }
+nav.topics .toc { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; padding-block: 10px; }
+nav.topics .toc a { color: var(--muted); text-decoration: none; }
+nav.topics .toc a:hover { color: var(--accent); }
+section.rep { display: grid; gap: 16px; scroll-margin-top: 110px; }
 .sec-head { display: grid; gap: 6px; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
@@ -105,7 +134,8 @@ section.rep { display: grid; gap: 16px; scroll-margin-top: 16px; }
 .tile .s { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .tile.hl .v { color: var(--crit); }
 .controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 0.88rem; color: var(--muted); }
-.controls select { padding: 5px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.controls > *, .controls .legend { min-width: 0; max-width: 100%; }
+.controls select { max-width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
 .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
 .empty { color: var(--muted); font-size: 0.9rem; padding: 18px; border: 1px dashed var(--line); border-radius: 10px; }
 .scroll { overflow-x: auto; }
@@ -160,7 +190,8 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
 .method { display: grid; gap: 10px; max-width: 78ch; color: var(--muted); font-size: 0.9rem; }
 .method b { color: var(--ink); }
 @media (max-width: 560px) {
-  .bar-row { grid-template-columns: 90px 1fr auto; }
+  .bar-row { grid-template-columns: 90px 1fr; row-gap: 0; }
+  .bar-row .val { grid-column: 2; text-align: left; white-space: normal; }
   .tile .v { font-size: 1.45rem; }
 }
 @media (prefers-reduced-motion: no-preference) { .bar-fill { transition: width .3s ease; } }
@@ -177,6 +208,7 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
         <p class="lede">Anexe ou cole os CSVs exportados das tabelas <span class="mono">customer</span>, <span class="mono">kpi</span> e <span class="mono">kpi_type</span>. O relatório cruza tudo pelo ID do cliente e mostra quais cancelamentos eram esperados para aquele perfil e quais fogem do padrão.</p>
       </div>
       <div class="actions">
+        <a class="btn" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Baixar modelo (.xlsx)</a>
         <button class="btn" id="btnSample" type="button">Carregar exemplo</button>
         <button class="btn ghost" id="btnClear" type="button">Limpar tudo</button>
       </div>
@@ -196,11 +228,24 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
       <span class="eyebrow">Referência</span>
       <h2>Como preparar os arquivos</h2>
     </div>
+    <div class="panel" style="display:grid;gap:12px">
+      <div class="tablebar" style="margin:0">
+        <div class="legend"><span class="col req">obrigatória</span><span class="col imp">opcional importante: filtros, hierarquia e comparações</span><span class="col">opcional</span></div>
+        <div class="actions">
+          <a class="btn sm primary" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Planilha modelo (.xlsx)</a>
+          <a class="btn sm" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/customer.csv" target="_blank" rel="noopener">customer.csv</a>
+          <a class="btn sm" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/kpi.csv" target="_blank" rel="noopener">kpi.csv</a>
+          <a class="btn sm" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/cancelamentos.csv" target="_blank" rel="noopener">cancelamentos.csv</a>
+        </div>
+      </div>
+      <div id="templateCols" style="display:grid;gap:10px"></div>
+      <p class="note">A planilha abre no Excel e pode ser importada no Google Sheets (Arquivo → Importar). Preencha, exporte cada aba como CSV e anexe no cartão correspondente. Passe o mouse sobre uma coluna para ver o que ela significa.</p>
+    </div>
     <div class="method">
       <p>Cada pessoa pode exportar só os campos principais; os nomes de coluna são reconhecidos sozinhos e podem ser trocados em <b>Colunas</b>. Separador vírgula, ponto e vírgula ou tab. Datas em <span class="mono">AAAA-MM-DD</span> (com ou sem hora), <span class="mono">DD/MM/AAAA</span> ou <span class="mono">MM/AAAA</span>. Números aceitam <span class="mono">1.234,56</span> e <span class="mono">1234.56</span>.</p>
-      <p><b>customer</b>: uma linha por cliente, ativos e cancelados. Mínimo: <span class="mono">id, dt_register, dt_cancel</span>. Recomendado: <span class="mono">name, cancel_tag, cancel_description</span> e os campos de perfil <span class="mono">industry, size, state, stage, group, cs_owner</span>. Cliente com <span class="mono">dt_cancel</span> preenchido conta como cancelado. Contatos, endereço e <span class="mono">custom_fields</span> são ignorados. MRR é opcional (coluna <span class="mono">mrr</span>, por exemplo extraída de custom_fields).</p>
-      <p><b>kpi</b>: <span class="mono">id_customer, ref_date, type, value</span>. Pode vir o histórico diário inteiro, mas o arquivo fica grande; a consulta em <span class="mono">sql/kpi_snapshot.sql</span> já traz só a última leitura de cada KPI antes do cancelamento. O relatório usa sempre a última leitura anterior a <span class="mono">dt_cancel</span>; para ativos, a mais recente.</p>
-      <p><b>kpi_type</b> (opcional, recomendado): <span class="mono">id, name, unit, inv_proportional</span>. Dá nome aos KPIs e diz a direção: <span class="mono">inv_proportional = true</span> significa que valor maior é pior.</p>
+      <p><b>customer</b>: uma linha por linha de cliente, ativos e cancelados. Mínimo: <span class="mono">id, dt_register, dt_cancel</span>. Recomendado: <span class="mono">name, cancel_tag, cancel_description</span> e os campos de perfil <span class="mono">industry, size, state, stage, cs_owner</span>. Cliente com <span class="mono">dt_cancel</span> preenchido conta como cancelado. Contatos, endereço e <span class="mono">custom_fields</span> são ignorados. MRR é opcional (coluna <span class="mono">mrr</span>, por exemplo extraída de custom_fields).</p>
+      <p><b>Hierarquia</b> (opcional, em customer): <span class="mono">group</span> (grupo econômico), uma coluna que identifique a organização (<span class="mono">cnpj</span> ou <span class="mono">name_contract</span>) e <span class="mono">product</span> quando o mesmo cliente tem uma linha por produto contratado (ex.: "Ambev - Produto 1", "Ambev - Produto 2"). Com elas dá para analisar por organização ou por grupo e filtrar qualquer recorte. Uma organização só conta como cancelada quando todas as suas linhas cancelaram; se só parte cancelou, entra em churn parcial.</p>
+      <p><b>kpi</b>: <span class="mono">id_customer, ref_date, type, value</span>, e de preferência <span class="mono">kpi_name</span> e <span class="mono">inv_proportional</span> trazidos de kpi_type no próprio export (veja <span class="mono">sql/kpi_snapshot.sql</span>). Pode vir o histórico diário inteiro, mas o arquivo fica grande; a consulta já traz só a última leitura de cada KPI antes do cancelamento. Sem <span class="mono">kpi_name</span>, os KPIs aparecem como "KPI 1", "KPI 2"; sem <span class="mono">inv_proportional</span> (true = valor maior é pior), a direção é deduzida dos dados.</p>
       <p><b>Cancelamentos</b> (opcional): só para quem guarda o cancelamento fora de customer. <span class="mono">id_customer, dt_cancel, cancel_tag</span>.</p>
       <p>Nada sai do seu navegador: os arquivos são lidos e processados localmente.</p>
     </div>
@@ -230,7 +275,7 @@ const fmtDate = d => d ? new Date(d).toLocaleDateString("pt-BR", { timeZone: "UT
 const MONTH = 30.4375 * 864e5;
 const monthsBetween = (a, b) => (b - a) / MONTH;
 const WORDS = { nps: "NPS", csm: "CSM", mrr: "MRR", arr: "ARR", kpi: "KPI", pct: "%", adocao: "adoção", regiao: "região", usuarios: "usuários", inicio: "início", referencia: "referência", saude: "saúde", "30d": "(30 dias)" };
-const FIELD_LABELS = { industry: "Setor", size: "Porte", state: "UF", stage: "Etapa", group: "Grupo", cs_owner: "CSM", support_owner: "Suporte", sales_owner: "Vendedor", onboarding_owner: "Onboarding", city: "Cidade", country: "País" };
+const FIELD_LABELS = { group: "Grupo econômico", grupo_economico: "Grupo econômico", cnpj: "Organização (CNPJ)", name_contract: "Contrato", product: "Produto", produto: "Produto", industry: "Setor", size: "Porte", state: "UF", stage: "Etapa", cs_owner: "CSM", support_owner: "Suporte", sales_owner: "Vendedor", onboarding_owner: "Onboarding", city: "Cidade", country: "País" };
 const pretty = c => { if (FIELD_LABELS[norm(c)]) return FIELD_LABELS[norm(c)]; const s = String(c).split(/[_\s]+/).filter(Boolean).map(w => WORDS[w.toLowerCase()] ?? w).join(" "); return s.charAt(0).toUpperCase() + s.slice(1); };
 
 function toNum(v) {
@@ -277,10 +322,13 @@ const ID_SYN = ["id_customer", "customer_id", "cliente_id", "id_cliente", "clien
 const SOURCES = {
   clientes: {
     title: "Clientes", table: "customer", hint: "toda a base, ativos e cancelados",
-    expect: "<code>id</code>, <code>name</code>, <code>dt_register</code>, <code>dt_cancel</code>, <code>cancel_tag</code> + perfil (<code>industry</code>, <code>size</code>, <code>state</code>, <code>cs_owner</code>, <code>group</code>)",
+    expect: "<code>id</code>, <code>name</code>, <code>dt_register</code>, <code>dt_cancel</code>, <code>cancel_tag</code>; hierarquia (<code>group</code>, <code>cnpj</code>, <code>product</code>) e perfil (<code>industry</code>, <code>size</code>, <code>state</code>, <code>cs_owner</code>)",
     fields: {
       id: { label: "ID do cliente", syn: ID_SYN },
       nome: { label: "Nome", syn: ["name", "nome", "nome_cliente", "razao_social", "empresa", "cliente", "account", "conta"] },
+      grupo: { label: "Hierarquia: grupo econômico", syn: ["grupo_economico", "economic_group", "group", "grupo", "holding"] },
+      organizacao: { label: "Hierarquia: organização", syn: ["organizacao", "organization", "org", "cnpj", "name_contract", "conta_pai", "cliente_pai", "parent_id"] },
+      produto: { label: "Hierarquia: produto", syn: ["produto", "product", "produto_contratado", "modulo", "module"] },
       inicio: { label: "Data de início", syn: ["dt_register", "data_inicio", "inicio", "data_contratacao", "data_ativacao", "inicio_contrato", "data_entrada", "start_date", "data_cadastro", "cliente_desde", "created_at"] },
       canc: { label: "Data de cancelamento", syn: ["dt_cancel", "data_cancelamento", "cancel_date", "churn_date", "data_churn", "cancelado_em"] },
       motivo: { label: "Motivo (tag)", syn: ["cancel_tag", "motivo", "motivo_cancelamento", "motivo_churn", "churn_reason"] },
@@ -290,22 +338,15 @@ const SOURCES = {
   },
   kpis: {
     title: "Indicadores", table: "kpi", hint: "histórico de KPIs por cliente",
-    expect: "<code>id_customer</code>, <code>ref_date</code>, <code>type</code>, <code>value</code>. Também aceita uma coluna por KPI",
+    expect: "<code>id_customer</code>, <code>ref_date</code>, <code>type</code>, <code>value</code>; opcional <code>kpi_name</code>, <code>inv_proportional</code>. Também aceita uma coluna por KPI",
     fields: {
       id: { label: "ID do cliente", syn: ID_SYN },
       data: { label: "Data de referência", syn: ["ref_date", "data_referencia", "referencia", "competencia", "mes_referencia", "mes", "periodo", "data", "date", "month"] },
       tipo: { label: "Tipo do KPI", syn: ["type", "tipo", "kpi_type", "id_kpi", "kpi", "indicador"] },
-      valor: { label: "Valor", syn: ["value", "valor"] }
-    }
-  },
-  tipos: {
-    title: "Tipos de KPI", table: "kpi_type", hint: "nomes e direção de cada KPI", optional: true,
-    expect: "<code>id</code>, <code>name</code>, <code>unit</code>, <code>inv_proportional</code>",
-    fields: {
-      id: { label: "ID do tipo", syn: ["id", "type", "kpi_id", "id_kpi"] },
-      nome: { label: "Nome", syn: ["name", "nome", "description", "descricao"] },
-      unidade: { label: "Unidade", syn: ["unit", "unidade"] },
-      inverso: { label: "Inversamente proporcional", syn: ["inv_proportional", "inverso", "inverse", "menor_melhor"] }
+      valor: { label: "Valor", syn: ["value", "valor"] },
+      nomeKpi: { label: "Nome do KPI", syn: ["kpi_name", "type_name", "nome_kpi", "indicador_nome", "name", "nome"] },
+      inverso: { label: "Maior é pior (inv_proportional)", syn: ["inv_proportional", "inverso", "inverse", "menor_melhor"] },
+      unidade: { label: "Unidade do KPI", syn: ["unit", "unidade"] }
     }
   },
   cancel: {
@@ -319,8 +360,8 @@ const SOURCES = {
     }
   }
 };
-const EMPTY_RAW = () => ({ clientes: null, kpis: null, tipos: null, cancel: null });
-const EMPTY_MAP = () => ({ clientes: {}, kpis: {}, tipos: {}, cancel: {} });
+const EMPTY_RAW = () => ({ clientes: null, kpis: null, cancel: null });
+const EMPTY_MAP = () => ({ clientes: {}, kpis: {}, cancel: {} });
 
 const state = {
   raw: EMPTY_RAW(),
@@ -328,6 +369,9 @@ const state = {
   isSample: false,
   dimBar: null,
   dimPeer: null,
+  topic: "churn",
+  level: "linha",
+  filters: [],
   showAll: { churn: false, risk: false }
 };
 
@@ -431,6 +475,8 @@ document.addEventListener("change", e => {
     renderInputs(); renderReport();
   } else if (t.id === "selDimBar") { state.dimBar = t.value; renderReport(); }
   else if (t.id === "selDimPeer") { state.dimPeer = t.value; renderReport(); }
+  else if (t.id === "selLevel") { state.level = t.value; state.showAll = { churn: false, risk: false }; renderReport(); }
+  else if (t.id === "addFilter" && t.value) { state.filters.push({ dim: t.value, values: [] }); state.openFilter = state.filters.length - 1; renderReport(); }
 });
 document.addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
@@ -439,8 +485,18 @@ document.addEventListener("click", e => {
   else if (b.dataset.clear) { state.raw[b.dataset.clear] = null; state.map[b.dataset.clear] = {}; renderInputs(); renderReport(); }
   else if (b.dataset.more) { state.showAll[b.dataset.more] = !state.showAll[b.dataset.more]; renderReport(); }
   else if (b.dataset.copy) copyCSV(b.dataset.copy);
+  else if (b.dataset.topic) { state.topic = b.dataset.topic; renderReport(); }
+  else if (b.dataset.fapply) { const i = +b.dataset.fapply; state.filters[i].values = [...document.querySelectorAll(`#flt-${i} .fopts input:checked`)].map(x => x.value); state.openFilter = null; renderReport(); }
+  else if (b.dataset.fclear) document.querySelectorAll(`#flt-${b.dataset.fclear} .fopts input`).forEach(x => (x.checked = false));
+  else if (b.dataset.fremove) { state.filters.splice(+b.dataset.fremove, 1); state.openFilter = null; renderReport(); }
+  else if (b.id === "btnClearFilters") { state.filters = []; state.openFilter = null; renderReport(); }
   else if (b.id === "btnSample") loadSample();
-  else if (b.id === "btnClear") { state.raw = EMPTY_RAW(); state.map = EMPTY_MAP(); state.isSample = false; renderInputs(); renderReport(); }
+  else if (b.id === "btnClear") { state.raw = EMPTY_RAW(); state.map = EMPTY_MAP(); state.filters = []; state.level = "linha"; state.isSample = false; renderInputs(); renderReport(); }
+});
+document.addEventListener("input", e => {
+  const t = e.target; if (!t.dataset || t.dataset.fsearch == null) return;
+  const q = norm(t.value);
+  document.querySelectorAll(`#flt-${t.dataset.fsearch} .fopts label`).forEach(l => (l.hidden = q && !l.dataset.v.includes(q)));
 });
 ["dragenter", "dragover"].forEach(ev => document.addEventListener(ev, e => {
   const s = e.target.closest && e.target.closest(".src"); if (!s) return;
@@ -464,8 +520,8 @@ const NUMERIC_DIM = /(owner|csm|responsavel|group|grupo|size|porte|stage|etapa|s
 const isTrue = v => /^(t|true|1|sim|s|y|yes|verdadeiro)$/i.test(String(v ?? "").trim());
 
 function build() {
-  const C = state.raw.clientes, K = state.raw.kpis, T = state.raw.tipos, X = state.raw.cancel;
-  const mC = state.map.clientes, mK = state.map.kpis, mT = state.map.tipos, mX = state.map.cancel;
+  const C = state.raw.clientes, K = state.raw.kpis, X = state.raw.cancel;
+  const mC = state.map.clientes, mK = state.map.kpis, mX = state.map.cancel;
   const okC = C && C.rows.length && mC.id, okK = K && K.rows.length && mK.id, okX = X && X.rows.length && mX.id;
   if (!okC && !okK && !okX) return null;
   const clients = new Map(), warnings = [];
@@ -506,8 +562,15 @@ function build() {
       if (distinct.size < 2 || distinct.size > 40 || distinct.size > Math.max(6, n * 0.5)) continue;
       dims.push(f);
     }
+    // produto é hierarquia e também perfil de comparação
+    if (mC.produto && !dims.includes(mC.produto)) {
+      const distinct = new Set([...clients.values()].map(c => String(c.row[mC.produto] ?? "").trim()).filter(Boolean));
+      if (distinct.size >= 1 && distinct.size <= 40) dims.unshift(mC.produto);
+    }
     for (const c of clients.values()) for (const d of dims) c.attrs[d] = String(c.row[d] ?? "").trim() || "(vazio)";
   }
+  const hier = { grupo: okC ? mC.grupo || "" : "", org: okC ? mC.organizacao || "" : "", produto: okC ? mC.produto || "" : "" };
+  const fdims = [...new Set([hier.grupo, hier.org, ...dims].filter(Boolean))];
 
   if (okX) {
     let orphan = 0;
@@ -526,15 +589,16 @@ function build() {
   }
   for (const c of clients.values()) if (c.churned && !Number.isFinite(c.mrrPerdido)) c.mrrPerdido = c.mrr;
 
-  // kpi_type: nome, unidade e direção configurada de cada tipo
+  // nome e direção de cada tipo de KPI, quando o export de kpi traz as colunas de kpi_type (join)
+  const tcol = mK.tipo || mK.nomeKpi;
   const types = new Map();
-  if (T && T.rows.length && mT.id) {
-    for (const r of T.rows) {
-      const id = String(r[mT.id] ?? "").trim(); if (!id) continue;
+  if (K && K.rows.length && tcol && (mK.nomeKpi || mK.inverso || mK.unidade)) {
+    for (const r of K.rows) {
+      const id = String(r[tcol] ?? "").trim(); if (!id || types.has(id)) continue;
       types.set(id, {
-        name: (mT.nome && String(r[mT.nome] ?? "").trim()) || `KPI ${id}`,
-        unit: mT.unidade ? String(r[mT.unidade] ?? "").trim() : "",
-        inv: mT.inverso && String(r[mT.inverso] ?? "").trim() !== "" ? isTrue(r[mT.inverso]) : null
+        name: (mK.nomeKpi && String(r[mK.nomeKpi] ?? "").trim()) || `KPI ${id}`,
+        unit: mK.unidade ? String(r[mK.unidade] ?? "").trim() : "",
+        inv: mK.inverso && String(r[mK.inverso] ?? "").trim() !== "" ? isTrue(r[mK.inverso]) : null
       });
     }
   }
@@ -548,7 +612,7 @@ function build() {
       if (okC) { orphan++; return null; }
       const c = mk(id, id); clients.set(id, c); return c;
     };
-    if (mK.tipo && mK.valor) {
+    if (tcol && mK.valor) {
       // formato longo (tabela kpi): uma linha por cliente × data × tipo. Vale a última leitura antes do cancelamento.
       const cols = new Map(), names = new Set();
       const colOf = t => {
@@ -563,7 +627,7 @@ function build() {
       const best = new Map();
       for (const r of K.rows) {
         const raw = String(r[mK.id] ?? "").trim(), id = nid(raw); if (!id) continue;
-        const t = String(r[mK.tipo] ?? "").trim(); if (!t) continue;
+        const t = String(r[tcol] ?? "").trim(); if (!t) continue;
         const v = toNum(r[mK.valor]); if (!Number.isFinite(v)) continue;
         const c = target(id); if (!c) continue;
         const col = colOf(t), d = mK.data ? toDate(r[mK.data]) : null, key = id + "|" + col;
@@ -576,7 +640,7 @@ function build() {
       kpiCols = [...cols.values()];
     } else {
       // formato largo: uma coluna por indicador
-      const used = new Set([mK.id, mK.data].filter(Boolean));
+      const used = new Set([mK.id, mK.data, mK.inverso, mK.unidade].filter(Boolean));
       kpiCols = K.fields.filter(f => {
         if (used.has(f)) return false;
         const vals = K.rows.map(r => r[f]).filter(v => String(v ?? "").trim() !== "");
@@ -608,17 +672,19 @@ function build() {
       }
     }
     if (orphan) warnings.push(`${orphan} linha(s) de Indicadores com ID que não está em Clientes foram ignoradas.`);
-    if (mK.tipo && mK.valor && !types.size) warnings.push(`Sem o arquivo Tipos de KPI, os indicadores aparecem como "KPI 1", "KPI 2"… e a direção (maior ou menor é melhor) é deduzida dos dados.`);
+    if (mK.tipo && mK.valor && !mK.nomeKpi) warnings.push(`O arquivo de Indicadores não tem o nome do KPI (kpi_name), então eles aparecem como "KPI 1", "KPI 2"…`);
+    if (tcol && mK.valor && !mK.inverso) warnings.push(`Sem a coluna inv_proportional, a direção de cada KPI (maior ou menor é melhor) é deduzida dos dados.`);
   }
 
   const list = [...clients.values()];
+  for (const c of list) { c.f = {}; for (const d of fdims) c.f[d] = c.row ? (String(c.row[d] ?? "").trim() || "(vazio)") : "(sem cadastro)"; }
   let ref = -Infinity;
   for (const c of list) for (const d of [c.inicio, c.dataCanc, c.kpiDate]) if (d != null && d > ref) ref = d;
   if (!Number.isFinite(ref)) ref = Date.now();
   for (const c of list) c.tenure = c.inicio != null ? Math.max(0, monthsBetween(c.inicio, c.churned && c.dataCanc ? c.dataCanc : ref)) : NaN;
   if (list.some(c => c.churned && !c.dataCanc)) warnings.push(`${list.filter(c => c.churned && !c.dataCanc).length} cancelamento(s) sem data válida; ficam fora das curvas de coorte.`);
   if (okC && !mC.canc && !okX) warnings.push(`Nenhuma coluna de data de cancelamento em Clientes (dt_cancel). Escolha em Colunas ou anexe o arquivo de Cancelamentos.`);
-  return { clients: list, dims, kpiCols, kpiMeta, ref, warnings };
+  return { clients: list, dims, fdims, hier, kpiCols, kpiMeta, ref, warnings };
 }
 
 function kpiStats(M) {
@@ -687,29 +753,136 @@ const healthyText = c => c.healthy.map(d => `${pretty(d.col)} ${d.low ? "alto" :
 
 let EXPORTS = {};
 
+
+/* ---------- visão: filtros e nível de hierarquia ---------- */
+const LEVELS = { linha: ["Linha de cliente", "Linhas de cliente", "linha", "a"], org: ["Organização", "Organizações", "organização", "a"], grupo: ["Grupo econômico", "Grupos econômicos", "grupo", "o"] };
+const sumF = arr => { let t = 0, any = false; for (const v of arr) if (Number.isFinite(v)) { t += v; any = true; } return any ? t : NaN; };
+const mixOf = vals => { const u = [...new Set(vals)].sort(); return u.length === 1 ? u[0] : u.length <= 3 ? u.join(" + ") : "(vários)"; };
+function view(M) {
+  const { hier } = M;
+  const levels = ["linha"].concat(hier.org ? ["org"] : [], hier.grupo ? ["grupo"] : []);
+  if (!levels.includes(state.level)) state.level = "linha";
+  const filters = state.filters.filter(f => M.fdims.includes(f.dim) && f.values.length);
+  const lines = M.clients.filter(c => filters.every(f => f.values.includes(c.f[f.dim])));
+  const lv = state.level;
+  const real = v => v && v !== "(vazio)" && v !== "(sem cadastro)";
+  let ents;
+  if (lv === "linha") ents = lines.map(c => ({ ...c, lines: 1, linesCanc: c.churned ? 1 : 0, partial: false, partialLost: 0 }));
+  else {
+    const keyOf = c => {
+      if (lv === "grupo" && real(c.f[hier.grupo])) return ["g", c.f[hier.grupo]];
+      if (hier.org && real(c.f[hier.org])) return ["o", c.f[hier.org]];
+      return ["c", c.id];
+    };
+    const groups = new Map();
+    for (const c of lines) { const [t, k] = keyOf(c), key = t + ":" + k; if (!groups.has(key)) groups.set(key, { t, k, arr: [] }); groups.get(key).arr.push(c); }
+    ents = [...groups.values()].map(({ t, k, arr }) => {
+      const act = arr.filter(c => !c.churned), ch = arr.filter(c => c.churned);
+      const churned = act.length === 0;
+      const names = arr.map(c => c.nome).filter(Boolean);
+      const prefix = names.length ? names[0].split(" - ")[0].trim() : "";
+      const nome = t === "c" ? arr[0].nome : t === "g" ? "" : (names.every(n => n.split(" - ")[0].trim() === prefix) ? prefix : names[0] || "");
+      const lastCanc = ch.filter(c => c.dataCanc != null).sort((a, b) => b.dataCanc - a.dataCanc)[0];
+      const src = churned ? arr : act;
+      const e = {
+        id: t + ":" + k, label: t === "c" ? arr[0].label : k, nome,
+        lines: arr.length, linesCanc: ch.length, partial: ch.length > 0 && act.length > 0,
+        inicio: arr.some(c => c.inicio != null) ? Math.min(...arr.filter(c => c.inicio != null).map(c => c.inicio)) : null,
+        churned,
+        dataCanc: churned && ch.every(c => c.dataCanc != null) ? Math.max(...ch.map(c => c.dataCanc)) : null,
+        motivo: lastCanc ? lastCanc.motivo : "", descricao: lastCanc ? lastCanc.descricao : "",
+        mrr: sumF((churned ? arr : act).map(c => c.mrr)),
+        mrrPerdido: churned ? sumF(ch.map(c => c.mrrPerdido)) : NaN,
+        partialLost: ch.length && act.length ? sumF(ch.map(c => c.mrrPerdido)) : 0,
+        attrs: {}, f: {}, kpi: {},
+        kpiDate: src.some(c => c.kpiDate != null) ? Math.max(...src.filter(c => c.kpiDate != null).map(c => c.kpiDate)) : null
+      };
+      for (const d of M.dims) e.attrs[d] = mixOf(arr.map(c => c.attrs[d]));
+      for (const d of M.fdims) e.f[d] = mixOf(arr.map(c => c.f[d]));
+      for (const col of M.kpiCols) { const v = src.map(c => c.kpi[col]).filter(Number.isFinite); e.kpi[col] = v.length ? mean(v) : NaN; }
+      e.tenure = e.inicio != null ? Math.max(0, monthsBetween(e.inicio, e.churned && e.dataCanc ? e.dataCanc : M.ref)) : NaN;
+      return e;
+    });
+  }
+  return { ...M, clients: ents, lines, levels, level: lv, noun: LEVELS[lv], filtersOn: filters.length };
+}
+
+function viewbar(M, M0) {
+  const total = M0.clients.length;
+  const counts = d => { const m = new Map(); for (const c of M0.clients) m.set(c.f[d], (m.get(c.f[d]) || 0) + 1); return [...m.entries()].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0]))); };
+  const avail = M.fdims.filter(d => !state.filters.some(f => f.dim === d));
+  const flt = state.filters.map((f, i) => {
+    if (!M.fdims.includes(f.dim)) return "";
+    const vals = counts(f.dim);
+    const sum = f.values.length ? (f.values.length === 1 ? f.values[0] : `${f.values.length} valores`) : "todos";
+    return `<span class="fchip">
+      <details id="flt-${i}" ${state.openFilter === i ? "open" : ""}>
+        <summary><b>${esc(pretty(f.dim))}</b>: ${esc(sum)}</summary>
+        <div class="fpop">
+          ${vals.length > 8 ? `<input type="search" id="fs-${i}" data-fsearch="${i}" placeholder="Buscar ${esc(pretty(f.dim).toLowerCase())}">` : ""}
+          <div class="fopts">${vals.slice(0, 1000).map(([v, n], j) => `<label data-v="${esc(norm(v))}"><input type="checkbox" id="fo-${i}-${j}" value="${esc(v)}" ${f.values.includes(v) ? "checked" : ""}> <span>${esc(v)}</span> <small>${n}</small></label>`).join("")}</div>
+          <div class="actions"><button type="button" class="btn sm primary" data-fapply="${i}">Aplicar</button><button type="button" class="btn sm" data-fclear="${i}">Limpar seleção</button></div>
+        </div>
+      </details>
+      <button type="button" class="fx" data-fremove="${i}" aria-label="Remover filtro ${esc(pretty(f.dim))}">×</button>
+    </span>`;
+  }).join("");
+  return `<div class="viewbar">
+    <div class="vb-row">
+      <label for="selLevel">Analisar por</label>
+      <select id="selLevel">${M.levels.map(l => `<option value="${l}" ${l === M.level ? "selected" : ""}>${LEVELS[l][0]}</option>`).join("")}</select>
+      ${M.levels.length === 1 ? `<span class="note">Mapeie grupo econômico ou organização em Clientes → Colunas para analisar por hierarquia.</span>` : ""}
+    </div>
+    <div class="vb-row">
+      <span>Filtros</span>${flt}
+      ${avail.length ? `<select id="addFilter" aria-label="Adicionar filtro"><option value="">+ Adicionar filtro</option>${avail.map(d => `<option value="${esc(d)}">${esc(pretty(d))}</option>`).join("")}</select>` : ""}
+      ${state.filters.length ? `<button type="button" class="btn sm ghost" id="btnClearFilters">Remover filtros</button>` : ""}
+    </div>
+    <p class="note">${M.filtersOn ? `Filtrado: ${fmtInt(M.lines.length)} de ${fmtInt(total)} linhas de cliente` : `${fmtInt(total)} linhas de cliente`}${M.level !== "linha" ? `, agrupadas em ${fmtInt(M.clients.length)} ${M.noun[1].toLowerCase()}. ${M.noun[3] === "o" ? "Um" : "Uma"} ${M.noun[2]} só conta como cancelad${M.noun[3]} quando todas as suas linhas cancelaram.${M.level === "grupo" ? " Organizações sem grupo contam como um grupo próprio." : ""}` : "."}</p>
+  </div>`;
+}
+
 function renderReport() {
   const host = $("#report");
-  const M = build();
+  const M0 = build();
   const w = $("#warnings");
-  if (!M) {
+  if (!M0) {
     w.hidden = true;
     host.innerHTML = `<div class="empty">Anexe pelo menos o arquivo de Clientes (customer, com dt_cancel) para ver o relatório. Os Indicadores (kpi) ativam a separação entre churn esperado e anormal. Sem arquivos à mão? Use <b>Carregar exemplo</b>.</div>`;
     return;
   }
-  w.hidden = !M.warnings.length;
-  w.innerHTML = M.warnings.map(esc).join("<br>");
+  w.hidden = !M0.warnings.length;
+  w.innerHTML = M0.warnings.map(esc).join("<br>");
+  const M = view(M0);
+  const bar = viewbar(M, M0);
+  if (!M.clients.length) { host.innerHTML = bar + `<div class="empty">Nenhuma linha de cliente passa pelos filtros escolhidos.</div>`; return; }
   if (state.dimBar && !M.dims.includes(state.dimBar)) state.dimBar = null;
   if (!state.dimBar) state.dimBar = M.dims.find(d => /segment|setor|vertical|industry/.test(norm(d))) || M.dims[0] || null;
   if (state.dimPeer !== "" && (state.dimPeer == null || !M.dims.includes(state.dimPeer))) state.dimPeer = M.dims.find(d => /plano|plan|porte|tier|size/.test(norm(d))) || M.dims[0] || "";
 
   const stats = kpiStats(M);
   const sig = computeRisk(M, stats, state.dimPeer || null);
-  const parts = [summary(M), cohort(M), profile(M), indicators(M, stats), anomaly(M, sig), atRisk(M, sig), reasons(M), method()];
-  host.innerHTML = `<nav class="toc" aria-label="Seções">
-      <a href="#resumo">Resumo</a><a href="#coortes">Retenção por coorte</a><a href="#perfil">Churn por perfil</a>
-      <a href="#indicadores">Indicadores</a><a href="#anormal">Churn anormal</a><a href="#risco">Ativos em risco</a><a href="#motivos">Motivos</a><a href="#metodo">Método</a>
-    </nav>` + parts.join("");
+  const topic = TOPICS.find(t => t.id === state.topic) || TOPICS[0];
+  const ctx = { M, stats, sig };
+  host.innerHTML = bar + `<nav class="topics" aria-label="Tópicos">
+      <div class="tabs" role="tablist">${TOPICS.map(t => `<button type="button" role="tab" class="tab" data-topic="${t.id}" aria-selected="${t === topic}">${t.label}</button>`).join("")}</div>
+      <div class="toc">${topic.sections.map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}</div>
+    </nav>` + topic.sections.map(([, , fn]) => fn(ctx)).join("");
 }
+
+// Tópicos do relatório. Cada tópico tem seu submenu de seções; novos tópicos entram aqui.
+const TOPICS = [
+  { id: "churn", label: "Churn", sections: [
+    ["resumo", "Resumo", ({ M }) => summary(M)],
+    ["coortes", "Retenção por coorte", ({ M }) => cohort(M)],
+    ["perfil", "Churn por perfil", ({ M }) => profile(M)],
+    ["indicadores", "Indicadores", ({ M, stats }) => indicators(M, stats)],
+    ["anormal", "Churn anormal", ({ M, sig }) => anomaly(M, sig)],
+    ["risco", "Ativos em risco", ({ M, sig }) => atRisk(M, sig)],
+    ["motivos", "Motivos", ({ M }) => reasons(M)],
+    ["metodo", "Método", () => method()]
+  ] }
+];
 
 function sec(id, eyebrow, title, lede, body) {
   return `<section class="rep" id="${id}"><div class="sec-head"><span class="eyebrow">${eyebrow}</span><h2>${title}</h2>${lede ? `<p class="lede">${lede}</p>` : ""}</div>${body}</section>`;
@@ -725,12 +898,13 @@ function summary(M) {
   const ten = ch.map(c => c.tenure).filter(Number.isFinite).sort((a, b) => a - b);
   const anorm = ch.filter(c => c.cls === "anormal").length, scored = ch.filter(c => c.risk != null).length;
   const tiles = [
-    ["Clientes na base", fmtInt(n), `corte em ${fmtDate(M.ref)}`],
+    [`${M.noun[1]} na base`, fmtInt(n), M.level !== "linha" ? `${fmtInt(M.lines.length)} linhas · corte em ${fmtDate(M.ref)}` : `corte em ${fmtDate(M.ref)}`],
     ["Ativos", fmtInt(act), mrrAct ? `${fmtBRL(mrrAct)} de MRR` : ""],
     ["Cancelados", fmtInt(ch.length), `${fmtPct(ch.length / n)} da base`],
     ["Churn mensal médio", fmtPct(monthly, 2), Number.isFinite(monthly) ? `cancelamentos ÷ meses-cliente` : "precisa de data de início"],
     ["MRR perdido", mrrLost ? fmtBRL(mrrLost) : "—", mrrLost && mrrAct ? `${fmtPct(mrrLost / (mrrLost + mrrAct))} do MRR total` : ""],
     ["Tempo até cancelar", ten.length ? nf1.format(quantile(ten, 0.5)) + " m" : "—", ten.length ? "mediana, em meses" : "precisa de data de início"],
+    ...(M.level !== "linha" ? [["Churn parcial", fmtInt(M.clients.filter(c => c.partial).length), (() => { const v = sumF(M.clients.filter(c => c.partial).map(c => c.partialLost)); return Number.isFinite(v) && v ? `ativas, mas perderam ${fmtBRL(v)} em produtos` : "ativas, mas cancelaram algum produto"; })()]] : []),
     ["Churn anormal", scored ? fmtInt(anorm) : "—", scored ? `${fmtPct(anorm / scored, 0)} dos cancelados com KPIs` : "precisa de Indicadores", true]
   ];
   return sec("resumo", "Visão geral", "Resumo", "", `<div class="tiles">${tiles.map(([k, v, s, hl]) => `<div class="tile${hl && scored ? " hl" : ""}"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${esc(s)}</span></div>`).join("")}</div>`);
@@ -859,7 +1033,11 @@ function tableRows(list, key, cols, limit = 15) {
     <tbody>${shown.map(r => `<tr>${cols.map(c => `<td class="${c.n ? "n" : ""}">${c.f(r)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
     ${list.length > limit ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-more="${key}">${all ? "Mostrar menos" : `Mostrar todos (${list.length})`}</button></div>` : ""}`;
 }
-const clientCell = c => `${esc(c.nome || c.label)}${c.nome ? `<span class="sub mono">${esc(c.label)}</span>` : ""}`;
+const clientCell = c => {
+  const sub = [c.nome ? esc(c.label) : "", c.lines > 1 ? `${c.lines} linhas` : "", c.partial ? `${c.linesCanc} cancelada(s)` : ""].filter(Boolean).join(" · ");
+  return `${esc(c.nome || c.label)}${sub ? `<span class="sub mono">${sub}</span>` : ""}`;
+};
+const hierOut = (M, c) => { const o = {}; if (M.hier.grupo) o.grupo_economico = c.f[M.hier.grupo]; if (M.hier.org) o.organizacao = c.f[M.hier.org]; if (M.level !== "linha") { o.linhas = c.lines; o.linhas_canceladas = c.linesCanc; } return o; };
 
 function anomaly(M, sig) {
   const ch = M.clients.filter(c => c.churned);
@@ -869,7 +1047,7 @@ function anomaly(M, sig) {
   ch.forEach(c => counts[c.cls]++);
   const scored = ch.length - counts.na;
   const list = ch.filter(c => c.risk != null).sort((a, b) => a.risk - b.risk);
-  EXPORTS.churn = { name: "churn-classificado", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, grupo_pares: c.peerLabel, ...c.attrs, mrr_perdido: c.mrrPerdido, data_cancelamento: c.dataCanc ? new Date(c.dataCanc).toISOString().slice(0, 10) : "", meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", motivo: c.motivo, descricao_motivo: c.descricao, score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: c.cls === "anormal" ? healthyText(c) : drvText(c) })) };
+  EXPORTS.churn = { name: "churn-classificado", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr_perdido: c.mrrPerdido, data_cancelamento: c.dataCanc ? new Date(c.dataCanc).toISOString().slice(0, 10) : "", meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", motivo: c.motivo, descricao_motivo: c.descricao, score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: c.cls === "anormal" ? healthyText(c) : drvText(c) })) };
   let byDim = "";
   if (M.dims.length) {
     const d = state.dimBar, g = new Map();
@@ -907,7 +1085,7 @@ function atRisk(M, sig) {
   const list = act.filter(c => c.cls !== "ok").sort((a, b) => b.risk - a.risk);
   const hi = list.filter(c => c.cls === "alto");
   const mrr = hi.reduce((s, c) => s + (Number.isFinite(c.mrr) ? c.mrr : 0), 0);
-  EXPORTS.risk = { name: "ativos-em-risco", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, grupo_pares: c.peerLabel, ...c.attrs, mrr: c.mrr, meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: drvText(c) })) };
+  EXPORTS.risk = { name: "ativos-em-risco", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr: c.mrr, meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: drvText(c) })) };
   const body = `<div class="panel">
     <div class="tablebar"><p>${chip("alto")} <b>${hi.length}</b> clientes${mrr ? `, ${fmtBRL(mrr)} de MRR` : ""} &nbsp; ${chip("atencao")} <b>${list.length - hi.length}</b></p><button type="button" class="btn sm" data-copy="risk">Copiar como CSV</button></div>
     ${list.length ? tableRows(list, "risk", [
@@ -955,6 +1133,20 @@ function method() {
     <p><b>Indicadores com histórico.</b> Quando há data de referência, vale a última leitura antes do cancelamento. Sem data, vale a média das linhas do cliente.</p>
   </div>`);
 }
+
+/* ---------- modelo de importação (mantenha igual a tools/gerar_modelo.py) ---------- */
+const TEMPLATE = {
+  customer: [["id", "req", "ID da linha de cliente. Igual a kpi.id_customer."], ["dt_register", "req", "Data de início. Define a coorte."], ["dt_cancel", "req", "Data do cancelamento. Vazio = ativo."],
+    ["name", "imp", "Nome exibido. Ex.: Ambev - Produto 1."], ["group", "imp", "Hierarquia: grupo econômico."], ["cnpj", "imp", "Hierarquia: organização. Pode ser name_contract."], ["product", "imp", "Hierarquia: produto contratado."],
+    ["industry", "imp", "Perfil: setor."], ["size", "imp", "Perfil: porte."], ["state", "imp", "Perfil: UF."], ["stage", "imp", "Perfil: etapa."], ["cs_owner", "imp", "Perfil: nome do CSM responsável (texto)."],
+    ["cancel_tag", "imp", "Motivo do cancelamento."], ["cancel_description", "imp", "Descrição do motivo."], ["mrr", "imp", "Receita mensal da linha."],
+    ["id_legacy", "opt", "ID no sistema anterior."], ["name_contract", "opt", "Nome do contrato."], ["city", "opt", "Cidade."], ["country", "opt", "País."],
+    ["support_owner", "opt", "Responsável de suporte."], ["sales_owner", "opt", "Vendedor."], ["onboarding_owner", "opt", "Responsável pelo onboarding."], ["dt_stage", "opt", "Data da etapa atual."]],
+  kpi: [["id_customer", "req", "ID da linha de cliente."], ["type", "req", "ID do tipo de KPI."], ["value", "req", "Valor do KPI."],
+    ["ref_date", "imp", "Data da leitura."], ["kpi_name", "imp", "Nome do KPI (kpi_type.name)."], ["inv_proportional", "imp", "true = valor maior é pior."], ["unit", "opt", "Unidade do KPI."]],
+  cancelamentos: [["id_customer", "req", "Só se o cancelamento não estiver em customer."], ["dt_cancel", "req", "Data do cancelamento."], ["cancel_tag", "imp", "Motivo."], ["mrr_perdido", "opt", "MRR perdido."]]
+};
+$("#templateCols").innerHTML = Object.entries(TEMPLATE).map(([t, cols]) => `<div class="tcols"><b>${t}${t === "cancelamentos" ? " (opcional)" : ""}</b>${cols.map(([n, k, d]) => `<span class="col ${k === "opt" ? "" : k}" data-tip="${esc(d)}">${n}</span>`).join("")}</div>`).join("");
 
 /* ---------- export ---------- */
 function toCSV(rows) {
@@ -1006,77 +1198,92 @@ function makeSample() {
   const iso = t => new Date(t).toISOString().slice(0, 10);
   const monthStart = t => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1); };
   const addMonths = (t, n) => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + n, 1); };
-  const DAY = 864e5, REF = Date.UTC(2026, 8, 30), START = Date.UTC(2024, 0, 1);
+  const digits = n => Array.from({ length: n }, () => Math.floor(R() * 10)).join("");
+  const DAY = 864e5, REF = Date.UTC(2026, 8, 30), START = Date.UTC(2024, 0, 1), LASTSTART = Date.UTC(2026, 7, 31);
   const inds = ["Varejo", "Indústria", "Serviços", "Saúde", "Educação"], indW = [.26, .2, .24, .16, .14], indR = { Varejo: 0.05, "Indústria": -0.35, "Serviços": 0, "Saúde": -0.2, "Educação": 0.6 };
   const sizes = ["Pequeno", "Médio", "Grande"], sizeW = [.44, .38, .18], sizeR = { Pequeno: 0.45, "Médio": 0, Grande: -0.55 };
   const mrrR = { Pequeno: [290, 690], "Médio": [990, 2490], Grande: [3800, 9800] }, usersB = { Pequeno: 6, "Médio": 15, Grande: 42 };
   const ufs = ["SP", "RJ", "MG", "PR", "SC", "RS", "BA", "PE", "GO", "DF"], ufW = [.3, .1, .1, .09, .07, .08, .08, .07, .06, .05];
-  const owners = [2, 7, 9, 12, 15], ownerR = { 2: -0.1, 7: 0, 9: -0.15, 12: 0.4, 15: 0.05 };
-  const pre = ["Grupo", "Rede", "Clínica", "Colégio", "Distribuidora", "Indústria", "Studio", "Mercado", "Instituto", "Comercial", "Laboratório", "Escola"];
+  const owners = ["Ana Ribeiro", "Bruno Lima", "Carla Mendes", "Diego Rocha", "Elisa Prado"], ownerR = { "Ana Ribeiro": -0.1, "Bruno Lima": 0, "Carla Mendes": -0.15, "Diego Rocha": 0.4, "Elisa Prado": 0.05 };
+  const prods = ["Gestão", "Financeiro", "Analytics"], prodR = { "Gestão": 0, Financeiro: -0.2, Analytics: 0.35 }, prodM = { "Gestão": 1, Financeiro: 0.6, Analytics: 0.45 };
+  const pre = ["Rede", "Clínica", "Colégio", "Distribuidora", "Indústria", "Studio", "Mercado", "Instituto", "Comercial", "Laboratório", "Escola", "Farmácia"];
   const nomes = ["Aurora", "Horizonte", "Ipê", "Maré", "Serra Azul", "Bandeirante", "Pinhal", "Carvalho", "Vale Verde", "Atlântica", "Cerrado", "Jacarandá", "Boa Vista", "Itapuã", "Lagoa", "Araucária", "Mantiqueira", "Paraty", "Tocantins", "Juriti"];
+  const grupos = ["Grupo Pampa", "Grupo Sertão", "Grupo Planalto", "Grupo Litoral", "Grupo Capital", "Grupo Ribeira", "Grupo Guará", "Grupo Tapajós", "Grupo Cantareira", "Grupo Jequitibá", "Grupo Aroeira", "Grupo Paranapanema", "Grupo Iguaçu", "Grupo Xingu", "Grupo Borborema", "Grupo Caparaó", "Grupo Pantanal", "Grupo Ibiapaba"];
   const motE = [["baixa_adocao", "Equipe não incorporou a ferramenta na rotina."], ["preco", "Considerou o valor alto para o uso atual."], ["concorrente", "Migrou para outra solução."], ["suporte", "Reclamações recorrentes sobre tempo de resposta do suporte."], ["corte_custos", "Revisão de orçamento cortou ferramentas."], ["encerramento", "Empresa encerrou as atividades."]], motEW = [.32, .18, .14, .16, .12, .08];
   const motS = [["concorrente", "Decisão da diretoria de padronizar outro fornecedor."], ["fusao_aquisicao", "Empresa foi adquirida e adotou o sistema do grupo comprador."], ["corte_custos", "Corte de custos geral, sem queixa sobre o produto."], ["encerramento", "Empresa encerrou as atividades."], ["preco", "Pediu desconto na renovação e não houve acordo."]], motSW = [.3, .24, .22, .14, .1];
-  const TYPES = [
-    [1, "Health Score", "Pontuação geral de saúde do cliente", "pts", false],
-    [2, "NPS", "Última nota de NPS respondida", "nota", false],
-    [3, "Adoção", "Funcionalidades-chave em uso", "%", false],
-    [4, "Usuários ativos", "Usuários com login nos últimos 30 dias", "usuários", false],
-    [5, "Tickets abertos", "Chamados abertos nos últimos 30 dias", "tickets", true],
-    [6, "Dias sem acesso", "Dias desde o último login de qualquer usuário", "dias", true]
-  ];
-  const C = [["id", "name", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description"]];
-  const K = [["id_customer", "ref_date", "type", "value"]];
-  const T = [["id", "name", "description", "unit", "inv_proportional"], ...TYPES.map(t => [t[0], t[1], t[2], t[3], t[4] ? "true" : "false"])];
+  const CASCADE = new Set(["concorrente", "fusao_aquisicao", "encerramento", "corte_custos"]);
+  const TYPES = [[1, "Health Score", false], [2, "NPS", false], [3, "Adoção (%)", false], [4, "Usuários ativos", false], [5, "Tickets abertos (30d)", true], [6, "Dias sem acesso", true]];
+  const C = [["id", "name", "group", "cnpj", "product", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description"]];
+  const K = [["id_customer", "ref_date", "type", "kpi_name", "inv_proportional", "value"]];
   const usedNames = new Set();
-  for (let i = 1; i <= 280; i++) {
-    const id = 1000 + i;
-    const ind = pick(inds, indW), size = pick(sizes, sizeW), uf = pick(ufs, ufW), owner = pick(owners, [1, 1, 1, 1, 1]);
+  let nextId = 1001;
+  // organizações: ~20% pertencem a um grupo econômico com 2 a 5 organizações
+  const orgs = [];
+  const groupQueue = [];
+  grupos.forEach(g => { const n = 2 + Math.floor(R() * 4); for (let i = 0; i < n; i++) groupQueue.push(g); });
+  for (let o = 0; o < 175; o++) {
+    const grp = o < groupQueue.length && R() < 0.85 ? groupQueue[o] : "";
     let nome; do { nome = `${pre[Math.floor(R() * pre.length)]} ${nomes[Math.floor(R() * nomes.length)]}`; } while (usedNames.has(nome) && usedNames.size < 230);
-    if (usedNames.has(nome)) nome += " " + i; usedNames.add(nome);
-    const start = START + Math.floor(R() * (Date.UTC(2026, 7, 31) - START) / DAY) * DAY;
-    const [m0, m1] = mrrR[size]; const mrr = Math.round((m0 + R() * (m1 - m0)) / 10) * 10;
-    const latent = gauss() * 0.9 + indR[ind] + sizeR[size] + ownerR[owner];
-    const life = Math.floor((REF - start) / (30.4375 * DAY));
-    let churnAt = null, surprise = false;
-    for (let m = 1; m <= life; m++) {
-      if (R() < clamp(0.011 * Math.exp(1.05 * latent), 0.002, 0.2)) { churnAt = m; break; }
-      if (R() < 0.0045) { churnAt = m; surprise = true; break; }
-    }
-    let cancel = null, mot = ["", ""];
-    if (churnAt) {
-      cancel = Math.min(start + Math.round(churnAt * 30.4375 + R() * 20) * DAY, REF - DAY);
-      mot = surprise ? pick(motS, motSW) : pick(motE, motEW);
-    }
-    C.push([id, nome, iso(start), ind, size, uf, owner, mrr.toFixed(2), cancel ? iso(cancel) : "", mot[0], mot[1]]);
-    // até 6 leituras mensais por KPI, terminando antes do cancelamento (ou na data de corte)
-    const last = cancel ? monthStart(cancel) - DAY : REF;
-    const months = [];
-    for (let k = 5; k >= 0; k--) { const t = k === 0 ? last : addMonths(monthStart(last), -k); if (t >= start) months.push(t); }
-    if (!months.length) months.push(start);
-    months.forEach((t, j) => {
-      const prog = months.length > 1 ? j / (months.length - 1) : 1;
-      const kk = surprise ? latent - 0.9 : churnAt ? latent + 0.6 * prog : latent;
-      const n = () => gauss();
-      const vals = [
-        clamp(Math.round(70 - 13 * kk + n() * 8), 4, 99),
-        clamp(Math.round(8 - 1.5 * kk + n() * 1.3), 0, 10),
-        clamp(Math.round(66 - 14 * kk + n() * 10), 3, 100),
-        Math.max(1, Math.round(usersB[size] * clamp(1 - 0.16 * kk + n() * 0.15, 0.2, 1.8))),
-        Math.max(0, Math.round(2 + 1.3 * kk + n() * 1.4)),
-        Math.max(0, Math.round(3 + 6 * Math.max(kk, 0) + Math.abs(n()) * 4))
-      ];
-      vals.forEach((v, ti) => K.push([id, iso(t) + " 00:00:00", TYPES[ti][0], v]));
+    if (usedNames.has(nome)) nome += " " + (o + 1); usedNames.add(nome);
+    const ind = pick(inds, indW), size = pick(sizes, sizeW);
+    orgs.push({
+      nome, grp, ind, size, uf: pick(ufs, ufW), owner: pick(owners, [1, 1, 1, 1, 1]),
+      cnpj: `${digits(2)}.${digits(3)}.${digits(3)}/0001-${digits(2)}`,
+      latent: gauss() * 0.7 + indR[ind] + sizeR[size],
+      start: START + Math.floor(R() * (LASTSTART - START) / DAY) * DAY,
+      nProd: pick([1, 2, 3], [.55, .3, .15])
     });
   }
+  for (const org of orgs) {
+    const ps = [prods[0]].concat(prods.slice(1).sort(() => R() - 0.5)).slice(0, org.nProd);
+    const lines = ps.map((prod, j) => {
+      const start = j === 0 ? org.start : Math.min(org.start + Math.floor(R() * 365) * DAY, LASTSTART);
+      const latent = org.latent + ownerR[org.owner] + prodR[prod] + gauss() * 0.5;
+      const life = Math.floor((REF - start) / (30.4375 * DAY));
+      let churnAt = null, surprise = false;
+      for (let m = 1; m <= life; m++) {
+        if (R() < clamp(0.009 * Math.exp(1.05 * latent), 0.002, 0.2)) { churnAt = m; break; }
+        if (R() < 0.0035) { churnAt = m; surprise = true; break; }
+      }
+      const [m0, m1] = mrrR[org.size];
+      const line = { id: nextId++, prod, start, latent, surprise, cancel: null, mot: ["", ""], mrr: Math.round(((m0 + R() * (m1 - m0)) * prodM[prod]) / 10) * 10 };
+      if (churnAt) { line.cancel = Math.min(start + Math.round(churnAt * 30.4375 + R() * 20) * DAY, REF - DAY); line.mot = surprise ? pick(motS, motSW) : pick(motE, motEW); }
+      return line;
+    });
+    // saída da organização inteira (concorrente, aquisição, encerramento) leva junto os outros produtos
+    const first = lines.filter(l => l.cancel && CASCADE.has(l.mot[0])).sort((a, b) => a.cancel - b.cancel)[0];
+    if (first && R() < 0.75) for (const l of lines) if (l !== first && l.start < first.cancel && (!l.cancel || l.cancel > first.cancel)) { l.cancel = first.cancel; l.mot = first.mot; l.surprise = first.surprise; }
+    for (const l of lines) {
+      C.push([l.id, `${org.nome} - ${l.prod}`, org.grp, org.cnpj, l.prod, iso(l.start), org.ind, org.size, org.uf, org.owner, l.mrr.toFixed(2), l.cancel ? iso(l.cancel) : "", l.mot[0], l.mot[1]]);
+      const last = l.cancel ? monthStart(l.cancel) - DAY : REF;
+      const months = [];
+      for (let k = 5; k >= 0; k--) { const t = k === 0 ? last : addMonths(monthStart(last), -k); if (t >= l.start) months.push(t); }
+      if (!months.length) months.push(l.start);
+      months.forEach((t, j) => {
+        const prog = months.length > 1 ? j / (months.length - 1) : 1;
+        const kk = l.surprise ? l.latent - 0.9 : l.cancel ? l.latent + 0.6 * prog : l.latent;
+        const n = () => gauss();
+        const vals = [
+          clamp(Math.round(70 - 13 * kk + n() * 8), 4, 99),
+          clamp(Math.round(8 - 1.5 * kk + n() * 1.3), 0, 10),
+          clamp(Math.round(66 - 14 * kk + n() * 10), 3, 100),
+          Math.max(1, Math.round(usersB[org.size] * prodM[l.prod] * clamp(1 - 0.16 * kk + n() * 0.15, 0.2, 1.8))),
+          Math.max(0, Math.round(2 + 1.3 * kk + n() * 1.4)),
+          Math.max(0, Math.round(3 + 6 * Math.max(kk, 0) + Math.abs(n()) * 4))
+        ];
+        vals.forEach((v, ti) => K.push([l.id, iso(t) + " 00:00:00", TYPES[ti][0], TYPES[ti][1], TYPES[ti][2] ? "true" : "false", v]));
+      });
+    }
+  }
   const csv = rows => rows.map(r => r.map(v => { const s = String(v); return /[,"\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }).join(",")).join("\n");
-  return { clientes: csv(C), kpis: csv(K), tipos: csv(T) };
+  return { clientes: csv(C), kpis: csv(K) };
 }
 // SAMPLE-END
 function loadSample() {
   const s = makeSample();
-  state.isSample = true; state.dimBar = null; state.dimPeer = null;
+  state.isSample = true; state.dimBar = null; state.dimPeer = null; state.level = "org"; state.filters = []; state.openFilter = null;
   state.raw = EMPTY_RAW(); state.map = EMPTY_MAP();
-  for (const k of ["clientes", "kpis", "tipos"]) { state.raw[k] = parseCSV(s[k]); autoMap(k); }
+  for (const k of ["clientes", "kpis"]) { state.raw[k] = parseCSV(s[k]); autoMap(k); }
   renderInputs(); renderReport();
 }
 

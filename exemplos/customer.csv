@@ -1,281 +1,276 @@
-id,name,dt_register,industry,size,state,cs_owner,mrr,dt_cancel,cancel_tag,cancel_description
-1001,Clínica Juriti,2026-05-19,Saúde,Grande,GO,15,4760.00,,,
-1002,Escola Pinhal,2025-07-19,Indústria,Médio,SP,2,1730.00,,,
-1003,Comercial Pinhal,2025-05-25,Varejo,Pequeno,MG,15,360.00,,,
-1004,Comercial Jacarandá,2024-06-16,Indústria,Pequeno,DF,12,460.00,2026-03-01,preco,Considerou o valor alto para o uso atual.
-1005,Distribuidora Maré,2026-02-01,Varejo,Pequeno,SP,9,330.00,2026-09-14,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1006,Studio Aurora,2024-06-15,Serviços,Médio,RS,7,2330.00,,,
-1007,Clínica Paraty,2025-01-25,Varejo,Médio,RJ,2,2030.00,,,
-1008,Instituto Bandeirante,2024-05-21,Saúde,Pequeno,PR,2,500.00,,,
-1009,Indústria Itapuã,2025-07-02,Varejo,Médio,RS,15,1880.00,,,
-1010,Rede Itapuã,2025-12-17,Varejo,Médio,BA,15,1890.00,,,
-1011,Studio Lagoa,2025-05-22,Indústria,Médio,SP,15,2380.00,,,
-1012,Rede Horizonte,2026-08-01,Varejo,Grande,SP,7,4630.00,,,
-1013,Comercial Aurora,2024-11-11,Varejo,Médio,SC,7,1370.00,,,
-1014,Studio Vale Verde,2025-03-12,Indústria,Pequeno,RJ,12,600.00,2025-11-30,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1015,Instituto Ipê,2024-07-05,Serviços,Pequeno,RJ,9,480.00,2025-09-15,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1016,Instituto Paraty,2024-03-13,Saúde,Grande,SP,9,7930.00,2024-07-01,encerramento,Empresa encerrou as atividades.
-1017,Instituto Araucária,2024-08-26,Saúde,Grande,GO,9,4560.00,,,
-1018,Distribuidora Pinhal,2024-03-29,Varejo,Pequeno,SP,9,480.00,,,
-1019,Escola Bandeirante,2024-04-22,Indústria,Grande,PR,15,5950.00,2026-05-08,preco,Considerou o valor alto para o uso atual.
-1020,Escola Lagoa,2024-12-01,Varejo,Pequeno,SP,7,290.00,,,
-1021,Instituto Vale Verde,2025-01-10,Educação,Pequeno,PR,7,310.00,2025-06-13,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1022,Colégio Boa Vista,2026-02-07,Serviços,Médio,BA,9,2350.00,,,
-1023,Rede Lagoa,2024-01-17,Educação,Grande,RS,7,8080.00,2024-04-20,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
-1024,Laboratório Vale Verde,2024-10-06,Varejo,Pequeno,SC,7,460.00,,,
-1025,Indústria Serra Azul,2024-07-02,Educação,Pequeno,RJ,12,490.00,2026-01-20,concorrente,Decisão da diretoria de padronizar outro fornecedor.
-1026,Instituto Serra Azul,2025-01-30,Serviços,Pequeno,SP,12,480.00,2025-07-03,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1027,Indústria Boa Vista,2025-06-25,Saúde,Médio,PE,12,1190.00,,,
-1028,Laboratório Paraty,2026-06-13,Varejo,Médio,SP,15,2110.00,,,
-1029,Clínica Araucária,2026-05-28,Serviços,Grande,SP,12,4700.00,,,
-1030,Grupo Horizonte,2024-10-26,Indústria,Pequeno,RS,15,310.00,,,
-1031,Indústria Mantiqueira,2025-05-22,Serviços,Grande,RJ,12,8700.00,,,
-1032,Distribuidora Mantiqueira,2026-01-03,Saúde,Pequeno,SP,12,520.00,2026-02-10,preco,Considerou o valor alto para o uso atual.
-1033,Grupo Atlântica,2026-03-12,Saúde,Grande,RJ,2,4420.00,,,
-1034,Distribuidora Bandeirante,2024-04-22,Educação,Médio,RJ,12,2130.00,2024-09-01,concorrente,Migrou para outra solução.
-1035,Distribuidora Tocantins,2026-06-19,Educação,Pequeno,SP,15,630.00,2026-09-22,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1036,Studio Boa Vista,2025-12-17,Indústria,Grande,SP,12,9250.00,,,
-1037,Distribuidora Carvalho,2025-07-03,Serviços,Pequeno,SP,7,540.00,,,
-1038,Instituto Pinhal,2025-04-13,Educação,Grande,GO,7,4350.00,,,
-1039,Colégio Tocantins,2024-01-17,Indústria,Médio,MG,7,1060.00,,,
-1040,Grupo Mantiqueira,2026-07-25,Serviços,Médio,SP,9,2420.00,,,
-1041,Comercial Araucária,2025-07-02,Indústria,Pequeno,SP,15,320.00,,,
-1042,Studio Jacarandá,2026-03-16,Saúde,Pequeno,SP,2,580.00,,,
-1043,Colégio Ipê,2024-09-15,Serviços,Pequeno,RS,2,500.00,2025-05-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.
-1044,Comercial Bandeirante,2024-10-15,Educação,Grande,SC,15,8890.00,,,
-1045,Colégio Araucária,2024-12-18,Serviços,Médio,SC,12,1830.00,,,
-1046,Indústria Carvalho,2025-12-18,Serviços,Pequeno,PE,12,400.00,2026-09-24,preco,Considerou o valor alto para o uso atual.
-1047,Distribuidora Horizonte,2025-08-11,Varejo,Médio,DF,7,1320.00,,,
-1048,Indústria Maré,2025-02-25,Saúde,Pequeno,SC,15,440.00,,,
-1049,Indústria Pinhal,2026-07-07,Saúde,Médio,SP,12,1490.00,,,
-1050,Rede Cerrado,2026-08-06,Educação,Grande,RS,9,7700.00,,,
-1051,Mercado Lagoa,2026-02-15,Varejo,Médio,SP,7,1150.00,,,
-1052,Rede Vale Verde,2024-04-14,Indústria,Pequeno,SP,2,670.00,2024-05-24,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
-1053,Laboratório Aurora,2025-10-16,Educação,Grande,SP,2,5790.00,,,
-1054,Grupo Aurora,2026-01-03,Varejo,Pequeno,SP,15,340.00,,,
-1055,Comercial Serra Azul,2025-06-28,Varejo,Médio,PR,15,1340.00,,,
-1056,Instituto Cerrado,2026-08-07,Serviços,Pequeno,RJ,7,630.00,2026-09-12,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1057,Rede Ipê,2025-04-12,Educação,Grande,BA,9,5040.00,,,
-1058,Instituto Lagoa,2025-01-23,Serviços,Médio,SP,9,1960.00,,,
-1059,Studio Itapuã,2026-01-30,Indústria,Pequeno,SP,2,460.00,,,
-1060,Mercado Pinhal,2025-02-21,Varejo,Grande,SP,2,6580.00,,,
-1061,Studio Pinhal,2025-09-16,Varejo,Pequeno,GO,2,510.00,2026-07-02,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1062,Rede Pinhal,2024-02-28,Serviços,Pequeno,GO,12,480.00,,,
-1063,Comercial Mantiqueira,2024-10-05,Varejo,Pequeno,GO,2,640.00,2025-09-07,corte_custos,Revisão de orçamento cortou ferramentas.
-1064,Indústria Jacarandá,2025-01-30,Varejo,Pequeno,PR,2,440.00,,,
-1065,Instituto Atlântica,2025-01-09,Indústria,Pequeno,RS,15,610.00,,,
-1066,Grupo Carvalho,2026-05-16,Serviços,Pequeno,SC,7,350.00,,,
-1067,Indústria Lagoa,2026-03-16,Saúde,Médio,PR,12,1450.00,,,
-1068,Mercado Bandeirante,2026-07-05,Indústria,Pequeno,SP,7,590.00,,,
-1069,Instituto Horizonte,2026-08-30,Varejo,Médio,PE,12,1730.00,,,
-1070,Studio Araucária,2025-12-29,Serviços,Médio,SP,9,1900.00,,,
-1071,Escola Atlântica,2025-11-20,Indústria,Médio,MG,2,2080.00,,,
-1072,Colégio Paraty,2025-10-26,Educação,Médio,PE,15,990.00,2026-01-06,concorrente,Decisão da diretoria de padronizar outro fornecedor.
-1073,Escola Mantiqueira,2026-04-30,Educação,Pequeno,BA,9,440.00,2026-09-02,concorrente,Migrou para outra solução.
-1074,Escola Aurora,2024-08-31,Saúde,Pequeno,SP,7,680.00,,,
-1075,Indústria Paraty,2025-02-20,Indústria,Médio,RJ,7,1560.00,2025-12-27,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1076,Distribuidora Vale Verde,2024-10-28,Saúde,Pequeno,PR,7,390.00,,,
-1077,Clínica Atlântica,2026-01-28,Varejo,Grande,SP,12,4640.00,,,
-1078,Rede Boa Vista,2024-05-21,Varejo,Grande,SP,12,7240.00,2025-10-03,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1079,Studio Bandeirante,2026-01-11,Educação,Médio,MG,12,1690.00,2026-06-26,encerramento,Empresa encerrou as atividades.
-1080,Indústria Araucária,2024-01-25,Saúde,Médio,RS,2,1180.00,2025-04-11,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1081,Escola Boa Vista,2025-02-27,Saúde,Grande,SP,15,4470.00,2026-01-02,encerramento,Empresa encerrou as atividades.
-1082,Distribuidora Araucária,2026-03-28,Serviços,Médio,RJ,12,2380.00,,,
-1083,Laboratório Bandeirante,2025-03-16,Saúde,Grande,MG,2,5760.00,,,
-1084,Laboratório Jacarandá,2026-06-11,Varejo,Pequeno,SP,15,610.00,,,
-1085,Studio Juriti,2025-05-02,Indústria,Grande,GO,2,8940.00,,,
-1086,Laboratório Serra Azul,2025-06-11,Varejo,Médio,SP,7,1270.00,,,
-1087,Mercado Boa Vista,2024-09-20,Varejo,Pequeno,RJ,15,540.00,,,
-1088,Instituto Juriti,2024-12-12,Serviços,Pequeno,SP,12,390.00,,,
-1089,Rede Aurora,2026-02-06,Serviços,Médio,MG,7,2030.00,,,
-1090,Comercial Paraty,2025-05-25,Saúde,Pequeno,MG,7,550.00,,,
-1091,Studio Cerrado,2026-01-03,Indústria,Pequeno,PR,12,400.00,,,
-1092,Escola Maré,2024-05-15,Educação,Pequeno,RJ,7,500.00,2026-08-30,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1093,Escola Ipê,2024-06-19,Serviços,Pequeno,SP,15,560.00,2024-08-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1094,Laboratório Juriti,2026-06-11,Varejo,Pequeno,SP,9,670.00,2026-09-12,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1095,Instituto Itapuã,2026-07-20,Educação,Grande,GO,12,9270.00,,,
-1096,Grupo Paraty,2025-12-29,Saúde,Médio,RS,15,2280.00,,,
-1097,Indústria Juriti,2026-05-07,Saúde,Grande,SP,12,5220.00,,,
-1098,Rede Mantiqueira,2025-10-26,Varejo,Pequeno,PE,15,660.00,,,
-1099,Laboratório Tocantins,2025-04-25,Serviços,Pequeno,MG,15,300.00,,,
-1100,Mercado Serra Azul,2025-04-20,Varejo,Pequeno,SP,7,330.00,2025-10-31,encerramento,Empresa encerrou as atividades.
-1101,Colégio Bandeirante,2025-08-11,Varejo,Médio,PE,7,1830.00,,,
-1102,Comercial Maré,2025-04-06,Educação,Pequeno,SP,2,450.00,2026-07-17,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1103,Distribuidora Boa Vista,2025-07-25,Saúde,Pequeno,SC,15,510.00,,,
-1104,Comercial Atlântica,2026-05-30,Serviços,Médio,PE,7,1850.00,,,
-1105,Mercado Itapuã,2025-09-06,Saúde,Médio,SP,12,2180.00,,,
-1106,Escola Tocantins,2025-05-01,Serviços,Pequeno,PR,15,350.00,,,
-1107,Grupo Cerrado,2025-11-24,Indústria,Pequeno,SP,12,520.00,,,
-1108,Rede Maré,2024-01-03,Indústria,Médio,BA,12,2330.00,2024-10-17,encerramento,Empresa encerrou as atividades.
-1109,Laboratório Ipê,2025-05-16,Serviços,Médio,SP,12,1180.00,,,
-1110,Grupo Serra Azul,2025-05-01,Varejo,Médio,BA,15,1230.00,,,
-1111,Colégio Juriti,2024-12-30,Varejo,Pequeno,SP,9,590.00,2026-05-10,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
-1112,Grupo Juriti,2025-06-01,Indústria,Médio,RS,2,1660.00,,,
-1113,Clínica Tocantins,2025-03-02,Varejo,Pequeno,SP,9,640.00,,,
-1114,Indústria Bandeirante,2024-10-18,Indústria,Médio,SP,2,1680.00,,,
-1115,Laboratório Mantiqueira,2024-09-18,Serviços,Pequeno,DF,12,670.00,,,
-1116,Clínica Aurora,2025-05-14,Varejo,Grande,GO,9,9680.00,,,
-1117,Clínica Lagoa,2026-02-08,Saúde,Médio,SP,12,1750.00,,,
-1118,Studio Tocantins,2024-02-03,Indústria,Médio,SC,15,1080.00,,,
-1119,Mercado Juriti,2026-04-17,Educação,Médio,MG,15,2000.00,,,
-1120,Comercial Vale Verde,2026-07-16,Varejo,Médio,SP,15,2220.00,,,
-1121,Colégio Mantiqueira,2024-07-21,Serviços,Pequeno,SP,7,580.00,2025-08-08,preco,Considerou o valor alto para o uso atual.
-1122,Rede Araucária,2024-01-14,Indústria,Grande,MG,7,7720.00,2025-01-25,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
-1123,Indústria Cerrado,2024-05-08,Serviços,Grande,MG,7,6320.00,,,
-1124,Colégio Vale Verde,2025-06-12,Serviços,Médio,GO,9,2010.00,,,
-1125,Mercado Maré,2024-12-25,Saúde,Pequeno,GO,2,460.00,,,
-1126,Distribuidora Cerrado,2025-07-26,Varejo,Pequeno,MG,12,300.00,2025-11-13,encerramento,Empresa encerrou as atividades.
-1127,Clínica Carvalho,2025-12-31,Educação,Pequeno,MG,12,450.00,2026-08-09,corte_custos,Revisão de orçamento cortou ferramentas.
-1128,Clínica Serra Azul,2024-06-12,Varejo,Médio,PE,15,1500.00,2024-09-25,preco,Considerou o valor alto para o uso atual.
-1129,Mercado Horizonte,2026-06-14,Indústria,Pequeno,RS,15,410.00,,,
-1130,Rede Tocantins,2024-10-26,Indústria,Pequeno,PR,9,590.00,,,
-1131,Indústria Vale Verde,2024-10-26,Educação,Pequeno,SC,15,430.00,2025-05-02,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1132,Instituto Aurora,2025-12-03,Saúde,Pequeno,SP,9,650.00,,,
-1133,Escola Cerrado,2025-12-23,Indústria,Pequeno,SP,12,560.00,,,
-1134,Studio Paraty,2025-03-22,Educação,Grande,MG,2,8950.00,2025-04-28,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1135,Laboratório Cerrado,2024-05-14,Indústria,Pequeno,MG,9,640.00,,,
-1136,Distribuidora Aurora,2026-01-31,Educação,Médio,SC,2,1990.00,,,
-1137,Clínica Itapuã,2024-09-05,Educação,Pequeno,SP,12,320.00,2026-07-18,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1138,Grupo Lagoa,2026-05-25,Varejo,Médio,SP,12,2140.00,,,
-1139,Laboratório Maré,2024-08-21,Educação,Grande,RS,12,8580.00,2024-11-30,concorrente,Decisão da diretoria de padronizar outro fornecedor.
-1140,Indústria Aurora,2024-07-20,Serviços,Grande,SP,15,7820.00,,,
-1141,Mercado Jacarandá,2024-09-06,Serviços,Médio,GO,9,1150.00,,,
-1142,Comercial Horizonte,2024-09-01,Serviços,Grande,SP,9,4280.00,,,
-1143,Laboratório Horizonte,2024-04-08,Indústria,Médio,DF,12,1580.00,,,
-1144,Colégio Aurora,2025-07-24,Serviços,Grande,RS,15,7090.00,,,
-1145,Colégio Carvalho,2024-04-20,Educação,Médio,SP,9,2030.00,2025-08-05,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1146,Laboratório Boa Vista,2026-04-07,Serviços,Pequeno,MG,7,580.00,,,
-1147,Colégio Jacarandá,2024-06-03,Saúde,Médio,PE,7,1430.00,,,
-1148,Laboratório Lagoa,2024-08-08,Serviços,Pequeno,PR,12,610.00,2025-02-14,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1149,Grupo Maré,2025-07-16,Varejo,Médio,SC,7,1310.00,2026-01-18,corte_custos,Revisão de orçamento cortou ferramentas.
-1150,Studio Atlântica,2026-06-01,Indústria,Pequeno,SP,9,380.00,,,
-1151,Grupo Jacarandá,2024-03-16,Indústria,Pequeno,SP,7,660.00,2025-03-28,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
-1152,Clínica Mantiqueira,2025-07-27,Indústria,Grande,MG,12,4840.00,2025-12-14,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
-1153,Escola Itapuã,2025-12-07,Saúde,Pequeno,SP,9,520.00,,,
-1154,Instituto Tocantins,2026-01-29,Saúde,Médio,RS,2,2230.00,,,
-1155,Comercial Carvalho,2024-01-05,Educação,Pequeno,PE,12,340.00,2024-09-24,preco,Considerou o valor alto para o uso atual.
-1156,Rede Juriti,2026-02-04,Saúde,Grande,RJ,9,6590.00,,,
-1157,Escola Horizonte,2025-02-07,Varejo,Grande,BA,12,4280.00,2025-08-17,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1158,Clínica Vale Verde,2025-05-05,Varejo,Médio,PE,2,2010.00,,,
-1159,Grupo Bandeirante,2026-08-24,Serviços,Médio,SP,7,2060.00,,,
-1160,Clínica Horizonte,2025-10-02,Varejo,Médio,SP,15,2100.00,,,
-1161,Instituto Maré,2024-08-31,Varejo,Médio,BA,2,990.00,2025-03-14,concorrente,Decisão da diretoria de padronizar outro fornecedor.
-1162,Rede Paraty,2025-09-24,Indústria,Pequeno,SP,12,300.00,,,
-1163,Clínica Cerrado,2026-07-07,Varejo,Grande,SP,15,6130.00,,,
-1164,Escola Serra Azul,2025-02-06,Serviços,Médio,SC,12,1480.00,2025-08-13,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1165,Instituto Mantiqueira,2026-04-24,Serviços,Pequeno,GO,7,520.00,,,
-1166,Mercado Aurora,2024-03-03,Serviços,Grande,DF,15,9320.00,2024-10-04,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1167,Grupo Araucária,2025-06-17,Serviços,Médio,BA,9,1650.00,,,
-1168,Grupo Vale Verde,2026-08-03,Varejo,Pequeno,SP,2,520.00,,,
-1169,Instituto Carvalho,2026-08-15,Serviços,Pequeno,RJ,2,550.00,,,
-1170,Colégio Pinhal,2025-11-29,Varejo,Médio,RJ,12,1070.00,2026-07-09,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
-1171,Studio Carvalho,2025-06-23,Varejo,Pequeno,SP,9,580.00,,,
-1172,Comercial Lagoa,2026-08-13,Educação,Grande,SP,2,9170.00,,,
-1173,Indústria Ipê,2024-02-16,Varejo,Médio,SP,12,1650.00,2025-03-04,concorrente,Decisão da diretoria de padronizar outro fornecedor.
-1174,Clínica Jacarandá,2026-07-20,Saúde,Pequeno,SP,12,540.00,,,
-1175,Comercial Tocantins,2024-06-27,Serviços,Médio,SP,7,2040.00,2024-11-10,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
-1176,Laboratório Carvalho,2024-05-27,Saúde,Médio,DF,7,1110.00,2024-08-05,encerramento,Empresa encerrou as atividades.
-1177,Escola Vale Verde,2025-10-03,Serviços,Médio,GO,15,1440.00,2026-08-15,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1178,Grupo Boa Vista,2025-02-03,Educação,Médio,MG,2,2040.00,,,
-1179,Studio Ipê,2026-03-19,Indústria,Médio,GO,9,1690.00,,,
-1180,Comercial Cerrado,2024-11-12,Varejo,Médio,SC,9,2460.00,,,
-1181,Indústria Tocantins,2024-10-09,Saúde,Médio,SP,15,2100.00,,,
-1182,Distribuidora Juriti,2024-05-30,Indústria,Pequeno,SP,15,450.00,,,
-1183,Rede Jacarandá,2026-05-06,Varejo,Médio,MG,15,1930.00,,,
-1184,Studio Maré,2025-11-02,Serviços,Médio,RS,12,1170.00,,,
-1185,Laboratório Pinhal,2026-08-17,Serviços,Médio,RS,9,2060.00,,,
-1186,Laboratório Itapuã,2025-01-08,Varejo,Pequeno,PR,9,360.00,,,
-1187,Distribuidora Jacarandá,2024-07-08,Educação,Médio,SC,7,2460.00,,,
-1188,Laboratório Araucária,2024-03-03,Indústria,Pequeno,GO,7,370.00,2025-04-09,concorrente,Migrou para outra solução.
-1189,Distribuidora Ipê,2026-02-12,Varejo,Médio,RJ,7,2440.00,,,
-1190,Clínica Maré,2025-02-28,Serviços,Pequeno,RJ,7,520.00,,,
-1191,Studio Mantiqueira,2025-10-12,Indústria,Grande,SP,15,6060.00,,,
-1192,Rede Atlântica,2025-03-29,Varejo,Médio,RJ,12,1440.00,,,
-1193,Grupo Ipê,2026-07-10,Varejo,Médio,SP,9,1410.00,,,
-1194,Rede Carvalho,2024-06-20,Saúde,Médio,SP,15,1500.00,2025-02-26,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1195,Mercado Carvalho,2024-12-18,Varejo,Médio,MG,12,1670.00,,,
-1196,Escola Juriti,2025-10-03,Serviços,Médio,RJ,9,1730.00,,,
-1197,Comercial Ipê,2024-04-30,Educação,Pequeno,SC,2,490.00,2024-07-17,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1198,Mercado Mantiqueira,2025-03-03,Serviços,Médio,SP,9,1340.00,,,
-1199,Instituto Jacarandá,2024-10-06,Indústria,Médio,SC,7,1190.00,2026-06-16,concorrente,Migrou para outra solução.
-1200,Studio Serra Azul,2025-04-17,Serviços,Grande,SP,12,6190.00,2026-08-03,concorrente,Migrou para outra solução.
-1201,Distribuidora Itapuã,2024-12-29,Varejo,Pequeno,DF,7,460.00,,,
-1202,Mercado Cerrado,2025-05-16,Indústria,Grande,SP,12,9740.00,,,
-1203,Distribuidora Lagoa,2024-03-10,Serviços,Pequeno,BA,9,590.00,2025-11-19,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
-1204,Distribuidora Serra Azul,2025-12-04,Indústria,Pequeno,DF,15,670.00,,,
-1205,Escola Paraty,2024-05-11,Indústria,Pequeno,SP,2,380.00,2025-08-19,encerramento,Empresa encerrou as atividades.
-1206,Colégio Horizonte,2025-09-19,Serviços,Pequeno,SP,15,680.00,,,
-1207,Grupo Itapuã,2025-01-14,Saúde,Pequeno,RS,7,370.00,2025-09-03,corte_custos,Revisão de orçamento cortou ferramentas.
-1208,Colégio Serra Azul,2024-08-05,Indústria,Grande,MG,12,5360.00,,,
-1209,Comercial Juriti,2025-08-19,Indústria,Médio,PR,12,1990.00,,,
-1210,Comercial Itapuã,2025-07-21,Varejo,Pequeno,GO,15,330.00,,,
-1211,Studio Horizonte,2024-03-07,Varejo,Grande,SC,2,5730.00,,,
-1212,Clínica Pinhal,2025-06-28,Serviços,Médio,RS,15,2330.00,,,
-1213,Mercado Atlântica,2025-10-11,Varejo,Médio,SP,15,1790.00,,,
-1214,Grupo Pinhal,2024-11-27,Saúde,Pequeno,DF,9,320.00,2025-08-31,encerramento,Empresa encerrou as atividades.
-1215,Clínica Bandeirante,2025-01-29,Indústria,Pequeno,PE,2,360.00,2026-04-08,corte_custos,Revisão de orçamento cortou ferramentas.
-1216,Escola Araucária,2025-06-24,Educação,Grande,PR,9,6210.00,,,
-1217,Distribuidora Paraty,2026-07-22,Serviços,Pequeno,PR,9,500.00,,,
-1218,Laboratório Atlântica,2025-11-01,Varejo,Grande,MG,7,4180.00,,,
-1219,Escola Jacarandá,2025-07-30,Educação,Pequeno,DF,2,450.00,,,
-1220,Rede Bandeirante,2024-02-07,Serviços,Pequeno,RS,2,570.00,,,
-1221,Mercado Vale Verde,2025-05-30,Serviços,Grande,SP,15,4150.00,,,
-1222,Mercado Tocantins,2025-05-28,Indústria,Médio,SC,12,1590.00,2025-07-17,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1223,Instituto Boa Vista,2024-12-17,Educação,Pequeno,SP,9,580.00,2025-10-22,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1224,Indústria Horizonte,2026-01-28,Saúde,Médio,SP,9,1160.00,,,
-1225,Colégio Lagoa,2026-02-18,Indústria,Pequeno,SP,12,300.00,,,
-1226,Rede Serra Azul,2024-09-02,Varejo,Médio,GO,12,2140.00,2025-02-14,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
-1227,Mercado Araucária,2024-07-05,Indústria,Médio,PR,2,2290.00,,,
-1228,Mercado Paraty,2024-02-02,Indústria,Médio,BA,12,2270.00,,,
-1229,Clínica Ipê,2025-08-18,Varejo,Pequeno,PR,15,320.00,2026-05-23,concorrente,Migrou para outra solução.
-1230,Comercial Boa Vista,2025-09-24,Indústria,Grande,SP,15,4090.00,,,
-1231,Rede Boa Vista 231,2025-12-10,Serviços,Médio,SP,12,1590.00,,,
-1232,Instituto Araucária 232,2024-10-09,Serviços,Pequeno,SP,7,470.00,,,
-1233,Mercado Aurora 233,2024-06-23,Indústria,Pequeno,GO,12,380.00,,,
-1234,Distribuidora Ipê 234,2024-03-13,Indústria,Grande,PR,7,7280.00,,,
-1235,Studio Itapuã 235,2026-04-13,Educação,Médio,RS,9,1000.00,2026-08-24,encerramento,Empresa encerrou as atividades.
-1236,Mercado Mantiqueira 236,2025-12-01,Indústria,Pequeno,PR,12,380.00,,,
-1237,Rede Bandeirante 237,2025-03-10,Varejo,Médio,DF,15,1740.00,2025-09-24,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1238,Distribuidora Carvalho 238,2024-07-14,Serviços,Médio,MG,15,1530.00,2025-07-03,preco,Pediu desconto na renovação e não houve acordo.
-1239,Mercado Tocantins 239,2026-02-27,Varejo,Pequeno,SC,7,480.00,2026-07-16,encerramento,Empresa encerrou as atividades.
-1240,Escola Serra Azul 240,2026-06-16,Educação,Pequeno,PR,9,690.00,2026-07-23,concorrente,Migrou para outra solução.
-1241,Clínica Serra Azul 241,2026-05-16,Serviços,Pequeno,MG,15,330.00,,,
-1242,Colégio Jacarandá 242,2026-05-14,Educação,Médio,SP,7,1030.00,2026-09-28,corte_custos,Revisão de orçamento cortou ferramentas.
-1243,Comercial Serra Azul 243,2024-02-26,Varejo,Pequeno,RJ,7,640.00,2026-08-13,preco,Considerou o valor alto para o uso atual.
-1244,Instituto Maré 244,2024-11-22,Serviços,Grande,SP,9,8520.00,,,
-1245,Rede Mantiqueira 245,2026-01-04,Varejo,Médio,SP,7,2410.00,,,
-1246,Studio Itapuã 246,2025-08-27,Varejo,Pequeno,DF,7,480.00,,,
-1247,Grupo Horizonte 247,2024-01-11,Varejo,Médio,GO,12,1240.00,,,
-1248,Indústria Vale Verde 248,2026-01-07,Serviços,Pequeno,RJ,7,560.00,,,
-1249,Instituto Atlântica 249,2026-05-15,Saúde,Médio,SP,15,1360.00,,,
-1250,Escola Aurora 250,2024-03-14,Saúde,Médio,PR,2,1030.00,,,
-1251,Comercial Aurora 251,2024-03-07,Varejo,Pequeno,BA,12,520.00,,,
-1252,Escola Ipê 252,2024-11-29,Varejo,Grande,SP,2,9200.00,2024-12-30,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
-1253,Instituto Horizonte 253,2024-07-05,Saúde,Pequeno,BA,12,660.00,2025-11-12,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
-1254,Laboratório Serra Azul 254,2026-05-20,Serviços,Médio,RJ,7,1670.00,,,
-1255,Comercial Cerrado 255,2025-02-07,Varejo,Pequeno,SP,9,340.00,2025-05-28,corte_custos,Revisão de orçamento cortou ferramentas.
-1256,Rede Lagoa 256,2024-08-30,Indústria,Pequeno,SP,15,540.00,2024-10-06,encerramento,Empresa encerrou as atividades.
-1257,Instituto Araucária 257,2026-01-18,Educação,Médio,SP,15,2470.00,,,
-1258,Distribuidora Ipê 258,2026-04-07,Varejo,Pequeno,SP,12,460.00,,,
-1259,Indústria Paraty 259,2025-06-15,Varejo,Médio,RJ,12,1320.00,,,
-1260,Comercial Lagoa 260,2024-03-10,Saúde,Pequeno,SP,7,340.00,,,
-1261,Instituto Horizonte 261,2026-01-18,Indústria,Grande,SP,15,9490.00,,,
-1262,Indústria Serra Azul 262,2026-02-03,Serviços,Pequeno,BA,7,490.00,2026-09-19,preco,Considerou o valor alto para o uso atual.
-1263,Mercado Lagoa 263,2024-03-29,Saúde,Médio,SP,15,1920.00,,,
-1264,Laboratório Serra Azul 264,2025-11-11,Varejo,Grande,SP,9,8560.00,,,
-1265,Rede Cerrado 265,2026-06-30,Indústria,Grande,GO,15,5850.00,,,
-1266,Laboratório Juriti 266,2024-07-05,Serviços,Pequeno,SP,15,360.00,2026-03-25,preco,Considerou o valor alto para o uso atual.
-1267,Instituto Lagoa 267,2024-02-12,Varejo,Médio,RJ,9,1870.00,2025-08-25,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
-1268,Comercial Jacarandá 268,2025-02-06,Saúde,Médio,SP,9,1630.00,,,
-1269,Distribuidora Mantiqueira 269,2024-01-01,Educação,Médio,DF,15,2250.00,,,
-1270,Rede Itapuã 270,2024-11-20,Saúde,Pequeno,SP,12,480.00,2025-03-22,preco,Considerou o valor alto para o uso atual.
-1271,Grupo Atlântica 271,2026-07-05,Indústria,Grande,SP,15,7110.00,,,
-1272,Grupo Jacarandá 272,2026-04-13,Saúde,Médio,PR,9,1740.00,,,
-1273,Distribuidora Maré 273,2026-07-18,Varejo,Pequeno,SC,9,610.00,,,
-1274,Distribuidora Atlântica,2026-06-11,Indústria,Médio,GO,2,2440.00,,,
-1275,Escola Juriti 275,2026-01-21,Educação,Pequeno,SP,7,310.00,,,
-1276,Comercial Cerrado 276,2024-05-14,Indústria,Médio,RJ,7,1150.00,2025-06-17,corte_custos,Revisão de orçamento cortou ferramentas.
-1277,Grupo Mantiqueira 277,2026-06-21,Saúde,Médio,PR,2,1860.00,,,
-1278,Instituto Jacarandá 278,2026-05-30,Saúde,Médio,SP,9,2020.00,,,
-1279,Rede Pinhal 279,2025-11-30,Educação,Pequeno,GO,12,520.00,,,
-1280,Distribuidora Juriti 280,2026-08-10,Varejo,Grande,RJ,15,6960.00,,,
+id,name,group,cnpj,product,dt_register,industry,size,state,cs_owner,mrr,dt_cancel,cancel_tag,cancel_description
+1001,Studio Lagoa - Gestão,Grupo Pampa,16.541.638/0001-39,Gestão,2024-11-25,Educação,Médio,MG,Bruno Lima,1460.00,,,
+1002,Studio Lagoa - Financeiro,Grupo Pampa,16.541.638/0001-39,Financeiro,2025-10-17,Educação,Médio,MG,Bruno Lima,850.00,2026-03-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1003,Studio Lagoa - Analytics,Grupo Pampa,16.541.638/0001-39,Analytics,2025-08-06,Educação,Médio,MG,Bruno Lima,740.00,,,
+1004,Mercado Cerrado - Gestão,Grupo Pampa,81.402.830/0001-87,Gestão,2025-03-24,Indústria,Pequeno,BA,Elisa Prado,630.00,,,
+1005,Mercado Cerrado - Analytics,Grupo Pampa,81.402.830/0001-87,Analytics,2025-11-02,Indústria,Pequeno,BA,Elisa Prado,280.00,,,
+1006,Mercado Cerrado - Financeiro,Grupo Pampa,81.402.830/0001-87,Financeiro,2026-02-21,Indústria,Pequeno,BA,Elisa Prado,300.00,,,
+1007,Indústria Pinhal - Gestão,,51.093.547/0001-59,Gestão,2025-08-28,Varejo,Médio,RS,Bruno Lima,2480.00,,,
+1008,Clínica Tocantins - Gestão,Grupo Pampa,06.262.906/0001-50,Gestão,2025-05-28,Indústria,Médio,GO,Carla Mendes,1600.00,,,
+1009,Indústria Araucária - Gestão,Grupo Sertão,32.592.819/0001-16,Gestão,2024-07-01,Educação,Pequeno,SP,Diego Rocha,560.00,,,
+1010,Indústria Araucária - Analytics,Grupo Sertão,32.592.819/0001-16,Analytics,2024-12-26,Educação,Pequeno,SP,Diego Rocha,160.00,,,
+1011,Indústria Araucária - Financeiro,Grupo Sertão,32.592.819/0001-16,Financeiro,2024-09-27,Educação,Pequeno,SP,Diego Rocha,310.00,,,
+1012,Colégio Bandeirante - Gestão,,39.698.613/0001-61,Gestão,2025-10-14,Indústria,Pequeno,SP,Diego Rocha,530.00,,,
+1013,Colégio Bandeirante - Analytics,,39.698.613/0001-61,Analytics,2026-02-14,Indústria,Pequeno,SP,Diego Rocha,140.00,2026-07-01,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1014,Comercial Atlântica - Gestão,,47.462.317/0001-14,Gestão,2024-11-09,Varejo,Grande,PE,Bruno Lima,7200.00,,,
+1015,Comercial Atlântica - Financeiro,,47.462.317/0001-14,Financeiro,2024-11-30,Varejo,Grande,PE,Bruno Lima,3340.00,,,
+1016,Farmácia Aurora - Gestão,Grupo Sertão,05.701.348/0001-83,Gestão,2026-01-16,Educação,Médio,PE,Ana Ribeiro,1740.00,,,
+1017,Farmácia Aurora - Analytics,Grupo Sertão,05.701.348/0001-83,Analytics,2026-08-31,Educação,Médio,PE,Ana Ribeiro,600.00,,,
+1018,Comercial Mantiqueira - Gestão,Grupo Sertão,44.886.122/0001-91,Gestão,2026-01-13,Educação,Médio,PR,Elisa Prado,1900.00,,,
+1019,Comercial Mantiqueira - Analytics,Grupo Sertão,44.886.122/0001-91,Analytics,2026-06-09,Educação,Médio,PR,Elisa Prado,680.00,,,
+1020,Comercial Carvalho - Gestão,Grupo Planalto,02.489.815/0001-18,Gestão,2025-06-16,Varejo,Médio,PR,Elisa Prado,1320.00,2025-10-19,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1021,Laboratório Araucária - Gestão,Grupo Planalto,68.016.915/0001-89,Gestão,2024-04-06,Educação,Médio,SP,Bruno Lima,1730.00,2024-09-12,concorrente,Migrou para outra solução.
+1022,Laboratório Araucária - Financeiro,Grupo Planalto,68.016.915/0001-89,Financeiro,2024-07-09,Educação,Médio,SP,Bruno Lima,1030.00,2024-09-12,concorrente,Migrou para outra solução.
+1023,Clínica Cerrado - Gestão,Grupo Planalto,94.286.643/0001-79,Gestão,2024-08-21,Indústria,Grande,DF,Elisa Prado,4370.00,,,
+1024,Mercado Maré - Gestão,,71.741.310/0001-74,Gestão,2024-08-21,Indústria,Pequeno,MG,Bruno Lima,530.00,,,
+1025,Farmácia Araucária - Gestão,Grupo Planalto,68.716.861/0001-00,Gestão,2024-06-10,Saúde,Médio,SP,Carla Mendes,1310.00,,,
+1026,Farmácia Araucária - Analytics,Grupo Planalto,68.716.861/0001-00,Analytics,2025-05-24,Saúde,Médio,SP,Carla Mendes,700.00,2025-08-07,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1027,Colégio Serra Azul - Gestão,Grupo Litoral,11.537.370/0001-26,Gestão,2024-08-26,Saúde,Grande,SP,Carla Mendes,4480.00,,,
+1028,Colégio Araucária - Gestão,Grupo Litoral,41.255.292/0001-82,Gestão,2025-01-24,Saúde,Médio,SP,Diego Rocha,2280.00,2025-04-06,preco,Considerou o valor alto para o uso atual.
+1029,Farmácia Tocantins - Gestão,Grupo Litoral,63.600.088/0001-58,Gestão,2025-10-02,Educação,Pequeno,GO,Diego Rocha,400.00,2026-07-19,preco,Pediu desconto na renovação e não houve acordo.
+1030,Farmácia Tocantins - Analytics,Grupo Litoral,63.600.088/0001-58,Analytics,2025-11-09,Educação,Pequeno,GO,Diego Rocha,260.00,2026-03-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1031,Rede Aurora - Gestão,Grupo Litoral,20.978.243/0001-81,Gestão,2025-05-11,Serviços,Médio,RS,Bruno Lima,1540.00,2026-03-29,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1032,Distribuidora Boa Vista - Gestão,Grupo Litoral,23.334.371/0001-10,Gestão,2024-07-04,Varejo,Médio,SP,Diego Rocha,1130.00,,,
+1033,Clínica Juriti - Gestão,Grupo Capital,91.351.679/0001-70,Gestão,2024-04-22,Serviços,Pequeno,RS,Bruno Lima,350.00,2025-08-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.
+1034,Clínica Juriti - Financeiro,Grupo Capital,91.351.679/0001-70,Financeiro,2024-08-11,Serviços,Pequeno,RS,Bruno Lima,230.00,2025-08-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.
+1035,Indústria Mantiqueira - Gestão,Grupo Capital,09.658.872/0001-40,Gestão,2024-05-30,Indústria,Médio,DF,Ana Ribeiro,1400.00,2024-07-14,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
+1036,Indústria Mantiqueira - Analytics,Grupo Capital,09.658.872/0001-40,Analytics,2024-07-28,Indústria,Médio,DF,Ana Ribeiro,840.00,,,
+1037,Laboratório Vale Verde - Gestão,Grupo Ribeira,48.253.229/0001-03,Gestão,2025-09-21,Serviços,Médio,RJ,Elisa Prado,1660.00,,,
+1038,Laboratório Vale Verde - Financeiro,Grupo Ribeira,48.253.229/0001-03,Financeiro,2025-12-16,Serviços,Médio,RJ,Elisa Prado,1310.00,,,
+1039,Clínica Araucária - Gestão,Grupo Ribeira,40.811.083/0001-01,Gestão,2025-10-17,Varejo,Médio,SC,Diego Rocha,1900.00,,,
+1040,Clínica Araucária - Financeiro,Grupo Ribeira,40.811.083/0001-01,Financeiro,2026-05-16,Varejo,Médio,SC,Diego Rocha,860.00,,,
+1041,Clínica Araucária - Analytics,Grupo Ribeira,40.811.083/0001-01,Analytics,2026-01-07,Varejo,Médio,SC,Diego Rocha,740.00,,,
+1042,Farmácia Lagoa - Gestão,Grupo Ribeira,56.625.018/0001-12,Gestão,2026-05-22,Varejo,Médio,GO,Bruno Lima,2460.00,,,
+1043,Studio Paraty - Gestão,Grupo Ribeira,04.329.584/0001-34,Gestão,2025-05-28,Saúde,Médio,RS,Elisa Prado,2470.00,,,
+1044,Studio Paraty - Analytics,Grupo Ribeira,04.329.584/0001-34,Analytics,2025-06-11,Saúde,Médio,RS,Elisa Prado,1000.00,,,
+1045,Colégio Carvalho - Gestão,Grupo Ribeira,07.062.241/0001-66,Gestão,2024-05-29,Indústria,Pequeno,PR,Elisa Prado,660.00,,,
+1046,Colégio Carvalho - Analytics,Grupo Ribeira,07.062.241/0001-66,Analytics,2024-12-21,Indústria,Pequeno,PR,Elisa Prado,300.00,,,
+1047,Colégio Carvalho - Financeiro,Grupo Ribeira,07.062.241/0001-66,Financeiro,2024-07-05,Indústria,Pequeno,PR,Elisa Prado,190.00,2026-02-09,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1048,Laboratório Serra Azul - Gestão,Grupo Guará,37.172.683/0001-27,Gestão,2024-01-27,Varejo,Médio,DF,Carla Mendes,1080.00,,,
+1049,Rede Cerrado - Gestão,Grupo Guará,21.258.329/0001-16,Gestão,2026-05-22,Educação,Médio,RJ,Diego Rocha,2030.00,,,
+1050,Indústria Atlântica - Gestão,Grupo Guará,35.985.746/0001-53,Gestão,2024-04-11,Educação,Médio,SP,Diego Rocha,2170.00,2025-04-25,preco,Considerou o valor alto para o uso atual.
+1051,Indústria Atlântica - Financeiro,Grupo Guará,35.985.746/0001-53,Financeiro,2025-01-19,Educação,Médio,SP,Diego Rocha,880.00,2026-02-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1052,Clínica Paraty - Gestão,Grupo Guará,72.148.574/0001-59,Gestão,2024-12-05,Varejo,Pequeno,MG,Bruno Lima,530.00,,,
+1053,Escola Vale Verde - Gestão,Grupo Guará,27.232.606/0001-00,Gestão,2024-08-30,Serviços,Médio,PE,Ana Ribeiro,1040.00,,,
+1054,Farmácia Vale Verde - Gestão,Grupo Tapajós,56.371.998/0001-03,Gestão,2026-01-02,Educação,Médio,SP,Bruno Lima,1390.00,,,
+1055,Farmácia Vale Verde - Financeiro,Grupo Tapajós,56.371.998/0001-03,Financeiro,2026-08-31,Educação,Médio,SP,Bruno Lima,750.00,,,
+1056,Studio Itapuã - Gestão,Grupo Tapajós,15.024.924/0001-45,Gestão,2024-02-10,Educação,Pequeno,SP,Elisa Prado,520.00,,,
+1057,Rede Vale Verde - Gestão,Grupo Cantareira,65.629.353/0001-60,Gestão,2024-12-25,Educação,Pequeno,RS,Ana Ribeiro,320.00,,,
+1058,Instituto Mantiqueira - Gestão,Grupo Cantareira,98.112.539/0001-16,Gestão,2025-11-09,Varejo,Pequeno,SP,Carla Mendes,630.00,,,
+1059,Instituto Mantiqueira - Analytics,Grupo Cantareira,98.112.539/0001-16,Analytics,2026-08-31,Varejo,Pequeno,SP,Carla Mendes,250.00,,,
+1060,Laboratório Paraty - Gestão,Grupo Cantareira,95.407.151/0001-72,Gestão,2025-03-16,Saúde,Médio,SP,Diego Rocha,1930.00,,,
+1061,Laboratório Paraty - Analytics,Grupo Cantareira,95.407.151/0001-72,Analytics,2025-06-11,Saúde,Médio,SP,Diego Rocha,800.00,,,
+1062,Laboratório Paraty - Financeiro,Grupo Cantareira,95.407.151/0001-72,Financeiro,2025-10-01,Saúde,Médio,SP,Diego Rocha,800.00,,,
+1063,Distribuidora Atlântica - Gestão,Grupo Jequitibá,92.362.415/0001-16,Gestão,2024-10-03,Indústria,Pequeno,SC,Elisa Prado,600.00,,,
+1064,Mercado Horizonte - Gestão,Grupo Jequitibá,64.005.260/0001-33,Gestão,2025-11-08,Varejo,Pequeno,BA,Elisa Prado,650.00,,,
+1065,Instituto Serra Azul - Gestão,Grupo Jequitibá,21.611.232/0001-36,Gestão,2024-06-01,Educação,Pequeno,MG,Diego Rocha,650.00,2025-08-09,corte_custos,Revisão de orçamento cortou ferramentas.
+1066,Instituto Serra Azul - Financeiro,Grupo Jequitibá,21.611.232/0001-36,Financeiro,2025-05-20,Educação,Pequeno,MG,Diego Rocha,290.00,2025-07-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1067,Instituto Serra Azul - Analytics,Grupo Jequitibá,21.611.232/0001-36,Analytics,2025-04-18,Educação,Pequeno,MG,Diego Rocha,270.00,2025-07-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1068,Rede Boa Vista - Gestão,Grupo Jequitibá,93.745.408/0001-93,Gestão,2025-09-29,Varejo,Médio,SP,Elisa Prado,1500.00,,,
+1069,Laboratório Bandeirante - Gestão,Grupo Jequitibá,20.186.219/0001-61,Gestão,2025-09-14,Saúde,Grande,SP,Diego Rocha,8390.00,,,
+1070,Laboratório Bandeirante - Financeiro,Grupo Jequitibá,20.186.219/0001-61,Financeiro,2026-06-28,Saúde,Grande,SP,Diego Rocha,4060.00,,,
+1071,Laboratório Bandeirante - Analytics,Grupo Jequitibá,20.186.219/0001-61,Analytics,2026-08-29,Saúde,Grande,SP,Diego Rocha,3530.00,,,
+1072,Comercial Maré - Gestão,,10.331.869/0001-61,Gestão,2024-02-18,Serviços,Pequeno,PE,Ana Ribeiro,640.00,2024-10-02,encerramento,Empresa encerrou as atividades.
+1073,Comercial Maré - Analytics,,10.331.869/0001-61,Analytics,2024-04-27,Serviços,Pequeno,PE,Ana Ribeiro,160.00,2024-10-02,encerramento,Empresa encerrou as atividades.
+1074,Instituto Jacarandá - Gestão,Grupo Aroeira,93.220.550/0001-59,Gestão,2025-02-15,Serviços,Médio,SC,Ana Ribeiro,1590.00,,,
+1075,Escola Paraty - Gestão,,13.143.005/0001-98,Gestão,2025-10-26,Varejo,Pequeno,MG,Bruno Lima,470.00,,,
+1076,Escola Paraty - Financeiro,,13.143.005/0001-98,Financeiro,2025-10-28,Varejo,Pequeno,MG,Bruno Lima,210.00,,,
+1077,Laboratório Tocantins - Gestão,Grupo Aroeira,55.533.792/0001-12,Gestão,2024-07-07,Varejo,Médio,PE,Diego Rocha,1320.00,,,
+1078,Laboratório Tocantins - Analytics,Grupo Aroeira,55.533.792/0001-12,Analytics,2024-11-27,Varejo,Médio,PE,Diego Rocha,950.00,2025-05-10,concorrente,Decisão da diretoria de padronizar outro fornecedor.
+1079,Colégio Paraty - Gestão,Grupo Paranapanema,41.207.887/0001-61,Gestão,2025-11-13,Varejo,Médio,SP,Diego Rocha,2070.00,,,
+1080,Studio Cerrado - Gestão,Grupo Paranapanema,03.303.530/0001-41,Gestão,2024-01-29,Varejo,Pequeno,DF,Ana Ribeiro,500.00,2024-05-14,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1081,Clínica Itapuã - Gestão,Grupo Paranapanema,39.129.939/0001-43,Gestão,2026-04-08,Saúde,Médio,BA,Bruno Lima,2010.00,,,
+1082,Indústria Bandeirante - Gestão,Grupo Paranapanema,12.172.067/0001-48,Gestão,2025-06-11,Saúde,Médio,PR,Bruno Lima,2290.00,,,
+1083,Clínica Ipê - Gestão,Grupo Paranapanema,90.496.178/0001-10,Gestão,2025-07-08,Serviços,Grande,RJ,Bruno Lima,8100.00,,,
+1084,Clínica Serra Azul - Gestão,,65.071.466/0001-34,Gestão,2024-07-13,Varejo,Pequeno,SP,Ana Ribeiro,310.00,,,
+1085,Indústria Boa Vista - Gestão,Grupo Iguaçu,06.261.957/0001-59,Gestão,2024-10-26,Varejo,Pequeno,GO,Carla Mendes,310.00,,,
+1086,Indústria Horizonte - Gestão,Grupo Iguaçu,53.506.435/0001-53,Gestão,2026-01-21,Varejo,Pequeno,MG,Elisa Prado,430.00,,,
+1087,Distribuidora Tocantins - Gestão,,81.289.112/0001-85,Gestão,2024-08-21,Educação,Pequeno,RS,Carla Mendes,610.00,,,
+1088,Studio Vale Verde - Gestão,Grupo Iguaçu,67.619.232/0001-64,Gestão,2025-12-04,Indústria,Grande,PR,Diego Rocha,9430.00,,,
+1089,Studio Vale Verde - Analytics,Grupo Iguaçu,67.619.232/0001-64,Analytics,2026-05-26,Indústria,Grande,PR,Diego Rocha,2790.00,,,
+1090,Farmácia Cerrado - Gestão,Grupo Xingu,15.546.032/0001-62,Gestão,2024-04-26,Serviços,Grande,SP,Carla Mendes,8460.00,,,
+1091,Farmácia Cerrado - Analytics,Grupo Xingu,15.546.032/0001-62,Analytics,2024-07-08,Serviços,Grande,SP,Carla Mendes,2570.00,,,
+1092,Escola Bandeirante - Gestão,Grupo Xingu,91.596.921/0001-80,Gestão,2024-03-06,Varejo,Pequeno,BA,Bruno Lima,480.00,2025-10-22,encerramento,Empresa encerrou as atividades.
+1093,Escola Bandeirante - Analytics,Grupo Xingu,91.596.921/0001-80,Analytics,2024-12-11,Varejo,Pequeno,BA,Bruno Lima,300.00,2026-05-30,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1094,Escola Bandeirante - Financeiro,Grupo Xingu,91.596.921/0001-80,Financeiro,2024-08-14,Varejo,Pequeno,BA,Bruno Lima,200.00,2025-06-22,concorrente,Migrou para outra solução.
+1095,Colégio Atlântica - Gestão,Grupo Xingu,10.868.438/0001-62,Gestão,2025-06-01,Serviços,Pequeno,SP,Bruno Lima,400.00,,,
+1096,Colégio Atlântica - Financeiro,Grupo Xingu,10.868.438/0001-62,Financeiro,2026-04-20,Serviços,Pequeno,SP,Bruno Lima,220.00,,,
+1097,Colégio Atlântica - Analytics,Grupo Xingu,10.868.438/0001-62,Analytics,2026-02-11,Serviços,Pequeno,SP,Bruno Lima,200.00,,,
+1098,Laboratório Jacarandá - Gestão,Grupo Borborema,76.370.320/0001-19,Gestão,2026-01-29,Indústria,Médio,MG,Bruno Lima,1520.00,,,
+1099,Laboratório Jacarandá - Financeiro,Grupo Borborema,76.370.320/0001-19,Financeiro,2026-08-31,Indústria,Médio,MG,Bruno Lima,1310.00,,,
+1100,Clínica Atlântica - Gestão,Grupo Borborema,75.851.551/0001-85,Gestão,2026-05-04,Serviços,Pequeno,SP,Ana Ribeiro,350.00,,,
+1101,Farmácia Mantiqueira - Gestão,Grupo Caparaó,73.158.789/0001-20,Gestão,2025-11-22,Saúde,Pequeno,RS,Diego Rocha,490.00,,,
+1102,Rede Mantiqueira - Gestão,Grupo Caparaó,24.295.739/0001-93,Gestão,2025-03-03,Varejo,Médio,PE,Elisa Prado,2030.00,,,
+1103,Indústria Lagoa - Gestão,Grupo Caparaó,57.872.553/0001-98,Gestão,2025-07-18,Serviços,Grande,SP,Diego Rocha,7270.00,,,
+1104,Indústria Lagoa - Financeiro,Grupo Caparaó,57.872.553/0001-98,Financeiro,2026-03-02,Serviços,Grande,SP,Diego Rocha,3620.00,,,
+1105,Clínica Jacarandá - Gestão,Grupo Caparaó,05.847.012/0001-14,Gestão,2025-08-04,Serviços,Pequeno,SP,Ana Ribeiro,520.00,2025-10-06,corte_custos,Revisão de orçamento cortou ferramentas.
+1106,Distribuidora Bandeirante - Gestão,Grupo Pantanal,44.708.365/0001-46,Gestão,2025-08-18,Indústria,Pequeno,RS,Carla Mendes,520.00,2026-07-26,corte_custos,Revisão de orçamento cortou ferramentas.
+1107,Distribuidora Bandeirante - Analytics,Grupo Pantanal,44.708.365/0001-46,Analytics,2025-08-24,Indústria,Pequeno,RS,Carla Mendes,270.00,2026-07-26,corte_custos,Revisão de orçamento cortou ferramentas.
+1108,Colégio Ipê - Gestão,Grupo Pantanal,39.702.870/0001-53,Gestão,2026-06-03,Varejo,Médio,SP,Elisa Prado,2040.00,,,
+1109,Farmácia Maré - Gestão,,33.503.610/0001-08,Gestão,2026-03-07,Serviços,Pequeno,MG,Bruno Lima,410.00,,,
+1110,Studio Maré - Gestão,Grupo Pantanal,91.703.703/0001-64,Gestão,2025-07-29,Varejo,Grande,SP,Carla Mendes,4870.00,,,
+1111,Studio Maré - Analytics,Grupo Pantanal,91.703.703/0001-64,Analytics,2026-05-12,Varejo,Grande,SP,Carla Mendes,3070.00,,,
+1112,Studio Maré - Financeiro,Grupo Pantanal,91.703.703/0001-64,Financeiro,2026-06-29,Varejo,Grande,SP,Carla Mendes,2940.00,,,
+1113,Clínica Boa Vista - Gestão,Grupo Pantanal,85.492.206/0001-52,Gestão,2025-10-19,Serviços,Médio,SP,Diego Rocha,2430.00,,,
+1114,Studio Aurora - Gestão,Grupo Ibiapaba,23.581.429/0001-71,Gestão,2025-10-24,Indústria,Médio,DF,Bruno Lima,2340.00,,,
+1115,Instituto Horizonte - Gestão,Grupo Ibiapaba,90.057.458/0001-93,Gestão,2025-10-20,Indústria,Pequeno,GO,Ana Ribeiro,390.00,,,
+1116,Instituto Horizonte - Financeiro,Grupo Ibiapaba,90.057.458/0001-93,Financeiro,2025-11-23,Indústria,Pequeno,GO,Ana Ribeiro,320.00,,,
+1117,Colégio Tocantins - Gestão,Grupo Ibiapaba,75.982.739/0001-77,Gestão,2025-04-24,Saúde,Pequeno,SC,Diego Rocha,480.00,,,
+1118,Instituto Pinhal - Gestão,Grupo Ibiapaba,58.757.609/0001-64,Gestão,2024-08-01,Indústria,Pequeno,SC,Elisa Prado,330.00,,,
+1119,Studio Carvalho - Gestão,,53.868.848/0001-63,Gestão,2024-07-02,Serviços,Pequeno,GO,Ana Ribeiro,330.00,,,
+1120,Farmácia Ipê - Gestão,,67.830.013/0001-09,Gestão,2025-07-17,Serviços,Médio,PE,Ana Ribeiro,1790.00,,,
+1121,Escola Atlântica - Gestão,,68.123.255/0001-83,Gestão,2026-01-09,Serviços,Pequeno,SP,Elisa Prado,550.00,,,
+1122,Rede Serra Azul - Gestão,,00.179.957/0001-72,Gestão,2024-02-28,Saúde,Grande,GO,Bruno Lima,8520.00,,,
+1123,Mercado Paraty - Gestão,,66.452.157/0001-79,Gestão,2025-03-26,Serviços,Médio,SC,Bruno Lima,2470.00,2026-03-10,concorrente,Migrou para outra solução.
+1124,Colégio Itapuã - Gestão,,78.492.984/0001-29,Gestão,2026-05-10,Indústria,Médio,PE,Diego Rocha,1310.00,,,
+1125,Colégio Itapuã - Financeiro,,78.492.984/0001-29,Financeiro,2026-08-31,Indústria,Médio,PE,Diego Rocha,1470.00,,,
+1126,Laboratório Mantiqueira - Gestão,,06.503.790/0001-09,Gestão,2024-11-20,Saúde,Médio,SP,Carla Mendes,1520.00,,,
+1127,Laboratório Mantiqueira - Financeiro,,06.503.790/0001-09,Financeiro,2025-11-03,Saúde,Médio,SP,Carla Mendes,1150.00,,,
+1128,Rede Horizonte - Gestão,,72.508.511/0001-49,Gestão,2024-10-04,Educação,Pequeno,BA,Diego Rocha,540.00,2025-05-08,preco,Considerou o valor alto para o uso atual.
+1129,Colégio Horizonte - Gestão,,97.765.542/0001-70,Gestão,2024-12-08,Varejo,Pequeno,SP,Diego Rocha,440.00,2025-05-21,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1130,Instituto Lagoa - Gestão,,87.853.026/0001-67,Gestão,2024-09-01,Indústria,Médio,MG,Diego Rocha,1490.00,2026-02-09,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1131,Studio Bandeirante - Gestão,,75.490.046/0001-16,Gestão,2024-08-20,Serviços,Pequeno,RS,Ana Ribeiro,370.00,,,
+1132,Laboratório Itapuã - Gestão,,67.610.880/0001-95,Gestão,2024-08-06,Serviços,Pequeno,PR,Carla Mendes,610.00,2026-07-31,corte_custos,Revisão de orçamento cortou ferramentas.
+1133,Laboratório Itapuã - Financeiro,,67.610.880/0001-95,Financeiro,2025-01-14,Serviços,Pequeno,PR,Carla Mendes,230.00,2025-08-30,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1134,Laboratório Itapuã - Analytics,,67.610.880/0001-95,Analytics,2025-01-17,Serviços,Pequeno,PR,Carla Mendes,230.00,2026-07-31,corte_custos,Revisão de orçamento cortou ferramentas.
+1135,Mercado Aurora - Gestão,,59.494.695/0001-60,Gestão,2024-11-27,Serviços,Grande,PE,Ana Ribeiro,9550.00,2025-06-07,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
+1136,Escola Ipê - Gestão,,15.157.643/0001-11,Gestão,2025-09-30,Educação,Médio,SP,Elisa Prado,1790.00,2026-08-15,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1137,Mercado Mantiqueira - Gestão,,83.456.599/0001-04,Gestão,2026-08-15,Indústria,Médio,SP,Bruno Lima,2330.00,,,
+1138,Mercado Mantiqueira - Financeiro,,83.456.599/0001-04,Financeiro,2026-08-24,Indústria,Médio,SP,Bruno Lima,1040.00,,,
+1139,Mercado Mantiqueira - Analytics,,83.456.599/0001-04,Analytics,2026-08-23,Indústria,Médio,SP,Bruno Lima,990.00,,,
+1140,Indústria Maré - Gestão,,82.793.932/0001-53,Gestão,2025-06-22,Varejo,Pequeno,SC,Bruno Lima,630.00,2025-07-28,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1141,Rede Ipê - Gestão,,68.272.285/0001-89,Gestão,2024-12-15,Indústria,Pequeno,RJ,Diego Rocha,330.00,2025-03-28,corte_custos,Revisão de orçamento cortou ferramentas.
+1142,Studio Tocantins - Gestão,,68.711.121/0001-04,Gestão,2026-03-26,Indústria,Pequeno,SC,Elisa Prado,640.00,,,
+1143,Mercado Lagoa - Gestão,,63.880.710/0001-61,Gestão,2025-07-22,Educação,Pequeno,GO,Bruno Lima,400.00,2026-07-01,concorrente,Migrou para outra solução.
+1144,Laboratório Pinhal - Gestão,,75.588.766/0001-33,Gestão,2025-04-08,Serviços,Pequeno,GO,Carla Mendes,690.00,2025-10-26,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1145,Mercado Itapuã - Gestão,,61.258.126/0001-41,Gestão,2024-04-01,Varejo,Grande,PR,Carla Mendes,4230.00,2026-06-25,concorrente,Migrou para outra solução.
+1146,Mercado Itapuã - Analytics,,61.258.126/0001-41,Analytics,2024-08-13,Varejo,Grande,PR,Carla Mendes,2870.00,2026-06-25,concorrente,Migrou para outra solução.
+1147,Mercado Itapuã - Financeiro,,61.258.126/0001-41,Financeiro,2024-11-12,Varejo,Grande,PR,Carla Mendes,5310.00,2025-04-24,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1148,Studio Serra Azul - Gestão,,64.964.451/0001-58,Gestão,2024-11-23,Indústria,Grande,SP,Ana Ribeiro,9800.00,,,
+1149,Indústria Carvalho - Gestão,,11.902.100/0001-03,Gestão,2024-12-01,Indústria,Grande,SP,Elisa Prado,7130.00,,,
+1150,Instituto Bandeirante - Gestão,,74.383.368/0001-49,Gestão,2026-04-17,Educação,Médio,BA,Bruno Lima,1040.00,,,
+1151,Mercado Serra Azul - Gestão,,32.457.514/0001-11,Gestão,2026-03-07,Serviços,Médio,PR,Elisa Prado,1210.00,,,
+1152,Farmácia Pinhal - Gestão,,20.365.985/0001-59,Gestão,2024-12-30,Serviços,Pequeno,SC,Diego Rocha,630.00,,,
+1153,Escola Maré - Gestão,,13.087.340/0001-11,Gestão,2025-03-08,Saúde,Grande,GO,Bruno Lima,3850.00,2026-03-18,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1154,Escola Maré - Analytics,,13.087.340/0001-11,Analytics,2025-04-09,Saúde,Grande,GO,Bruno Lima,2450.00,,,
+1155,Rede Atlântica - Gestão,,77.309.682/0001-55,Gestão,2025-11-26,Serviços,Grande,SP,Ana Ribeiro,7430.00,,,
+1156,Rede Atlântica - Analytics,,77.309.682/0001-55,Analytics,2026-02-09,Serviços,Grande,SP,Ana Ribeiro,2910.00,,,
+1157,Rede Atlântica - Financeiro,,77.309.682/0001-55,Financeiro,2026-02-07,Serviços,Grande,SP,Ana Ribeiro,5200.00,,,
+1158,Rede Paraty - Gestão,,43.576.319/0001-92,Gestão,2025-10-28,Varejo,Médio,SP,Diego Rocha,1480.00,,,
+1159,Distribuidora Paraty - Gestão,,05.007.072/0001-06,Gestão,2025-03-18,Varejo,Pequeno,SP,Bruno Lima,370.00,,,
+1160,Distribuidora Paraty - Financeiro,,05.007.072/0001-06,Financeiro,2025-11-16,Varejo,Pequeno,SP,Bruno Lima,190.00,2026-02-02,preco,Considerou o valor alto para o uso atual.
+1161,Distribuidora Paraty - Analytics,,05.007.072/0001-06,Analytics,2026-01-28,Varejo,Pequeno,SP,Bruno Lima,190.00,,,
+1162,Colégio Pinhal - Gestão,,87.957.895/0001-55,Gestão,2024-02-05,Serviços,Grande,RJ,Ana Ribeiro,7560.00,2025-10-06,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1163,Comercial Tocantins - Gestão,,37.251.667/0001-76,Gestão,2025-12-17,Indústria,Grande,BA,Bruno Lima,7490.00,,,
+1164,Comercial Tocantins - Analytics,,37.251.667/0001-76,Analytics,2026-02-12,Indústria,Grande,BA,Bruno Lima,3970.00,,,
+1165,Farmácia Bandeirante - Gestão,,12.686.114/0001-70,Gestão,2025-11-23,Serviços,Médio,GO,Elisa Prado,1070.00,,,
+1166,Escola Jacarandá - Gestão,,60.796.566/0001-34,Gestão,2024-02-12,Varejo,Pequeno,PR,Ana Ribeiro,340.00,,,
+1167,Escola Jacarandá - Financeiro,,60.796.566/0001-34,Financeiro,2024-08-14,Varejo,Pequeno,PR,Ana Ribeiro,380.00,2024-10-17,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1168,Escola Jacarandá - Analytics,,60.796.566/0001-34,Analytics,2024-02-16,Varejo,Pequeno,PR,Ana Ribeiro,190.00,,,
+1169,Farmácia Serra Azul - Gestão,,47.459.928/0001-34,Gestão,2025-05-04,Varejo,Pequeno,RS,Carla Mendes,430.00,,,
+1170,Farmácia Serra Azul - Analytics,,47.459.928/0001-34,Analytics,2025-10-16,Varejo,Pequeno,RS,Carla Mendes,290.00,,,
+1171,Farmácia Serra Azul - Financeiro,,47.459.928/0001-34,Financeiro,2026-02-10,Varejo,Pequeno,RS,Carla Mendes,340.00,,,
+1172,Instituto Paraty - Gestão,,91.532.399/0001-75,Gestão,2024-11-22,Indústria,Médio,BA,Elisa Prado,2040.00,,,
+1173,Instituto Paraty - Financeiro,,91.532.399/0001-75,Financeiro,2025-04-02,Indústria,Médio,BA,Elisa Prado,800.00,2026-09-18,concorrente,Migrou para outra solução.
+1174,Instituto Paraty - Analytics,,91.532.399/0001-75,Analytics,2025-05-10,Indústria,Médio,BA,Elisa Prado,480.00,,,
+1175,Mercado Atlântica - Gestão,,31.707.999/0001-51,Gestão,2024-01-03,Serviços,Grande,DF,Diego Rocha,6300.00,2026-03-21,corte_custos,"Corte de custos geral, sem queixa sobre o produto."
+1176,Studio Boa Vista - Gestão,,69.312.717/0001-27,Gestão,2024-11-19,Varejo,Médio,SP,Ana Ribeiro,2430.00,,,
+1177,Studio Boa Vista - Analytics,,69.312.717/0001-27,Analytics,2025-07-05,Varejo,Médio,SP,Ana Ribeiro,640.00,2025-09-06,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1178,Studio Boa Vista - Financeiro,,69.312.717/0001-27,Financeiro,2025-03-08,Varejo,Médio,SP,Ana Ribeiro,1390.00,,,
+1179,Laboratório Juriti - Gestão,,29.424.448/0001-38,Gestão,2025-07-03,Indústria,Pequeno,RJ,Diego Rocha,440.00,,,
+1180,Studio Ipê - Gestão,,65.620.052/0001-32,Gestão,2024-04-11,Serviços,Médio,SP,Elisa Prado,2340.00,,,
+1181,Rede Araucária - Gestão,,37.394.522/0001-25,Gestão,2026-05-27,Saúde,Pequeno,SC,Bruno Lima,420.00,,,
+1182,Comercial Paraty - Gestão,,84.364.964/0001-57,Gestão,2024-02-11,Educação,Médio,SP,Bruno Lima,2310.00,2026-02-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1183,Studio Mantiqueira - Gestão,,67.744.448/0001-00,Gestão,2024-12-16,Varejo,Grande,MG,Ana Ribeiro,4500.00,,,
+1184,Instituto Carvalho - Gestão,,51.010.225/0001-05,Gestão,2025-07-21,Indústria,Pequeno,PR,Diego Rocha,690.00,,,
+1185,Instituto Maré - Gestão,,74.215.636/0001-24,Gestão,2025-05-26,Indústria,Grande,RJ,Bruno Lima,4480.00,,,
+1186,Laboratório Lagoa - Gestão,,12.885.703/0001-77,Gestão,2024-06-02,Varejo,Pequeno,BA,Bruno Lima,350.00,2025-09-19,preco,Pediu desconto na renovação e não houve acordo.
+1187,Laboratório Lagoa - Financeiro,,12.885.703/0001-77,Financeiro,2025-04-15,Varejo,Pequeno,BA,Bruno Lima,250.00,,,
+1188,Laboratório Lagoa - Analytics,,12.885.703/0001-77,Analytics,2024-09-14,Varejo,Pequeno,BA,Bruno Lima,290.00,,,
+1189,Escola Boa Vista - Gestão,,29.383.043/0001-18,Gestão,2026-05-24,Varejo,Pequeno,SP,Elisa Prado,400.00,,,
+1190,Escola Juriti - Gestão,,40.622.038/0001-43,Gestão,2024-08-21,Indústria,Pequeno,SP,Elisa Prado,580.00,2026-08-31,encerramento,Empresa encerrou as atividades.
+1191,Escola Juriti - Analytics,,40.622.038/0001-43,Analytics,2025-02-06,Indústria,Pequeno,SP,Elisa Prado,200.00,2026-08-31,encerramento,Empresa encerrou as atividades.
+1192,Comercial Jacarandá - Gestão,,48.203.763/0001-73,Gestão,2024-05-20,Educação,Pequeno,GO,Carla Mendes,570.00,2024-06-28,concorrente,Migrou para outra solução.
+1193,Instituto Araucária - Gestão,,81.650.115/0001-63,Gestão,2024-11-08,Serviços,Médio,MG,Ana Ribeiro,1160.00,,,
+1194,Comercial Itapuã - Gestão,,03.844.619/0001-41,Gestão,2026-08-14,Varejo,Pequeno,MG,Bruno Lima,670.00,,,
+1195,Comercial Bandeirante - Gestão,,34.970.353/0001-76,Gestão,2025-07-24,Serviços,Médio,PE,Elisa Prado,1800.00,,,
+1196,Clínica Horizonte - Gestão,,93.718.222/0001-01,Gestão,2026-02-23,Varejo,Médio,SP,Bruno Lima,2360.00,,,
+1197,Clínica Horizonte - Financeiro,,93.718.222/0001-01,Financeiro,2026-03-20,Varejo,Médio,SP,Bruno Lima,1030.00,,,
+1198,Mercado Ipê - Gestão,,82.925.195/0001-60,Gestão,2025-03-04,Indústria,Grande,MG,Bruno Lima,5990.00,,,
+1199,Mercado Ipê - Financeiro,,82.925.195/0001-60,Financeiro,2026-02-18,Indústria,Grande,MG,Bruno Lima,2630.00,,,
+1200,Laboratório Ipê - Gestão,,71.193.976/0001-04,Gestão,2025-03-29,Serviços,Pequeno,BA,Ana Ribeiro,540.00,,,
+1201,Escola Aurora - Gestão,,72.890.452/0001-51,Gestão,2024-09-19,Indústria,Pequeno,RJ,Ana Ribeiro,560.00,2024-11-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1202,Escola Horizonte - Gestão,,86.338.995/0001-72,Gestão,2025-10-15,Varejo,Médio,SC,Elisa Prado,1750.00,2026-03-29,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.
+1203,Distribuidora Araucária - Gestão,,49.154.766/0001-43,Gestão,2024-10-24,Educação,Médio,MG,Diego Rocha,2010.00,,,
+1204,Distribuidora Araucária - Analytics,,49.154.766/0001-43,Analytics,2025-02-07,Educação,Médio,MG,Diego Rocha,540.00,2026-08-09,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1205,Mercado Carvalho - Gestão,,40.749.085/0001-93,Gestão,2025-11-30,Serviços,Médio,PR,Bruno Lima,1160.00,,,
+1206,Mercado Carvalho - Financeiro,,40.749.085/0001-93,Financeiro,2026-05-14,Serviços,Médio,PR,Bruno Lima,1330.00,,,
+1207,Rede Tocantins - Gestão,,42.510.001/0001-40,Gestão,2025-07-23,Serviços,Pequeno,RJ,Bruno Lima,610.00,2026-06-02,concorrente,Migrou para outra solução.
+1208,Clínica Lagoa - Gestão,,51.899.875/0001-59,Gestão,2025-09-24,Varejo,Médio,GO,Ana Ribeiro,1070.00,,,
+1209,Clínica Lagoa - Analytics,,51.899.875/0001-59,Analytics,2026-01-04,Varejo,Médio,GO,Ana Ribeiro,690.00,,,
+1210,Laboratório Aurora - Gestão,,52.677.156/0001-36,Gestão,2025-05-15,Serviços,Pequeno,RJ,Elisa Prado,690.00,2026-05-03,corte_custos,Revisão de orçamento cortou ferramentas.
+1211,Laboratório Aurora - Analytics,,52.677.156/0001-36,Analytics,2025-07-28,Serviços,Pequeno,RJ,Elisa Prado,300.00,2026-09-29,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1212,Mercado Tocantins - Gestão,,48.533.278/0001-00,Gestão,2024-07-20,Varejo,Médio,SP,Elisa Prado,1750.00,2025-04-01,preco,Considerou o valor alto para o uso atual.
+1213,Mercado Tocantins - Analytics,,48.533.278/0001-00,Analytics,2024-11-11,Varejo,Médio,SP,Elisa Prado,770.00,,,
+1214,Distribuidora Ipê - Gestão,,11.961.737/0001-33,Gestão,2026-04-18,Saúde,Médio,SP,Bruno Lima,2360.00,,,
+1215,Rede Pinhal - Gestão,,77.112.414/0001-23,Gestão,2025-10-05,Educação,Médio,SC,Bruno Lima,1990.00,,,
+1216,Distribuidora Horizonte - Gestão,,04.661.105/0001-84,Gestão,2024-03-12,Varejo,Médio,MG,Ana Ribeiro,2380.00,,,
+1217,Studio Horizonte - Gestão,,48.425.860/0001-49,Gestão,2025-06-10,Educação,Pequeno,SP,Diego Rocha,620.00,2026-02-10,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1218,Clínica Bandeirante - Gestão,,53.970.359/0001-62,Gestão,2026-06-28,Varejo,Pequeno,SC,Bruno Lima,490.00,,,
+1219,Clínica Bandeirante - Financeiro,,53.970.359/0001-62,Financeiro,2026-08-31,Varejo,Pequeno,SC,Bruno Lima,200.00,,,
+1220,Distribuidora Jacarandá - Gestão,,93.286.936/0001-46,Gestão,2025-05-22,Varejo,Pequeno,MG,Carla Mendes,560.00,,,
+1221,Distribuidora Jacarandá - Financeiro,,93.286.936/0001-46,Financeiro,2026-03-31,Varejo,Pequeno,MG,Carla Mendes,360.00,,,
+1222,Instituto Vale Verde - Gestão,,15.171.334/0001-51,Gestão,2024-11-05,Serviços,Pequeno,SP,Carla Mendes,680.00,,,
+1223,Instituto Vale Verde - Financeiro,,15.171.334/0001-51,Financeiro,2025-03-06,Serviços,Pequeno,SP,Carla Mendes,180.00,,,
+1224,Clínica Maré - Gestão,,81.405.775/0001-51,Gestão,2025-11-12,Serviços,Médio,SP,Bruno Lima,1260.00,,,
+1225,Clínica Maré - Financeiro,,81.405.775/0001-51,Financeiro,2025-12-28,Serviços,Médio,SP,Bruno Lima,670.00,,,
+1226,Clínica Maré - Analytics,,81.405.775/0001-51,Analytics,2026-05-02,Serviços,Médio,SP,Bruno Lima,820.00,,,
+1227,Colégio Aurora - Gestão,,39.031.157/0001-48,Gestão,2025-01-08,Educação,Grande,PE,Elisa Prado,7950.00,,,
+1228,Colégio Aurora - Financeiro,,39.031.157/0001-48,Financeiro,2025-02-15,Educação,Grande,PE,Elisa Prado,3110.00,,,
+1229,Colégio Aurora - Analytics,,39.031.157/0001-48,Analytics,2025-08-27,Educação,Grande,PE,Elisa Prado,2440.00,,,
+1230,Distribuidora Aurora - Gestão,,27.419.701/0001-74,Gestão,2025-08-28,Varejo,Pequeno,MG,Bruno Lima,520.00,,,
+1231,Farmácia Itapuã - Gestão,,38.751.703/0001-42,Gestão,2025-05-16,Saúde,Pequeno,SP,Diego Rocha,300.00,,,
+1232,Distribuidora Cerrado - Gestão,,93.104.816/0001-37,Gestão,2025-11-25,Serviços,Médio,SC,Elisa Prado,1920.00,,,
+1233,Distribuidora Juriti - Gestão,,17.186.664/0001-63,Gestão,2026-08-25,Educação,Médio,DF,Diego Rocha,2330.00,,,
+1234,Distribuidora Juriti - Analytics,,17.186.664/0001-63,Analytics,2026-08-31,Educação,Médio,DF,Diego Rocha,620.00,,,
+1235,Escola Tocantins - Gestão,,50.647.439/0001-73,Gestão,2025-07-27,Varejo,Grande,SC,Carla Mendes,9210.00,,,
+1236,Colégio Jacarandá - Gestão,,40.204.953/0001-25,Gestão,2025-02-19,Saúde,Grande,SC,Carla Mendes,8430.00,,,
+1237,Instituto Tocantins - Gestão,,21.730.125/0001-17,Gestão,2025-05-24,Serviços,Pequeno,SC,Bruno Lima,530.00,,,
+1238,Clínica Aurora - Gestão,,84.613.349/0001-83,Gestão,2024-07-01,Indústria,Pequeno,PE,Diego Rocha,360.00,2025-11-19,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1239,Comercial Pinhal - Gestão,,94.564.621/0001-89,Gestão,2026-02-15,Varejo,Pequeno,SP,Ana Ribeiro,670.00,,,
+1240,Comercial Pinhal - Financeiro,,94.564.621/0001-89,Financeiro,2026-08-26,Varejo,Pequeno,SP,Ana Ribeiro,390.00,,,
+1241,Comercial Pinhal - Analytics,,94.564.621/0001-89,Analytics,2026-08-31,Varejo,Pequeno,SP,Ana Ribeiro,260.00,,,
+1242,Rede Juriti - Gestão,,28.209.601/0001-15,Gestão,2024-10-23,Indústria,Grande,GO,Elisa Prado,4610.00,,,
+1243,Rede Juriti - Financeiro,,28.209.601/0001-15,Financeiro,2025-05-19,Indústria,Grande,GO,Elisa Prado,2550.00,,,
+1244,Studio Juriti - Gestão,,52.270.562/0001-58,Gestão,2026-08-05,Serviços,Médio,SP,Elisa Prado,1840.00,,,
+1245,Laboratório Cerrado - Gestão,,36.336.084/0001-64,Gestão,2026-01-19,Serviços,Médio,GO,Elisa Prado,2170.00,,,
+1246,Laboratório Cerrado - Financeiro,,36.336.084/0001-64,Financeiro,2026-08-31,Serviços,Médio,GO,Elisa Prado,710.00,,,
+1247,Rede Bandeirante - Gestão,,86.049.867/0001-46,Gestão,2026-07-08,Saúde,Grande,SP,Diego Rocha,9570.00,,,
+1248,Rede Bandeirante - Analytics,,86.049.867/0001-46,Analytics,2026-08-31,Saúde,Grande,SP,Diego Rocha,1830.00,,,
+1249,Farmácia Horizonte - Gestão,,57.568.906/0001-82,Gestão,2025-11-22,Varejo,Pequeno,SP,Carla Mendes,440.00,2026-03-30,preco,Considerou o valor alto para o uso atual.
+1250,Farmácia Horizonte - Financeiro,,57.568.906/0001-82,Financeiro,2025-11-28,Varejo,Pequeno,SP,Carla Mendes,380.00,,,
+1251,Farmácia Horizonte - Analytics,,57.568.906/0001-82,Analytics,2026-08-31,Varejo,Pequeno,SP,Carla Mendes,300.00,,,
+1252,Indústria Juriti - Gestão,,79.650.007/0001-03,Gestão,2026-06-11,Educação,Pequeno,RJ,Elisa Prado,690.00,,,
+1253,Distribuidora Mantiqueira - Gestão,,25.852.233/0001-35,Gestão,2025-02-11,Serviços,Médio,SP,Elisa Prado,2420.00,,,
+1254,Distribuidora Mantiqueira - Analytics,,25.852.233/0001-35,Analytics,2025-09-12,Serviços,Médio,SP,Elisa Prado,690.00,2026-01-20,baixa_adocao,Equipe não incorporou a ferramenta na rotina.
+1255,Instituto Juriti - Gestão,,96.240.832/0001-40,Gestão,2025-09-25,Saúde,Pequeno,PR,Elisa Prado,350.00,2025-12-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1256,Comercial Aurora - Gestão,,48.083.051/0001-29,Gestão,2025-12-13,Varejo,Pequeno,SC,Bruno Lima,660.00,,,
+1257,Comercial Aurora - Financeiro,,48.083.051/0001-29,Financeiro,2026-08-31,Varejo,Pequeno,SC,Bruno Lima,310.00,,,
+1258,Colégio Juriti - Gestão,,87.132.834/0001-25,Gestão,2026-06-14,Serviços,Grande,SP,Elisa Prado,8530.00,,,
+1259,Colégio Juriti - Analytics,,87.132.834/0001-25,Analytics,2026-08-31,Serviços,Grande,SP,Elisa Prado,2320.00,,,
+1260,Colégio Cerrado - Gestão,,88.226.870/0001-63,Gestão,2024-07-05,Serviços,Médio,GO,Elisa Prado,1300.00,,,
+1261,Indústria Aurora - Gestão,,24.283.662/0001-60,Gestão,2024-11-27,Saúde,Pequeno,SP,Ana Ribeiro,660.00,,,
+1262,Indústria Aurora - Analytics,,24.283.662/0001-60,Analytics,2024-12-17,Saúde,Pequeno,SP,Ana Ribeiro,280.00,,,
+1263,Indústria Aurora - Financeiro,,24.283.662/0001-60,Financeiro,2025-08-09,Saúde,Pequeno,SP,Ana Ribeiro,240.00,,,
+1264,Escola Serra Azul - Gestão,,47.567.395/0001-51,Gestão,2024-03-21,Serviços,Médio,RJ,Diego Rocha,1240.00,,,
+1265,Escola Serra Azul - Financeiro,,47.567.395/0001-51,Financeiro,2024-04-29,Serviços,Médio,RJ,Diego Rocha,1100.00,2025-05-30,corte_custos,Revisão de orçamento cortou ferramentas.
+1266,Instituto Itapuã - Gestão,,55.190.805/0001-56,Gestão,2024-09-11,Serviços,Médio,SP,Diego Rocha,2110.00,,,
+1267,Studio Atlântica - Gestão,,07.291.816/0001-71,Gestão,2024-02-07,Indústria,Pequeno,GO,Ana Ribeiro,360.00,,,
+1268,Studio Atlântica - Analytics,,07.291.816/0001-71,Analytics,2024-11-09,Indústria,Pequeno,GO,Ana Ribeiro,300.00,,,
+1269,Studio Pinhal - Gestão,,35.268.245/0001-12,Gestão,2025-08-24,Serviços,Médio,SP,Carla Mendes,1450.00,2026-03-08,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.
+1270,Laboratório Atlântica - Gestão,,53.519.838/0001-27,Gestão,2026-03-30,Saúde,Pequeno,DF,Carla Mendes,650.00,,,
+1271,Rede Maré - Gestão,,54.488.056/0001-80,Gestão,2026-03-11,Varejo,Médio,DF,Carla Mendes,1610.00,,,
+1272,Rede Maré - Financeiro,,54.488.056/0001-80,Financeiro,2026-08-31,Varejo,Médio,DF,Carla Mendes,1130.00,,,
+1273,Indústria Vale Verde - Gestão,,18.992.042/0001-11,Gestão,2024-05-15,Saúde,Pequeno,DF,Ana Ribeiro,670.00,,,
+1274,Mercado Boa Vista - Gestão,,16.631.060/0001-64,Gestão,2025-04-10,Indústria,Médio,RS,Diego Rocha,1290.00,,,
+1275,Colégio Vale Verde - Gestão,,96.334.929/0001-68,Gestão,2025-07-15,Varejo,Médio,PE,Diego Rocha,2040.00,2026-07-17,preco,Considerou o valor alto para o uso atual.

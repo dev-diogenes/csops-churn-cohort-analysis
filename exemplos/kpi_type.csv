@@ -1,7 +1,0 @@
-id,name,description,unit,inv_proportional
-1,Health Score,Pontuação geral de saúde do cliente,pts,false
-2,NPS,Última nota de NPS respondida,nota,false
-3,Adoção,Funcionalidades-chave em uso,%,false
-4,Usuários ativos,Usuários com login nos últimos 30 dias,usuários,false
-5,Tickets abertos,Chamados abertos nos últimos 30 dias,tickets,true
-6,Dias sem acesso,Dias desde o último login de qualquer usuário,dias,true

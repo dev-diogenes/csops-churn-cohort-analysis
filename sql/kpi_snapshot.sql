@@ -1,11 +1,14 @@
--- Última leitura de cada KPI por cliente.
+-- kpi: última leitura de cada KPI por linha de cliente.
 -- Cancelados: última leitura antes de dt_cancel. Ativos: leitura mais recente.
--- Gera um arquivo pequeno mesmo com o histórico diário completo na tabela kpi.
+-- Nome, unidade e direção vêm de kpi_type no próprio export (não é preciso exportar kpi_type).
 SELECT DISTINCT ON (k.id_customer, k.type)
     k.id_customer,
-    k.ref_date,
     k.type,
-    k.value
+    k.value,
+    k.ref_date,
+    t.name             AS kpi_name,
+    t.inv_proportional,
+    t.unit
 FROM kpi k
 JOIN customer c ON c.id = k.id_customer
 JOIN kpi_type t ON t.id = k.type
