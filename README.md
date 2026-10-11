@@ -8,7 +8,7 @@ Este repositório é um relatório de página única (`index.html`) para times d
 
 1. Baixe o modelo [`modelos/modelo_churn.xlsx`](modelos/modelo_churn.xlsx) (abre no Excel e importa no Google Sheets) ou rode as consultas de [`sql/`](sql/).
 2. Abra `index.html` no navegador. Ele abre com dados de exemplo fictícios.
-3. Anexe ou cole cada CSV no cartão correspondente. Os dados de exemplo são descartados no primeiro arquivo seu.
+3. Anexe o CSV ou use **Colar**: abre uma tabela com as colunas do modelo, onde você cola direto do Excel/Sheets e confere para qual campo vai cada coluna. **Ver** reabre essa tabela com os dados já carregados. Os dados de exemplo são descartados no primeiro arquivo seu.
 
 Os nomes de coluna são reconhecidos sozinhos (PT ou EN) e podem ser trocados em **Colunas** em cada cartão.
 
@@ -18,7 +18,7 @@ No modelo, o cabeçalho vermelho é obrigatório, o amarelo é opcional mas impo
 
 | Tabela | Obrigatórias | Opcionais importantes | Opcionais |
 |---|---|---|---|
-| `customer` | `id`, `dt_register`, `dt_cancel` | `name`, `group`, `cnpj`, `product`, `industry`, `size`, `state`, `stage`, `cs_owner`, `cancel_tag`, `cancel_description`, `mrr` | `id_legacy`, `name_contract`, `city`, `country`, `support_owner`, `sales_owner`, `onboarding_owner`, `dt_stage` |
+| `customer` | `id`, `dt_register`, `dt_cancel` | `name`, `hierarchy_type`, `id_group`, `group`, `id_org`, `id_product`, `product`, `industry`, `size`, `state`, `stage`, `cs_owner`, `cancel_tag`, `cancel_description`, `mrr` | `cnpj`, `id_legacy`, `name_contract`, `city`, `country`, `support_owner`, `sales_owner`, `onboarding_owner`, `dt_stage` |
 | `kpi` | `id_customer`, `type`, `value` | `ref_date`, `kpi_name`, `inv_proportional` | `unit` |
 | cancelamentos | `id_customer`, `dt_cancel` | `cancel_tag` | `mrr_perdido` |
 
@@ -31,8 +31,9 @@ No modelo, o cabeçalho vermelho é obrigatório, o amarelo é opcional mas impo
 
 ## Hierarquia e filtros
 
-Uma linha de `customer` pode ser um produto contratado (ex.: "Ambev - Produto 1", "Ambev - Produto 2"). Com `group` (grupo econômico), `cnpj` (organização) e `product`:
+A hierarquia usa IDs: `id_group` (grupo econômico), `id_org` (organização, o próprio cliente) e `id_product` (produto contratado), com os nomes em `group`, `name` e `product`. `hierarchy_type` diz o que cada linha de `customer` representa: `grupo`, `organizacao` ou `produto`.
 
+- Linhas de grupo ou organização que têm linhas abaixo delas só dão nome à hierarquia e não entram na contagem, para o mesmo cliente não contar duas vezes. Sem `hierarchy_type`, toda linha conta.
 - **Analisar por** linha de cliente, organização ou grupo econômico. Uma organização ou grupo só conta como cancelado quando todas as suas linhas cancelaram; se só parte cancelou, entra em **churn parcial**. Organizações sem grupo contam como um grupo próprio.
 - **Filtros** por qualquer hierarquia ou perfil (grupo, organização, produto, setor, porte, UF, CSM…), com vários valores por filtro. Todas as seções recalculam para o recorte.
 
@@ -47,6 +48,8 @@ O menu **Churn** agrupa as seções (novos tópicos entram como abas ao lado):
 5. **Churn anormal**: score de risco 0–100 contra pares do mesmo perfil. Cancelado com score < 50 = churn anormal.
 6. **Ativos em risco**: score ≥ 70 (alto) ou 55–70 (atenção), com os KPIs que puxam o risco.
 7. **Motivos** (`cancel_tag` + `cancel_description`) e tempo de casa no cancelamento.
+
+O ícone **i** ao lado de cada título resume como a análise é feita; clicando nele, abre um painel móvel com o passo a passo calculado com os dados carregados (escolha a coorte, o grupo, o KPI ou o cliente de exemplo).
 
 As tabelas de churn classificado e ativos em risco podem ser copiadas como CSV.
 

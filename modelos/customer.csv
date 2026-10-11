@@ -1,1 +1,1 @@
-id,dt_register,dt_cancel,name,group,cnpj,product,industry,size,state,stage,cs_owner,cancel_tag,cancel_description,mrr,id_legacy,name_contract,city,country,support_owner,sales_owner,onboarding_owner,dt_stage
+id,dt_register,dt_cancel,name,hierarchy_type,id_group,group,id_org,id_product,product,industry,size,state,stage,cs_owner,cancel_tag,cancel_description,mrr,cnpj,id_legacy,name_contract,city,country,support_owner,sales_owner,onboarding_owner,dt_stage

@@ -115,6 +115,53 @@ details[open] > summary { margin-bottom: 8px; }
 .fopts label span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .fopts small { color: var(--faint); font-variant-numeric: tabular-nums; }
 
+/* ícone de explicação e painel */
+.h2row { display: flex; align-items: center; gap: 10px; }
+.info { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--muted); background: transparent; color: var(--muted); font: italic 700 13px/1 Georgia, "Times New Roman", serif; cursor: pointer; display: inline-grid; place-items: center; padding: 0; flex: none; }
+.info:hover, .info[aria-expanded="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+.xp { position: fixed; z-index: 40; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; width: min(440px, calc(100vw - 32px)); max-height: calc(100vh - 32px); display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 48px color-mix(in srgb, var(--ink) 22%, transparent); }
+.xp-head { display: flex; gap: 10px; align-items: center; padding: 12px 10px 10px 12px; border-bottom: 1px solid var(--line); cursor: grab; user-select: none; touch-action: none; }
+.xp-head.drag { cursor: grabbing; }
+.xp-head h3 { font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.xp-grip { color: var(--faint); letter-spacing: -2px; font-size: 1rem; }
+.xp-body { overflow: auto; padding: 14px 16px 18px; display: grid; gap: 16px; align-content: start; }
+.xp-short { color: var(--ink); font-size: 0.9rem; padding: 10px 12px; background: var(--sunken); border-radius: 8px; }
+.xstep { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 6px 10px; align-items: start; }
+.xstep .xn { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 600 0.75rem var(--f-mono); }
+.xstep h4 { margin: 0; font-size: 0.93rem; line-height: 24px; }
+.xstep > p, .xstep .xextra, .xstep .calc { grid-column: 2; }
+.xstep > p { color: var(--muted); font-size: 0.86rem; }
+.xstep > p b { color: var(--ink); }
+.xextra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 0; }
+.xextra .scroll { width: 100%; }
+.calc { margin: 0; font-family: var(--f-mono); font-size: 0.76rem; line-height: 1.55; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; white-space: pre-wrap; color: var(--ink); overflow-x: auto; }
+.term { border-bottom: 1px dotted var(--muted); cursor: help; color: var(--ink); }
+.xsel { display: inline-flex; gap: 6px; align-items: center; font-size: 0.82rem; color: var(--muted); min-width: 0; max-width: 100%; }
+.xsel select { max-width: 260px; min-width: 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); }
+table.xtable { font-size: 0.78rem; }
+table.xtable th, table.xtable td { padding: 5px 6px; }
+
+/* modal de colar */
+.pm-backdrop { position: fixed; inset: 0; z-index: 45; background: color-mix(in srgb, var(--ink) 38%, transparent); display: grid; place-items: center; padding: 16px; }
+.pm { width: min(1080px, 100%); max-height: calc(100vh - 32px); display: flex; flex-direction: column; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; box-shadow: 0 24px 64px color-mix(in srgb, var(--ink) 30%, transparent); min-width: 0; }
+.pm-head { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+.pm-status { display: flex; flex-wrap: wrap; gap: 6px; }
+.pm-status .chip { white-space: normal; }
+.pm-grid { overflow: auto; border: 1px solid var(--line); border-radius: 8px; min-height: 220px; flex: 1; background: var(--bg); }
+.pm-grid:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+.pm-grid table { border-collapse: separate; border-spacing: 0; font-size: 0.8rem; width: max-content; min-width: 100%; }
+.pm-grid th { position: sticky; top: 0; z-index: 1; background: var(--surface); padding: 6px 8px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); text-transform: none; letter-spacing: 0; font-family: var(--f-mono); font-size: 0.78rem; color: var(--ink); vertical-align: bottom; }
+.pm-grid th.req { background: color-mix(in srgb, var(--crit) 24%, var(--surface)); }
+.pm-grid th.imp { background: color-mix(in srgb, var(--warn) 38%, var(--surface)); }
+.pm-grid th select { display: block; font-size: 0.78rem; width: 100%; min-width: 120px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); padding: 2px 4px; }
+.pm-orig { display: block; font-weight: 400; color: var(--muted); font-size: 0.72rem; margin-bottom: 3px; }
+.pm-grid td { padding: 5px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis; font-family: var(--f-mono); font-size: 0.76rem; background: var(--surface); }
+.pm-grid td.off { color: var(--faint); background: var(--bg); text-decoration: line-through; }
+.pm-grid td.ph { color: var(--faint); font-style: italic; height: 28px; min-width: 110px; }
+.pm-grid .rn { position: sticky; left: 0; background: var(--sunken); color: var(--faint); text-align: right; min-width: 36px; font-family: var(--f-mono); font-size: 0.72rem; }
+.pm-grid th.rn { z-index: 2; }
+.pm-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; }
+
 /* relatório */
 nav.topics { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); display: grid; }
 .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
@@ -185,8 +232,8 @@ table.heat tbody tr:hover td.lbl { background: var(--sunken); }
 
 svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
 .tablebar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 8px; }
-#tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 0.78rem; padding: 6px 9px; border-radius: 5px; max-width: 280px; white-space: pre-line; line-height: 1.4; }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: var(--r); font-size: 0.88rem; z-index: 60; }
+#tip { position: fixed; z-index: 60; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 0.78rem; padding: 6px 9px; border-radius: 5px; max-width: 280px; white-space: pre-line; line-height: 1.4; }
+.toast { position: fixed; z-index: 70; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: var(--r); font-size: 0.88rem; z-index: 60; }
 .method { display: grid; gap: 10px; max-width: 78ch; color: var(--muted); font-size: 0.9rem; }
 .method b { color: var(--ink); }
 @media (max-width: 560px) {
@@ -251,6 +298,34 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
     </div>
   </section>
 </div>
+<aside id="xp" class="xp" role="dialog" aria-labelledby="xpTitle" hidden>
+  <header class="xp-head" id="xpHead" tabindex="0" aria-label="Mover painel: arraste ou use as setas">
+    <span class="xp-grip" aria-hidden="true">⋮⋮</span>
+    <div style="min-width:0;flex:1"><span class="eyebrow">Como é calculado</span><h3 id="xpTitle"></h3></div>
+    <button type="button" class="fx" id="xpClose" aria-label="Fechar explicação">×</button>
+  </header>
+  <div class="xp-body" id="xpBody"></div>
+</aside>
+<div id="pm" class="pm-backdrop" hidden>
+  <div class="pm" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <header class="pm-head">
+      <div><span class="eyebrow">Colar dados</span><h3 id="pmTitle"></h3></div>
+      <button type="button" class="fx" id="pmClose" aria-label="Fechar">×</button>
+    </header>
+    <p class="note">Copie as linhas no Excel, no Google Sheets ou de um CSV, clique na tabela e cole com Ctrl+V. A primeira linha pode ser o cabeçalho. Confira no topo de cada coluna para qual campo ela vai.</p>
+    <div class="legend"><span class="col req">obrigatória</span><span class="col imp">opcional importante</span><span class="col">opcional</span></div>
+    <div id="pmStatus" class="pm-status"></div>
+    <div class="pm-grid" id="pmGrid" tabindex="0" aria-label="Tabela: clique e cole com Ctrl+V"></div>
+    <footer class="pm-foot">
+      <span class="note" id="pmCount"></span>
+      <div class="actions">
+        <button type="button" class="btn sm ghost" id="pmReset">Limpar</button>
+        <button type="button" class="btn sm" id="pmCancel">Cancelar</button>
+        <button type="button" class="btn sm primary" id="pmImport" disabled>Importar</button>
+      </div>
+    </footer>
+  </div>
+</div>
 <div id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -275,7 +350,7 @@ const fmtDate = d => d ? new Date(d).toLocaleDateString("pt-BR", { timeZone: "UT
 const MONTH = 30.4375 * 864e5;
 const monthsBetween = (a, b) => (b - a) / MONTH;
 const WORDS = { nps: "NPS", csm: "CSM", mrr: "MRR", arr: "ARR", kpi: "KPI", pct: "%", adocao: "adoção", regiao: "região", usuarios: "usuários", inicio: "início", referencia: "referência", saude: "saúde", "30d": "(30 dias)" };
-const FIELD_LABELS = { group: "Grupo econômico", grupo_economico: "Grupo econômico", cnpj: "Organização (CNPJ)", name_contract: "Contrato", product: "Produto", produto: "Produto", industry: "Setor", size: "Porte", state: "UF", stage: "Etapa", cs_owner: "CSM", support_owner: "Suporte", sales_owner: "Vendedor", onboarding_owner: "Onboarding", city: "Cidade", country: "País" };
+const FIELD_LABELS = { grupo: "Grupo econômico", org: "Organização", group: "Grupo econômico", grupo_economico: "Grupo econômico", cnpj: "Organização (CNPJ)", name_contract: "Contrato", product: "Produto", produto: "Produto", industry: "Setor", size: "Porte", state: "UF", stage: "Etapa", cs_owner: "CSM", support_owner: "Suporte", sales_owner: "Vendedor", onboarding_owner: "Onboarding", city: "Cidade", country: "País" };
 const pretty = c => { if (FIELD_LABELS[norm(c)]) return FIELD_LABELS[norm(c)]; const s = String(c).split(/[_\s]+/).filter(Boolean).map(w => WORDS[w.toLowerCase()] ?? w).join(" "); return s.charAt(0).toUpperCase() + s.slice(1); };
 
 function toNum(v) {
@@ -322,13 +397,16 @@ const ID_SYN = ["id_customer", "customer_id", "cliente_id", "id_cliente", "clien
 const SOURCES = {
   clientes: {
     title: "Clientes", table: "customer", hint: "toda a base, ativos e cancelados",
-    expect: "<code>id</code>, <code>name</code>, <code>dt_register</code>, <code>dt_cancel</code>, <code>cancel_tag</code>; hierarquia (<code>group</code>, <code>cnpj</code>, <code>product</code>) e perfil (<code>industry</code>, <code>size</code>, <code>state</code>, <code>cs_owner</code>)",
+    expect: "<code>id</code>, <code>name</code>, <code>dt_register</code>, <code>dt_cancel</code>, <code>cancel_tag</code>; hierarquia (<code>hierarchy_type</code>, <code>id_group</code>, <code>id_org</code>, <code>id_product</code>) e perfil (<code>industry</code>, <code>size</code>, <code>state</code>, <code>cs_owner</code>)",
     fields: {
       id: { label: "ID do cliente", syn: ID_SYN },
       nome: { label: "Nome", syn: ["name", "nome", "nome_cliente", "razao_social", "empresa", "cliente", "account", "conta"] },
-      grupo: { label: "Hierarquia: grupo econômico", syn: ["grupo_economico", "economic_group", "group", "grupo", "holding"] },
-      organizacao: { label: "Hierarquia: organização", syn: ["organizacao", "organization", "org", "cnpj", "name_contract", "conta_pai", "cliente_pai", "parent_id"] },
-      produto: { label: "Hierarquia: produto", syn: ["produto", "product", "produto_contratado", "modulo", "module"] },
+      tipo: { label: "Tipo de hierarquia", syn: ["hierarchy_type", "tipo_hierarquia", "nivel_hierarquia", "hierarchy_level"] },
+      grupo: { label: "ID do grupo econômico", syn: ["id_group", "group_id", "id_grupo", "grupo_economico", "economic_group", "group", "grupo", "holding"] },
+      grupoNome: { label: "Nome do grupo econômico", syn: ["group_name", "nome_grupo", "group", "grupo", "grupo_economico"] },
+      organizacao: { label: "ID da organização", syn: ["id_org", "org_id", "id_organizacao", "organizacao", "organization", "cnpj", "name_contract", "conta_pai", "cliente_pai", "parent_id"] },
+      produto: { label: "ID do produto", syn: ["id_product", "product_id", "id_produto", "produto", "product", "modulo", "module"] },
+      produtoNome: { label: "Nome do produto", syn: ["product_name", "nome_produto", "product", "produto"] },
       inicio: { label: "Data de início", syn: ["dt_register", "data_inicio", "inicio", "data_contratacao", "data_ativacao", "inicio_contrato", "data_entrada", "start_date", "data_cadastro", "cliente_desde", "created_at"] },
       canc: { label: "Data de cancelamento", syn: ["dt_cancel", "data_cancelamento", "cancel_date", "churn_date", "data_churn", "cancelado_em"] },
       motivo: { label: "Motivo (tag)", syn: ["cancel_tag", "motivo", "motivo_cancelamento", "motivo_churn", "churn_reason"] },
@@ -447,12 +525,9 @@ function renderInputs() {
           <label class="btn sm primary" for="file-${key}" style="cursor:pointer">Anexar CSV</label>
           <input type="file" id="file-${key}" accept=".csv,.txt,.tsv,text/csv" hidden data-src="${key}">
           <button type="button" class="btn sm" data-paste="${key}">Colar</button>
+          ${raw && raw.rows.length ? `<button type="button" class="btn sm" data-view="${key}">Ver</button>` : ""}
           ${raw ? `<button type="button" class="btn sm ghost" data-clear="${key}">Remover</button>` : ""}
         </div>
-      </div>
-      <div class="paste" id="paste-${key}" hidden>
-        <textarea id="ta-${key}" placeholder="Cole aqui o conteúdo do CSV, com a linha de cabeçalho"></textarea>
-        <div class="actions" style="margin-top:6px"><button type="button" class="btn sm primary" data-apply="${key}">Usar estes dados</button></div>
       </div>
       <p class="expect">Esperado: ${s.expect}</p>
       ${map}
@@ -475,17 +550,23 @@ document.addEventListener("change", e => {
     renderInputs(); renderReport();
   } else if (t.id === "selDimBar") { state.dimBar = t.value; renderReport(); }
   else if (t.id === "selDimPeer") { state.dimPeer = t.value; renderReport(); }
+  else if (t.dataset && t.dataset.xp && state.xp) { state.xp.sel[t.dataset.xp] = t.value; renderExplain(); const el = $("#xp-" + t.dataset.xp); if (el) el.focus(); }
   else if (t.id === "selLevel") { state.level = t.value; state.showAll = { churn: false, risk: false }; renderReport(); }
   else if (t.id === "addFilter" && t.value) { state.filters.push({ dim: t.value, values: [] }); state.openFilter = state.filters.length - 1; renderReport(); }
 });
 document.addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
-  if (b.dataset.paste) { const p = $("#paste-" + b.dataset.paste); p.hidden = !p.hidden; if (!p.hidden) $("#ta-" + b.dataset.paste).focus(); }
-  else if (b.dataset.apply) { const v = $("#ta-" + b.dataset.apply).value; if (v.trim()) loadText(b.dataset.apply, v); }
+  if (b.dataset.paste) openPaste(b.dataset.paste, b);
+  else if (b.dataset.view) openPaste(b.dataset.view, b, true);
+  else if (b.id === "pmClose" || b.id === "pmCancel") closePaste();
+  else if (b.id === "pmReset") { pm.rows = []; pm.targets = []; pm.header = null; pm.viewing = false; renderPaste(); $("#pmGrid").focus(); }
+  else if (b.id === "pmImport") importPaste();
   else if (b.dataset.clear) { state.raw[b.dataset.clear] = null; state.map[b.dataset.clear] = {}; renderInputs(); renderReport(); }
   else if (b.dataset.more) { state.showAll[b.dataset.more] = !state.showAll[b.dataset.more]; renderReport(); }
   else if (b.dataset.copy) copyCSV(b.dataset.copy);
   else if (b.dataset.topic) { state.topic = b.dataset.topic; renderReport(); }
+  else if (b.dataset.info) { state.xp && state.xp.id === b.dataset.info ? closeExplain() : openExplain(b.dataset.info, b); }
+  else if (b.id === "xpClose") closeExplain();
   else if (b.dataset.fapply) { const i = +b.dataset.fapply; state.filters[i].values = [...document.querySelectorAll(`#flt-${i} .fopts input:checked`)].map(x => x.value); state.openFilter = null; renderReport(); }
   else if (b.dataset.fclear) document.querySelectorAll(`#flt-${b.dataset.fclear} .fopts input`).forEach(x => (x.checked = false));
   else if (b.dataset.fremove) { state.filters.splice(+b.dataset.fremove, 1); state.openFilter = null; renderReport(); }
@@ -524,7 +605,7 @@ function build() {
   const mC = state.map.clientes, mK = state.map.kpis, mX = state.map.cancel;
   const okC = C && C.rows.length && mC.id, okK = K && K.rows.length && mK.id, okX = X && X.rows.length && mX.id;
   if (!okC && !okK && !okX) return null;
-  const clients = new Map(), warnings = [];
+  const clients = new Map(), warnings = [], notes = [];
   const nid = v => String(v ?? "").trim().toLowerCase();
   const mk = (id, label) => ({ id, label: label || id, nome: "", inicio: null, mrr: NaN, attrs: {}, churned: false, dataCanc: null, motivo: "", descricao: "", mrrPerdido: NaN, kpi: {}, kpiDate: null });
   const dims = [];
@@ -548,6 +629,36 @@ function build() {
       clients.set(id, c);
     }
     if (dup) warnings.push(`${dup} linha(s) repetida(s) em Clientes foram ignoradas (mesmo ID).`);
+
+    // hierarquia: ids de grupo, organização e produto, e o tipo de cada linha
+    if (mC.grupo || mC.organizacao || mC.produto) {
+      const val = (r, col) => col ? String(r[col] ?? "").trim() : "";
+      const tipoOf = r => { const v = norm(val(r, mC.tipo)); return /^grup/.test(v) ? "grupo" : /^(org|empresa|cliente|conta)/.test(v) ? "org" : /^prod/.test(v) ? "produto" : ""; };
+      const gName = new Map(), oName = new Map(), pName = new Map(), groupHasChild = new Set(), orgHasChild = new Set();
+      for (const c of clients.values()) {
+        const r = c.row, t = tipoOf(r);
+        c.h = { tipo: t, grupo: val(r, mC.grupo), org: val(r, mC.organizacao), produto: val(r, mC.produto) };
+        if (c.h.grupo && mC.grupoNome && val(r, mC.grupoNome) && !gName.has(c.h.grupo)) gName.set(c.h.grupo, val(r, mC.grupoNome));
+        if (t === "grupo" && c.h.grupo && c.nome) gName.set(c.h.grupo, c.nome);
+        if (t === "org" && c.h.org && c.nome) oName.set(c.h.org, c.nome);
+        if (c.h.produto && mC.produtoNome && val(r, mC.produtoNome) && !pName.has(c.h.produto)) pName.set(c.h.produto, val(r, mC.produtoNome));
+        if (t !== "grupo" && c.h.grupo) groupHasChild.add(c.h.grupo);
+        if (t !== "grupo" && t !== "org" && c.h.org) orgHasChild.add(c.h.org);
+      }
+      // linhas de grupo ou organização que têm linhas abaixo só dão nome à hierarquia; contá-las duplicaria o cliente
+      let agg = 0;
+      if (mC.tipo) for (const [id, c] of clients) if ((c.h.tipo === "grupo" && groupHasChild.has(c.h.grupo)) || (c.h.tipo === "org" && orgHasChild.has(c.h.org))) { clients.delete(id); agg++; }
+      if (agg) notes.push(`${fmtInt(agg)} linha(s) de grupo ou organização (hierarchy_type) servem só de nome da hierarquia, para não contar o mesmo cliente duas vezes.`);
+      for (const c of clients.values()) {
+        if (c.h.org && !oName.has(c.h.org) && c.nome) oName.set(c.h.org, c.nome.split(" - ")[0].trim());
+      }
+      for (const c of clients.values()) {
+        c.hl = {};
+        if (mC.grupo) c.hl.__grupo = c.h.grupo ? (gName.get(c.h.grupo) || c.h.grupo) : "(sem grupo)";
+        if (mC.organizacao) c.hl.__org = c.h.org ? (oName.get(c.h.org) || c.h.org) : "(sem organização)";
+        if (mC.produto) c.hl.__produto = c.h.produto ? (pName.get(c.h.produto) || c.h.produto) : "(sem produto)";
+      }
+    }
     const used = new Set(Object.values(mC).filter(Boolean));
     const n = clients.size;
     for (const f of C.fields) {
@@ -563,13 +674,10 @@ function build() {
       dims.push(f);
     }
     // produto é hierarquia e também perfil de comparação
-    if (mC.produto && !dims.includes(mC.produto)) {
-      const distinct = new Set([...clients.values()].map(c => String(c.row[mC.produto] ?? "").trim()).filter(Boolean));
-      if (distinct.size >= 1 && distinct.size <= 40) dims.unshift(mC.produto);
-    }
-    for (const c of clients.values()) for (const d of dims) c.attrs[d] = String(c.row[d] ?? "").trim() || "(vazio)";
+    if (mC.produto && new Set([...clients.values()].map(c => c.hl.__produto)).size <= 40) dims.unshift("__produto");
+    for (const c of clients.values()) for (const d of dims) c.attrs[d] = d === "__produto" ? c.hl.__produto : String(c.row[d] ?? "").trim() || "(vazio)";
   }
-  const hier = { grupo: okC ? mC.grupo || "" : "", org: okC ? mC.organizacao || "" : "", produto: okC ? mC.produto || "" : "" };
+  const hier = { grupo: okC && mC.grupo ? "__grupo" : "", org: okC && mC.organizacao ? "__org" : "", produto: okC && mC.produto ? "__produto" : "" };
   const fdims = [...new Set([hier.grupo, hier.org, ...dims].filter(Boolean))];
 
   if (okX) {
@@ -677,14 +785,14 @@ function build() {
   }
 
   const list = [...clients.values()];
-  for (const c of list) { c.f = {}; for (const d of fdims) c.f[d] = c.row ? (String(c.row[d] ?? "").trim() || "(vazio)") : "(sem cadastro)"; }
+  for (const c of list) { c.f = {}; for (const d of fdims) c.f[d] = !c.row ? "(sem cadastro)" : c.hl && d in c.hl ? c.hl[d] : (String(c.row[d] ?? "").trim() || "(vazio)"); }
   let ref = -Infinity;
   for (const c of list) for (const d of [c.inicio, c.dataCanc, c.kpiDate]) if (d != null && d > ref) ref = d;
   if (!Number.isFinite(ref)) ref = Date.now();
   for (const c of list) c.tenure = c.inicio != null ? Math.max(0, monthsBetween(c.inicio, c.churned && c.dataCanc ? c.dataCanc : ref)) : NaN;
   if (list.some(c => c.churned && !c.dataCanc)) warnings.push(`${list.filter(c => c.churned && !c.dataCanc).length} cancelamento(s) sem data válida; ficam fora das curvas de coorte.`);
   if (okC && !mC.canc && !okX) warnings.push(`Nenhuma coluna de data de cancelamento em Clientes (dt_cancel). Escolha em Colunas ou anexe o arquivo de Cancelamentos.`);
-  return { clients: list, dims, fdims, hier, kpiCols, kpiMeta, ref, warnings };
+  return { clients: list, dims, fdims, hier, kpiCols, kpiMeta, ref, warnings, notes };
 }
 
 function kpiStats(M) {
@@ -725,9 +833,10 @@ function computeRisk(M, stats, peerDim) {
       if (!Number.isFinite(x) || !arr || arr.length < 5) continue;
       const p = pctRank(arr, x), comp = s.d < 0 ? 1 - p : p, w = Math.min(Math.abs(s.d), 2);
       sw += w; sc += w * comp;
-      drv.push({ col: s.col, p, comp, w, low: s.d < 0 });
+      drv.push({ col: s.col, x, p, comp, w, low: s.d < 0 });
     }
     c.risk = sw ? sc / sw : null;
+    c.allDrv = drv; c.peerN = g.n;
     c.drivers = drv.filter(d => d.comp >= 0.75).sort((a, b) => b.comp * b.w - a.comp * a.w).slice(0, 3);
     c.healthy = drv.filter(d => d.comp <= 0.35).sort((a, b) => a.comp * b.w - b.comp * a.w).slice(0, 2);
     if (c.risk == null) c.cls = "na";
@@ -765,23 +874,22 @@ function view(M) {
   const filters = state.filters.filter(f => M.fdims.includes(f.dim) && f.values.length);
   const lines = M.clients.filter(c => filters.every(f => f.values.includes(c.f[f.dim])));
   const lv = state.level;
-  const real = v => v && v !== "(vazio)" && v !== "(sem cadastro)";
   let ents;
   if (lv === "linha") ents = lines.map(c => ({ ...c, lines: 1, linesCanc: c.churned ? 1 : 0, partial: false, partialLost: 0 }));
   else {
     const keyOf = c => {
-      if (lv === "grupo" && real(c.f[hier.grupo])) return ["g", c.f[hier.grupo]];
-      if (hier.org && real(c.f[hier.org])) return ["o", c.f[hier.org]];
-      return ["c", c.id];
+      if (lv === "grupo" && c.h && c.h.grupo) return ["g", c.h.grupo, c.f[hier.grupo]];
+      if (hier.org && c.h && c.h.org) return ["o", c.h.org, c.f[hier.org]];
+      return ["c", c.id, c.label];
     };
     const groups = new Map();
-    for (const c of lines) { const [t, k] = keyOf(c), key = t + ":" + k; if (!groups.has(key)) groups.set(key, { t, k, arr: [] }); groups.get(key).arr.push(c); }
-    ents = [...groups.values()].map(({ t, k, arr }) => {
+    for (const c of lines) { const [t, k, lab] = keyOf(c), key = t + ":" + k; if (!groups.has(key)) groups.set(key, { t, k, lab, arr: [] }); groups.get(key).arr.push(c); }
+    ents = [...groups.values()].map(({ t, k, lab, arr }) => {
       const act = arr.filter(c => !c.churned), ch = arr.filter(c => c.churned);
       const churned = act.length === 0;
       const names = arr.map(c => c.nome).filter(Boolean);
       const prefix = names.length ? names[0].split(" - ")[0].trim() : "";
-      const nome = t === "c" ? arr[0].nome : t === "g" ? "" : (names.every(n => n.split(" - ")[0].trim() === prefix) ? prefix : names[0] || "");
+      const nome = t === "c" ? arr[0].nome : lab && lab !== k ? lab : t === "g" ? "" : (names.every(n => n.split(" - ")[0].trim() === prefix) ? prefix : names[0] || "");
       const lastCanc = ch.filter(c => c.dataCanc != null).sort((a, b) => b.dataCanc - a.dataCanc)[0];
       const src = churned ? arr : act;
       const e = {
@@ -838,7 +946,7 @@ function viewbar(M, M0) {
       ${avail.length ? `<select id="addFilter" aria-label="Adicionar filtro"><option value="">+ Adicionar filtro</option>${avail.map(d => `<option value="${esc(d)}">${esc(pretty(d))}</option>`).join("")}</select>` : ""}
       ${state.filters.length ? `<button type="button" class="btn sm ghost" id="btnClearFilters">Remover filtros</button>` : ""}
     </div>
-    <p class="note">${M.filtersOn ? `Filtrado: ${fmtInt(M.lines.length)} de ${fmtInt(total)} linhas de cliente` : `${fmtInt(total)} linhas de cliente`}${M.level !== "linha" ? `, agrupadas em ${fmtInt(M.clients.length)} ${M.noun[1].toLowerCase()}. ${M.noun[3] === "o" ? "Um" : "Uma"} ${M.noun[2]} só conta como cancelad${M.noun[3]} quando todas as suas linhas cancelaram.${M.level === "grupo" ? " Organizações sem grupo contam como um grupo próprio." : ""}` : "."}</p>
+    <p class="note">${M.filtersOn ? `Filtrado: ${fmtInt(M.lines.length)} de ${fmtInt(total)} linhas de cliente` : `${fmtInt(total)} linhas de cliente`}${M.level !== "linha" ? `, agrupadas em ${fmtInt(M.clients.length)} ${M.noun[1].toLowerCase()}. ${M.noun[3] === "o" ? "Um" : "Uma"} ${M.noun[2]} só conta como cancelad${M.noun[3]} quando todas as suas linhas cancelaram.${M.level === "grupo" ? " Organizações sem grupo contam como um grupo próprio." : ""}` : "."}${M0.notes.length ? " " + esc(M0.notes.join(" ")) : ""}</p>
   </div>`;
 }
 
@@ -847,7 +955,7 @@ function renderReport() {
   const M0 = build();
   const w = $("#warnings");
   if (!M0) {
-    w.hidden = true;
+    w.hidden = true; LAST = null; closeExplain();
     host.innerHTML = `<div class="empty">Anexe pelo menos o arquivo de Clientes (customer, com dt_cancel) para ver o relatório. Os Indicadores (kpi) ativam a separação entre churn esperado e anormal. Sem arquivos à mão? Use <b>Carregar exemplo</b>.</div>`;
     return;
   }
@@ -855,7 +963,7 @@ function renderReport() {
   w.innerHTML = M0.warnings.map(esc).join("<br>");
   const M = view(M0);
   const bar = viewbar(M, M0);
-  if (!M.clients.length) { host.innerHTML = bar + `<div class="empty">Nenhuma linha de cliente passa pelos filtros escolhidos.</div>`; return; }
+  if (!M.clients.length) { LAST = null; closeExplain(); host.innerHTML = bar + `<div class="empty">Nenhuma linha de cliente passa pelos filtros escolhidos.</div>`; return; }
   if (state.dimBar && !M.dims.includes(state.dimBar)) state.dimBar = null;
   if (!state.dimBar) state.dimBar = M.dims.find(d => /segment|setor|vertical|industry/.test(norm(d))) || M.dims[0] || null;
   if (state.dimPeer !== "" && (state.dimPeer == null || !M.dims.includes(state.dimPeer))) state.dimPeer = M.dims.find(d => /plano|plan|porte|tier|size/.test(norm(d))) || M.dims[0] || "";
@@ -863,11 +971,13 @@ function renderReport() {
   const stats = kpiStats(M);
   const sig = computeRisk(M, stats, state.dimPeer || null);
   const topic = TOPICS.find(t => t.id === state.topic) || TOPICS[0];
-  const ctx = { M, stats, sig };
+  const ctx = { M, M0, stats, sig };
+  LAST = ctx;
   host.innerHTML = bar + `<nav class="topics" aria-label="Tópicos">
       <div class="tabs" role="tablist">${TOPICS.map(t => `<button type="button" role="tab" class="tab" data-topic="${t.id}" aria-selected="${t === topic}">${t.label}</button>`).join("")}</div>
       <div class="toc">${topic.sections.map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}</div>
     </nav>` + topic.sections.map(([, , fn]) => fn(ctx)).join("");
+  if (state.xp) renderExplain();
 }
 
 // Tópicos do relatório. Cada tópico tem seu submenu de seções; novos tópicos entram aqui.
@@ -885,7 +995,8 @@ const TOPICS = [
 ];
 
 function sec(id, eyebrow, title, lede, body) {
-  return `<section class="rep" id="${id}"><div class="sec-head"><span class="eyebrow">${eyebrow}</span><h2>${title}</h2>${lede ? `<p class="lede">${lede}</p>` : ""}</div>${body}</section>`;
+  const info = INFO[id] ? `<button type="button" class="info" data-info="${id}" data-tip="${esc(INFO[id].short)}\nClique para ver o passo a passo." aria-label="Como é calculado: ${esc(title)}" aria-expanded="${state.xp && state.xp.id === id}">i</button>` : "";
+  return `<section class="rep" id="${id}"><div class="sec-head"><span class="eyebrow">${eyebrow}</span><div class="h2row"><h2>${title}</h2>${info}</div>${lede ? `<p class="lede">${lede}</p>` : ""}</div>${body}</section>`;
 }
 
 function summary(M) {
@@ -911,9 +1022,9 @@ function summary(M) {
 }
 
 const RAMP = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281"];
-function cohort(M) {
+function cohortData(M) {
   const L = M.clients.filter(c => c.inicio != null && !(c.churned && !c.dataCanc));
-  if (L.length < 5) return sec("coortes", "Retenção", "Retenção por coorte", "", `<div class="empty">Para ver as coortes, o arquivo de Clientes precisa de uma coluna de data de início.</div>`);
+  if (L.length < 5) return null;
   const minD = Math.min(...L.map(c => c.inicio));
   const quarters = new Set(L.map(c => { const d = new Date(c.inicio); return d.getUTCFullYear() * 4 + Math.floor(d.getUTCMonth() / 3); }));
   const byMonth = quarters.size < 3;
@@ -931,10 +1042,15 @@ function cohort(M) {
       const lost = elig.filter(c => c.churned && c.tenure < s).length;
       return { r: 1 - lost / elig.length, n: elig.length, lost };
     });
-    return { k, n: g.length, ch: g.filter(c => c.churned).length, cells };
+    return { k, n: g.length, ch: g.filter(c => c.churned).length, cells, members: g };
   });
   const vals = rows.flatMap(r => r.cells.filter(Boolean).map(c => c.r));
-  const lo = Math.min(...vals, 0.99);
+  return { byMonth, steps, rows, lo: Math.min(...vals, 0.99) };
+}
+function cohort(M) {
+  const D = cohortData(M);
+  if (!D) return sec("coortes", "Retenção", "Retenção por coorte", "", `<div class="empty">Para ver as coortes, o arquivo de Clientes precisa de uma coluna de data de início.</div>`);
+  const { byMonth, steps, rows, lo } = D;
   const colorOf = r => { const t = Math.max(0, Math.min(1, (r - lo) / (1 - lo || 1))); const i = Math.round(t * (RAMP.length - 1)); return [RAMP[i], i >= 6 ? "#ffffff" : "#13201b"]; };
   const body = `<div class="panel">
     <div class="scroll"><table class="heat">
@@ -1134,19 +1250,316 @@ function method() {
   </div>`);
 }
 
+
+/* ---------- explicação passo a passo ---------- */
+let LAST = null;
+const term = (word, text) => `<span class="term" tabindex="0" data-tip="${esc(text)}">${word}</span>`;
+const n2 = v => Number.isFinite(v) ? v.toLocaleString("pt-BR", { maximumFractionDigits: 2 }) : "—";
+const n3 = v => Number.isFinite(v) ? v.toLocaleString("pt-BR", { maximumFractionDigits: 3 }) : "—";
+const colName = (src, f) => state.map[src] && state.map[src][f] ? `<span class="col">${esc(state.map[src][f])}</span>` : `<span class="col">não informada</span>`;
+const xpSelect = (key, label, options, cur) => `<label class="xsel" for="xp-${key}">${label}<select id="xp-${key}" data-xp="${key}">${options.map(([v, t]) => `<option value="${esc(v)}" ${String(v) === String(cur) ? "selected" : ""}>${esc(t)}</option>`).join("")}</select></label>`;
+const who = c => c.nome || c.label;
+
+function riskSteps({ M, sig }, isChurn) {
+  const list = M.clients.filter(c => c.churned === isChurn && c.risk != null).sort((a, b) => isChurn ? a.risk - b.risk : b.risk - a.risk);
+  if (!sig.length || !list.length) return [["Sem score", "O score precisa do arquivo de Indicadores com pelo menos um KPI que diferencie ativos de cancelados."]];
+  const c = list.find(x => String(x.id) === String(state.xp.sel.client)) || list[0];
+  const peer = state.dimPeer;
+  const sw = c.allDrv.reduce((t, d) => t + d.w, 0), sc = c.allDrv.reduce((t, d) => t + d.w * d.comp, 0);
+  const table = `<div class="scroll"><table class="xtable"><thead><tr><th>KPI</th><th class="n">Valor</th><th class="n">Percentil</th><th class="n">Risco</th><th class="n">Peso</th><th class="n">Contrib.</th></tr></thead><tbody>${c.allDrv.map(d => `<tr><td>${esc(pretty(d.col))}</td><td class="n">${fmtN(d.x)}</td><td class="n">p${Math.round(d.p * 100)}</td><td class="n">${Math.round(d.comp * 100)}</td><td class="n">${n2(d.w)}</td><td class="n">${n2(d.w * d.comp)}</td></tr>`).join("")}</tbody></table></div>`;
+  return [
+    ["Escolher um exemplo", isChurn ? "A lista vem do cancelado mais surpreendente ao mais previsível, como na tabela da seção." : "A lista vem do ativo com maior score ao menor.", null,
+      xpSelect("client", isChurn ? "Cancelado" : "Ativo", list.slice(0, 400).map(x => [x.id, `${who(x)} · score ${Math.round(x.risk * 100)}`]), c.id)],
+    ["Definir os pares", peer ? `${esc(who(c))} é comparado com os ativos do mesmo ${esc(pretty(peer).toLowerCase())}: <b>${esc(c.peerLabel)}</b>. Grupos com menos de 8 ativos usam a base inteira. Troque o critério em "Comparar cada cliente com pares do mesmo".` : `${esc(who(c))} é comparado com todos os ativos da base.`, `${fmtInt(c.peerN)} ativos de referência`],
+    ["Posicionar o cliente em cada KPI", `O ${term("percentil", "Posição do valor entre os ativos pares: p20 quer dizer que 20% deles têm valor menor.")} mostra onde o valor cai entre os pares. O ${term("risco do KPI", "É o próprio percentil quando valor maior é pior, e 100 menos o percentil quando valor menor é pior. Vai de 0 (melhor que todos os pares) a 100 (pior que todos).")} vira o percentil para o lado em que o KPI indica churn. O ${term("peso", "O d de Cohen do KPI, limitado a 2. KPIs que separam melhor ativos e cancelados pesam mais.")} vem da seção Indicadores.`, null, table],
+    ["Fazer a média ponderada", "Score = soma das contribuições (peso × risco) ÷ soma dos pesos.", `${n2(sc)} ÷ ${n2(sw)} = ${n3(sc / sw)}  →  score ${Math.round(c.risk * 100)}`],
+    ["Classificar", isChurn ? "Cancelados: abaixo de 50 é anormal (os números pareciam saudáveis), de 50 a 65 tem sinais fracos e de 65 para cima era esperado." : "Ativos: de 70 para cima é alto risco, de 55 a 70 pede atenção e abaixo de 55 é saudável.", null,
+      `${chip(c.cls)} <span class="note">${esc(isChurn && c.cls === "anormal" ? (healthyText(c) || "indicadores na média dos ativos") : (drvText(c) || "piora distribuída em vários KPIs"))}</span>`]
+  ];
+}
+
+const INFO = {
+  resumo: {
+    title: "Resumo",
+    short: "Conta ativos e cancelados (cancelado = dt_cancel preenchido) no nível e nos filtros escolhidos. O churn mensal divide os cancelamentos pela soma dos meses que cada cliente passou na base.",
+    steps: ({ M, M0 }) => {
+      const n = M.clients.length, ch = M.clients.filter(c => c.churned);
+      const exposure = M.clients.reduce((t, c) => t + (Number.isFinite(c.tenure) ? c.tenure : 0), 0);
+      const chDated = ch.filter(c => Number.isFinite(c.tenure)).length;
+      const ten = ch.map(c => c.tenure).filter(Number.isFinite).sort((a, b) => a - b);
+      const ex = ch.find(c => Number.isFinite(c.tenure) && c.dataCanc);
+      const exA = M.clients.find(c => !c.churned && Number.isFinite(c.tenure));
+      return [
+        ["Ler o cadastro", `${fmtInt(M0.clients.length)} linhas de cliente lidas. O início vem de ${colName("clientes", "inicio")} e o cancelamento de ${colName("clientes", "canc")}.`],
+        ["Aplicar filtros e nível", (M.filtersOn ? `Os filtros deixam ${fmtInt(M.lines.length)} linhas. ` : "Sem filtros, toda a base entra. ") + (M.level === "linha" ? "Cada linha conta como um cliente." : `As linhas são agrupadas em ${fmtInt(n)} ${M.noun[1].toLowerCase()}. ${M.noun[3] === "o" ? "Um" : "Uma"} ${M.noun[2]} só conta como cancelad${M.noun[3]} quando todas as suas linhas cancelaram.`)],
+        ["Separar ativos e cancelados", `Cancelado é quem tem ${colName("clientes", "canc")} preenchido. Os demais são ativos.`, `${fmtInt(ch.length)} cancelados ÷ ${fmtInt(n)} na base = ${fmtPct(ch.length / n)}`],
+        ["Medir o tempo de casa", `${term("Meses-cliente", "Meses entre o início e o cancelamento, ou até a data de corte para quem está ativo. Somados, medem por quanto tempo a base esteve exposta ao risco de cancelar.")}: meses entre o início e o cancelamento, ou até a ${term("data de corte", "A data mais recente encontrada nos arquivos (dt_register, dt_cancel ou ref_date).")} (${fmtDate(M.ref)}) para ativos.`,
+          [ex ? `${who(ex)}: ${fmtDate(ex.inicio)} → ${fmtDate(ex.dataCanc)} = ${nf1.format(ex.tenure)} meses` : "", exA ? `${who(exA)} (ativo): ${fmtDate(exA.inicio)} → ${fmtDate(M.ref)} = ${nf1.format(exA.tenure)} meses` : ""].filter(Boolean).join("\n")],
+        ["Churn mensal médio", "Cancelamentos com data ÷ soma dos meses-cliente: a chance média de um cliente cancelar num mês qualquer.", exposure ? `${fmtInt(chDated)} ÷ ${nf1.format(exposure)} meses-cliente = ${fmtPct(chDated / exposure, 2)}` : "precisa da data de início"],
+        ["Tempo até cancelar", "Mediana dos meses de casa dos cancelados: metade cancelou antes desse ponto, metade depois.", ten.length ? `${ten.length} cancelados · mediana ${nf1.format(quantile(ten, .5))} meses\n25% cancelaram até ${nf1.format(quantile(ten, .25))} m · 75% até ${nf1.format(quantile(ten, .75))} m` : "precisa da data de início"]
+      ];
+    }
+  },
+  coortes: {
+    title: "Retenção por coorte",
+    short: "Agrupa os clientes pelo período de início e mede, para cada mês de vida, quantos dos que já chegaram àquele mês continuam ativos.",
+    steps: ({ M }) => {
+      const D = cohortData(M);
+      if (!D) return [["Sem coortes", `Precisa da data de início (${colName("clientes", "inicio")}) em Clientes.`]];
+      const { rows, steps, byMonth, lo } = D, sel = state.xp.sel;
+      const big = rows.slice().sort((a, b) => b.n - a.n)[0];
+      const row = rows.find(r => r.k === sel.cohort) || big;
+      const avail = steps.filter((x, i) => row.cells[i]);
+      const m = avail.includes(+sel.m) ? +sel.m : avail.includes(6) ? 6 : avail[avail.length - 1];
+      const cell = m != null ? row.cells[steps.indexOf(m)] : null;
+      const lostList = m != null ? row.members.filter(c => monthsBetween(c.inicio, M.ref) >= m && c.churned && c.tenure < m) : [];
+      return [
+        ["Agrupar por safra", `Cada cliente entra na ${term("coorte", "Grupo de clientes que começaram no mesmo período. Comparar coortes mostra se clientes mais novos ficam mais ou menos tempo.")} do ${byMonth ? "mês" : "trimestre"} de ${colName("clientes", "inicio")}. São ${rows.length} coortes; a maior é ${esc(big.k)}, com ${big.n} clientes.`, null,
+          xpSelect("cohort", "Coorte", rows.map(r => [r.k, `${r.k} · ${r.n} clientes`]), row.k) + (avail.length ? xpSelect("m", "Mês", avail.map(x => [x, `M${x}`]), m) : "")],
+        ["Ver quem já pode ser medido", m == null ? "Esta coorte ainda não tem nenhum mês com 3 ou mais clientes medidos." : `Em M${m} só entra quem já teria ${m} meses de casa na data de corte (${fmtDate(M.ref)}). Esses são os ${term("elegíveis", "Clientes da coorte com pelo menos M meses entre o início e a data de corte. Quem é mais novo fica fora da coluna, para a safra recente não parecer melhor só por ser nova.")}.`, cell ? `${row.n} na coorte → ${cell.n} elegíveis em M${m}` : null],
+        ["Contar quem saiu antes", m == null ? "" : `Perdido é o elegível que cancelou com menos de ${m} meses de casa.`, cell ? `${cell.lost} perdido(s)${lostList.length ? "\n" + lostList.slice(0, 5).map(c => `· ${who(c)}: cancelou com ${nf1.format(c.tenure)} meses`).join("\n") + (lostList.length > 5 ? `\n· e mais ${lostList.length - 5}` : "") : ""}` : null],
+        ["Calcular a retenção", "Retenção = 1 − perdidos ÷ elegíveis.", cell ? `1 − ${cell.lost} ÷ ${cell.n} = ${fmtPct(cell.r)}` : null],
+        ["Pintar a célula", `Quanto mais escura, maior a retenção. A escala vai da menor retenção da tabela (${Math.round(lo * 100)}%) até 100%. Células com menos de 3 elegíveis ficam vazias.`]
+      ];
+    }
+  },
+  perfil: {
+    title: "Churn por perfil",
+    short: "Calcula a taxa de churn de cada grupo e compara com a média da base usando um teste z, que leva em conta o tamanho do grupo.",
+    steps: ({ M }) => {
+      if (!M.dims.length) return [["Sem perfis", "Adicione colunas de perfil em Clientes."]];
+      const dim = state.dimBar, n = M.clients.length, chN = M.clients.filter(c => c.churned).length, p = chN / n;
+      const g = new Map();
+      for (const c of M.clients) { const k = c.attrs[dim]; if (!g.has(k)) g.set(k, { k, n: 0, ch: 0 }); const o = g.get(k); o.n++; if (c.churned) o.ch++; }
+      const groups = [...g.values()].map(o => ({ ...o, r: o.ch / o.n })).sort((a, b) => b.r - a.r);
+      const x = groups.find(o => o.k === state.xp.sel.group) || groups[0];
+      const se = Math.sqrt(p * (1 - p) / x.n), z = se ? (x.r - p) / se : 0;
+      return [
+        ["Escolher o recorte", `Os clientes são separados por <b>${esc(pretty(dim))}</b>. Troque em "Agrupar por" na seção.`, `${groups.length} grupos`, xpSelect("group", "Grupo", groups.map(o => [o.k, `${o.k} · ${fmtPct(o.r)}`]), x.k)],
+        ["Taxa do grupo", "Cancelados do grupo ÷ clientes do grupo.", `${x.k}: ${x.ch} ÷ ${x.n} = ${fmtPct(x.r)}`],
+        ["Taxa da base", "A mesma conta para todos os clientes do recorte atual. É a linha tracejada no gráfico.", `${chN} ÷ ${n} = ${fmtPct(p)}`],
+        ["Medir se a diferença é acaso", `O ${term("teste z", "Quantos desvios-padrão a taxa do grupo está da taxa da base. O desvio diminui com o tamanho do grupo, então grupos pequenos precisam de diferenças maiores para chamar atenção.")} divide a diferença entre as taxas pelo quanto ela poderia variar por acaso num grupo desse tamanho.`,
+          `z = (${n3(x.r)} − ${n3(p)}) ÷ √(${n3(p)} × ${n3(1 - p)} ÷ ${x.n})\n  = ${n3(x.r - p)} ÷ ${n3(se)}\n  = ${n2(z)}`],
+        ["Marcar o grupo", `Com |z| de 1,96 ou mais, a chance de a diferença ser acaso é menor que 5%.`, null,
+          z >= 1.96 ? chip("anormal").replace("Anormal", "Acima do esperado") : z <= -1.96 ? chip("ok").replace("Saudável", "Abaixo do esperado") : `<span class="note">|z| = ${n2(Math.abs(z))}: diferença dentro do que o acaso explica, sem marca.</span>`]
+      ];
+    }
+  },
+  indicadores: {
+    title: "Indicadores: ativos x cancelados",
+    short: "Pega a última leitura de cada KPI antes do cancelamento, compara ativos e cancelados e mede a distância entre os grupos com o d de Cohen.",
+    steps: ({ M, stats }) => {
+      if (!stats.length) return [["Sem indicadores", "Anexe o arquivo de Indicadores."]];
+      const sorted = stats.slice().sort((a, b) => (Math.abs(b.d) || 0) - (Math.abs(a.d) || 0));
+      const s = stats.find(x => x.col === state.xp.sel.kpi) || sorted[0];
+      const na = s.a.length, nb = s.b.length, va = na > 1 ? variance(s.a) : NaN, vb = nb > 1 ? variance(s.b) : NaN;
+      const sp = Math.sqrt(((na - 1) * va + (nb - 1) * vb) / (na + nb - 2));
+      const rowsK = state.raw.kpis ? state.raw.kpis.rows.length : 0;
+      const dir = s.inv == null ? (Number.isFinite(s.d) ? `Sem ${colName("kpis", "inverso")}, a direção é deduzida dos dados: os cancelados têm valores ${s.d < 0 ? "menores, então valor menor indica risco" : "maiores, então valor maior indica risco"}.` : "")
+        : `${colName("kpis", "inverso")} = ${s.inv ? "true: valor maior é pior" : "false: valor maior é melhor"}.` + (s.contrary ? " Os cancelados se saíram melhor do que essa configuração prevê, então o KPI fica fora do score." : " Os dados confirmam a configuração.");
+      return [
+        ["Escolher a leitura de cada KPI", `Das ${fmtInt(rowsK)} linhas de Indicadores fica uma por cliente e KPI: a última antes de ${colName("clientes", "canc")}; para ativos, a mais recente.${M.level !== "linha" ? ` No nível ${M.noun[2]}, vale a média das linhas.` : ""}`, null,
+          xpSelect("kpi", "KPI", sorted.map(x => [x.col, `${pretty(x.col)} · d ${n2(x.d)}`]), s.col)],
+        ["Separar ativos e cancelados", "Os valores de cada grupo formam as faixas do gráfico: a barra grossa cobre os 50% do meio e o círculo é a mediana.",
+          `ativos:     n=${na}  média ${n2(s.ma)}  mediana ${n2(quantile(s.a, .5))}\ncancelados: n=${nb}  média ${n2(s.mb)}  mediana ${n2(quantile(s.b, .5))}`],
+        ["Calcular o efeito", `O ${term("d de Cohen", "Diferença entre as médias dividida pelo desvio-padrão combinado dos dois grupos. Por convenção, 0,2 é pequeno, 0,5 médio e 0,8 grande.")} diz quantos desvios-padrão separam as médias.`,
+          `desvio combinado = √(((${na}−1)×${n2(va)} + (${nb}−1)×${n2(vb)}) ÷ (${na}+${nb}−2)) = ${n2(sp)}\nd = (${n2(s.mb)} − ${n2(s.ma)}) ÷ ${n2(sp)} = ${n2(s.d)}`],
+        ["Definir a direção", dir],
+        ["Peso no score", "Peso = |d|, limitado a 2. KPIs com |d| abaixo de 0,2 não separam os grupos e ficam fora.", Math.abs(s.d) >= 0.2 && !s.contrary ? `peso = ${n2(Math.min(Math.abs(s.d), 2))}` : "fora do score"]
+      ];
+    }
+  },
+  anormal: { title: "Churn esperado x anormal", short: "Score de 0 a 100: média ponderada dos percentis do cliente em cada KPI, comparado com ativos do mesmo perfil. Cancelado com score baixo é churn anormal.", steps: ctx => riskSteps(ctx, true) },
+  risco: { title: "Ativos em risco", short: "O mesmo score aplicado aos clientes ativos. De 70 para cima é alto risco; de 55 a 70, atenção.", steps: ctx => riskSteps(ctx, false) },
+  motivos: {
+    title: "Motivos e momento do cancelamento",
+    short: "Conta os cancelamentos por motivo (cancel_tag) e por faixa de tempo de casa (dt_cancel − dt_register).",
+    steps: ({ M }) => {
+      const ch = M.clients.filter(c => c.churned);
+      if (!ch.length) return [["Sem cancelamentos", "Nenhum cliente com data de cancelamento no recorte atual."]];
+      const g = new Map(); for (const c of ch) { const k = c.motivo || "(não informado)"; if (!g.has(k)) g.set(k, { k, n: 0, an: 0 }); const o = g.get(k); o.n++; if (c.cls === "anormal") o.an++; }
+      const tags = [...g.values()].sort((a, b) => b.n - a.n), top = tags[0];
+      const t = ch.filter(c => Number.isFinite(c.tenure));
+      const B = [[0, 3], [3, 6], [6, 12], [12, 18], [18, 24], [24, 36], [36, Infinity]];
+      const ex = t[0];
+      return [
+        ["Ler o motivo", `Vem de ${colName("clientes", "motivo")}, com o texto de ${colName("clientes", "descricao")} na tabela de cancelados. Sem motivo, entra como "(não informado)".`, `${tags.length} motivos · mais comum: ${top.k} (${top.n} de ${ch.length})`],
+        ["Medir o tempo de casa", "Meses entre o início e o cancelamento.", ex ? `${who(ex)}: ${fmtDate(ex.inicio)} → ${fmtDate(ex.dataCanc)} = ${nf1.format(ex.tenure)} meses` : "precisa da data de início"],
+        ["Agrupar em faixas", "As faixas seguem marcos comuns em SaaS: fim do onboarding (3 meses), meio do primeiro ano e renovações anuais (12, 24 e 36 meses).", t.length ? B.map(([a, b]) => `${a}–${b === Infinity ? "" : b} m: ${t.filter(c => c.tenure >= a && c.tenure < b).length}`).join("\n") : null],
+        ["Cruzar com o score", "O tooltip de cada motivo mostra quantos daqueles cancelamentos foram anormais. Motivos com muitos anormais, como aquisição ou corte de custos, costumam ser decisões externas que os KPIs não antecipam.", tags.slice(0, 5).map(o => `${o.k}: ${o.an} anormal(is) de ${o.n}`).join("\n")]
+      ];
+    }
+  }
+};
+
+function renderExplain() {
+  const box = $("#xp");
+  if (!state.xp || !LAST || !INFO[state.xp.id]) { box.hidden = true; return; }
+  const info = INFO[state.xp.id];
+  let steps;
+  try { steps = info.steps(LAST); } catch (e) { steps = [["Não deu para detalhar com estes dados", esc(e.message)]]; }
+  $("#xpTitle").textContent = info.title;
+  $("#xpBody").innerHTML = `<p class="xp-short">${esc(info.short)}</p>` + steps.map(([t, html, calc, extra], i) => `
+    <div class="xstep"><span class="xn">${i + 1}</span><h4>${t}</h4>${html ? `<p>${html}</p>` : ""}${extra ? `<div class="xextra">${extra}</div>` : ""}${calc ? `<pre class="calc">${esc(calc)}</pre>` : ""}</div>`).join("")
+    + `<p class="note">Os números acompanham os arquivos, filtros e nível escolhidos agora. Arraste o painel pelo topo; dois cliques no topo o devolvem ao lugar.</p>`;
+  box.hidden = false;
+  document.querySelectorAll(".info").forEach(b => b.setAttribute("aria-expanded", String(b.dataset.info === state.xp.id)));
+}
+let xpOpener = null;
+function openExplain(id, opener) { state.xp = { id, sel: {} }; xpOpener = opener || null; renderExplain(); $("#xpClose").focus(); }
+function closeExplain() {
+  if (!state.xp) return;
+  state.xp = null; $("#xp").hidden = true;
+  document.querySelectorAll(".info").forEach(b => b.setAttribute("aria-expanded", "false"));
+  if (xpOpener && document.body.contains(xpOpener)) xpOpener.focus();
+}
+(() => {
+  const box = $("#xp"), head = $("#xpHead");
+  let drag = null;
+  head.addEventListener("pointerdown", e => {
+    if (e.target.closest("button")) return;
+    const r = box.getBoundingClientRect();
+    drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+    head.setPointerCapture(e.pointerId); head.classList.add("drag");
+  });
+  head.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const x = Math.max(8, Math.min(innerWidth - box.offsetWidth - 8, e.clientX - drag.dx));
+    const y = Math.max(8, Math.min(innerHeight - 56, e.clientY - drag.dy));
+    box.style.left = x + "px"; box.style.top = y + "px"; box.style.right = "auto";
+  });
+  const end = () => { drag = null; head.classList.remove("drag"); };
+  head.addEventListener("pointerup", end); head.addEventListener("pointercancel", end);
+  head.addEventListener("dblclick", () => { box.style.left = ""; box.style.top = ""; box.style.right = ""; });
+  head.addEventListener("keydown", e => {
+    const k = { ArrowLeft: [-24, 0], ArrowRight: [24, 0], ArrowUp: [0, -24], ArrowDown: [0, 24] }[e.key]; if (!k) return;
+    e.preventDefault(); const r = box.getBoundingClientRect();
+    box.style.left = Math.max(8, Math.min(innerWidth - r.width - 8, r.left + k[0])) + "px";
+    box.style.top = Math.max(8, Math.min(innerHeight - 56, r.top + k[1])) + "px"; box.style.right = "auto";
+  });
+})();
+
 /* ---------- modelo de importação (mantenha igual a tools/gerar_modelo.py) ---------- */
 const TEMPLATE = {
   customer: [["id", "req", "ID da linha de cliente. Igual a kpi.id_customer."], ["dt_register", "req", "Data de início. Define a coorte."], ["dt_cancel", "req", "Data do cancelamento. Vazio = ativo."],
-    ["name", "imp", "Nome exibido. Ex.: Ambev - Produto 1."], ["group", "imp", "Hierarquia: grupo econômico."], ["cnpj", "imp", "Hierarquia: organização. Pode ser name_contract."], ["product", "imp", "Hierarquia: produto contratado."],
+    ["name", "imp", "Nome exibido. Ex.: Ambev - Produto 1."], ["hierarchy_type", "imp", "O que a linha representa: grupo, organizacao ou produto."],
+    ["id_group", "imp", "Hierarquia: ID do grupo econômico."], ["group", "imp", "Hierarquia: nome do grupo econômico."], ["id_org", "imp", "Hierarquia: ID da organização (o próprio cliente)."],
+    ["id_product", "imp", "Hierarquia: ID do produto contratado."], ["product", "imp", "Hierarquia: nome do produto."],
     ["industry", "imp", "Perfil: setor."], ["size", "imp", "Perfil: porte."], ["state", "imp", "Perfil: UF."], ["stage", "imp", "Perfil: etapa."], ["cs_owner", "imp", "Perfil: nome do CSM responsável (texto)."],
     ["cancel_tag", "imp", "Motivo do cancelamento."], ["cancel_description", "imp", "Descrição do motivo."], ["mrr", "imp", "Receita mensal da linha."],
-    ["id_legacy", "opt", "ID no sistema anterior."], ["name_contract", "opt", "Nome do contrato."], ["city", "opt", "Cidade."], ["country", "opt", "País."],
+    ["cnpj", "opt", "CNPJ da organização."], ["id_legacy", "opt", "ID no sistema anterior."], ["name_contract", "opt", "Nome do contrato."], ["city", "opt", "Cidade."], ["country", "opt", "País."],
     ["support_owner", "opt", "Responsável de suporte."], ["sales_owner", "opt", "Vendedor."], ["onboarding_owner", "opt", "Responsável pelo onboarding."], ["dt_stage", "opt", "Data da etapa atual."]],
   kpi: [["id_customer", "req", "ID da linha de cliente."], ["type", "req", "ID do tipo de KPI."], ["value", "req", "Valor do KPI."],
     ["ref_date", "imp", "Data da leitura."], ["kpi_name", "imp", "Nome do KPI (kpi_type.name)."], ["inv_proportional", "imp", "true = valor maior é pior."], ["unit", "opt", "Unidade do KPI."]],
   cancelamentos: [["id_customer", "req", "Só se o cancelamento não estiver em customer."], ["dt_cancel", "req", "Data do cancelamento."], ["cancel_tag", "imp", "Motivo."], ["mrr_perdido", "opt", "MRR perdido."]]
 };
 $("#templateCols").innerHTML = Object.entries(TEMPLATE).map(([t, cols]) => `<div class="tcols"><b>${t}${t === "cancelamentos" ? " (opcional)" : ""}</b>${cols.map(([n, k, d]) => `<span class="col ${k === "opt" ? "" : k}" data-tip="${esc(d)}">${n}</span>`).join("")}</div>`).join("");
+
+
+/* ---------- modal de colar ---------- */
+const TPL_OF = { clientes: "customer", kpis: "kpi", cancel: "cancelamentos" };
+// campo do relatório → nome da coluna no modelo
+const FIELD_TPL = {
+  clientes: { id: "id", nome: "name", inicio: "dt_register", canc: "dt_cancel", motivo: "cancel_tag", descricao: "cancel_description", mrr: "mrr", tipo: "hierarchy_type", grupo: "id_group", grupoNome: "group", organizacao: "id_org", produto: "id_product", produtoNome: "product" },
+  kpis: { id: "id_customer", data: "ref_date", tipo: "type", valor: "value", nomeKpi: "kpi_name", inverso: "inv_proportional", unidade: "unit" },
+  cancel: { id: "id_customer", data: "dt_cancel", motivo: "cancel_tag", mrr: "mrr_perdido" }
+};
+const pm = { src: null, rows: [], targets: [], header: null, opener: null, viewing: false };
+const tplCols = src => TEMPLATE[TPL_OF[src]];
+function targetFor(src, cell) {
+  const n = norm(cell); if (!n) return "";
+  const t = tplCols(src).find(([name]) => norm(name) === n); if (t) return t[0];
+  for (const [f, def] of Object.entries(SOURCES[src].fields)) if (def.syn.includes(n) && FIELD_TPL[src][f]) return FIELD_TPL[src][f];
+  return "";
+}
+function openPaste(src, opener, view = false) {
+  Object.assign(pm, { src, rows: [], targets: [], header: null, opener, viewing: false });
+  const raw = state.raw[src];
+  if (view && raw && raw.rows.length) {
+    // mostra o que já foi carregado, com o mapeamento atual de colunas
+    const byCol = {};
+    for (const [f, col] of Object.entries(state.map[src] || {})) if (col && FIELD_TPL[src][f] && !byCol[col]) byCol[col] = FIELD_TPL[src][f];
+    const seen = new Set();
+    pm.header = raw.fields.slice();
+    pm.targets = raw.fields.map(f => { const t = byCol[f] || targetFor(src, f); if (t && !seen.has(t)) { seen.add(t); return t; } return "extra:" + f; });
+    pm.rows = raw.rows.map(r => raw.fields.map(f => String(r[f] ?? "")));
+    pm.viewing = true;
+  }
+  $("#pmTitle").textContent = `${pm.viewing ? "Dados carregados · " : ""}${SOURCES[src].title} · ${SOURCES[src].table === "opcional" ? "cancelamentos" : SOURCES[src].table}`;
+  $("#pm").hidden = false; renderPaste(); $("#pmGrid").focus();
+}
+function closePaste() { $("#pm").hidden = true; if (pm.opener && document.body.contains(pm.opener)) pm.opener.focus(); }
+function onPasteText(text) {
+  const res = Papa.parse(String(text).replace(/^﻿/, "").replace(/\s+$/, ""), { skipEmptyLines: "greedy", delimitersToGuess: ["\t", ";", ",", "|"] });
+  let rows = res.data.map(r => r.map(v => String(v ?? "").trim())).filter(r => r.some(Boolean));
+  if (!rows.length) return;
+  const first = rows[0].map(c => targetFor(pm.src, c));
+  const isHeader = first.filter(Boolean).length >= Math.min(2, rows[0].length) || first.filter(Boolean).length / rows[0].length >= 0.5;
+  const tpl = tplCols(pm.src).map(c => c[0]);
+  if (isHeader) {
+    pm.header = rows[0];
+    const seen = new Set();
+    pm.targets = rows[0].map((h, j) => { const t = first[j]; if (t && !seen.has(t)) { seen.add(t); return t; } return h ? "extra:" + h : ""; });
+    rows = rows.slice(1);
+  } else {
+    pm.header = null;
+    pm.targets = rows[0].map((v, j) => tpl[j] || "");
+  }
+  pm.rows = rows; pm.viewing = false;
+  renderPaste();
+}
+function renderPaste() {
+  const tpl = tplCols(pm.src), kindOf = name => (tpl.find(c => c[0] === name) || [])[1] || "opt";
+  const grid = $("#pmGrid"), status = $("#pmStatus");
+  if (!pm.rows.length) {
+    grid.innerHTML = `<table><thead><tr><th class="rn"></th>${tpl.map(([n, k, d]) => `<th class="${k === "opt" ? "" : k}" data-tip="${esc(d)}">${n}</th>`).join("")}</tr></thead>
+      <tbody>${Array.from({ length: 6 }, (_, i) => `<tr><td class="rn">${i + 1}</td>${tpl.map((c, j) => `<td class="ph">${i === 0 && j === 0 ? "Cole aqui (Ctrl+V)" : ""}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+    status.innerHTML = ""; $("#pmCount").textContent = "Nenhuma linha colada"; $("#pmImport").disabled = true; $("#pmImport").textContent = "Importar";
+    return;
+  }
+  const width = Math.max(...pm.rows.slice(0, 200).map(r => r.length), pm.targets.length);
+  while (pm.targets.length < width) pm.targets.push("");
+  const opts = cur => `<option value="">(ignorar)</option>` + tpl.map(([n, k]) => `<option value="${n}" ${cur === n ? "selected" : ""}>${n}${k === "req" ? " *" : ""}</option>`).join("")
+    + (cur && cur.startsWith("extra:") ? `<option value="${esc(cur)}" selected>${esc(cur.slice(6))} (extra)</option>` : "");
+  const shown = pm.rows.slice(0, 100);
+  grid.innerHTML = `<table><thead><tr><th class="rn"></th>${pm.targets.map((t, j) => {
+      const k = t && !t.startsWith("extra:") ? kindOf(t) : "opt";
+      return `<th class="${k === "opt" ? "" : k}">${pm.header ? `<span class="pm-orig">${esc(pm.header[j] || "")}</span>` : ""}<select data-pmcol="${j}" id="pmcol-${j}" aria-label="Campo da coluna ${j + 1}">${opts(t)}</select></th>`; }).join("")}</tr></thead>
+    <tbody>${shown.map((r, i) => `<tr><td class="rn">${i + 1}</td>${pm.targets.map((t, j) => `<td class="${t ? "" : "off"}" title="${esc(r[j] || "")}">${esc(r[j] || "")}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  const chosen = new Set(pm.targets.filter(Boolean));
+  const missing = tpl.filter(([n, k]) => k === "req" && !chosen.has(n)).map(c => c[0]);
+  const dupT = pm.targets.filter((t, i) => t && pm.targets.indexOf(t) !== i);
+  status.innerHTML = [
+    pm.header ? `<span class="chip good"><i aria-hidden="true">●</i>Cabeçalho reconhecido</span>` : `<span class="chip warn"><i aria-hidden="true">◆</i>Sem cabeçalho: as colunas seguem a ordem do modelo. Ajuste no topo de cada coluna.</span>`,
+    missing.length ? `<span class="chip crit"><i aria-hidden="true">▲</i>Faltam obrigatórias: ${missing.join(", ")}</span>` : `<span class="chip good"><i aria-hidden="true">●</i>Todas as obrigatórias presentes</span>`,
+    dupT.length ? `<span class="chip warn"><i aria-hidden="true">◆</i>Campo usado em duas colunas: ${esc([...new Set(dupT)].join(", "))}</span>` : ""
+  ].join(" ");
+  const idCol = tpl[0][0];
+  $("#pmCount").textContent = `${fmtInt(pm.rows.length)} linha(s)${pm.rows.length > 100 ? ", mostrando as 100 primeiras" : ""}`;
+  $("#pmImport").disabled = !chosen.has(idCol) || dupT.length > 0;
+  $("#pmImport").textContent = `${pm.viewing ? "Reimportar" : "Importar"} ${fmtInt(pm.rows.length)} linha(s)`;
+}
+function importPaste() {
+  const cols = pm.targets.map((t, j) => [t, j]).filter(([t]) => t);
+  const header = cols.map(([t]) => t.startsWith("extra:") ? t.slice(6) : t);
+  const csv = Papa.unparse({ fields: header, data: pm.rows.map(r => cols.map(([, j]) => r[j] ?? "")) });
+  const src = pm.src, keepSample = pm.viewing && state.isSample;
+  closePaste();
+  loadText(src, csv, !keepSample);
+}
+document.addEventListener("paste", e => {
+  if ($("#pm").hidden) return;
+  const text = e.clipboardData && e.clipboardData.getData("text");
+  if (!text) return;
+  e.preventDefault();
+  onPasteText(text);
+});
+document.addEventListener("change", e => {
+  const t = e.target; if (!t.dataset || t.dataset.pmcol == null) return;
+  pm.targets[+t.dataset.pmcol] = t.value; renderPaste();
+  const el = $("#pmcol-" + t.dataset.pmcol); if (el) el.focus();
+});
+$("#pm").addEventListener("mousedown", e => { if (e.target.id === "pm") closePaste(); });
 
 /* ---------- export ---------- */
 function toCSV(rows) {
@@ -1186,6 +1599,18 @@ document.addEventListener("mousemove", e => {
   tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
 });
 document.addEventListener("mouseleave", () => (tip.hidden = true));
+document.addEventListener("focusin", e => {
+  const el = e.target.closest && e.target.closest("[data-tip]"); if (!el) return;
+  tip.textContent = el.dataset.tip; tip.hidden = false;
+  const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(innerWidth - t.width - 8, r.left)) + "px";
+  tip.style.top = (r.bottom + 8 + t.height > innerHeight ? r.top - t.height - 8 : r.bottom + 8) + "px";
+});
+document.addEventListener("focusout", () => (tip.hidden = true));
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if (!$("#pm").hidden) closePaste(); else if (state.xp) closeExplain();
+});
 
 /* ---------- dados de exemplo (fictícios) ---------- */
 // SAMPLE-START
@@ -1213,7 +1638,8 @@ function makeSample() {
   const motS = [["concorrente", "Decisão da diretoria de padronizar outro fornecedor."], ["fusao_aquisicao", "Empresa foi adquirida e adotou o sistema do grupo comprador."], ["corte_custos", "Corte de custos geral, sem queixa sobre o produto."], ["encerramento", "Empresa encerrou as atividades."], ["preco", "Pediu desconto na renovação e não houve acordo."]], motSW = [.3, .24, .22, .14, .1];
   const CASCADE = new Set(["concorrente", "fusao_aquisicao", "encerramento", "corte_custos"]);
   const TYPES = [[1, "Health Score", false], [2, "NPS", false], [3, "Adoção (%)", false], [4, "Usuários ativos", false], [5, "Tickets abertos (30d)", true], [6, "Dias sem acesso", true]];
-  const C = [["id", "name", "group", "cnpj", "product", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description"]];
+  const C = [["id", "hierarchy_type", "id_group", "group", "id_org", "cnpj", "id_product", "product", "name", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description"]];
+  const prodId = { "Gestão": "P10", Financeiro: "P20", Analytics: "P30" };
   const K = [["id_customer", "ref_date", "type", "kpi_name", "inv_proportional", "value"]];
   const usedNames = new Set();
   let nextId = 1001;
@@ -1227,6 +1653,7 @@ function makeSample() {
     if (usedNames.has(nome)) nome += " " + (o + 1); usedNames.add(nome);
     const ind = pick(inds, indW), size = pick(sizes, sizeW);
     orgs.push({
+      idOrg: "O" + String(o + 1).padStart(3, "0"), idGroup: grp ? "G" + String(grupos.indexOf(grp) + 1).padStart(2, "0") : "",
       nome, grp, ind, size, uf: pick(ufs, ufW), owner: pick(owners, [1, 1, 1, 1, 1]),
       cnpj: `${digits(2)}.${digits(3)}.${digits(3)}/0001-${digits(2)}`,
       latent: gauss() * 0.7 + indR[ind] + sizeR[size],
@@ -1234,7 +1661,13 @@ function makeSample() {
       nProd: pick([1, 2, 3], [.55, .3, .15])
     });
   }
+  grupos.forEach((g, i) => {
+    const members = orgs.filter(o => o.grp === g); if (!members.length) return;
+    C.push([9001 + i, "grupo", "G" + String(i + 1).padStart(2, "0"), g, "", "", "", "", g, iso(Math.min(...members.map(o => o.start))), "", "", "", "", "", "", "", ""]);
+  });
+  let orgRowId = 5001;
   for (const org of orgs) {
+    C.push([orgRowId++, "organizacao", org.idGroup, org.grp, org.idOrg, org.cnpj, "", "", org.nome, iso(org.start), org.ind, org.size, org.uf, org.owner, "", "", "", ""]);
     const ps = [prods[0]].concat(prods.slice(1).sort(() => R() - 0.5)).slice(0, org.nProd);
     const lines = ps.map((prod, j) => {
       const start = j === 0 ? org.start : Math.min(org.start + Math.floor(R() * 365) * DAY, LASTSTART);
@@ -1254,7 +1687,7 @@ function makeSample() {
     const first = lines.filter(l => l.cancel && CASCADE.has(l.mot[0])).sort((a, b) => a.cancel - b.cancel)[0];
     if (first && R() < 0.75) for (const l of lines) if (l !== first && l.start < first.cancel && (!l.cancel || l.cancel > first.cancel)) { l.cancel = first.cancel; l.mot = first.mot; l.surprise = first.surprise; }
     for (const l of lines) {
-      C.push([l.id, `${org.nome} - ${l.prod}`, org.grp, org.cnpj, l.prod, iso(l.start), org.ind, org.size, org.uf, org.owner, l.mrr.toFixed(2), l.cancel ? iso(l.cancel) : "", l.mot[0], l.mot[1]]);
+      C.push([l.id, "produto", org.idGroup, org.grp, org.idOrg, org.cnpj, prodId[l.prod], l.prod, `${org.nome} - ${l.prod}`, iso(l.start), org.ind, org.size, org.uf, org.owner, l.mrr.toFixed(2), l.cancel ? iso(l.cancel) : "", l.mot[0], l.mot[1]]);
       const last = l.cancel ? monthStart(l.cancel) - DAY : REF;
       const months = [];
       for (let k = 5; k >= 0; k--) { const t = k === 0 ? last : addMonths(monthStart(last), -k); if (t >= l.start) months.push(t); }
