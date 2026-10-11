@@ -217,6 +217,38 @@ th.sort[aria-sort="ascending"]::after { content: " ▲"; color: var(--accent); }
 th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); }
 .muted { color: var(--muted); }
 
+
+/* tour de boas-vindas (Driver.js 1.3.1, MIT, CSS copiado abaixo) */
+.driver-active .driver-overlay,.driver-active *{pointer-events:none}.driver-active .driver-active-element,.driver-active .driver-active-element *,.driver-popover,.driver-popover *{pointer-events:auto}@keyframes animate-fade-in{0%{opacity:0}to{opacity:1}}.driver-fade .driver-overlay{animation:animate-fade-in .2s ease-in-out}.driver-fade .driver-popover{animation:animate-fade-in .2s}.driver-popover{all:unset;box-sizing:border-box;color:#2d2d2d;margin:0;padding:15px;border-radius:5px;min-width:250px;max-width:300px;box-shadow:0 1px 10px #0006;z-index:1000000000;position:fixed;top:0;right:0;background-color:#fff}.driver-popover *{font-family:Helvetica Neue,Inter,ui-sans-serif,"Apple Color Emoji",Helvetica,Arial,sans-serif}.driver-popover-title{font:19px/normal sans-serif;font-weight:700;display:block;position:relative;line-height:1.5;zoom:1;margin:0}.driver-popover-close-btn{all:unset;position:absolute;top:0;right:0;width:32px;height:28px;cursor:pointer;font-size:18px;font-weight:500;color:#d2d2d2;z-index:1;text-align:center;transition:color;transition-duration:.2s}.driver-popover-close-btn:hover,.driver-popover-close-btn:focus{color:#2d2d2d}.driver-popover-title[style*=block]+.driver-popover-description{margin-top:5px}.driver-popover-description{margin-bottom:0;font:14px/normal sans-serif;line-height:1.5;font-weight:400;zoom:1}.driver-popover-footer{margin-top:15px;text-align:right;zoom:1;display:flex;align-items:center;justify-content:space-between}.driver-popover-progress-text{font-size:13px;font-weight:400;color:#727272;zoom:1}.driver-popover-footer button{all:unset;display:inline-block;box-sizing:border-box;padding:3px 7px;text-decoration:none;text-shadow:1px 1px 0 #fff;background-color:#fff;color:#2d2d2d;font:12px/normal sans-serif;cursor:pointer;outline:0;zoom:1;line-height:1.3;border:1px solid #ccc;border-radius:3px}.driver-popover-footer .driver-popover-btn-disabled{opacity:.5;pointer-events:none}:not(body):has(>.driver-active-element){overflow:hidden!important}.driver-no-interaction,.driver-no-interaction *{pointer-events:none!important}.driver-popover-footer button:hover,.driver-popover-footer button:focus{background-color:#f7f7f7}.driver-popover-navigation-btns{display:flex;flex-grow:1;justify-content:flex-end}.driver-popover-navigation-btns button+button{margin-left:4px}.driver-popover-arrow{content:"";position:absolute;border:5px solid #fff}.driver-popover-arrow-side-over{display:none}.driver-popover-arrow-side-left{left:100%;border-right-color:transparent;border-bottom-color:transparent;border-top-color:transparent}.driver-popover-arrow-side-right{right:100%;border-left-color:transparent;border-bottom-color:transparent;border-top-color:transparent}.driver-popover-arrow-side-top{top:100%;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}.driver-popover-arrow-side-bottom{bottom:100%;border-left-color:transparent;border-top-color:transparent;border-right-color:transparent}.driver-popover-arrow-side-center{display:none}.driver-popover-arrow-side-left.driver-popover-arrow-align-start,.driver-popover-arrow-side-right.driver-popover-arrow-align-start{top:15px}.driver-popover-arrow-side-top.driver-popover-arrow-align-start,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-start{left:15px}.driver-popover-arrow-align-end.driver-popover-arrow-side-left,.driver-popover-arrow-align-end.driver-popover-arrow-side-right{bottom:15px}.driver-popover-arrow-side-top.driver-popover-arrow-align-end,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-end{right:15px}.driver-popover-arrow-side-left.driver-popover-arrow-align-center,.driver-popover-arrow-side-right.driver-popover-arrow-align-center{top:50%;margin-top:-5px}.driver-popover-arrow-side-top.driver-popover-arrow-align-center,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-center{left:50%;margin-left:-5px}.driver-popover-arrow-none{display:none}
+.driver-popover.csops-tour { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 48px rgba(0, 0, 0, .28); max-width: 360px; min-width: 260px; padding: 16px 18px; font-family: var(--f-body); }
+.driver-popover.csops-tour .driver-popover-title { font-family: var(--f-display); font-size: 1.08rem; font-weight: 700; line-height: 1.25; color: var(--ink); }
+.driver-popover.csops-tour .driver-popover-description { color: var(--muted); font-size: 0.9rem; line-height: 1.5; margin-top: 6px; }
+.driver-popover.csops-tour .driver-popover-description b { color: var(--ink); }
+.driver-popover.csops-tour .driver-popover-progress-text { color: var(--faint); font-family: var(--f-mono); font-size: 0.74rem; }
+.driver-popover.csops-tour .driver-popover-footer { margin-top: 14px; gap: 8px; align-items: center; }
+.driver-popover.csops-tour .driver-popover-navigation-btns { gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.driver-popover.csops-tour button { font: inherit; font-size: 0.86rem; text-shadow: none; border-radius: 8px; padding: 7px 14px; min-height: 36px; cursor: pointer; border: 1px solid var(--ctl); background: var(--surface); color: var(--ink); }
+.driver-popover.csops-tour .driver-popover-next-btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.driver-popover.csops-tour .tour-skip { border-color: transparent; color: var(--muted); background: none; }
+.driver-popover.csops-tour .tour-skip:hover { color: var(--ink); }
+.driver-popover.csops-tour button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.driver-popover.csops-tour .driver-popover-close-btn { display: none; }
+.csops-tour .driver-popover-arrow-side-left { border-left-color: var(--surface); }
+.csops-tour .driver-popover-arrow-side-right { border-right-color: var(--surface); }
+.csops-tour .driver-popover-arrow-side-top { border-top-color: var(--surface); }
+.csops-tour .driver-popover-arrow-side-bottom { border-bottom-color: var(--surface); }
+.tour-w { width: min(560px, 100%); gap: 14px; }
+.tour-w h3 { font-size: 1.35rem; }
+.tour-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.tour-paths button { text-align: left; border: 1px solid var(--ctl); background: var(--bg); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: grid; gap: 2px; color: var(--ink); font: inherit; }
+.tour-paths button:hover, .tour-paths button:focus-visible { border-color: var(--accent); background: var(--surface); }
+.tour-paths b { font-size: 0.95rem; }
+.tour-paths span { font-size: 0.8rem; color: var(--muted); }
+/* durante o tour a barra fixa não cobre o elemento destacado */
+.driver-active nav.topics { position: static; }
+.tab-link { text-decoration: none; margin-left: auto; color: var(--accent); }
+@media (max-width: 560px) { .driver-popover.csops-tour { max-width: calc(100vw - 24px); } }
+
 /* interações dos gráficos */
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .seg { display: inline-flex; border: 1px solid var(--ctl); border-radius: 8px; overflow: hidden; }
@@ -338,7 +370,9 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
         <p class="lede">Informe o perfil da empresa e anexe ou cole os CSVs exportados das tabelas <span class="mono">customer</span> e <span class="mono">kpi</span>. O relatório cruza tudo pelo ID do cliente e mostra quais cancelamentos eram esperados para aquele perfil e quais fogem do padrão.</p>
       </div>
       <div class="actions">
+        <a class="btn primary" id="toDiag" href="diagnostico.html" target="_blank" rel="noopener" data-diag>Diagnóstico de Churn ↗</a>
         <a class="btn" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Baixar modelo (.xlsx)</a>
+        <button class="btn ghost" id="btnTour" type="button">Ver tour</button>
         <button class="btn" id="btnSample" type="button">Carregar exemplo</button>
         <button class="btn ghost" id="btnClear" type="button">Limpar tudo</button>
       </div>
@@ -411,9 +445,19 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
     </footer>
   </div>
 </div>
+<div id="tourWelcome" class="pm-backdrop" hidden>
+  <div class="pm tour-w" role="dialog" aria-modal="true" aria-labelledby="twTitle" aria-describedby="twDesc">
+    <span class="eyebrow">Boas-vindas</span>
+    <h3 id="twTitle">Em 2 minutos, o que cada parte do relatório responde</h3>
+    <p class="note" id="twDesc" style="font-size:.92rem">O tour usa os dados de exemplo e leva você até cada seção. Escolha por onde começar:</p>
+    <div class="tour-paths" id="tourPaths"></div>
+    <div class="actions" style="justify-content:flex-end"><button type="button" class="btn ghost" id="tourSkipAll">Pular tour</button></div>
+  </div>
+</div>
 <div id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js"></script>
 <script>
 "use strict";
 /* ---------- utilidades ---------- */
@@ -1084,7 +1128,7 @@ function renderReport() {
   const ctx = { M, M0, stats, sig };
   LAST = ctx;
   host.innerHTML = bar + `<nav class="topics" aria-label="Tópicos">
-      <div class="tabs" role="tablist">${TOPICS.map(t => `<button type="button" role="tab" class="tab" data-topic="${t.id}" aria-selected="${t === topic}">${t.label}</button>`).join("")}</div>
+      <div class="tabs" role="tablist">${TOPICS.map(t => `<button type="button" role="tab" class="tab" data-topic="${t.id}" aria-selected="${t === topic}">${t.label}</button>`).join("")}<a class="tab tab-link" href="diagnostico.html" target="_blank" rel="noopener" data-diag title="Abre o painel com os dados e o recorte desta tela">Diagnóstico de Churn ↗</a></div>
       <div class="toc">${topic.sections.map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}</div>
       <div class="scope"><span>Analisando <b>${esc(M.noun[1].toLowerCase())}</b>${state.filters.filter(f => f.values.length).map(f => ` · ${esc(pretty(f.dim))}: ${esc(f.values.length === 1 ? f.values[0] : f.values.length + " valores")}`).join("")}</span><a href="#filtros">Ajustar</a></div>
     </nav>` + topic.sections.map(([, , fn]) => fn(ctx)).join("");
@@ -1570,6 +1614,213 @@ function market(M) {
   return sec("mercado", "Mercado", "Seu churn x mercado", `${esc(co.nome || "Sua empresa")} comparada com empresas B2B SaaS do segmento ${co.segmento ? esc(SEGMENTS[co.segmento]) : "mais parecido"}${band ? ` e ticket ${esc(band.label)}` : ""}.`, body);
 }
 
+
+/* ---------- dados do painel de diagnóstico (diagnostico.html) ----------
+   Usado pelo botão "Diagnóstico de Churn" e por tools/gerar_diagnostico.mjs. Muda o nível e os pares do estado: chame por openDiagnostic(). */
+function diagnosticData(isSample) {
+  const M0 = build();
+  if (!M0) throw new Error("Sem dados: anexe pelo menos customer.csv.");
+  state.level = M0.hier.org ? "org" : "linha";
+  const M = view(M0);
+  const filtersDesc = state.filters.filter(f => f.values.length).map(f => `${pretty(f.dim)}: ${f.values.length === 1 ? f.values[0] : f.values.length + " valores"}`);
+  const dimOf = re => M.dims.find(d => re.test(norm(d))) || null;
+  state.dimPeer = dimOf(/plano|plan|porte|tier|size/) || "";
+  state.dimBar = dimOf(/segment|setor|vertical|industry/) || M.dims[0] || null;
+  const csmDim = dimOf(/owner|csm|responsavel/);
+  const stats = kpiStats(M);
+  const sig = computeRisk(M, stats, state.dimPeer || null);
+
+  const E = M.clients, act = E.filter(c => !c.churned), ch = E.filter(c => c.churned);
+  const sumF = a => a.reduce((t, v) => t + (Number.isFinite(v) ? v : 0), 0);
+  const iso = t => t == null ? null : new Date(t).toISOString().slice(0, 10);
+  const attr = (c, d) => d ? c.attrs[d] : null;
+  const exposure = sumF(E.map(c => c.tenure));
+  const chDated = ch.filter(c => Number.isFinite(c.tenure)).length;
+  const monthly = exposure ? chDated / exposure : null;
+  const ten = ch.map(c => c.tenure).filter(Number.isFinite).sort((a, b) => a - b);
+  const mrrAct = sumF(act.map(c => c.mrr)), mrrLost = sumF(ch.map(c => c.mrrPerdido));
+  const count = cls => E.filter(c => c.cls === cls).length;
+  const hi = act.filter(c => c.cls === "alto");
+  const rowsCustomer = state.raw.clientes ? state.raw.clientes.rows.length : 0;
+
+  const kpis = {
+    base: E.length, lines: M.lines.length, rowsCustomer, active: act.length, churned: ch.length, rate: ch.length / E.length,
+    monthly, exposure, mrrActive: mrrAct, mrrLost, mrrLostShare: mrrLost + mrrAct ? mrrLost / (mrrLost + mrrAct) : null,
+    medianTenure: ten.length ? quantile(ten, .5) : null, p25Tenure: ten.length ? quantile(ten, .25) : null, p75Tenure: ten.length ? quantile(ten, .75) : null,
+    partial: E.filter(c => c.partial).length, partialLost: sumF(E.filter(c => c.partial).map(c => c.partialLost)),
+    anormal: count("anormal"), fraco: count("fraco"), esperado: count("esperado"), scoredChurned: ch.filter(c => c.risk != null).length,
+    alto: hi.length, altoMrr: sumF(hi.map(c => c.mrr)), atencao: count("atencao"), ok: count("ok"), ref: iso(M.ref)
+  };
+
+  // retenção: coortes e curva de sobrevivência (Kaplan-Meier, mês a mês)
+  const D = cohortData(M);
+  const cohorts = D ? { byMonth: D.byMonth, steps: D.steps, rows: D.rows.map(r => ({ k: r.k, n: r.n, ch: r.ch, cells: r.cells.map(c => c ? [c.r, c.n, c.lost] : null) })) } : null;
+  const valid = E.filter(c => Number.isFinite(c.tenure) && !(c.churned && c.dataCanc == null));
+  const maxT = Math.min(36, Math.floor(Math.max(0, ...valid.map(c => c.tenure))));
+  const km = list => {
+    let S = 1; const pts = [[0, 1, list.length]];
+    for (let t = 0; t < maxT; t++) {
+      const atRisk = list.filter(c => c.tenure >= t).length; if (atRisk < 10) break;
+      const d = list.filter(c => c.churned && c.tenure >= t && c.tenure < t + 1).length;
+      S *= 1 - d / atRisk; pts.push([t + 1, S, atRisk]);
+    }
+    return pts;
+  };
+  const survival = { all: km(valid), by: [], dim: state.dimPeer ? pretty(state.dimPeer) : null };
+  if (state.dimPeer) {
+    const vals = [...new Set(valid.map(c => c.attrs[state.dimPeer]))];
+    if (vals.length <= 5) survival.by = vals.sort().map(v => ({ k: v, pts: km(valid.filter(c => c.attrs[state.dimPeer] === v)) }));
+  }
+
+  // onde está o churn: taxa por perfil e teste z
+  const p = ch.length / E.length;
+  const groupRates = (list, d, base) => {
+    const g = new Map();
+    for (const c of list) { const k = c.attrs[d]; if (!g.has(k)) g.set(k, { k, n: 0, ch: 0, mrr: 0 }); const o = g.get(k); o.n++; if (c.churned) { o.ch++; o.mrr += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; } }
+    return [...g.values()].map(o => ({ ...o, r: o.ch / o.n, z: base > 0 && base < 1 ? (o.ch / o.n - base) / Math.sqrt(base * (1 - base) / o.n) : 0 })).sort((a, b) => b.r - a.r).slice(0, 15);
+  };
+  const profiles = M.dims.filter(d => d !== "__produto").map(d => ({ dim: d, label: pretty(d), rows: groupRates(E, d, p) }));
+  state.level = "linha";
+  const ML = view(M0);
+  const pl = ML.clients.filter(c => c.churned).length / ML.clients.length;
+  const productRates = M0.hier.produto ? { base: pl, rows: groupRates(ML.clients, "__produto", pl) } : null;
+  state.level = M0.hier.org ? "org" : "linha";
+
+  // indicadores: distribuição e efeito
+  const q = a => a.length ? [.1, .25, .5, .75, .9].map(x => quantile(a, x)) : null;
+  const sigCols = new Set(sig.map(s => s.col));
+  const kpiStatsOut = stats.map(s => ({ col: s.col, label: pretty(s.col), unit: s.unit, inv: s.inv, contrary: s.contrary, d: s.d, w: sigCols.has(s.col) ? Math.min(Math.abs(s.d), 2) : 0, a: q(s.a), b: q(s.b), na: s.a.length, nb: s.b.length, ma: s.ma, mb: s.mb }))
+    .sort((x, y) => (Math.abs(y.d) || 0) - (Math.abs(x.d) || 0));
+
+  // trajetória: média de cada KPI nos meses antes do cancelamento (linhas) x ativos antes da data de corte
+  const K = state.raw.kpis, mK = state.map.kpis, tcol = mK.tipo || mK.nomeKpi;
+  const trajectory = {};
+  if (K && K.rows.length && mK.id && mK.data) {
+    const byId = new Map(M0.clients.map(c => [c.id, c]));
+    const typeToCol = {}; for (const [name, meta] of Object.entries(M0.kpiMeta)) if (meta.type != null) typeToCol[meta.type] = name;
+    const acc = {};
+    const add = (col, grp, k, v) => { const a = (acc[col] ??= { canc: {}, ativo: {} })[grp]; (a[k] ??= [0, 0]); a[k][0] += v; a[k][1]++; };
+    for (const r of K.rows) {
+      const c = byId.get(String(r[mK.id] ?? "").trim().toLowerCase()); if (!c) continue;
+      const d = toDate(r[mK.data]); if (d == null) continue;
+      let grp, k;
+      if (c.churned) { if (!c.dataCanc || d >= c.dataCanc) continue; grp = "canc"; k = Math.floor(monthsBetween(d, c.dataCanc)) + 1; }
+      else { grp = "ativo"; k = Math.floor(monthsBetween(d, M.ref)) + 1; }
+      if (k < 1 || k > 6) continue;
+      if (tcol && mK.valor) { const col = typeToCol[String(r[tcol] ?? "").trim()]; const v = toNum(r[mK.valor]); if (col && Number.isFinite(v)) add(col, grp, k, v); }
+      else for (const col of M0.kpiCols) { const v = toNum(r[col]); if (Number.isFinite(v)) add(col, grp, k, v); }
+    }
+    for (const [col, g] of Object.entries(acc)) {
+      const ser = grp => [6, 5, 4, 3, 2, 1].map(k => g[grp][k] && g[grp][k][1] >= 3 ? g[grp][k][0] / g[grp][k][1] : null);
+      trajectory[col] = { label: pretty(col), canc: ser("canc"), ativo: ser("ativo"), n: [6, 5, 4, 3, 2, 1].map(k => (g.canc[k] || [0, 0])[1]) };
+    }
+  }
+
+  // qualidade do score: ROC, AUC, decis e cortes (na mesma base em que foi calculado)
+  const scored = E.filter(c => c.risk != null);
+  let quality = null;
+  if (scored.length > 10 && scored.some(c => c.churned) && scored.some(c => !c.churned)) {
+    const sorted = scored.slice().sort((a, b) => b.risk - a.risk), P = sorted.filter(c => c.churned).length, N = sorted.length - P;
+    let tp = 0, fp = 0; const roc = [[0, 0]];
+    sorted.forEach((c, i) => { c.churned ? tp++ : fp++; if (i === sorted.length - 1 || sorted[i + 1].risk !== c.risk) roc.push([fp / N, tp / P]); });
+    const step = Math.max(1, Math.floor(roc.length / 60)); const rocS = roc.filter((x, i) => i % step === 0 || i === roc.length - 1);
+    let auc = 0; for (let i = 1; i < roc.length; i++) auc += (roc[i][0] - roc[i - 1][0]) * (roc[i][1] + roc[i - 1][1]) / 2;
+    const deciles = Array.from({ length: 10 }, (_, i) => { const part = sorted.slice(Math.floor(i * sorted.length / 10), Math.floor((i + 1) * sorted.length / 10)); return { n: part.length, ch: part.filter(c => c.churned).length, min: part.length ? part[part.length - 1].risk : null }; });
+    const cut = t => { const above = scored.filter(c => c.risk >= t); return { t, flagged: above.length, churnedFlagged: above.filter(c => c.churned).length, recall: above.filter(c => c.churned).length / P, precision: above.length ? above.filter(c => c.churned).length / above.length : null }; };
+    const hist = grp => { const h = Array(10).fill(0); for (const c of scored.filter(c => c.churned === grp)) h[Math.min(9, Math.floor(c.risk * 10))]++; return h; };
+    quality = { auc, roc: rocS, deciles, cuts: [cut(.5), cut(.65), cut(.7)], histActive: hist(false), histChurned: hist(true), P, N, scores: sorted.map(c => [Math.round(c.risk * 1000) / 1000, c.churned ? 1 : 0]) };
+  }
+
+  // casos
+  const caseOf = c => ({ nome: c.nome || c.label, id: c.label, setor: attr(c, state.dimBar), porte: attr(c, state.dimPeer), csm: attr(c, csmDim), lines: c.lines, linesCanc: c.linesCanc, mrr: c.churned ? c.mrrPerdido : c.mrr, tenure: c.tenure, risk: c.risk, cls: c.cls, motivo: c.motivo, descricao: c.descricao, dataCanc: iso(c.dataCanc), sinais: c.churned && c.cls === "anormal" ? healthyText(c) : drvText(c), peer: c.peerLabel });
+  const anomalies = ch.filter(c => c.cls === "anormal").sort((a, b) => a.risk - b.risk).map(caseOf);
+  const atRisk = act.filter(c => c.risk != null && c.risk >= .55).sort((a, b) => b.risk - a.risk).map(caseOf);
+  const mot = new Map();
+  for (const c of ch) { const k = c.motivo || "(não informado)"; if (!mot.has(k)) mot.set(k, { k, anormal: 0, fraco: 0, esperado: 0, na: 0, mrr: 0 }); const o = mot.get(k); o[c.cls in o ? c.cls : "na"]++; o.mrr += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; }
+  const reasons = [...mot.values()].sort((a, b) => (b.anormal + b.fraco + b.esperado + b.na) - (a.anormal + a.fraco + a.esperado + a.na));
+  const tenureBuckets = [[0, 3], [3, 6], [6, 12], [12, 18], [18, 24], [24, 36], [36, 999]].map(([a, b]) => ({ a, b, n: ten.filter(x => x >= a && x < b).length }));
+
+  // carteira de CSM ajustada pelo mix de clientes (setor × porte)
+  let csm = null;
+  if (csmDim) {
+    const seg = [state.dimBar, state.dimPeer].filter(Boolean);
+    const cellKey = c => seg.map(d => c.attrs[d]).join("|");
+    const cell = new Map();
+    for (const c of E) { const k = cellKey(c); if (!cell.has(k)) cell.set(k, [0, 0]); const o = cell.get(k); o[0]++; if (c.churned) o[1]++; }
+    const g = new Map();
+    for (const c of E) { const k = c.attrs[csmDim]; if (!g.has(k)) g.set(k, { k, n: 0, ch: 0, exp: 0, mrr: 0, alto: 0 }); const o = g.get(k); const cr = cell.get(cellKey(c)); o.n++; o.exp += cr[1] / cr[0]; if (c.churned) { o.ch++; o.mrr += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; } if (c.cls === "alto") o.alto++; }
+    csm = { dim: pretty(csmDim), mix: seg.map(pretty), rows: [...g.values()].map(o => ({ ...o, r: o.ch / o.n, ratio: o.exp ? o.ch / o.exp : null })).sort((a, b) => (b.ratio || 0) - (a.ratio || 0)) };
+  }
+
+  // hierarquia: churn parcial e contágio dentro do grupo econômico
+  let hierarchy = null;
+  if (M0.hier.org) {
+    const byOrg = new Map();
+    for (const c of M0.clients) { if (!c.h || !c.h.org) continue; if (!byOrg.has(c.h.org)) byOrg.set(c.h.org, []); byOrg.get(c.h.org).push(c); }
+    const multi = [...byOrg.values()].filter(a => a.length > 1);
+    const partialOrgs = multi.filter(a => a.some(c => c.churned) && a.some(c => !c.churned));
+    const firstProduct = new Map();
+    for (const a of partialOrgs) for (const c of a.filter(x => x.churned)) { const k = c.hl ? c.hl.__produto : "?"; firstProduct.set(k, (firstProduct.get(k) || 0) + 1); }
+    let contagion = null;
+    if (M0.hier.grupo) {
+      const byGroup = new Map();
+      for (const e of E) { const g = e.f[M.hier.grupo]; if (!g || /^\(/.test(g)) continue; if (!byGroup.has(g)) byGroup.set(g, []); byGroup.get(g).push(e); }
+      const groupsMulti = [...byGroup.values()].filter(a => a.length > 1);
+      let exposed = 0, followed = 0, withChurn = 0;
+      for (const a of groupsMulti) {
+        const first = a.filter(e => e.churned && e.dataCanc != null).sort((x, y) => x.dataCanc - y.dataCanc)[0]; if (!first) continue;
+        withChurn++;
+        for (const e of a) {
+          if (e === first || e.inicio == null || e.inicio > first.dataCanc || (e.churned && e.dataCanc != null && e.dataCanc <= first.dataCanc)) continue;
+          if (M.ref - first.dataCanc < 183 * 864e5) continue;
+          exposed++;
+          if (e.churned && e.dataCanc != null && e.dataCanc - first.dataCanc <= 183 * 864e5) followed++;
+        }
+      }
+      contagion = { groups: byGroup.size, groupsMulti: groupsMulti.length, withChurn, exposed, followed, rate: exposed ? followed / exposed : null, baseline: monthly != null ? 1 - Math.pow(1 - monthly, 6) : null };
+    }
+    hierarchy = { orgs: byOrg.size, multi: multi.length, partial: partialOrgs.length, fullChurnMulti: multi.filter(a => a.every(c => c.churned)).length, firstProduct: [...firstProduct.entries()].sort((a, b) => b[1] - a[1]), contagion, productRates };
+  }
+
+  // qualidade dos dados
+  const L = M0.clients, n = L.length || 1, mC = state.map.clientes;
+  const typeCounts = {};
+  if (mC.tipo && state.raw.clientes) for (const r of state.raw.clientes.rows) { const t = String(r[mC.tipo] ?? "").trim() || "(vazio)"; typeCounts[t] = (typeCounts[t] || 0) + 1; }
+  let kMin = null, kMax = null;
+  if (K && mK.data) for (const r of K.rows) { const d = toDate(r[mK.data]); if (d == null) continue; if (kMin == null || d < kMin) kMin = d; if (kMax == null || d > kMax) kMax = d; }
+  const lChurn = L.filter(c => c.churned);
+  const completeness = [
+    ["Data de início", L.filter(c => c.inicio != null).length / n],
+    ["Nome", L.filter(c => c.nome).length / n],
+    ...M0.dims.map(d => [pretty(d), L.filter(c => c.attrs[d] && !/^\(/.test(c.attrs[d])).length / n]),
+    ["MRR", L.filter(c => Number.isFinite(c.mrr)).length / n],
+    ["Motivo (cancelados)", lChurn.length ? lChurn.filter(c => c.motivo).length / lChurn.length : null],
+    ["Algum KPI", L.filter(c => Object.values(c.kpi).some(Number.isFinite)).length / n]
+  ];
+  const dataQuality = {
+    rowsCustomer, linesCounted: M0.clients.length, typeCounts, kpiRows: K ? K.rows.length : 0, kpiTypes: M0.kpiCols.length, kpiFrom: iso(kMin), kpiTo: iso(kMax),
+    completeness, warnings: M0.warnings, notes: M0.notes, mapping: { clientes: state.map.clientes, kpis: state.map.kpis }
+  };
+
+  const out = {
+    generatedAt: new Date().toISOString().slice(0, 10), isSample: !!isSample, filters: filtersDesc, level: M.noun[1], levelOne: M.noun[0], peerDim: state.dimPeer ? pretty(state.dimPeer) : null, segDim: state.dimBar ? pretty(state.dimBar) : null,
+    kpis, cohorts, survival, profiles, kpiStats: kpiStatsOut, trajectory, quality, anomalies, atRisk, reasons, tenureBuckets, csm, hierarchy, dataQuality
+  };
+  const round = v => typeof v === "number" ? (Number.isFinite(v) ? Math.round(v * 10000) / 10000 : null) : Array.isArray(v) ? v.map(round) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, round(x)])) : v;
+  return round(out);
+}
+function openDiagnostic() {
+  const keep = { level: state.level, dimPeer: state.dimPeer, dimBar: state.dimBar };
+  try {
+    const data = diagnosticData(state.isSample);
+    localStorage.setItem("csops-diag-data", JSON.stringify({ savedAt: new Date().toISOString(), data }));
+  } catch (e) {
+    toast("Não deu para preparar o diagnóstico com estes dados: " + e.message);
+  } finally {
+    Object.assign(state, keep); renderReport();
+  }
+}
+
 /* ---------- explicação passo a passo ---------- */
 let LAST = null;
 const term = (word, text) => `<span class="term" tabindex="0" data-tip="${esc(text)}">${word}</span>`;
@@ -1948,6 +2199,96 @@ function heatHover(cell) {
 document.addEventListener("mouseover", e => heatHover(e.target.closest && e.target.closest("table.heat td.cell[data-c]")));
 document.addEventListener("focusin", e => heatHover(e.target.closest && e.target.closest("table.heat td.cell[data-c]")));
 
+
+/* ---------- tour de boas-vindas ---------- */
+const TOUR_KEY = "csops-tour", TOUR_V = 1;
+const MOTION_OK = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+const getTour = () => { try { const t = JSON.parse(localStorage.getItem(TOUR_KEY) || "null"); return t && t.v === TOUR_V ? t : null; } catch (e) { return null; } };
+const setTour = o => { try { localStorage.setItem(TOUR_KEY, JSON.stringify({ v: TOUR_V, at: new Date().toISOString(), ...o })); } catch (e) {} };
+const TOUR_STEPS = {
+  empresa: { el: "#empresa .company", title: "Sua empresa e o mercado", text: "Diga o modelo, o segmento e o ticket. Com isso a seção <b>Mercado</b> compara o seu churn com empresas parecidas." },
+  dados: { el: "#inputs .srcbar", title: "Seus dados", text: "Anexe ou cole os CSVs de clientes e indicadores. <b>Ver</b> mostra o que já foi carregado; o modelo de planilha está em <b>Baixar modelo</b>, no topo." },
+  filtros: { el: "#filtros", title: "Recorte e nível", text: "Analise por produto, organização ou grupo econômico e filtre qualquer perfil. Tudo abaixo recalcula." },
+  achados: { el: "#resumo .highlights", title: "Comece por aqui", text: "Os principais achados resumem o relatório numa leitura, com links para a seção de cada um." },
+  mercado: { el: "#mercado .mk-grid, #mercado .empty", title: "Você x mercado", text: "O seu churn ao lado de referências de empresas B2B SaaS do mesmo segmento e ticket. Aparece depois que o perfil do Passo 1 está preenchido." },
+  risco: { el: "#risco .cuts", title: "Quem precisa de atenção agora", text: "Clientes ativos parecidos com quem já cancelou. <b>Experimente:</b> arraste os cortes para ajustar o tamanho da lista ao time." },
+  coortes: { el: "#coortes table.heat", title: "Retenção por safra", text: "Cada linha é um período de entrada; cada coluna, um mês de vida. <b>Experimente:</b> clique numa célula para ver quem saiu até aquele mês." },
+  perfil: { el: "#perfil .bars", title: "Onde está o churn", text: "Grupos com ▲ cancelam acima do que o acaso explica. <b>Experimente:</b> clique numa barra para filtrar o relatório inteiro. O ícone (i) de cada título explica o cálculo." },
+  indicadores: { el: "#indicadores table", title: "Quais indicadores anteciparam o churn", text: "Os KPIs do topo são os que mais separam quem saiu de quem ficou. Clique no nome de um KPI para ver a distribuição completa." },
+  anormal: { el: "#anormal .cuts", title: "Churn esperado x anormal", text: "Cancelado com score baixo saiu com indicadores saudáveis: os números não avisaram. Esses casos pedem conversa com o CSM, não alerta de KPI." },
+  motivos: { el: "#motivos .bars", title: "Motivos e momento", text: "Clique num motivo para ver os cancelamentos dele na tabela. Picos perto de 12 ou 24 meses costumam ser renovação." },
+  diag: { el: "#toDiag", title: "Diagnóstico de Churn", text: "Abre um painel com a história completa destes dados: retenção, sinais, qualidade do score e lista de ação, com o cálculo passo a passo." }
+};
+const TOUR_PATHS = {
+  csm: { label: "Agir na minha carteira", who: "CSM", keys: ["achados", "risco", "perfil", "coortes", "filtros", "dados"] },
+  head: { label: "Entender o churn da base", who: "Head de CS", keys: ["achados", "mercado", "coortes", "perfil", "risco", "filtros"] },
+  ops: { label: "Preparar e conferir os dados", who: "CS Ops ou analista", keys: ["empresa", "dados", "filtros", "achados", "risco", "coortes"] },
+  all: { label: "Ver tudo, na ordem da página", who: "cerca de 2 minutos", keys: ["empresa", "dados", "filtros", "achados", "mercado", "risco", "coortes", "perfil"] }
+};
+const TRAIL2 = ["indicadores", "anormal", "motivos", "diag"];
+let tourOpener = null;
+function openWelcome(opener) {
+  tourOpener = opener || null;
+  $("#tourPaths").innerHTML = Object.entries(TOUR_PATHS).map(([k, p]) => `<button type="button" data-tourpath="${k}"><b>${p.label}</b><span>${p.who}</span></button>`).join("");
+  $("#tourWelcome").hidden = false; $(".wrap").inert = true;
+  $("#tourPaths button").focus();
+}
+function closeWelcome() { $("#tourWelcome").hidden = true; $(".wrap").inert = false; }
+function startUsing() {
+  window.scrollTo({ top: 0, behavior: MOTION_OK ? "smooth" : "auto" });
+  const f = $("#co-nome"); if (f) setTimeout(() => f.focus({ preventScroll: true }), MOTION_OK ? 450 : 0);
+}
+function runTour(keys, path, trail = 1) {
+  const D = window.driver && window.driver.js && window.driver.js.driver;
+  if (!D) { toast("O tour não carregou: verifique a conexão com cdn.jsdelivr.net."); return; }
+  const list = keys.map(k => TOUR_STEPS[k]).filter(st => document.querySelector(st.el));
+  const steps = list.map(st => ({ element: st.el, popover: { title: st.title, description: st.text } }));
+  if (trail === 1) steps.push({ element: "#empresa .company", popover: { title: "Agora é com você", description: "Preencha o perfil da empresa e anexe os seus dados; os exemplos saem no primeiro arquivo. Para rever o tour, use <b>Ver tour</b> no topo." } });
+  else steps.push({ element: "#empresa .company", popover: { title: "Pronto", description: "Você viu todas as seções. Comece pelo perfil da empresa e pelos seus dados." } });
+  let ended = null;
+  const tour = D({
+    steps, showProgress: true, progressText: "{{current}} de {{total}}", showButtons: ["next"],
+    nextBtnText: "Entendi", doneBtnText: "Começar a usar", allowClose: true, allowKeyboardControl: true,
+    smoothScroll: MOTION_OK, animate: false, overlayColor: "#0b1210", overlayOpacity: 0.62, stagePadding: 8, stageRadius: 10, popoverClass: "csops-tour",
+    onPopoverRender: (pop, { state: st }) => {
+      const last = st.activeIndex === steps.length - 1;
+      pop.wrapper.setAttribute("role", "dialog"); pop.wrapper.setAttribute("aria-modal", "true");
+      pop.title.id = "tourTitle"; pop.description.id = "tourDesc";
+      pop.wrapper.setAttribute("aria-labelledby", "tourTitle"); pop.wrapper.setAttribute("aria-describedby", "tourDesc");
+      const skip = document.createElement("button");
+      skip.type = "button"; skip.className = "tour-skip"; skip.textContent = last ? "Fechar" : "Pular";
+      skip.addEventListener("click", () => { ended = last ? "done" : "skipped"; tour.destroy(); });
+      // Entendi vem primeiro no foco (Enter avança); Pular fica à esquerda só visualmente
+      skip.style.order = "-2"; pop.footerButtons.append(skip);
+      if (last && trail === 1) {
+        const more = document.createElement("button");
+        more.type = "button"; more.textContent = "Explorar mais 4 seções";
+        more.addEventListener("click", () => { ended = "more"; tour.destroy(); });
+        more.style.order = "-1"; pop.footerButtons.append(more);
+      }
+      setTimeout(() => pop.nextButton && pop.nextButton.focus({ preventScroll: true }), 160);
+    },
+    // "Entendi" no último passo conta como tour concluído
+    onNextClick: () => { if (tour.isLastStep()) { ended = "done"; tour.destroy(); } else tour.moveNext(); },
+    onDestroyed: () => {
+      const how = ended || "skipped";
+      setTour({ status: how === "more" ? "done" : how, path, trail });
+      if (how === "more") { runTour(TRAIL2, path, 2); return; }
+      if (how === "done") startUsing();
+      else if (tourOpener && document.body.contains(tourOpener)) tourOpener.focus();
+    }
+  });
+  tour.drive();
+}
+document.addEventListener("click", e => {
+  const pb = e.target.closest && e.target.closest("[data-tourpath]");
+  if (pb) { closeWelcome(); const p = TOUR_PATHS[pb.dataset.tourpath]; runTour(p.keys, pb.dataset.tourpath); return; }
+  if (e.target.id === "tourSkipAll") { closeWelcome(); setTour({ status: "skipped", step: 0 }); toast("Tour pulado. Você pode rever quando quiser em Ver tour."); if (tourOpener) tourOpener.focus(); return; }
+  if (e.target.id === "btnTour") { openWelcome(e.target); return; }
+  if (e.target.closest && e.target.closest("[data-diag]")) openDiagnostic();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#tourWelcome").hidden) { closeWelcome(); setTour({ status: "skipped", step: 0 }); } });
+
 /* ---------- export ---------- */
 function toCSV(rows) {
   if (!rows.length) return "";
@@ -2115,6 +2456,8 @@ function loadSample() {
 }
 
 loadSample();
+// primeira visita: oferece o tour depois que a página assenta
+if (!getTour()) setTimeout(() => { if (!getTour() && $("#tourWelcome").hidden && $("#pm").hidden) openWelcome(); }, 900);
 </script>
 </body>
 </html>

@@ -30,7 +30,7 @@ const E = new Proxy(function () {}, {
 });
 const document = { querySelector: () => E, querySelectorAll: () => [], addEventListener() {}, createElement: () => E, body: E };
 const papa = await (await fetch("https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js")).text();
-const ctx = vm.createContext({ document, window: {}, navigator: {}, location: {}, innerWidth: 1200, innerHeight: 800, setTimeout, clearTimeout, console, Intl, Date, Math, JSON });
+const ctx = vm.createContext({ document, window: {}, navigator: {}, location: {}, innerWidth: 1200, innerHeight: 800, matchMedia: () => ({ matches: false }), localStorage: { getItem: () => null, setItem() {}, removeItem() {} }, setTimeout: () => 0, clearTimeout, console, Intl, Date, Math, JSON });
 vm.runInContext(papa + "\nthis.Papa = Papa;", ctx);
 vm.runInContext(engine, ctx);
 
@@ -46,8 +46,8 @@ if (files.length) {
   `, ctx);
 }
 ctx.__isSample = !files.length;
-const calc = fs.readFileSync(path.join(root, "tools", "diagnostico_calc.js"), "utf8");
-const data = vm.runInContext(calc, ctx);
+// mesmo cálculo do botão "Diagnóstico de Churn" do relatório
+const data = vm.runInContext("diagnosticData(__isSample)", ctx);
 
 const out = path.join(root, "diagnostico.html");
 const page = fs.readFileSync(out, "utf8");

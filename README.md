@@ -12,7 +12,14 @@ Este repositório é um relatório de página única (`index.html`) para times d
 
 Os nomes de coluna são reconhecidos sozinhos (PT ou EN) e podem ser trocados em **Colunas** em cada cartão.
 
+## Tour de boas-vindas
+
+Na primeira visita, o relatório oferece um tour guiado (Driver.js) que rola até cada seção, explica para que ela serve e onde clicar, com **Pular** e **Entendi**. Há quatro caminhos: agir na carteira (CSM), entender o churn da base (Head de CS), preparar os dados (CS Ops) e ver tudo na ordem da página. No fim, o tour volta ao Passo 1 com o foco no primeiro campo; "Explorar mais 4 seções" abre uma segunda trilha (Indicadores, Churn anormal, Motivos e o painel de diagnóstico). **Ver tour**, no topo, reabre a qualquer momento. O painel de diagnóstico tem o seu próprio tour de 4 passos. A escolha fica salva no navegador (`csops-tour`, `csops-diag-tour`); mudar a versão no código reapresenta o tour.
+
 ## Painel de diagnóstico
+
+Abra pelo botão **Diagnóstico de Churn ↗** no topo do relatório (ou na aba ao lado de Churn). O painel abre com os dados e o recorte que estão na tela do relatório; sem isso, mostra os dados de exemplo. "usar exemplo" no topo do painel volta aos dados de exemplo.
+
 
 [`diagnostico.html`](diagnostico.html) conta a história em 7 páginas: diagnóstico, retenção (curva de sobrevivência e coortes), onde está o churn (perfis, carteira de CSM ajustada pelo mix, hierarquia e contágio no grupo), sinais (força e trajetória dos KPIs antes da saída), qualidade do score (ROC, AUC, décimos e cortes), ação e dados e método. Cada achado mostra o cálculo passo a passo.
 
