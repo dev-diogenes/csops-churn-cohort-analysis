@@ -16,7 +16,7 @@
   --sunken: #eaeeec;
   --ink: #13201b;
   --muted: #56645e;
-  --faint: #8a9690;
+  --faint: #6b7872;
   --line: #d9e0dc;
   --accent: #1d6b57;
   --accent-ink: #ffffff;
@@ -34,17 +34,18 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #77837d;
+    --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993;
     --line: #2f3935; --accent: #4fb596; --accent-ink: #0d1512; --s-ativo: #3987e5; --s-canc: #d95926; --focus: #4fb596;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #77837d;
+  --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993;
   --line: #2f3935; --accent: #4fb596; --accent-ink: #0d1512; --s-ativo: #3987e5; --s-canc: #d95926; --focus: #4fb596;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
 .wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 40px; }
 h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
@@ -106,7 +107,8 @@ details[open] > summary { margin-bottom: 8px; }
 .fchip summary { list-style: none; padding: 4px 8px; cursor: pointer; color: var(--ink); font-size: 0.85rem; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .fchip summary::-webkit-details-marker { display: none; }
 .fchip details[open] > summary { margin: 0; }
-.fx { border: 0; background: none; cursor: pointer; color: var(--muted); padding: 4px 8px; font-size: 1rem; line-height: 1; }
+.fx { border: 0; background: none; cursor: pointer; color: var(--muted); min-width: 32px; min-height: 32px; padding: 4px 8px; font-size: 1.1rem; line-height: 1; border-radius: 6px; }
+.fx:hover { background: var(--sunken); color: var(--ink); }
 .fpop { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; width: min(320px, 80vw); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 8px; box-shadow: 0 8px 24px color-mix(in srgb, var(--ink) 18%, transparent); }
 .fpop input[type=search] { width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); }
 .fopts { max-height: 240px; overflow: auto; display: grid; gap: 2px; }
@@ -117,7 +119,7 @@ details[open] > summary { margin-bottom: 8px; }
 
 /* ícone de explicação e painel */
 .h2row { display: flex; align-items: center; gap: 10px; }
-.info { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--muted); background: transparent; color: var(--muted); font: italic 700 13px/1 Georgia, "Times New Roman", serif; cursor: pointer; display: inline-grid; place-items: center; padding: 0; flex: none; }
+.info { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--muted); background: transparent; color: var(--muted); font: italic 700 13px/1 Georgia, "Times New Roman", serif; cursor: pointer; display: inline-grid; place-items: center; padding: 0; flex: none; }
 .info:hover, .info[aria-expanded="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
 .xp { position: fixed; z-index: 40; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; width: min(440px, calc(100vw - 32px)); max-height: calc(100vh - 32px); display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 48px color-mix(in srgb, var(--ink) 22%, transparent); }
 .xp-head { display: flex; gap: 10px; align-items: center; padding: 12px 10px 10px 12px; border-bottom: 1px solid var(--line); cursor: grab; user-select: none; touch-action: none; }
@@ -162,22 +164,75 @@ table.xtable th, table.xtable td { padding: 5px 6px; }
 .pm-grid th.rn { z-index: 2; }
 .pm-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; }
 
+/* passos, fontes, mercado, tabelas */
+.step { display: grid; gap: 14px; scroll-margin-top: 16px; }
+.stephead { display: grid; gap: 4px; }
+.h-step { font-size: 1.2rem; }
+.lede { color: var(--muted); max-width: 72ch; font-size: 0.92rem; }
+.company { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.company label { display: grid; gap: 4px; font-size: 0.8rem; color: var(--muted); min-width: 0; }
+.company input, .company select { padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); min-height: 36px; min-width: 0; width: 100%; }
+.company-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.bench-prev { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.bench-prev > div { border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.bench-prev b { font-family: var(--f-display); font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.bench-prev .k { font-size: 0.76rem; color: var(--muted); }
+.srcbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.srcchip { font-size: 0.82rem; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); }
+.srcchip b { color: var(--ink); font-weight: 600; margin-right: 4px; }
+.srcchip.ok { border-color: color-mix(in srgb, var(--good) 45%, var(--line)); }
+.srcchip.err { border-color: color-mix(in srgb, var(--crit) 55%, var(--line)); }
+.highlights { display: grid; gap: 8px; }
+.highlights ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.highlights li { color: var(--muted); }
+.highlights li b { color: var(--ink); }
+.highlights a { color: var(--accent); white-space: nowrap; margin-left: 4px; }
+.scope { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; color: var(--muted); padding-bottom: 8px; }
+.scope b { color: var(--ink); }
+.scope a { color: var(--accent); }
+.mk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.mk { display: grid; gap: 10px; align-content: start; }
+.mk-h { display: flex; justify-content: space-between; gap: 8px; align-items: start; flex-wrap: wrap; }
+.mk-h .k { font-size: 0.8rem; color: var(--muted); }
+.mk-v { font-family: var(--f-display); font-size: 1.9rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.mk-v small { display: block; font-family: var(--f-body); font-size: 0.78rem; font-weight: 400; color: var(--muted); margin-top: 4px; }
+.bullet { position: relative; height: 34px; margin: 18px 4px 18px; border-bottom: 2px solid var(--line); }
+.bullet .band { position: absolute; bottom: 0; height: 14px; background: color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 3px 3px 0 0; }
+.bullet .mark { position: absolute; bottom: -2px; width: 3px; height: 26px; background: var(--ink); border-radius: 2px; transform: translateX(-50%); }
+.bullet .mark b { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font: 600 0.72rem var(--f-mono); white-space: nowrap; margin-bottom: 2px; }
+.bullet .tick { position: absolute; top: 100%; transform: translateX(-50%); font: 0.68rem var(--f-mono); color: var(--faint); margin-top: 3px; }
+.bullet .tick:first-of-type { transform: none; }
+.srcs summary { cursor: pointer; font-size: 0.85rem; color: var(--ink); }
+.srcs ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 8px; font-size: 0.86rem; }
+.srcs li .note { display: block; }
+.tsearch { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 8px; }
+.tsearch input { padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); min-width: min(100%, 260px); min-height: 34px; }
+table.dense td { padding-block: 6px; }
+td.n { white-space: nowrap; }
+td.one { white-space: nowrap; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+td.one .sub { overflow: hidden; text-overflow: ellipsis; }
+th.sort { cursor: pointer; user-select: none; }
+th.sort:hover { color: var(--ink); }
+th.sort[aria-sort="ascending"]::after { content: " ▲"; color: var(--accent); }
+th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); }
+.muted { color: var(--muted); }
+
 /* relatório */
-nav.topics { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); display: grid; }
-.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+nav.topics { position: sticky; padding-top: 2px; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); display: grid; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
 .tab { border: 0; background: none; padding: 10px 14px 9px; font-family: var(--f-display); font-weight: 600; font-size: 1rem; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 .tab:hover { color: var(--ink); }
 nav.topics .toc { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; padding-block: 10px; }
 nav.topics .toc a { color: var(--muted); text-decoration: none; }
 nav.topics .toc a:hover { color: var(--accent); }
-section.rep { display: grid; gap: 16px; scroll-margin-top: 110px; }
+section.rep { display: grid; gap: 16px; scroll-margin-top: 140px; }
 .sec-head { display: grid; gap: 6px; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.tile { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 2px; align-content: start; min-width: 0; }
 .tile .k { font-size: 0.78rem; color: var(--muted); }
-.tile .v { font-family: var(--f-display); font-size: 1.75rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.tile .v { white-space: nowrap; font-family: var(--f-display); font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; }
 .tile .s { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .tile.hl .v { color: var(--crit); }
 .controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 0.88rem; color: var(--muted); }
@@ -252,7 +307,7 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
     <div class="row">
       <div style="display:grid;gap:8px;min-width:0">
         <h1>Análise de Churn por Coorte</h1>
-        <p class="lede">Anexe ou cole os CSVs exportados das tabelas <span class="mono">customer</span>, <span class="mono">kpi</span> e <span class="mono">kpi_type</span>. O relatório cruza tudo pelo ID do cliente e mostra quais cancelamentos eram esperados para aquele perfil e quais fogem do padrão.</p>
+        <p class="lede">Informe o perfil da empresa e anexe ou cole os CSVs exportados das tabelas <span class="mono">customer</span> e <span class="mono">kpi</span>. O relatório cruza tudo pelo ID do cliente e mostra quais cancelamentos eram esperados para aquele perfil e quais fogem do padrão.</p>
       </div>
       <div class="actions">
         <a class="btn" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Baixar modelo (.xlsx)</a>
@@ -262,9 +317,11 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
     </div>
   </header>
 
+  <section class="step" id="empresa" aria-labelledby="empresaTitle"></section>
+
   <div class="banner" id="sampleBanner" hidden><b>Dados de exemplo.</b> São clientes fictícios para mostrar o relatório. Anexe ou cole seus arquivos para substituir.</div>
 
-  <div class="inputs" id="inputs"></div>
+  <section class="step" id="inputs"></section>
 
   <div id="warnings" class="banner" hidden></div>
 
@@ -428,7 +485,7 @@ const SOURCES = {
     }
   },
   cancel: {
-    title: "Cancelamentos", table: "opcional", hint: "só se o cancelamento não estiver em Clientes", optional: true,
+    title: "Cancelamentos", table: "", hint: "só se o cancelamento não estiver em Clientes", optional: true,
     expect: "<code>id_customer</code>, <code>dt_cancel</code>, <code>cancel_tag</code>",
     fields: {
       id: { label: "ID do cliente", syn: ID_SYN },
@@ -450,7 +507,10 @@ const state = {
   topic: "churn",
   level: "linha",
   filters: [],
-  showAll: { churn: false, risk: false }
+  showAll: { churn: false, risk: false },
+  q: {}, sort: {},
+  srcOpen: null,
+  company: (() => { try { return JSON.parse(localStorage.getItem("csops-company") || "null"); } catch (e) { return null; } })()
 };
 
 function parseCSV(text) {
@@ -488,6 +548,7 @@ function loadText(src, text, fromUser = true) {
     state.raw[src] = p;
     autoMap(src);
     if (!state.map[src].id) state.raw[src].error = "Não achei a coluna de ID do cliente. Escolha em Colunas.";
+    state.srcOpen = state.raw[src].error ? true : null;
   } catch (e) {
     state.raw[src] = { fields: [], rows: [], error: e.message };
   }
@@ -498,7 +559,7 @@ function loadText(src, text, fromUser = true) {
 /* ---------- entradas ---------- */
 function renderInputs() {
   const host = $("#inputs");
-  host.innerHTML = Object.entries(SOURCES).map(([key, s]) => {
+  const cards = Object.entries(SOURCES).map(([key, s]) => {
     const raw = state.raw[key];
     let st = `<span class="status">${s.optional ? "opcional" : "vazio"}</span>`;
     if (raw && raw.error && !raw.rows.length) st = `<span class="status err">erro</span>`;
@@ -517,7 +578,7 @@ function renderInputs() {
       </details>` : "";
     return `
     <div class="src" data-src="${key}">
-      <div class="src-head"><div><h3>${s.title} <span class="mono" style="font-weight:400;color:var(--faint)">${s.table}</span></h3><small>${s.hint}</small></div>${st}</div>
+      <div class="src-head"><div><h3>${s.title}${s.table ? ` <span class="mono" style="font-weight:400;color:var(--faint)">${s.table}</span>` : ""}</h3><small>${s.hint}</small></div>${st}</div>
       ${raw && raw.error ? `<p class="note" style="color:var(--ink)">${esc(raw.error)}</p>` : ""}
       <div class="drop">
         <span>Arraste o CSV aqui ou</span>
@@ -533,6 +594,15 @@ function renderInputs() {
       ${map}
     </div>`;
   }).join("");
+  const loaded = !!(state.raw.clientes && state.raw.clientes.rows.length);
+  const open = state.srcOpen == null ? !loaded : state.srcOpen;
+  const summaryChips = Object.entries(SOURCES).map(([key, s]) => {
+    const raw = state.raw[key];
+    return `<span class="srcchip ${raw && raw.rows.length ? (raw.error ? "err" : "ok") : ""}"><b>${s.title}</b> ${raw && raw.rows.length ? `${fmtInt(raw.rows.length)} linhas${raw.error ? " · revisar" : " ✓"}` : s.optional ? "opcional" : "faltando"}</span>`;
+  }).join("");
+  host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2></div>
+    <div class="srcbar">${summaryChips}<button type="button" class="btn sm" id="btnSources" aria-expanded="${open}">${open ? "Recolher" : "Ver e trocar arquivos"}</button></div>
+    <div class="inputs" ${open ? "" : "hidden"}>${cards}</div>`;
   $("#sampleBanner").hidden = !state.isSample;
 }
 
@@ -572,9 +642,18 @@ document.addEventListener("click", e => {
   else if (b.dataset.fremove) { state.filters.splice(+b.dataset.fremove, 1); state.openFilter = null; renderReport(); }
   else if (b.id === "btnClearFilters") { state.filters = []; state.openFilter = null; renderReport(); }
   else if (b.id === "btnSample") loadSample();
+  else if (b.id === "btnSources") { const open = b.getAttribute("aria-expanded") === "true"; state.srcOpen = !open; renderInputs(); }
+  else if (b.id === "btnCompanyClear") { saveCompany(null); renderReport(); renderCompany(); }
   else if (b.id === "btnClear") { state.raw = EMPTY_RAW(); state.map = EMPTY_MAP(); state.filters = []; state.level = "linha"; state.isSample = false; renderInputs(); renderReport(); }
 });
 document.addEventListener("input", e => {
+  const tq = e.target;
+  if (tq.dataset && tq.dataset.q) {
+    const key = tq.dataset.q, pos = tq.selectionStart;
+    state.q[key] = tq.value; state.showAll[key] = false; renderReport();
+    const el = $("#q-" + key); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (err) {} }
+    return;
+  }
   const t = e.target; if (!t.dataset || t.dataset.fsearch == null) return;
   const q = norm(t.value);
   document.querySelectorAll(`#flt-${t.dataset.fsearch} .fopts label`).forEach(l => (l.hidden = q && !l.dataset.v.includes(q)));
@@ -852,9 +931,10 @@ const CHIP = {
   alto: ["crit", "▲", "Alto risco"], atencao: ["warn", "◆", "Atenção"], ok: ["good", "●", "Saudável"], na: ["neu", "○", "Sem indicadores"]
 };
 const chip = cls => { const [k, i, t] = CHIP[cls] || CHIP.na; return `<span class="chip ${k}"><i aria-hidden="true">${i}</i>${t}</span>`; };
-const scoreCell = r => {
+// neutral: na tabela de cancelados a classificação já vem no chip; a cor da barra só confundiria
+const scoreCell = (r, neutral) => {
   if (r == null) return "—";
-  const col = r >= 0.65 ? "var(--crit)" : r >= 0.5 ? "var(--warn)" : "var(--good)";
+  const col = neutral ? "var(--muted)" : r >= 0.7 ? "var(--crit)" : r >= 0.55 ? "var(--warn)" : "var(--good)";
   return `<span class="score"><span class="m"><b style="width:${Math.round(r * 100)}%;background:${col}"></b></span>${Math.round(r * 100)}</span>`;
 };
 const drvText = c => c.drivers.map(d => `${pretty(d.col)} ${d.low ? "baixo" : "alto"} (p${Math.round(d.p * 100)})`).join(" · ");
@@ -935,7 +1015,7 @@ function viewbar(M, M0) {
       <button type="button" class="fx" data-fremove="${i}" aria-label="Remover filtro ${esc(pretty(f.dim))}">×</button>
     </span>`;
   }).join("");
-  return `<div class="viewbar">
+  return `<div class="viewbar" id="filtros">
     <div class="vb-row">
       <label for="selLevel">Analisar por</label>
       <select id="selLevel">${M.levels.map(l => `<option value="${l}" ${l === M.level ? "selected" : ""}>${LEVELS[l][0]}</option>`).join("")}</select>
@@ -955,7 +1035,7 @@ function renderReport() {
   const M0 = build();
   const w = $("#warnings");
   if (!M0) {
-    w.hidden = true; LAST = null; closeExplain();
+    w.hidden = true; LAST = null; closeExplain(); renderCompany();
     host.innerHTML = `<div class="empty">Anexe pelo menos o arquivo de Clientes (customer, com dt_cancel) para ver o relatório. Os Indicadores (kpi) ativam a separação entre churn esperado e anormal. Sem arquivos à mão? Use <b>Carregar exemplo</b>.</div>`;
     return;
   }
@@ -976,19 +1056,22 @@ function renderReport() {
   host.innerHTML = bar + `<nav class="topics" aria-label="Tópicos">
       <div class="tabs" role="tablist">${TOPICS.map(t => `<button type="button" role="tab" class="tab" data-topic="${t.id}" aria-selected="${t === topic}">${t.label}</button>`).join("")}</div>
       <div class="toc">${topic.sections.map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}</div>
+      <div class="scope"><span>Analisando <b>${esc(M.noun[1].toLowerCase())}</b>${state.filters.filter(f => f.values.length).map(f => ` · ${esc(pretty(f.dim))}: ${esc(f.values.length === 1 ? f.values[0] : f.values.length + " valores")}`).join("")}</span><a href="#filtros">Ajustar</a></div>
     </nav>` + topic.sections.map(([, , fn]) => fn(ctx)).join("");
   if (state.xp) renderExplain();
+  renderCompany();
 }
 
 // Tópicos do relatório. Cada tópico tem seu submenu de seções; novos tópicos entram aqui.
 const TOPICS = [
   { id: "churn", label: "Churn", sections: [
-    ["resumo", "Resumo", ({ M }) => summary(M)],
+    ["resumo", "Resumo", ctx => summary(ctx.M, ctx)],
+    ["mercado", "Mercado", ({ M }) => market(M)],
+    ["risco", "Ativos em risco", ({ M, sig }) => atRisk(M, sig)],
     ["coortes", "Retenção por coorte", ({ M }) => cohort(M)],
     ["perfil", "Churn por perfil", ({ M }) => profile(M)],
     ["indicadores", "Indicadores", ({ M, stats }) => indicators(M, stats)],
     ["anormal", "Churn anormal", ({ M, sig }) => anomaly(M, sig)],
-    ["risco", "Ativos em risco", ({ M, sig }) => atRisk(M, sig)],
     ["motivos", "Motivos", ({ M }) => reasons(M)],
     ["metodo", "Método", () => method()]
   ] }
@@ -999,7 +1082,28 @@ function sec(id, eyebrow, title, lede, body) {
   return `<section class="rep" id="${id}"><div class="sec-head"><span class="eyebrow">${eyebrow}</span><div class="h2row"><h2>${title}</h2>${info}</div>${lede ? `<p class="lede">${lede}</p>` : ""}</div>${body}</section>`;
 }
 
-function summary(M) {
+function highlights(M, ctx) {
+  const out = [];
+  const ch = M.clients.filter(c => c.churned), p = ch.length / M.clients.length;
+  let best = null;
+  for (const d of M.dims) {
+    const g = new Map();
+    for (const c of M.clients) { const k = c.attrs[d]; if (!g.has(k)) g.set(k, [0, 0]); const o = g.get(k); o[0]++; if (c.churned) o[1]++; }
+    for (const [k, [n, x]] of g) { if (n < 5 || p <= 0 || p >= 1) continue; const z = (x / n - p) / Math.sqrt(p * (1 - p) / n); if (z >= 1.96 && (!best || z > best.z)) best = { d, k, n, x, z }; }
+  }
+  if (best) out.push(`<b>${esc(best.k)}</b> (${esc(pretty(best.d).toLowerCase())}) cancela ${fmtPct(best.x / best.n)}, contra ${fmtPct(p)} da base. <a href="#perfil">Churn por perfil</a>`);
+  const top = ctx && ctx.stats ? ctx.stats.filter(s => ctx.sig.some(x => x.col === s.col)).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0] : null;
+  if (top) out.push(`<b>${esc(pretty(top.col))}</b> é o indicador que mais separa quem cancela (efeito ${nf1.format(Math.abs(top.d))}). <a href="#indicadores">Indicadores</a>`);
+  const hi = M.clients.filter(c => !c.churned && c.cls === "alto");
+  if (hi.length) out.push(`<b>${fmtInt(hi.length)} ${esc(M.noun[1].toLowerCase())} ativas</b> em alto risco, com ${fmtBRL(hi.reduce((t, c) => t + (Number.isFinite(c.mrr) ? c.mrr : 0), 0))} de MRR. <a href="#risco">Ativos em risco</a>`);
+  const an = ch.filter(c => c.cls === "anormal").length;
+  if (an) out.push(`<b>${fmtInt(an)} cancelamentos anormais</b>: saíram com indicadores saudáveis. <a href="#anormal">Churn anormal</a>`);
+  const co = state.company, mc = monthlyChurn(M);
+  if (co && co.modelo === "b2b" && co.segmento && mc) { const r = BENCH.logo[co.segmento]; out.push(`Churn de logos de <b>${fmtPct(mc.m, 2)} ao mês</b>: ${mc.m > r[1] ? "acima" : mc.m < r[0] ? "abaixo" : "dentro"} da faixa de ${esc(SEGMENTS[co.segmento])} (${fmtPct(r[0], 1)}–${fmtPct(r[1], 1)}). <a href="#mercado">Mercado</a>`); }
+  return out.length ? `<div class="panel highlights"><h3>Principais achados</h3><ul>${out.map(x => `<li>${x}</li>`).join("")}</ul></div>` : "";
+}
+
+function summary(M, ctx) {
   const n = M.clients.length, ch = M.clients.filter(c => c.churned), act = n - ch.length;
   const exposure = M.clients.reduce((s, c) => s + (Number.isFinite(c.tenure) ? c.tenure : 0), 0);
   const chDated = ch.filter(c => Number.isFinite(c.tenure)).length;
@@ -1018,7 +1122,7 @@ function summary(M) {
     ...(M.level !== "linha" ? [["Churn parcial", fmtInt(M.clients.filter(c => c.partial).length), (() => { const v = sumF(M.clients.filter(c => c.partial).map(c => c.partialLost)); return Number.isFinite(v) && v ? `ativas, mas perderam ${fmtBRL(v)} em produtos` : "ativas, mas cancelaram algum produto"; })()]] : []),
     ["Churn anormal", scored ? fmtInt(anorm) : "—", scored ? `${fmtPct(anorm / scored, 0)} dos cancelados com KPIs` : "precisa de Indicadores", true]
   ];
-  return sec("resumo", "Visão geral", "Resumo", "", `<div class="tiles">${tiles.map(([k, v, s, hl]) => `<div class="tile${hl && scored ? " hl" : ""}"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${esc(s)}</span></div>`).join("")}</div>`);
+  return sec("resumo", "Visão geral", "Resumo", "", highlights(M, ctx) + `<div class="tiles">${tiles.map(([k, v, s, hl]) => `<div class="tile${hl && scored ? " hl" : ""}"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${esc(s)}</span></div>`).join("")}</div>`);
 }
 
 const RAMP = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281"];
@@ -1143,11 +1247,19 @@ function histo(M) {
 }
 
 function tableRows(list, key, cols, limit = 15) {
+  const q = norm(state.q[key] || "");
+  let rows = q ? list.filter(r => cols.some(c => c.s && norm(c.s(r)).includes(q))) : list.slice();
+  const so = state.sort[key];
+  if (so && cols[so.i] && cols[so.i].s) {
+    const f = cols[so.i].s;
+    rows.sort((a, b) => { const x = f(a), y = f(b); return (typeof x === "number" && typeof y === "number" ? x - y : String(x ?? "").localeCompare(String(y ?? ""), "pt-BR")) * so.dir; });
+  }
   const all = state.showAll[key];
-  const shown = all ? list : list.slice(0, limit);
-  return `<div class="scroll"><table><thead><tr>${cols.map(c => `<th class="${c.n ? "n" : ""}">${c.h}</th>`).join("")}</tr></thead>
-    <tbody>${shown.map(r => `<tr>${cols.map(c => `<td class="${c.n ? "n" : ""}">${c.f(r)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
-    ${list.length > limit ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-more="${key}">${all ? "Mostrar menos" : `Mostrar todos (${list.length})`}</button></div>` : ""}`;
+  const shown = all ? rows : rows.slice(0, limit);
+  return `<div class="tsearch"><input type="search" id="q-${key}" data-q="${key}" value="${esc(state.q[key] || "")}" placeholder="Buscar cliente, motivo ou perfil" aria-label="Buscar na tabela"><span class="note">${fmtInt(rows.length)} de ${fmtInt(list.length)} · clique no título da coluna para ordenar</span></div>
+    <div class="scroll"><table class="dense"><thead><tr>${cols.map((c, i) => `<th class="${c.n ? "n" : ""}${c.s ? " sort" : ""}" ${c.s ? `data-tsort="${key}:${i}" tabindex="0" aria-sort="${so && so.i === i ? (so.dir > 0 ? "ascending" : "descending") : "none"}"` : ""}>${c.h}</th>`).join("")}</tr></thead>
+    <tbody>${shown.map(r => `<tr>${cols.map(c => `<td class="${c.n ? "n" : ""}${c.one ? " one" : ""}"${c.one && c.t ? ` title="${esc(c.t(r))}"` : ""}>${c.f(r)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${cols.length}" class="note">Nada encontrado.</td></tr>`}</tbody></table></div>
+    ${rows.length > limit ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-more="${key}">${all ? "Mostrar menos" : `Mostrar todos (${rows.length})`}</button></div>` : ""}`;
 }
 const clientCell = c => {
   const sub = [c.nome ? esc(c.label) : "", c.lines > 1 ? `${c.lines} linhas` : "", c.partial ? `${c.linesCanc} cancelada(s)` : ""].filter(Boolean).join(" · ");
@@ -1182,14 +1294,14 @@ function anomaly(M, sig) {
     <div class="panel">
       <div class="tablebar"><h3>Cancelados, do mais surpreendente ao mais previsível</h3><button type="button" class="btn sm" data-copy="churn">Copiar como CSV</button></div>
       ${tableRows(list, "churn", [
-        { h: "Cliente", f: clientCell },
-        { h: "Pares", f: c => esc(c.peerLabel) },
-        { h: "MRR perdido", n: 1, f: c => fmtBRL(c.mrrPerdido) },
-        { h: "Cancelou em", n: 1, f: c => fmtDate(c.dataCanc) + (Number.isFinite(c.tenure) ? `<span class="sub">${nf1.format(c.tenure)} meses de casa</span>` : "") },
-        { h: "Motivo", f: c => esc(c.motivo || "—") + (c.descricao ? `<span class="sub" title="${esc(c.descricao)}">${esc(c.descricao.length > 70 ? c.descricao.slice(0, 70) + "…" : c.descricao)}</span>` : "") },
-        { h: "Score", f: c => scoreCell(c.risk) },
-        { h: "Classificação", f: c => chip(c.cls) },
-        { h: "O que os indicadores diziam", f: c => `<span class="note">${esc(c.cls === "anormal" ? (healthyText(c) || "indicadores na média dos ativos") : (drvText(c) || "piora distribuída em vários indicadores"))}</span>` }
+        { h: "Cliente", f: clientCell, s: c => c.nome || c.label, one: 1, t: c => c.nome || c.label },
+        { h: "Pares", f: c => esc(c.peerLabel), s: c => c.peerLabel },
+        { h: "MRR perdido", n: 1, f: c => fmtBRL(c.mrrPerdido), s: c => Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : -1 },
+        { h: "Cancelou em", n: 1, f: c => fmtDate(c.dataCanc) + (Number.isFinite(c.tenure) ? `<span class="sub">${nf1.format(c.tenure)} m de casa</span>` : ""), s: c => c.dataCanc || 0 },
+        { h: "Motivo", f: c => esc(c.motivo || "—") + (c.descricao ? ` <span class="muted">· ${esc(c.descricao)}</span>` : ""), s: c => (c.motivo || "") + " " + (c.descricao || ""), one: 1, t: c => [c.motivo, c.descricao].filter(Boolean).join(" · ") },
+        { h: "Score", f: c => scoreCell(c.risk, true), s: c => c.risk },
+        { h: "Classificação", f: c => chip(c.cls), s: c => CHIP[c.cls][2] },
+        { h: "O que os indicadores diziam", f: c => esc(c.cls === "anormal" ? (healthyText(c) || "indicadores na média dos ativos") : (drvText(c) || "piora distribuída em vários indicadores")), one: 1, t: c => c.cls === "anormal" ? healthyText(c) : drvText(c) }
       ])}
     </div>`;
   return sec("anormal", "Diagnóstico", "Churn esperado x anormal", `Cada cliente recebe um score de risco de 0 a 100 que diz o quanto seus indicadores se parecem com os de quem cancela, comparado aos clientes ativos ${peer ? `do mesmo ${esc(pretty(peer).toLowerCase())}` : "da base"}. Cancelado com score baixo é churn <b>anormal</b>: os números diziam que estava tudo bem. Vale investigar esses casos um a um.`, body);
@@ -1205,13 +1317,13 @@ function atRisk(M, sig) {
   const body = `<div class="panel">
     <div class="tablebar"><p>${chip("alto")} <b>${hi.length}</b> clientes${mrr ? `, ${fmtBRL(mrr)} de MRR` : ""} &nbsp; ${chip("atencao")} <b>${list.length - hi.length}</b></p><button type="button" class="btn sm" data-copy="risk">Copiar como CSV</button></div>
     ${list.length ? tableRows(list, "risk", [
-      { h: "Cliente", f: clientCell },
-      { h: "Pares", f: c => esc(c.peerLabel) },
-      { h: "MRR", n: 1, f: c => fmtBRL(c.mrr) },
-      { h: "Casa", n: 1, f: c => Number.isFinite(c.tenure) ? nf1.format(c.tenure) + " m" : "—" },
-      { h: "Score", f: c => scoreCell(c.risk) },
-      { h: "Classificação", f: c => chip(c.cls) },
-      { h: "Sinais", f: c => `<span class="note">${esc(drvText(c) || "piora distribuída em vários indicadores")}</span>` }
+      { h: "Cliente", f: clientCell, s: c => c.nome || c.label, one: 1, t: c => c.nome || c.label },
+      { h: "Pares", f: c => esc(c.peerLabel), s: c => c.peerLabel },
+      { h: "MRR", n: 1, f: c => fmtBRL(c.mrr), s: c => Number.isFinite(c.mrr) ? c.mrr : -1 },
+      { h: "Casa", n: 1, f: c => Number.isFinite(c.tenure) ? nf1.format(c.tenure) + " m" : "—", s: c => Number.isFinite(c.tenure) ? c.tenure : -1 },
+      { h: "Score", f: c => scoreCell(c.risk), s: c => c.risk },
+      { h: "Classificação", f: c => chip(c.cls), s: c => CHIP[c.cls][2] },
+      { h: "Sinais", f: c => esc(drvText(c) || "piora distribuída em vários indicadores"), one: 1, t: c => drvText(c), s: c => drvText(c) }
     ]) : `<p class="note">Nenhum cliente ativo acima de 55 no score.</p>`}
   </div>`;
   return sec("risco", "Ação", "Ativos em risco", "Clientes ativos com indicadores parecidos com os de quem já cancelou. O percentil (p) compara o cliente com os ativos do mesmo grupo de pares: p8 em adoção significa que 92% dos pares têm adoção maior.", body);
@@ -1250,6 +1362,140 @@ function method() {
   </div>`);
 }
 
+
+
+/* ---------- referências de mercado (atualizadas manualmente; ver README) ---------- */
+const BENCH = {
+  updated: "outubro de 2026",
+  acvBands: [
+    { id: "lt12", label: "até US$ 12 mil", max: 12e3, nrr: 0.98, grr: 0.90 },
+    { id: "12-25", label: "US$ 12–25 mil", max: 25e3, nrr: 1.03, grr: 0.91 },
+    { id: "25-50", label: "US$ 25–50 mil", max: 50e3, nrr: 1.02, grr: 0.91 },
+    { id: "50-100", label: "US$ 50–100 mil", max: 100e3, nrr: 1.04, grr: 0.90 },
+    { id: "100-250", label: "US$ 100–250 mil", max: 250e3, nrr: 1.02, grr: 0.91 },
+    { id: "gt250", label: "acima de US$ 250 mil", max: Infinity, nrr: 1.06, grr: 0.95 }
+  ],
+  overall: { nrr: 1.01, grr: 0.91 },
+  logo: { smb: [0.03, 0.05], mid: [0.015, 0.03], ent: [0.01, 0.02] },
+  revChurn: { median: 0.125, top: 0.0548 },
+  sources: [
+    { id: "saascapital", name: "SaaS Capital · 2025 B2B SaaS Retention Benchmarks", what: "GRR e NRR medianas por ticket anual (ACV). Pesquisa do 1º tri/2025 com mais de 1.000 empresas privadas B2B SaaS; o gráfico por ACV exclui empresas com ARR abaixo de US$ 1 milhão.", url: "https://www.saas-capital.com/wp-content/uploads/2025/09/RB32WS1-2025-B2B-SaaS-Retention-Benchmarks.pdf" },
+    { id: "optifai", name: "Optifai · B2B SaaS Churn Rate Benchmarks", what: "Faixas de churn mensal de logos por segmento (939 empresas, 2º tri/2025 a 1º tri/2026). Fonte secundária: use como faixa de referência, não como mediana auditada.", url: "https://optif.ai/learn/questions/b2b-saas-churn-rate-benchmark/" },
+    { id: "crv", name: "CRV · SaaS churn rate (dados da Lighter Capital)", what: "Churn anual de receita mediano de 12,5% (top quartil abaixo de 5,48%) em empresas privadas B2B SaaS com ARR de US$ 1–10 milhões, 2025.", url: "https://www.crv.com/content/saas-churn-rate" }
+  ]
+};
+const SEGMENTS = { smb: "SMB", mid: "Mid-market", ent: "Enterprise" };
+const SEGMENT_OPTS = { smb: "SMB · pequenas empresas", mid: "Mid-market · médias empresas", ent: "Enterprise · grandes empresas" };
+function saveCompany(c) { state.company = c; try { localStorage.setItem("csops-company", JSON.stringify(c)); } catch (e) {} }
+// ACV médio (R$) a partir dos dados: MRR das organizações ativas × 12
+function acvFromData(M) {
+  if (!M) return null;
+  const act = M.clients.filter(c => !c.churned && Number.isFinite(c.mrr) && c.mrr > 0);
+  if (act.length < 5) return null;
+  const v = act.map(c => c.mrr * 12).sort((a, b) => a - b);
+  return { median: quantile(v, .5), n: act.length };
+}
+function companyBand(co, M) {
+  if (!co) return null;
+  if (co.acvBand && co.acvBand !== "auto") return BENCH.acvBands.find(b => b.id === co.acvBand) || null;
+  const fx = toNum(co.fx), acv = acvFromData(M);
+  if (!acv || !(fx > 0)) return null;
+  const usd = acv.median / fx;
+  return { ...BENCH.acvBands.find(b => usd < b.max), usd, auto: true };
+}
+// GRR dos últimos 12 meses, por linha de produto (perda de MRR de quem estava ativo há 12 meses)
+function grr12(lines, ref) {
+  const t0 = ref - 365 * 864e5;
+  const start = lines.filter(c => c.inicio != null && c.inicio <= t0 && (!c.churned || (c.dataCanc != null && c.dataCanc > t0)) && Number.isFinite(c.mrr));
+  if (start.length < 10) return null;
+  const base = start.reduce((t, c) => t + c.mrr, 0);
+  const lostL = start.filter(c => c.churned && c.dataCanc != null && c.dataCanc <= ref);
+  const lost = lostL.reduce((t, c) => t + (Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : c.mrr), 0);
+  return base > 0 ? { grr: 1 - lost / base, base, lost, n: start.length, nLost: lostL.length, from: t0 } : null;
+}
+function monthlyChurn(M) {
+  const ch = M.clients.filter(c => c.churned && Number.isFinite(c.tenure)).length;
+  const exp = M.clients.reduce((t, c) => t + (Number.isFinite(c.tenure) ? c.tenure : 0), 0);
+  return exp > 0 ? { m: ch / exp, ch, exp } : null;
+}
+
+function renderCompany() {
+  const co = state.company || {};
+  const M = LAST ? LAST.M : null, acv = acvFromData(M), band = companyBand(state.company, M);
+  const filled = !!(state.company && state.company.modelo);
+  const seg = co.segmento && BENCH.logo[co.segmento];
+  const preview = !filled ? `<p class="note">Preencha o perfil para o relatório comparar o seu churn com o de empresas parecidas.</p>`
+    : co.modelo !== "b2b" ? `<p class="note">As referências disponíveis cobrem B2B SaaS. Para B2C, o relatório mostra os seus números sem comparação de mercado.</p>`
+    : `<div class="bench-prev">
+        ${band ? `<div><span class="k">GRR mediana · ${esc(band.label)}</span><b>${fmtPct(band.grr, 0)}</b><span class="k">ao ano</span></div><div><span class="k">NRR mediana · ${esc(band.label)}</span><b>${fmtPct(band.nrr, 0)}</b><span class="k">ao ano</span></div>` : `<div><span class="k">GRR mediana · todos os tickets</span><b>${fmtPct(BENCH.overall.grr, 0)}</b><span class="k">informe o câmbio ou a faixa de ticket para refinar</span></div>`}
+        ${seg ? `<div><span class="k">Churn de logos · ${esc(SEGMENTS[co.segmento])}</span><b>${fmtPct(seg[0], 1)}–${fmtPct(seg[1], 1)}</b><span class="k">ao mês</span></div>` : ""}
+      </div>`;
+  $("#empresa").innerHTML = `<div class="stephead"><span class="eyebrow">Passo 1 · Sua empresa e o mercado</span><h2 class="h-step" id="empresaTitle">Com quem comparar o seu churn</h2>
+      <p class="lede">O perfil escolhe as referências de mercado (empresas privadas B2B SaaS, principalmente dos EUA) usadas na seção Mercado. Fica salvo só neste navegador.</p></div>
+    <form class="company" id="companyForm" autocomplete="off">
+      <label>Empresa<input id="co-nome" name="nome" value="${esc(co.nome || "")}" placeholder="Nome da empresa"></label>
+      <label>Modelo<select id="co-modelo" name="modelo"><option value="">Escolha</option><option value="b2b" ${co.modelo === "b2b" ? "selected" : ""}>B2B · vende para empresas</option><option value="b2c" ${co.modelo === "b2c" ? "selected" : ""}>B2C · vende para pessoas</option></select></label>
+      <label>Receita<select id="co-receita" name="receita"><option value="saas" ${co.receita !== "outra" ? "selected" : ""}>SaaS (assinatura de software)</option><option value="outra" ${co.receita === "outra" ? "selected" : ""}>Outra receita recorrente</option></select></label>
+      <label>Segmento dos clientes<select id="co-segmento" name="segmento"><option value="">Escolha</option>${Object.entries(SEGMENT_OPTS).map(([k, v]) => `<option value="${k}" ${co.segmento === k ? "selected" : ""}>${v}</option>`).join("")}</select></label>
+      <label>ARR da empresa<select id="co-arr" name="arr"><option value="">Escolha</option>${[["lt1", "até US$ 1 milhão"], ["1-5", "US$ 1–5 milhões"], ["5-20", "US$ 5–20 milhões"], ["gt20", "acima de US$ 20 milhões"]].map(([k, v]) => `<option value="${k}" ${co.arr === k ? "selected" : ""}>${v}</option>`).join("")}</select></label>
+      <label>Ticket anual (ACV)<select id="co-acvBand" name="acvBand"><option value="auto" ${!co.acvBand || co.acvBand === "auto" ? "selected" : ""}>Calcular pelos dados${acv ? ` (mediana ${fmtBRL(acv.median)})` : ""}</option>${BENCH.acvBands.map(b => `<option value="${b.id}" ${co.acvBand === b.id ? "selected" : ""}>${b.label}</option>`).join("")}</select></label>
+      <label>Câmbio R$ por US$<input id="co-fx" name="fx" inputmode="decimal" value="${esc(co.fx || "")}" placeholder="ex.: cotação do dia"></label>
+      <div class="company-actions"><button type="submit" class="btn primary">Salvar perfil</button>${filled ? `<button type="button" class="btn ghost" id="btnCompanyClear">Limpar</button>` : ""}</div>
+    </form>
+    ${co.arr === "lt1" ? `<p class="note">A pesquisa da SaaS Capital por ticket exclui empresas com ARR abaixo de US$ 1 milhão; a comparação de GRR fica menos precisa para o seu porte.</p>` : ""}
+    ${band && band.auto ? `<p class="note">ACV mediano dos seus dados: ${fmtBRL(acv.median)} ≈ US$ ${fmtInt(band.usd)} → faixa ${esc(band.label)}.</p>` : ""}
+    ${preview}`;
+}
+document.addEventListener("submit", e => {
+  if (e.target.id !== "companyForm") return;
+  e.preventDefault();
+  const f = new FormData(e.target), c = Object.fromEntries(f.entries());
+  saveCompany(c); renderReport(); renderCompany();
+  toast(c.modelo ? "Perfil salvo. A seção Mercado já compara com as referências." : "Perfil salvo. Escolha o modelo para ver as referências.");
+});
+
+function market(M) {
+  const co = state.company;
+  if (!co || !co.modelo) return sec("mercado", "Mercado", "Seu churn x mercado", "", `<div class="empty">Preencha o <a href="#empresa">Passo 1 · Sua empresa e o mercado</a> para comparar o seu churn com empresas do mesmo perfil.</div>`);
+  if (co.modelo !== "b2b") return sec("mercado", "Mercado", "Seu churn x mercado", "", `<div class="empty">As referências reunidas aqui são de empresas B2B SaaS. Para negócios B2C, compare com o seu próprio histórico (seção Retenção por coorte).</div>`);
+  const band = companyBand(co, M), mc = monthlyChurn(M), g = grr12(M.lines, M.ref), seg = co.segmento && BENCH.logo[co.segmento];
+  const annual = mc ? 1 - Math.pow(1 - mc.m, 12) : null;
+  const verdict = (v, lo, hi, lowerIsBetter = true) => v == null ? "" : (lowerIsBetter ? v < lo : v > hi) ? `<span class="chip good"><i aria-hidden="true">●</i>Melhor que a referência</span>` : (lowerIsBetter ? v > hi : v < lo) ? `<span class="chip crit"><i aria-hidden="true">▲</i>Pior que a referência</span>` : `<span class="chip neu"><i aria-hidden="true">●</i>Dentro da referência</span>`;
+  const bullet = (v, lo, hi, max, fmt) => {
+    const x = t => Math.max(0, Math.min(100, t / max * 100));
+    return `<div class="bullet" role="img" aria-label="Seu valor ${fmt(v)}; referência de ${fmt(lo)} a ${fmt(hi)}">
+      <span class="band" style="left:${x(lo)}%;width:${Math.max(1.5, x(hi) - x(lo))}%"></span>
+      ${v != null ? `<span class="mark" style="left:${x(v)}%"><b>${fmt(v)}</b></span>` : ""}
+      <span class="tick" style="left:0">${fmt(0)}</span><span class="tick" style="left:100%">${fmt(max)}</span>
+    </div>`;
+  };
+  const grrRef = band ? band.grr : BENCH.overall.grr;
+  const cards = [];
+  if (seg) cards.push(`<div class="panel mk">
+      <div class="mk-h"><span class="k">Churn de logos ao mês · ${esc(M.noun[1].toLowerCase())}</span>${verdict(mc && mc.m, seg[0], seg[1])}</div>
+      <div class="mk-v">${mc ? fmtPct(mc.m, 2) : "—"}<small>referência ${esc(SEGMENTS[co.segmento])}: ${fmtPct(seg[0], 1)}–${fmtPct(seg[1], 1)}</small></div>
+      ${bullet(mc && mc.m, seg[0], seg[1], Math.max(seg[1] * 1.6, (mc ? mc.m : 0) * 1.2), v => fmtPct(v, 1))}
+      <p class="note">${mc ? `${fmtInt(mc.ch)} cancelamentos ÷ ${nf1.format(mc.exp)} meses-cliente. Equivale a ${fmtPct(annual, 0)} ao ano (composto, não × 12).` : "Precisa de data de início."}</p></div>`);
+  cards.push(`<div class="panel mk">
+      <div class="mk-h"><span class="k">Retenção bruta de receita (GRR) · 12 meses</span>${g ? verdict(g.grr, grrRef - 0.02, grrRef + 0.02, false) : ""}</div>
+      <div class="mk-v">${g ? fmtPct(g.grr, 1) : "—"}<small>mediana ${band ? esc(band.label) : "todos os tickets"}: ${fmtPct(grrRef, 0)}</small></div>
+      ${g ? bullet(g.grr, grrRef - 0.02, grrRef + 0.02, 1, v => fmtPct(v, 0)) : ""}
+      <p class="note">${g ? `MRR perdido nos últimos 12 meses (${fmtBRL(g.lost)}, ${g.nLost} linhas) ÷ MRR de quem estava ativo em ${fmtDate(g.from)} (${fmtBRL(g.base)}). Não inclui reduções de plano, que os dados não trazem.` : "Precisa de MRR e de pelo menos 10 linhas ativas há 12 meses."}</p></div>`);
+  cards.push(`<div class="panel mk">
+      <div class="mk-h"><span class="k">Churn anual de receita · ARR US$ 1–10 mi</span>${g ? verdict(1 - g.grr, BENCH.revChurn.top, BENCH.revChurn.median) : ""}</div>
+      <div class="mk-v">${g ? fmtPct(1 - g.grr, 1) : "—"}<small>mediana ${fmtPct(BENCH.revChurn.median, 1)} · melhor quartil abaixo de ${fmtPct(BENCH.revChurn.top, 1)}</small></div>
+      ${g ? bullet(1 - g.grr, BENCH.revChurn.top, BENCH.revChurn.median, Math.max(0.3, (1 - g.grr) * 1.2), v => fmtPct(v, 0)) : ""}
+      <p class="note">Faixa entre o melhor quartil e a mediana. Acima da mediana, o churn de receita está pior que o da metade das empresas comparadas.</p></div>`);
+  cards.push(`<div class="panel mk">
+      <div class="mk-h"><span class="k">Retenção líquida de receita (NRR)</span><span class="chip neu"><i aria-hidden="true">○</i>Sem dado de expansão</span></div>
+      <div class="mk-v">${fmtPct(band ? band.nrr : BENCH.overall.nrr, 0)}<small>mediana de mercado ${band ? esc(band.label) : "todos os tickets"}</small></div>
+      <p class="note">Para calcular o seu NRR é preciso o histórico de MRR por cliente (upsell, cross-sell e reduções). Hoje os arquivos trazem só o MRR atual.</p></div>`);
+  const body = `<div class="mk-grid">${cards.join("")}</div>
+    <details class="panel srcs"><summary>Fontes das referências (atualizadas em ${BENCH.updated})</summary>
+      <ul>${BENCH.sources.map(x => `<li><a href="${x.url}" target="_blank" rel="noopener">${esc(x.name)}</a><span class="note">${esc(x.what)}</span></li>`).join("")}</ul>
+      <p class="note">As referências vêm de empresas privadas B2B SaaS, majoritariamente dos EUA, e não separam por setor nem por país. Use como ordem de grandeza: não existe hoje uma API pública e confiável com esses números por segmento brasileiro.</p></details>`;
+  return sec("mercado", "Mercado", "Seu churn x mercado", `${esc(co.nome || "Sua empresa")} comparada com empresas B2B SaaS do segmento ${co.segmento ? esc(SEGMENTS[co.segmento]) : "mais parecido"}${band ? ` e ticket ${esc(band.label)}` : ""}.`, body);
+}
 
 /* ---------- explicação passo a passo ---------- */
 let LAST = null;
@@ -1370,6 +1616,22 @@ const INFO = {
     }
   },
   anormal: { title: "Churn esperado x anormal", short: "Score de 0 a 100: média ponderada dos percentis do cliente em cada KPI, comparado com ativos do mesmo perfil. Cancelado com score baixo é churn anormal.", steps: ctx => riskSteps(ctx, true) },
+  mercado: {
+    title: "Seu churn x mercado",
+    short: "Compara o churn mensal de logos e a retenção de receita dos seus dados com faixas de mercado para B2B SaaS do mesmo segmento e ticket.",
+    steps: ({ M }) => {
+      const co = state.company || {}, mc = monthlyChurn(M), g = grr12(M.lines, M.ref), band = companyBand(state.company, M);
+      return [
+        ["Escolher a referência", `O perfil do Passo 1 define o segmento (${esc(co.segmento ? SEGMENTS[co.segmento] : "não informado")}) e o ticket anual (${esc(band ? band.label : "não informado")}).`],
+        ["Churn de logos ao mês", "Cancelamentos com data ÷ soma dos meses que cada cliente ficou na base, no nível escolhido.", mc ? `${mc.ch} ÷ ${nf1.format(mc.exp)} = ${fmtPct(mc.m, 2)} ao mês
+ao ano: 1 − (1 − ${fmtPct(mc.m, 2)})¹² = ${fmtPct(1 - Math.pow(1 - mc.m, 12), 1)}` : null],
+        ["GRR dos últimos 12 meses", "Pega as linhas de produto ativas há 12 meses e soma o MRR delas. Depois soma o MRR das que cancelaram desde então.", g ? `MRR inicial: ${fmtBRL(g.base)} (${g.n} linhas)
+MRR perdido: ${fmtBRL(g.lost)} (${g.nLost} linhas)
+GRR = 1 − ${fmtBRL(g.lost)} ÷ ${fmtBRL(g.base)} = ${fmtPct(g.grr, 1)}` : "sem dados suficientes"],
+        ["Comparar", "Dentro da referência: até 2 pontos da mediana de GRR ou dentro da faixa de churn de logos. As fontes estão no fim da seção."]
+      ];
+    }
+  },
   risco: { title: "Ativos em risco", short: "O mesmo score aplicado aos clientes ativos. De 70 para cima é alto risco; de 55 a 70, atenção.", steps: ctx => riskSteps(ctx, false) },
   motivos: {
     title: "Motivos e momento do cancelamento",
@@ -1485,7 +1747,7 @@ function openPaste(src, opener, view = false) {
     pm.rows = raw.rows.map(r => raw.fields.map(f => String(r[f] ?? "")));
     pm.viewing = true;
   }
-  $("#pmTitle").textContent = `${pm.viewing ? "Dados carregados · " : ""}${SOURCES[src].title} · ${SOURCES[src].table === "opcional" ? "cancelamentos" : SOURCES[src].table}`;
+  $("#pmTitle").textContent = `${pm.viewing ? "Dados carregados · " : ""}${SOURCES[src].title} · ${SOURCES[src].table || "cancelamentos"}`;
   $("#pm").hidden = false; renderPaste(); $("#pmGrid").focus();
 }
 function closePaste() { $("#pm").hidden = true; if (pm.opener && document.body.contains(pm.opener)) pm.opener.focus(); }
@@ -1607,6 +1869,14 @@ document.addEventListener("focusin", e => {
   tip.style.top = (r.bottom + 8 + t.height > innerHeight ? r.top - t.height - 8 : r.bottom + 8) + "px";
 });
 document.addEventListener("focusout", () => (tip.hidden = true));
+function sortBy(th) {
+  const [key, i] = th.dataset.tsort.split(":"), cur = state.sort[key];
+  state.sort[key] = { i: +i, dir: cur && cur.i === +i ? -cur.dir : -1 };
+  renderReport();
+  const el = document.querySelector(`[data-tsort="${th.dataset.tsort}"]`); if (el) el.focus();
+}
+document.addEventListener("click", e => { const th = e.target.closest && e.target.closest("th[data-tsort]"); if (th) sortBy(th); });
+document.addEventListener("keydown", e => { const th = e.target.closest && e.target.closest("th[data-tsort]"); if (th && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); sortBy(th); } });
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
   if (!$("#pm").hidden) closePaste(); else if (state.xp) closeExplain();
@@ -1639,7 +1909,7 @@ function makeSample() {
   const CASCADE = new Set(["concorrente", "fusao_aquisicao", "encerramento", "corte_custos"]);
   const TYPES = [[1, "Health Score", false], [2, "NPS", false], [3, "Adoção (%)", false], [4, "Usuários ativos", false], [5, "Tickets abertos (30d)", true], [6, "Dias sem acesso", true]];
   const C = [["id", "hierarchy_type", "id_group", "group", "id_org", "cnpj", "id_product", "product", "name", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description"]];
-  const prodId = { "Gestão": "P10", Financeiro: "P20", Analytics: "P30" };
+  const prodId = { "Gestão": "PRD-10", Financeiro: "PRD-20", Analytics: "PRD-30" };
   const K = [["id_customer", "ref_date", "type", "kpi_name", "inv_proportional", "value"]];
   const usedNames = new Set();
   let nextId = 1001;
@@ -1653,7 +1923,7 @@ function makeSample() {
     if (usedNames.has(nome)) nome += " " + (o + 1); usedNames.add(nome);
     const ind = pick(inds, indW), size = pick(sizes, sizeW);
     orgs.push({
-      idOrg: "O" + String(o + 1).padStart(3, "0"), idGroup: grp ? "G" + String(grupos.indexOf(grp) + 1).padStart(2, "0") : "",
+      idOrg: "ORG-" + String(o + 1).padStart(3, "0"), idGroup: grp ? "GRP-" + String(grupos.indexOf(grp) + 1).padStart(2, "0") : "",
       nome, grp, ind, size, uf: pick(ufs, ufW), owner: pick(owners, [1, 1, 1, 1, 1]),
       cnpj: `${digits(2)}.${digits(3)}.${digits(3)}/0001-${digits(2)}`,
       latent: gauss() * 0.7 + indR[ind] + sizeR[size],
@@ -1663,7 +1933,7 @@ function makeSample() {
   }
   grupos.forEach((g, i) => {
     const members = orgs.filter(o => o.grp === g); if (!members.length) return;
-    C.push([9001 + i, "grupo", "G" + String(i + 1).padStart(2, "0"), g, "", "", "", "", g, iso(Math.min(...members.map(o => o.start))), "", "", "", "", "", "", "", ""]);
+    C.push([9001 + i, "grupo", "GRP-" + String(i + 1).padStart(2, "0"), g, "", "", "", "", g, iso(Math.min(...members.map(o => o.start))), "", "", "", "", "", "", "", ""]);
   });
   let orgRowId = 5001;
   for (const org of orgs) {

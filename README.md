@@ -6,11 +6,31 @@ Este repositório é um relatório de página única (`index.html`) para times d
 
 ## Como usar
 
-1. Baixe o modelo [`modelos/modelo_churn.xlsx`](modelos/modelo_churn.xlsx) (abre no Excel e importa no Google Sheets) ou rode as consultas de [`sql/`](sql/).
-2. Abra `index.html` no navegador. Ele abre com dados de exemplo fictícios.
-3. Anexe o CSV ou use **Colar**: abre uma tabela com as colunas do modelo, onde você cola direto do Excel/Sheets e confere para qual campo vai cada coluna. **Ver** reabre essa tabela com os dados já carregados. Os dados de exemplo são descartados no primeiro arquivo seu.
+1. **Passo 1 · Sua empresa e o mercado**: informe modelo (B2B/B2C), segmento dos clientes, ARR e ticket anual (ou o câmbio, para o ticket ser calculado pelos dados). O perfil fica salvo no navegador e define as referências da seção **Mercado**.
+2. **Passo 2 · Seus dados**: baixe o modelo [`modelos/modelo_churn.xlsx`](modelos/modelo_churn.xlsx) ou rode as consultas de [`sql/`](sql/), e anexe ou use **Colar** (tabela com as colunas do modelo, direto do Excel/Sheets). **Ver** reabre os dados já carregados. Depois de carregar, as fontes se recolhem numa linha de status.
+3. Abra `index.html` no navegador. Ele abre com dados de exemplo fictícios, descartados no primeiro arquivo seu.
 
 Os nomes de coluna são reconhecidos sozinhos (PT ou EN) e podem ser trocados em **Colunas** em cada cartão.
+
+## Painel de diagnóstico
+
+[`diagnostico.html`](diagnostico.html) conta a história em 7 páginas: diagnóstico, retenção (curva de sobrevivência e coortes), onde está o churn (perfis, carteira de CSM ajustada pelo mix, hierarquia e contágio no grupo), sinais (força e trajetória dos KPIs antes da saída), qualidade do score (ROC, AUC, décimos e cortes), ação e dados e método. Cada achado mostra o cálculo passo a passo.
+
+Ele usa o mesmo motor de cálculo do relatório. Para gerar com os seus dados:
+
+```bash
+node tools/gerar_diagnostico.mjs customer.csv kpi.csv
+```
+
+## Referências de mercado
+
+A seção **Mercado** compara o seu churn de logos mensal, a GRR dos últimos 12 meses e o churn anual de receita com:
+
+- [SaaS Capital · 2025 B2B SaaS Retention Benchmarks](https://www.saas-capital.com/wp-content/uploads/2025/09/RB32WS1-2025-B2B-SaaS-Retention-Benchmarks.pdf): GRR e NRR medianas por ticket anual (mais de 1.000 empresas privadas B2B SaaS).
+- [Optifai · B2B SaaS Churn Rate Benchmarks](https://optif.ai/learn/questions/b2b-saas-churn-rate-benchmark/): faixas de churn mensal de logos por segmento (fonte secundária).
+- [CRV · SaaS churn rate](https://www.crv.com/content/saas-churn-rate): churn anual de receita mediano de empresas com ARR de US$ 1–10 milhões (dados da Lighter Capital, 2025).
+
+Não existe hoje uma API pública e confiável com esses números por segmento ou por país; as referências ficam na constante `BENCH` de `index.html` e devem ser revisadas uma vez por ano. São de empresas majoritariamente dos EUA e não separam por setor: use como ordem de grandeza.
 
 ## Colunas
 
