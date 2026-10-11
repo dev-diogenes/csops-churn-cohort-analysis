@@ -12,6 +12,31 @@ Este repositório é um relatório de página única (`index.html`) para times d
 
 Os nomes de coluna são reconhecidos sozinhos (PT ou EN) e podem ser trocados em **Colunas** em cada cartão.
 
+## Integração com a SenseData
+
+No topo do relatório, **Integrações → SenseData** importa os dados direto da API v2 da SenseData (SenseConnect), informando só a URL da API e o token:
+
+| Endpoint | O que vira no relatório |
+|---|---|
+| `GET /v2/me` | Teste do token (nome da plataforma e usuário) |
+| `GET /v2/customers` | `customer`: id, nome, grupo econômico (`group`), organização (`cnpj`), setor, porte, UF, fase, CS, `dt_register`, `dt_cancel`, `cancel_tag`, `cancel_description` |
+| `GET /v2/kpis/last` | Leitura mais recente de cada KPI |
+| `GET /v2/kpis?ref_date:start=&ref_date:end=` | Um retrato por mês (último dia de cada mês, 6/12/24 meses), como a SenseData recomenda: no máximo 1 mês por chamada |
+| `GET /v2/contracts` (opcional) | MRR: soma de `monthly_payment` dos contratos vigentes hoje (ativos) ou na véspera do cancelamento |
+
+O nome, a unidade e a direção (`inv_proportional`) de cada KPI já vêm no objeto `type` de cada leitura. A paginação segue `next_page`; respostas 429 (limite de requisições) são repetidas respeitando `retry-after`. Referência: [api.sensedata.io/v2/redoc](https://api.sensedata.io/v2/redoc).
+
+**Por que precisa de um servidor:** a API da SenseData não aceita chamadas feitas direto do navegador (não libera CORS), e o link publicado como Artifact bloqueia chamadas externas. Por isso a página chama `/api/sensedata/...` no próprio servidor do relatório, que repassa só leituras (GET), só para `https://*.sensedata.io`, com o token informado na página. O token fica na memória da aba e não é salvo.
+
+```bash
+node tools/servidor.mjs          # http://localhost:8787 com a ponte para a API real
+node tools/servidor.mjs --mock   # API simulada com os dados de exemplo, para testar sem token
+```
+
+Publicando o repositório na Vercel, a função `api/sensedata/[...path].js` faz o mesmo papel da ponte local.
+
+O token de produção do SenseConnect é pedido ao suporte da SenseData (suporte@sensedata.com.br).
+
 ## Tour de boas-vindas
 
 Na primeira visita, o relatório oferece um tour guiado (Driver.js) que rola até cada seção, explica para que ela serve e onde clicar, com **Pular** e **Entendi**. Há quatro caminhos: agir na carteira (CSM), entender o churn da base (Head de CS), preparar os dados (CS Ops) e ver tudo na ordem da página. No fim, o tour volta ao Passo 1 com o foco no primeiro campo; "Explorar mais 4 seções" abre uma segunda trilha (Indicadores, Churn anormal, Motivos e o painel de diagnóstico). **Ver tour**, no topo, reabre a qualquer momento. O painel de diagnóstico tem o seu próprio tour de 4 passos. A escolha fica salva no navegador (`csops-tour`, `csops-diag-tour`); mudar a versão no código reapresenta o tour.

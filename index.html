@@ -249,6 +249,28 @@ th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); 
 .tab-link { text-decoration: none; margin-left: auto; color: var(--accent); }
 @media (max-width: 560px) { .driver-popover.csops-tour { max-width: calc(100vw - 24px); } }
 
+/* menu de integrações e conexão SenseData */
+.menu { position: relative; }
+.menu-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, 86vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 14px 36px rgba(0, 0, 0, .18); padding: 6px; display: grid; gap: 2px; }
+.menu-pop [role=menuitem] { display: grid; gap: 2px; text-align: left; border: 0; background: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--ink); font: inherit; }
+.menu-pop [role=menuitem]:hover, .menu-pop [role=menuitem]:focus-visible { background: var(--sunken); }
+.menu-pop [role=menuitem] span { font-size: 0.8rem; color: var(--muted); }
+.menu-note { font-size: 0.76rem; color: var(--muted); padding: 6px 12px 4px; border-top: 1px solid var(--line); }
+.pm.sd { width: min(620px, 100%); }
+.sd-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; align-items: end; }
+.sd-form label { display: grid; gap: 4px; font-size: 0.82rem; color: var(--muted); min-width: 0; }
+.sd-form input[type=url], .sd-form input[type=password], .sd-form select { padding: 8px 10px; border: 1px solid var(--ctl); border-radius: 6px; background: var(--bg); color: var(--ink); min-height: 38px; width: 100%; font-family: var(--f-mono); font-size: 0.84rem; }
+.sd-form .sd-check { display: flex; gap: 8px; align-items: center; color: var(--ink); font-size: 0.88rem; min-height: 38px; }
+.sd-form .sd-safe, .sd-form .actions { grid-column: 1 / -1; }
+.sd-proxy:empty { display: none; }
+.sd-proxy { font-size: 0.86rem; border-radius: 8px; padding: 10px 12px; background: var(--sunken); color: var(--ink); display: grid; gap: 6px; }
+.sd-proxy.bad { background: color-mix(in srgb, var(--warn) 18%, var(--surface)); }
+.sd-proxy pre { margin: 0; font-family: var(--f-mono); font-size: 0.8rem; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; overflow-x: auto; }
+.sd-log { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 0.84rem; color: var(--muted); max-height: 200px; overflow: auto; }
+.sd-log:empty { display: none; }
+.sd-log li.err { color: var(--crit); }
+.sd-log li.ok { color: var(--ink); font-weight: 600; }
+
 /* lembrar dados e teste no tempo */
 .remember { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-left: auto; }
 .switch { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; cursor: pointer; color: var(--ink); font-size: 0.84rem; padding: 4px 2px; min-height: 32px; }
@@ -383,6 +405,13 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
       <div class="actions">
         <a class="btn primary" id="toDiag" href="diagnostico.html" target="_blank" rel="noopener" data-diag>Diagnóstico de Churn ↗</a>
         <a class="btn" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Baixar modelo (.xlsx)</a>
+        <div class="menu" id="integrMenu">
+          <button class="btn" id="btnIntegr" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="integrPop">Integrações ▾</button>
+          <div class="menu-pop" id="integrPop" role="menu" hidden>
+            <button type="button" role="menuitem" data-integr="sensedata"><b>SenseData</b><span>Importar clientes e KPIs pela API, com URL e token</span></button>
+            <span class="menu-note">Outras fontes: anexe ou cole os CSVs no Passo 2.</span>
+          </div>
+        </div>
         <button class="btn ghost" id="btnTour" type="button">Ver tour</button>
         <button class="btn" id="btnSample" type="button">Carregar exemplo</button>
         <button class="btn ghost" id="btnClear" type="button">Limpar tudo</button>
@@ -454,6 +483,29 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
         <button type="button" class="btn sm primary" id="pmImport" disabled>Importar</button>
       </div>
     </footer>
+  </div>
+</div>
+<div id="sdModal" class="pm-backdrop" hidden>
+  <div class="pm sd" role="dialog" aria-modal="true" aria-labelledby="sdTitle" aria-describedby="sdDesc">
+    <header class="pm-head">
+      <div><span class="eyebrow">Integrações</span><h3 id="sdTitle">Conectar à SenseData</h3></div>
+      <button type="button" class="fx" id="sdClose" aria-label="Fechar">×</button>
+    </header>
+    <p class="note" id="sdDesc">Busca os clientes (<span class="mono">/v2/customers</span>), os KPIs (<span class="mono">/v2/kpis</span> e <span class="mono">/v2/kpis/last</span>, com nome e direção de cada KPI) e, se quiser, o MRR dos contratos (<span class="mono">/v2/contracts</span>). Os dados entram no relatório como se fossem os CSVs de customer e kpi.</p>
+    <div class="sd-proxy" id="sdProxy" role="status"></div>
+    <form id="sdForm" class="sd-form" autocomplete="off">
+      <label for="sdBase">URL da API<input id="sdBase" name="base" type="url" required value="https://api.sensedata.io" spellcheck="false"></label>
+      <label for="sdToken">Bearer token<input id="sdToken" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="token de produção do SenseConnect"></label>
+      <label for="sdMonths">Histórico de KPIs<select id="sdMonths" name="months"><option value="6">6 meses</option><option value="12" selected>12 meses</option><option value="24">24 meses</option></select></label>
+      <label class="sd-check" for="sdMrr"><input id="sdMrr" name="mrr" type="checkbox" checked> Buscar MRR nos contratos</label>
+      <p class="note sd-safe">O token fica só na memória desta aba e segue para a SenseData pela ponte do servidor do relatório. Não é salvo em lugar nenhum.</p>
+      <div class="actions">
+        <button type="button" class="btn sm" id="sdTest">Testar conexão</button>
+        <button type="submit" class="btn sm primary" id="sdImport">Importar dados</button>
+        <button type="button" class="btn sm ghost" id="sdCancel" hidden>Cancelar importação</button>
+      </div>
+    </form>
+    <ol class="sd-log" id="sdLog" aria-live="polite"></ol>
   </div>
 </div>
 <div id="tourWelcome" class="pm-backdrop" hidden>
@@ -686,7 +738,7 @@ function renderInputs() {
     const raw = state.raw[key];
     return `<span class="srcchip ${raw && raw.rows.length ? (raw.error ? "err" : "ok") : ""}"><b>${s.title}</b> ${raw && raw.rows.length ? `${fmtInt(raw.rows.length)} linhas${raw.error ? " · revisar" : " ✓"}` : s.optional ? "opcional" : "faltando"}</span>`;
   }).join("");
-  host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2></div>
+  host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2>${state.source && !state.isSample ? `<p class="lede">Importado da ${esc(state.source.name)}${state.source.tenant ? ` · ${esc(state.source.tenant)}` : ""} em ${new Date(state.source.at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. Para atualizar, use Integrações → SenseData de novo.</p>` : `<p class="lede">Anexe ou cole os CSVs, ou importe direto da SenseData em <b>Integrações</b>, no topo.</p>`}</div>
     <div class="srcbar">${summaryChips}<button type="button" class="btn sm" id="btnSources" aria-expanded="${open}">${open ? "Recolher" : "Ver e trocar arquivos"}</button>
       ${state.isSample ? "" : `<span class="remember"><button type="button" role="switch" id="rememberToggle" aria-checked="${rememberOn}" class="switch"><span aria-hidden="true"></span>Lembrar neste navegador</button>${restoredAt ? `<span class="note">restaurado de ${new Date(restoredAt).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</span>` : ""}${rememberOn ? `<button type="button" class="btn sm ghost" id="btnForget">Esquecer dados</button>` : ""}</span>`}</div>
     <div class="inputs" ${open ? "" : "hidden"}>${cards}</div>`;
@@ -1934,7 +1986,7 @@ function saveSession() {
   saveTimer = setTimeout(() => {
     if (!rememberOn || state.isSample || !state.raw.clientes) return;
     const raw = {}; for (const k of Object.keys(state.raw)) if (state.raw[k] && state.raw[k].text) raw[k] = state.raw[k].text;
-    const snap = { raw, map: state.map, level: state.level, filters: state.filters, cut: state.cut, dimBar: state.dimBar, dimPeer: state.dimPeer, at: Date.now() };
+    const snap = { raw, source: state.source || null, map: state.map, level: state.level, filters: state.filters, cut: state.cut, dimBar: state.dimBar, dimPeer: state.dimPeer, at: Date.now() };
     idb("readwrite", st => st.put(snap, SESSION_KEY)).catch(() => {});
   }, 500);
 }
@@ -1945,7 +1997,7 @@ async function restoreSession() {
   if (!snap || !snap.raw || !snap.raw.clientes) return false;
   for (const k of Object.keys(snap.raw)) { const p = parseCSV(snap.raw[k]); p.text = snap.raw[k]; state.raw[k] = p; }
   Object.assign(state, { map: { ...EMPTY_MAP(), ...snap.map }, level: snap.level || "linha", filters: snap.filters || [], cut: { ...state.cut, ...(snap.cut || {}) }, dimBar: snap.dimBar || null, dimPeer: snap.dimPeer ?? null, isSample: false });
-  restoredAt = snap.at;
+  restoredAt = snap.at; state.source = snap.source || null;
   renderInputs(); renderReport();
   return true;
 }
@@ -2342,6 +2394,170 @@ document.addEventListener("mouseover", e => heatHover(e.target.closest && e.targ
 document.addEventListener("focusin", e => heatHover(e.target.closest && e.target.closest("table.heat td.cell[data-c]")));
 
 
+
+/* ---------- integração SenseData (API v2, SenseConnect) ----------
+   O navegador não consegue chamar api.sensedata.io direto (a API não libera CORS), então as chamadas
+   passam pela ponte /api/sensedata do servidor do relatório (tools/servidor.mjs ou a função da Vercel).
+   Endpoints, conforme https://api.sensedata.io/v2/redoc:
+     GET /v2/me                      teste do token
+     GET /v2/customers               cliente, hierarquia (group, cnpj), perfil, CS, dt_register, dt_cancel, cancel_tag
+     GET /v2/kpis/last               leitura mais recente de cada KPI (com type: id, description, unit, inv_proportional)
+     GET /v2/kpis?ref_date:start=&ref_date:end=   um retrato por mês (último dia), como a SenseData recomenda: até 1 mês por chamada
+     GET /v2/contracts               MRR (monthly_payment) dos contratos vigentes
+   Paginação por page/limit e next_page; 429 = limite de requisições (respeita retry-after). */
+const SD_PROXY = "/api/sensedata";
+const sd = { ctrl: null, proxy: null, busy: false };
+const sdBase = () => { try { return localStorage.getItem("csops-sd-base") || "https://api.sensedata.io"; } catch (e) { return "https://api.sensedata.io"; } };
+function sdValidBase(v) { try { const u = new URL(v); return u.protocol === "https:" && (u.hostname === "api.sensedata.io" || u.hostname.endsWith(".sensedata.io")) ? u.origin : null; } catch (e) { return null; } }
+// key: linhas com a mesma chave (ex.: páginas do mesmo endpoint) atualizam a linha em vez de criar outra
+function sdLog(msg, cls = "", key = "") {
+  const ol = $("#sdLog"), last = ol.lastElementChild;
+  if (key && last && last.dataset.key === key) { last.textContent = msg; return; }
+  const li = document.createElement("li"); li.textContent = msg; if (cls) li.className = cls; li.dataset.key = key; ol.appendChild(li); ol.scrollTop = ol.scrollHeight;
+}
+async function sdCheckProxy() {
+  const box = $("#sdProxy");
+  if (location.protocol === "file:" || /claude/.test(location.hostname)) sd.proxy = false;
+  else { try { const r = await fetch(SD_PROXY + "/health", { cache: "no-store" }); const j = r.ok ? await r.json() : null; sd.proxy = j && j.ok ? j : false; } catch (e) { sd.proxy = false; } }
+  if (sd.proxy) { box.className = "sd-proxy"; box.innerHTML = sd.proxy.mock ? "<b>Modo simulado.</b> O servidor está com <span class=\"mono\">--mock</span>: qualquer token funciona e os dados são os de exemplo." : "Ponte para a SenseData pronta neste servidor."; }
+  else {
+    box.className = "sd-proxy bad";
+    box.innerHTML = `<b>Para conectar, abra o relatório pelo servidor que acompanha o projeto.</b><span>A SenseData não aceita chamadas feitas direto do navegador${/claude/.test(location.hostname) ? ", e o link publicado bloqueia chamadas externas" : ""}. No terminal, na pasta do projeto:</span><pre>node tools/servidor.mjs</pre><span>e abra <span class="mono">http://localhost:8787</span>. Publicando o repositório na Vercel, a função <span class="mono">api/sensedata</span> faz o mesmo papel.</span>`;
+  }
+  $("#sdTest").disabled = $("#sdImport").disabled = !sd.proxy;
+}
+let sdOpener = null;
+function openSenseData(opener) {
+  sdOpener = opener || null;
+  $("#sdBase").value = sdBase(); $("#sdLog").innerHTML = "";
+  $("#sdModal").hidden = false; $(".wrap").inert = true;
+  sdCheckProxy();
+  $("#sdToken").focus();
+}
+function closeSenseData() {
+  if (sd.busy && sd.ctrl) sd.ctrl.abort();
+  $("#sdToken").value = "";
+  $("#sdModal").hidden = true; $(".wrap").inert = false;
+  if (sdOpener && document.body.contains(sdOpener)) sdOpener.focus();
+}
+const sdErr = async r => { try { const j = await r.json(); const e = (j.errors || [])[0] || j; return e.msg || e.message || e.detail || e.error || ""; } catch (e) { return ""; } };
+async function sdGet(path, params, token, base, signal) {
+  const qs = new URLSearchParams(); for (const [k, v] of Object.entries(params || {})) if (v != null && v !== "") qs.append(k, v);
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const r = await fetch(`${SD_PROXY}${path}${qs.toString() ? "?" + qs : ""}`, { headers: { authorization: "Bearer " + token, "x-sensedata-base": base }, signal, cache: "no-store" });
+    if (r.status === 429) { const wait = Math.min(60, +r.headers.get("retry-after") || 2 ** (attempt + 1)); sdLog(`A SenseData pediu uma pausa (limite de requisições). Continuo em ${wait} s.`); await new Promise(res => setTimeout(res, wait * 1000)); continue; }
+    if (r.status === 401 || r.status === 403) throw new Error(`Token recusado pela SenseData (${r.status}). Confira se é o token de produção do SenseConnect. ${await sdErr(r)}`.trim());
+    if (!r.ok) throw new Error(`A SenseData respondeu ${r.status} em ${path}. ${await sdErr(r)}`.trim());
+    return r.json();
+  }
+  throw new Error("A SenseData continuou limitando as requisições. Tente de novo em alguns minutos.");
+}
+async function sdPaged(path, key, params, token, base, signal, label) {
+  const out = []; let pg = 1;
+  while (pg) {
+    const j = await sdGet(path, { ...params, page: pg }, token, base, signal);
+    const items = Array.isArray(j[key]) ? j[key] : [];
+    out.push(...items);
+    sdLog(`${label}: ${fmtInt(out.length)} registro(s)`, "", label);
+    pg = j.next_page && j.next_page > pg && items.length ? j.next_page : 0;
+    if (pg > 5000) break;
+  }
+  return out;
+}
+const sdDay = t => new Date(t).toISOString().slice(0, 10);
+const userName = u => u && typeof u === "object" ? (u.name || u.username || u.email || "") : (u || "");
+async function sdImport(token, base, months, withMrr) {
+  sd.ctrl = new AbortController(); const signal = sd.ctrl.signal;
+  const me = await sdGet("/v2/me", {}, token, base, signal);
+  sdLog(`Conectado: ${me.name || me.tenant || "SenseData"}${me.username ? ` (${me.username})` : ""}.`, "ok");
+  const customers = await sdPaged("/v2/customers", "customers", { limit: 1000 }, token, base, signal, "Clientes");
+  if (!customers.length) throw new Error("A SenseData não devolveu nenhum cliente para este token.");
+  const kpis = await sdPaged("/v2/kpis/last", "kpis", { limit: 10000 }, token, base, signal, "KPIs mais recentes");
+  const now = new Date();
+  for (let i = 1; i <= months; i++) {
+    const d = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0), ref = sdDay(d);
+    kpis.push(...await sdPaged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, token, base, signal, `KPIs de ${fmtDate(d)}`));
+  }
+  let mrrOf = null;
+  if (withMrr) {
+    const contracts = await sdPaged("/v2/contracts", "contracts", { limit: 1000 }, token, base, signal, "Contratos");
+    // MRR de cada cliente: contratos vigentes hoje (ativos) ou na véspera do cancelamento (cancelados)
+    const byCust = new Map();
+    for (const c of contracts) { const id = c.id_customer ?? (c.customer && c.customer.id); if (id == null) continue; if (!byCust.has(id)) byCust.set(id, []); byCust.get(id).push(c); }
+    mrrOf = cust => {
+      const list = byCust.get(cust.id) || []; if (!list.length) return "";
+      const at = cust.dt_cancel ? sdDay(toDate(cust.dt_cancel) - 864e5) : sdDay(Date.now());
+      const live = list.filter(c => (!c.start_date || String(c.start_date).slice(0, 10) <= at) && (!c.end_date || String(c.end_date).slice(0, 10) >= at));
+      const v = (live.length ? live : list.filter(c => !c.status || c.status.enabled !== false)).reduce((t, c) => t + (Number(c.monthly_payment) || 0), 0);
+      return v ? v.toFixed(2) : "";
+    };
+  }
+  sdLog("Montando o relatório…");
+  const custRows = customers.map(c => ({
+    id: c.id, name: c.name || c.name_contract || "", name_contract: c.name_contract || "", group: c.group || "", cnpj: c.cnpj || "",
+    industry: c.industry || "", size: c.size || "", state: c.state || "", stage: c.stage || "", cs_owner: userName(c.cs), status: c.status && c.status.description || "",
+    dt_register: String(c.dt_register || "").slice(0, 10), dt_cancel: String(c.dt_cancel || "").slice(0, 10), cancel_tag: c.cancel_tag || "", cancel_description: c.cancel_description || "",
+    mrr: mrrOf ? mrrOf(c) : ""
+  }));
+  const seen = new Set(), kpiRows = [];
+  for (const k of kpis) {
+    const t = k.type || {}; if (t.active === false) continue;
+    const id = k.id_customer ?? (k.customer && k.customer.id), ref = String(k.ref_date || "").slice(0, 10), key = `${id}|${t.id}|${ref}`;
+    if (id == null || seen.has(key)) continue; seen.add(key);
+    kpiRows.push({ id_customer: id, ref_date: ref, type: t.id ?? t.name, kpi_name: t.description || t.name || "", inv_proportional: t.inv_proportional == null ? "" : String(t.inv_proportional), unit: t.unit || "", value: k.value });
+  }
+  if (!withMrr) custRows.forEach(r => delete r.mrr);
+  // a importação substitui todas as fontes (inclusive um CSV de cancelamentos anexado antes)
+  if (!state.isSample) { state.raw = EMPTY_RAW(); state.map = EMPTY_MAP(); }
+  loadText("clientes", Papa.unparse(custRows));
+  if (kpiRows.length) loadText("kpis", Papa.unparse(kpiRows), false);
+  state.source = { name: "SenseData", tenant: me.name || me.tenant || "", at: Date.now() };
+  renderInputs();
+  sdLog(`Pronto: ${fmtInt(custRows.length)} clientes e ${fmtInt(kpiRows.length)} leituras de KPI importados.`, "ok");
+  return { customers: custRows.length, kpis: kpiRows.length };
+}
+document.addEventListener("click", e => {
+  const t = e.target;
+  const mb = t.closest && t.closest("#btnIntegr");
+  if (mb) { const pop = $("#integrPop"), open = pop.hidden; pop.hidden = !open; mb.setAttribute("aria-expanded", String(open)); if (open) pop.querySelector("[role=menuitem]").focus(); return; }
+  if (t.closest && t.closest("[data-integr]")) { $("#integrPop").hidden = true; $("#btnIntegr").setAttribute("aria-expanded", "false"); openSenseData($("#btnIntegr")); return; }
+  if (!(t.closest && t.closest("#integrMenu"))) { const pop = $("#integrPop"); if (pop && !pop.hidden) { pop.hidden = true; $("#btnIntegr").setAttribute("aria-expanded", "false"); } }
+  if (t.id === "sdClose") closeSenseData();
+  if (t.id === "sdCancel" && sd.ctrl) sd.ctrl.abort();
+  if (t.id === "sdTest") sdRun(true);
+});
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if (!$("#sdModal").hidden) { closeSenseData(); return; }
+  const pop = $("#integrPop"); if (pop && !pop.hidden) { pop.hidden = true; $("#btnIntegr").setAttribute("aria-expanded", "false"); $("#btnIntegr").focus(); }
+});
+document.addEventListener("submit", e => { if (e.target.id === "sdForm") { e.preventDefault(); sdRun(false); } });
+$("#sdModal").addEventListener("mousedown", e => { if (e.target.id === "sdModal" && !sd.busy) closeSenseData(); });
+async function sdRun(testOnly) {
+  const base = sdValidBase($("#sdBase").value.trim()), token = $("#sdToken").value.trim().replace(/^Bearer\s+/i, "");
+  if (!base) { sdLog("A URL precisa ser https e da SenseData (ex.: https://api.sensedata.io).", "err"); $("#sdBase").focus(); return; }
+  if (!token) { sdLog("Informe o token.", "err"); $("#sdToken").focus(); return; }
+  try { localStorage.setItem("csops-sd-base", base); } catch (e) {}
+  sd.busy = true; $("#sdTest").disabled = $("#sdImport").disabled = true; $("#sdCancel").hidden = testOnly;
+  try {
+    if (testOnly) {
+      sd.ctrl = new AbortController();
+      const me = await sdGet("/v2/me", {}, token, base, sd.ctrl.signal);
+      const c = await sdGet("/v2/customers", { limit: 1 }, token, base, sd.ctrl.signal);
+      sdLog(`Token válido: ${me.name || me.tenant || "SenseData"}${me.username ? ` (${me.username})` : ""}. Clientes acessíveis: sim${c.customers && c.customers.length ? "" : " (nenhum retornado)"}.`, "ok");
+    } else {
+      sdLog("Importando da SenseData…");
+      await sdImport(token, base, +$("#sdMonths").value || 12, $("#sdMrr").checked);
+      toast("Dados da SenseData importados. O relatório já usa esses clientes.");
+      setTimeout(closeSenseData, 900);
+    }
+  } catch (err) {
+    sdLog(err.name === "AbortError" ? "Importação cancelada." : err.message, "err");
+  } finally {
+    sd.busy = false; $("#sdCancel").hidden = true; $("#sdTest").disabled = $("#sdImport").disabled = !sd.proxy;
+  }
+}
+
 /* ---------- tour de boas-vindas ---------- */
 const TOUR_KEY = "csops-tour", TOUR_V = 1;
 const MOTION_OK = !matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2591,7 +2807,7 @@ function makeSample() {
 // SAMPLE-END
 function loadSample() {
   const s = makeSample();
-  state.isSample = true; state.dimBar = null; state.dimPeer = null; state.level = "org"; state.filters = []; state.openFilter = null;
+  state.isSample = true; state.source = null; state.dimBar = null; state.dimPeer = null; state.level = "org"; state.filters = []; state.openFilter = null;
   state.raw = EMPTY_RAW(); state.map = EMPTY_MAP();
   for (const k of ["clientes", "kpis"]) { state.raw[k] = parseCSV(s[k]); autoMap(k); }
   renderInputs(); renderReport();
