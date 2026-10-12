@@ -48,6 +48,16 @@ check("histórico de KPI", run("build().clients.some(c => Object.values(c.hist).
 const ex = run("(() => { renderReport(); const t = exportTables(); return t ? Object.keys(t).sort() : null; })()");
 check("tabelas do relatório exportado", ex && ["ativos-em-risco.csv", "cancelados-classificados.csv", "clientes-analisados.csv", "indicadores.csv", "serie-mensal.csv"].every(k => ex.includes(k)), true);
 
+// sinais de churn: assinatura de cada motivo
+const sg = run(`(() => { state.level = "org"; renderReport(); const M0 = build(); const m = signalModel(M0, view(M0));
+  const top = mot => (m.sigs.find(x => x.motivo === mot) || { top: [] }).top.map(x => x.fam + "|" + x.f);
+  const S = signalSources(), exitTk = [...S.tk.values()].flat().filter(e => e.exit).length;
+  return { motivos: m.sigs.length, suporte: top("suporte"), concorrente: top("concorrente"), exitTk, fotos: m.snapshots }; })()`);
+check("assinaturas por motivo", sg.motivos >= 4, true);
+check("suporte aparece em tickets", sg.suporte.some(x => x.startsWith("Suporte|")), true);
+check("concorrente aparece em sponsor novo", sg.concorrente.includes("Relacionamento|sp_novo"), true);
+check("pedidos de cancelamento marcados para sair das variáveis", sg.exitTk > 30, true);
+
 // hierarquia: linhas de grupo/organização não contam como cliente
 check("linhas de hierarquia ignoradas", run("build().notes.length"), 1);
 // cortes: mexer no corte reclassifica sem reprocessar os arquivos

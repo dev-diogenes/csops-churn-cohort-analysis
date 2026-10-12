@@ -59,13 +59,13 @@ Todos os endpoints aceitam filtro de data e paginação (`limit`, `page`, `next_
 - `rel_dias_ultima_tarefa`: dias desde a última tarefa concluída; `rel_dias_ultima_reuniao` (tipos de tarefa de reunião)
 - `rel_tarefas_atrasadas_T`: `due_date` < T sem `end_date` até T
 - `rel_visitas_90d`, `rel_notas_90d`, `rel_playbooks_90d`
-- `sp_sem_sponsor`: nenhum contato ativo marcado como sponsor
 - `sp_novo`: sponsor atual cadastrado há menos de 180 dias (estimativa de troca)
 
-**Estrutura e contrato**
-- Tempo de casa e `ct_dias_fim`: dias até o fim do contrato vigente; `ct_auto_renovacao`
-- `ct_mrr_d90`: variação do MRR dos contratos vigentes em 90 dias; `ct_produtos_perdidos_90d`
+**Estrutura**
+- Tempo de casa e produtos cancelados na mesma organização nos 90 dias anteriores
 - Perfil: porte, setor, etapa, CSM (para comparar com pares, como o score atual)
+
+**Contrato (próxima etapa):** dias até o fim do contrato, renovação automática e variação do MRR. Ficaram fora da primeira versão porque, nos cancelados, a data de fim do contrato costuma ser a própria data de saída, e isso vazaria o resultado. Vão entrar quando a importação trouxer o histórico de contratos vigentes em cada foto.
 
 ## Cuidados contra resultado enganoso
 
@@ -80,6 +80,10 @@ Todos os endpoints aceitam filtro de data e paginação (`limit`, `page`, `next_
 - **Diagnóstico → Assinaturas por motivo:** tabela de motivos × sinais com o efeito, a direção, a antecedência (T−3, T−2, T−1) e a estabilidade.
 - **Ficha do cliente:** quando os sinais de um ativo lembram a assinatura de um motivo, aparece "parecido com quem saiu por X", com os 3 sinais que mais pesam.
 - **Exportar relatório:** `assinaturas-por-motivo.csv` e `fotos-mensais.csv` (uma linha por cliente × mês com todas as variáveis).
+
+## Status (12/10/2026)
+
+Semanas 1 a 3 entregues: fontes e modelos de CSV, importação da SenseData, exemplo com os mesmos sinais, API simulada, fotos mensais, assinaturas na área Diagnóstico, aviso na ficha do cliente e CSVs no relatório exportado. Falta a etapa 4: entrevistas com os CSMs.
 
 ## Etapas
 

@@ -30,6 +30,10 @@ No topo do relatório, **Integrações → SenseData** importa os dados direto d
 | `GET /v2/customers` | `customer`: id, nome, grupo econômico (`group`), organização (`cnpj`), setor, porte, UF, fase, CS, `dt_register`, `dt_cancel`, `cancel_tag`, `cancel_description` |
 | `GET /v2/kpis?ref_date:start=&ref_date:end=` | Só o último dia de cada um dos últimos 12 meses fechados (uma chamada por dia). Para clientes ativos, a leitura mais recente é a do fim do mês passado |
 | `GET /v2/contracts` (opcional) | MRR: soma de `monthly_payment` dos contratos vigentes hoje (ativos) ou na véspera do cancelamento |
+| `GET /v2/support_tickets`, `/v2/nps`, `/v2/tasks`, `/v2/tasks_checkin`, `/v2/customers_notes`, `/v2/usage_time`, `/v2/default_usage` (opcional) | Sinais de churn dos últimos 18 meses: tickets, NPS, tarefas, visitas, notas (só a data) e uso por mês |
+| `GET /v2/contacts?is_main_sponsor=true` (opcional) | `sponsor_desde`: data de cadastro do sponsor atual, usada como estimativa de troca de decisor |
+
+Fonte sem permissão ou sem o módulo contratado é pulada com um aviso; o resto da importação segue.
 
 O nome, a unidade e a direção (`inv_proportional`) de cada KPI já vêm no objeto `type` de cada leitura. A paginação segue `next_page`; respostas 429 (limite de requisições) são repetidas respeitando `retry-after`. Referência: [api.sensedata.io/v2/redoc](https://api.sensedata.io/v2/redoc).
 
@@ -43,6 +47,18 @@ node tools/servidor.mjs --mock   # API simulada com os dados de exemplo, para te
 Publicando o repositório na Vercel, a função `api/sensedata/[...path].js` faz o mesmo papel da ponte local.
 
 O token de produção do SenseConnect é pedido ao suporte da SenseData (suporte@sensedata.com.br).
+
+## Sinais de churn e assinatura de cada motivo
+
+Em **Dados → Sinais de churn** entram quatro fontes opcionais, com as mesmas colunas da API v2: **Tickets** (`support_tickets`), **NPS**, **Tarefas e interações** (tarefas, visitas e notas, com a coluna `kind`) e **Uso** (`usage_time`, com `modules` opcional). Os modelos estão na planilha e em [`exemplos/`](exemplos/).
+
+**Diagnóstico → Assinatura de cada motivo** responde por que os clientes saem:
+
+1. No fim de cada mês, cada linha ativa recebe variáveis de uso, suporte, voz do cliente, relacionamento, indicadores e estrutura, calculadas só com registros até aquela data.
+2. Quem cancelou nos 90 dias seguintes por um motivo é comparado com quem continuou ativo. Motivos com menos de 10 cancelamentos entram em "Outros".
+3. A matriz mostra em que família cada motivo dá aviso; o detalhe traz os sinais, a média de quem saiu e de quem ficou, o efeito, com quantos meses de antecedência o sinal aparece e se ele se repete nas duas metades do período.
+
+Pedidos de cancelamento, tarefas e playbooks de retenção (categoria, tipo, título, tag ou playbook com "cancel", "churn", "rescis", "retenção" ou "distrato") ficam fora das variáveis, porque são consequência da decisão. Na **ficha do cliente**, um ativo cujos sinais lembram a assinatura de um motivo (75% ou mais de semelhança em pelo menos dois sinais) recebe o aviso "Parecido com quem saiu por X". O relatório exportado inclui `assinaturas-por-motivo.csv` e `fotos-mensais.csv`. Desenho completo em [`docs/modelo-de-sinais.md`](docs/modelo-de-sinais.md).
 
 ## Tour de boas-vindas
 

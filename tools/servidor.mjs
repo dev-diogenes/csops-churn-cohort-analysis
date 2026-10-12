@@ -41,7 +41,8 @@ async function proxy(req, res, rest, search) {
 }
 
 // ---------------------------------------------------------------- API simulada (--mock)
-// Converte os CSVs de exemplo para o formato da API v2: customers, kpis, kpis/last, contracts, me.
+// Converte os CSVs de exemplo para o formato da API v2: customers, kpis, kpis/last, contracts, me e as rotas de sinais
+// (support_tickets, nps, tasks, tasks_checkin, customers_notes, usage_time, default_usage, contacts).
 function csv(file) {
   const text = fs.readFileSync(path.join(root, "exemplos", file), "utf8").trim();
   const rows = []; let row = [], cell = "", q = false;
@@ -66,7 +67,19 @@ function mockData() {
   const contracts = cust.map((c, i) => ({ id: i + 1, id_customer: +c.id, customer: { id: +c.id, name: c.name }, model: "MRR", monthly_payment: +c.mrr || 0, start_date: c.dt_register, end_date: c.dt_cancel || null, status: c.dt_cancel ? { id: 2, description: "Cancelado", enabled: false } : { id: 1, description: "Ativo", enabled: true }, plan: c.product, is_subscription: true }));
   const kpis = csv("kpi.csv").map(k => ({ id_customer: +k.id_customer, customer: { id: +k.id_customer }, ref_date: k.ref_date.slice(0, 10), type: { id: +k.type, name: k.kpi_name.toLowerCase().replace(/\W+/g, "_"), description: k.kpi_name, unit: "", inv_proportional: k.inv_proportional === "true", is_custom: false, active: true }, value: +k.value }));
   const last = kpis.reduce((m, k) => k.ref_date > m ? k.ref_date : m, "");
-  return (MOCKDATA = { customers, contracts, kpis, last });
+  // sinais de churn no formato da API v2
+  const opt = f => fs.existsSync(path.join(root, "exemplos", f)) ? csv(f) : [];
+  const support_tickets = opt("tickets.csv").map((t, i) => ({ id: i + 1, id_customer: +t.id_customer, created_on: t.created_on, end_date: t.end_date || null, expire_date: t.expire_date || null, priority: t.priority, category: t.category, type: t.type, title: t.title, status: t.end_date ? "Resolvido" : "Aberto" }));
+  const nps = opt("nps.csv").map((n, i) => ({ id: i + 1, id_customer: +n.id_customer, customer: { id: +n.id_customer }, survey_date: n.survey_date, score: +n.score, role: n.role, tags: n.tags }));
+  const ta = opt("tarefas.csv");
+  const tasks = ta.filter(t => t.kind === "tarefa").map((t, i) => ({ id: i + 1, id_customer: +t.id_customer, customer: { id: +t.id_customer }, type: { id: 1, description: t.type }, status: { id: t.end_date ? 3 : 1, description: t.end_date ? "Concluída" : "Pendente" }, created_on: t.created_on, created_at: t.created_on, due_date: t.due_date || null, end_date: t.end_date || null, playbook: t.playbook ? { id: 1, name: t.playbook } : null, tags: t.tags }));
+  const tasks_checkin = ta.filter(t => t.kind === "visita").map((t, i) => ({ id: i + 1, task: { id: i + 1, customer: { id: +t.id_customer } }, checkin_at: t.created_on, checkout_at: t.end_date || t.created_on }));
+  const customers_notes = ta.filter(t => t.kind === "nota").map((t, i) => ({ id: i + 1, customer: { id: +t.id_customer }, created_on: t.created_on, description: "nota", deleted: false }));
+  const uso = opt("uso.csv");
+  const usage_time = uso.map((u, i) => ({ id: i + 1, id_customer: +u.id_customer, ref_date: u.ref_date, active_users: +u.active_users, contracted_users: +u.contracted_users, registered_users: +u.contracted_users, usage_time: +u.usage_time }));
+  const default_usage = uso.flatMap(u => Array.from({ length: +u.modules || 0 }, (_, k) => ({ id_customer: +u.id_customer, customer: { id: +u.id_customer }, ref_date: u.ref_date, product: "Produto", module: "M" + (k + 1), action: "acesso", amount: 1 })));
+  const contacts = csv("customer.csv").filter(c => c.sponsor_desde).map((c, i) => ({ id: i + 1, id_customer: +c.id, customer: { id: +c.id }, is_main_sponsor: true, is_active: true, name: "Sponsor " + c.id, created_at: c.sponsor_desde }));
+  return (MOCKDATA = { customers, contracts, kpis, last, support_tickets, nps, tasks, tasks_checkin, customers_notes, usage_time, default_usage, contacts });
 }
 function page(res, key, items, q) {
   const limit = Math.max(1, Math.min(+q.get("limit") || 10, 10000)), p = Math.max(1, +q.get("page") || 1);
@@ -78,6 +91,16 @@ function mock(res, rest, q) {
   if (rest === "/v2/me") return json(res, 200, { name: "SenseData (simulada)", tenant: "exemplo", username: "usuario.teste" });
   if (rest === "/v2/customers") return page(res, "customers", D.customers, q);
   if (rest === "/v2/contracts") return page(res, "contracts", D.contracts, q);
+  // filtro de data "campo:start" das rotas de sinais
+  const since = (items, field) => { const a = q.get(field + ":start"); return a ? items.filter(x => String(x[field] || "") >= a) : items; };
+  if (rest === "/v2/support_tickets") return page(res, "support_tickets", since(D.support_tickets, "created_on"), q);
+  if (rest === "/v2/nps") return page(res, "nps", since(D.nps, "survey_date"), q);
+  if (rest === "/v2/tasks") return page(res, "tasks", since(D.tasks, "created_at"), q);
+  if (rest === "/v2/tasks_checkin") return page(res, "tasks_checkin", since(D.tasks_checkin, "checkin_at"), q);
+  if (rest === "/v2/customers_notes") return page(res, "customers_notes", since(D.customers_notes, "created_on"), q);
+  if (rest === "/v2/usage_time") return page(res, "usage_time", since(D.usage_time, "ref_date"), q);
+  if (rest === "/v2/default_usage") return page(res, "default_usage", since(D.default_usage, "ref_date"), q);
+  if (rest === "/v2/contacts") return page(res, "contacts", D.contacts, q);
   if (rest === "/v2/kpis/last") return page(res, "kpis", D.kpis.filter(k => k.ref_date === D.last), q);
   if (rest === "/v2/kpis") {
     const a = q.get("ref_date:start") || "0000", b = q.get("ref_date:end") || "9999";
