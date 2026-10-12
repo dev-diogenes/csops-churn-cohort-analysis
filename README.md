@@ -46,7 +46,9 @@ O token de produção do SenseConnect é pedido ao suporte da SenseData (suporte
 
 ## Tour de boas-vindas
 
-Na primeira visita, o relatório oferece um tour guiado (Driver.js) que rola até cada seção, explica para que ela serve e onde clicar, com **Pular** e **Entendi**. Há quatro caminhos: agir na carteira (CSM), entender o churn da base (Head de CS), preparar os dados (CS Ops) e ver tudo na ordem da página. No fim, o tour volta ao Passo 1 com o foco no primeiro campo; "Explorar mais 4 seções" abre uma segunda trilha (Indicadores, Churn anormal, Motivos e o painel de diagnóstico). **Ver tour**, no topo, reabre a qualquer momento. O painel de diagnóstico tem o seu próprio tour de 4 passos. A escolha fica salva no navegador (`csops-tour`, `csops-diag-tour`); mudar a versão no código reapresenta o tour.
+Na primeira visita, o relatório pergunta o que a pessoa quer resolver e mostra só o que importa para o papel dela: **Agir na minha carteira** (CSM, termina na Carteira), **Entender o churn da base** (Head de CS, termina na Visão geral) ou **Ver tudo**. O tour troca de área sozinho a cada passo, com **Pular** e **Entendi**; "Explorar mais 4 seções" abre uma segunda trilha. A escolha fica salva (`csops-profile`) e define a área inicial nas próximas visitas. **Ver tour**, na barra lateral, reabre a qualquer momento.
+
+Depois do tour, **dicas pontuais** aparecem uma por vez (ponto pulsante) em recursos ainda não usados, como exportar, abrir a ficha de um cliente, mover um cartão e salvar uma visão. Cada uma some no primeiro uso. A lista **Primeiros passos** da barra lateral acompanha o progresso (perfil, dados próprios, abrir um cliente, exportar).
 
 ## Painel de diagnóstico
 
@@ -77,7 +79,7 @@ No modelo, o cabeçalho vermelho é obrigatório, o amarelo é opcional mas impo
 
 | Tabela | Obrigatórias | Opcionais importantes | Opcionais |
 |---|---|---|---|
-| `customer` | `id`, `dt_register`, `dt_cancel` | `name`, `hierarchy_type`, `id_group`, `group`, `id_org`, `id_product`, `product`, `industry`, `size`, `state`, `stage`, `cs_owner`, `cancel_tag`, `cancel_description`, `mrr` | `cnpj`, `id_legacy`, `name_contract`, `city`, `country`, `support_owner`, `sales_owner`, `onboarding_owner`, `dt_stage` |
+| `customer` | `id`, `dt_register`, `dt_cancel` | `name`, `hierarchy_type`, `id_group`, `group`, `id_org`, `id_product`, `product`, `industry`, `size`, `state`, `stage`, `cs_owner`, `cancel_tag`, `cancel_description`, `mrr` | `mrr_12m_atras`, `cnpj`, `id_legacy`, `name_contract`, `city`, `country`, `support_owner`, `sales_owner`, `onboarding_owner`, `dt_stage` |
 | `kpi` | `id_customer`, `type`, `value` | `ref_date`, `kpi_name`, `inv_proportional` | `unit` |
 | cancelamentos | `id_customer`, `dt_cancel` | `cancel_tag` | `mrr_perdido` |
 
@@ -85,6 +87,7 @@ No modelo, o cabeçalho vermelho é obrigatório, o amarelo é opcional mas impo
 - `kpi_type` não precisa ser enviada: `kpi_name`, `inv_proportional` e `unit` vêm por join no próprio export de `kpi` ([`sql/kpi_snapshot.sql`](sql/kpi_snapshot.sql)). Sem elas, os KPIs aparecem como "KPI 1", "KPI 2"… e a direção é deduzida dos dados.
 - Para cada linha de cliente e KPI vale a última leitura **antes** de `dt_cancel` (ativos: a mais recente). [`sql/kpi_mensal.sql`](sql/kpi_mensal.sql) traz uma leitura por mês, se quiser histórico.
 - `cs_owner` e os demais campos de perfil são texto (nome do CSM, não o ID).
+- `mrr_12m_atras` (MRR da linha 12 meses antes) habilita o **NRR** na seção Mercado. A importação da SenseData calcula pelos contratos vigentes naquela data.
 - Separador `,` `;` ou tab; datas `AAAA-MM-DD` (com ou sem hora), `DD/MM/AAAA` ou `MM/AAAA`; números em formato BR ou US.
 - Para regenerar o modelo depois de mudar colunas: `python tools/gerar_modelo.py` (requer `openpyxl`). Mantenha a constante `TEMPLATE` de `index.html` igual.
 
@@ -98,15 +101,32 @@ A hierarquia usa IDs: `id_group` (grupo econômico), `id_org` (organização, o 
 
 ## O que o relatório mostra
 
-O menu **Churn** agrupa as seções (novos tópicos entram como abas ao lado):
+A barra lateral divide o relatório em cinco áreas, cada uma com uma pergunta (o endereço muda junto: `#inicio`, `#carteira`, `#retencao`, `#diagnostico`, `#dados`):
 
-1. **Resumo**: base, ativos, cancelados, churn mensal médio, MRR perdido, tempo mediano até cancelar, churn parcial.
-2. **Retenção por coorte**: safras de `dt_register` × meses de vida.
-3. **Churn por perfil**: taxa por grupo com teste z contra a média.
-4. **Indicadores**: KPIs de ativos x cancelados e tamanho de efeito (d de Cohen). KPIs que contrariam o `inv_proportional` ficam fora do score.
-5. **Churn anormal**: score de risco 0–100 contra pares do mesmo perfil. Cancelado com score < 50 = churn anormal.
-6. **Ativos em risco**: score ≥ 70 (alto) ou 55–70 (atenção), com os KPIs que puxam o risco.
-7. **Motivos** (`cancel_tag` + `cancel_description`) e tempo de casa no cancelamento.
+| Área | Seções |
+|---|---|
+| **Visão geral** | Principais achados; cartões com tendência de 12 meses e variação contra o mês anterior; seu churn, GRR e NRR x mercado |
+| **Carteira** | Quadro de risco (A abordar, Em contato, Plano de ação, Resolvido) e Ativos em risco (score ≥ 70 alto, 55–70 atenção) |
+| **Retenção** | Retenção por coorte; motivos (`cancel_tag` + `cancel_description`) e tempo de casa no cancelamento |
+| **Diagnóstico** | Churn por perfil (teste z), Indicadores (d de Cohen) e Churn esperado x anormal (score < 50) |
+| **Dados** | Perfil da empresa, arquivos, formato dos arquivos, método e uso neste navegador |
+
+Textos longos ficam em **Como ler** e **Como é calculado**, abertos sob demanda. O status usa a mesma legenda em todas as áreas: ▲ crítico, ◆ atenção, ● saudável. **Visões** prontas e salvas guardam área, nível, filtros e cortes.
+
+### Ficha do cliente e quadro de risco
+
+Clicar no nome de qualquer cliente abre a **ficha**: score e o que puxa cada ponto dele, indicadores mês a mês, linhas (produtos) e motivo, se cancelou. Ativos podem ir para o **quadro de risco** com uma nota. Clientes em alto risco entram sozinhos em *A abordar*; os cartões se movem arrastando ou pelo seletor (teclado). Cartão parado há mais de 7 dias fica vermelho. Quadro e notas ficam neste navegador.
+
+### Exportar relatório
+
+**Exportar relatório** baixa um `.zip` com:
+
+- `painel-diagnostico.html`: o painel de diagnóstico com os dados embutidos, para abrir em qualquer navegador;
+- `analises/`: clientes analisados, cancelados classificados, ativos em risco, retenção por coorte, churn por perfil, indicadores, série mensal, mercado, quadro de risco e uso do relatório (CSV com `;`, vírgula decimal e UTF-8, abre direto no Excel);
+- `dados/`: os arquivos de entrada como foram lidos;
+- `LEIA-ME.txt`: recorte, cortes do score e o que é cada arquivo.
+
+Nada sai do navegador para gerar o arquivo. No Artifact do claude.ai downloads são bloqueados; use a versão do GitHub Pages.
 
 O ícone **i** ao lado de cada título resume como a análise é feita; clicando nele, abre um painel móvel com o passo a passo calculado com os dados carregados (escolha a coorte, o grupo, o KPI ou o cliente de exemplo).
 
@@ -124,7 +144,7 @@ As tabelas de churn classificado e ativos em risco podem ser copiadas como CSV.
 ## Dados lembrados e teste no tempo
 
 - **Lembrar neste navegador** (ligado por padrão): os CSVs e os ajustes (colunas, filtros, nível, cortes) ficam no IndexedDB do navegador e voltam ao reabrir a página. **Esquecer dados** apaga. Nada é enviado para fora.
-- **Teste no tempo do score**: recalcula o score com as leituras de KPI de 90 dias atrás, só para quem estava ativo naquela data, e mede quantos dos marcados cancelaram depois. Aparece em *Ativos em risco* e na página *O score funciona?* do painel. A direção e o peso dos KPIs vêm da base inteira, então o teste tende a ser um pouco otimista.
+- **Teste no tempo do score**: recalcula o score com as leituras de KPI de 90 dias atrás, só para quem estava ativo naquela data, e mede quantos dos marcados cancelaram depois. Aparece em *Ativos em risco* e na página *O score funciona?* do painel. A direção e o peso de cada KPI são aprendidos só com os cancelamentos até aquela data; nada do período testado entra no score do teste.
 
 ## Testes
 

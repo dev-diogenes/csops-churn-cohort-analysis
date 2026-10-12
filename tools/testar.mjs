@@ -37,6 +37,17 @@ check("AUC na base", d.quality.auc, 0.779, 0.002);
 check("teste no tempo existe", !!d.backtest, true);
 if (d.backtest) check("teste no tempo antecipa (AUC > 0,6)", d.backtest.auc > 0.6, true);
 
+if (d.backtest) check("teste no tempo aprende só com o passado", d.backtest.trained, true);
+
+// NRR com o MRR de 12 meses atrás
+const nrr = run("(() => { const M = build(); const r = nrr12(M.clients, M.ref); return r && Math.round(r.nrr * 1000) / 1000; })()");
+check("NRR calculado", nrr != null && nrr > 0.5 && nrr < 1.5, true);
+// histórico de KPI por linha (ficha do cliente)
+check("histórico de KPI", run("build().clients.some(c => Object.values(c.hist).some(h => h.length >= 3))"), true);
+// relatório exportável: tabelas montadas a partir do último render
+const ex = run("(() => { renderReport(); const t = exportTables(); return t ? Object.keys(t).sort() : null; })()");
+check("tabelas do relatório exportado", ex && ["ativos-em-risco.csv", "cancelados-classificados.csv", "clientes-analisados.csv", "indicadores.csv", "serie-mensal.csv"].every(k => ex.includes(k)), true);
+
 // hierarquia: linhas de grupo/organização não contam como cliente
 check("linhas de hierarquia ignoradas", run("build().notes.length"), 1);
 // cortes: mexer no corte reclassifica sem reprocessar os arquivos

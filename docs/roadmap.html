@@ -101,6 +101,11 @@ td.c { text-align: center; }
 .g-lab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .g-bar { align-self: center; height: 22px; border-radius: 6px; border: 0; cursor: pointer; margin: 5px 2px; color: #fff; font: 600 0.72rem var(--f-mono); text-align: left; padding: 0 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; position: relative; }
 .g-bar:hover, .g-bar[aria-expanded="true"] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.g-bar.drop { opacity: .35; text-decoration: line-through; }
+.g-lab .st { font: 600 0.66rem var(--f-mono); padding: 1px 6px; border-radius: 99px; margin-left: 6px; white-space: nowrap; }
+.g-lab .st.ok { background: color-mix(in srgb, #0b7f49 18%, transparent); color: inherit; }
+.g-lab .st.off { background: color-mix(in srgb, currentColor 12%, transparent); color: inherit; opacity: .8; }
+.g-lab.drop span[title] { text-decoration: line-through; opacity: .6; }
 .g-bar.dep { background-image: repeating-linear-gradient(135deg, transparent 0 6px, rgba(255, 255, 255, .28) 6px 9px); }
 .g-row-dim { opacity: .2; }
 .g-ms { grid-column-end: span 1; align-self: center; justify-self: end; width: 12px; height: 12px; transform: rotate(45deg); background: var(--ink); margin-right: -6px; z-index: 1; }
@@ -202,7 +207,7 @@ td.c { text-align: center; }
     <h2 id="s-road">Cinco fases, cada uma entregável sozinha</h2>
     <div class="filters" role="group" aria-label="Filtrar por tema" id="filters"></div>
     <div class="scroll"><div class="gantt" id="gantt" role="grid" aria-label="Cronograma por semana"></div></div>
-    <p class="hint">Clique numa barra para ver problema, entrega, referência e como medir. Barra listrada = depende de uma decisão da lista "Decisões" abaixo. ◆ = marco de fim de fase.</p>
+    <p class="hint">Clique numa barra para ver problema, entrega, referência e como medir. ✓ = entregue; riscada = fora do escopo pelas decisões abaixo. ◆ = marco de fim de fase.</p>
     <div class="detail" id="detail" hidden aria-live="polite"></div>
   </section>
 
@@ -248,12 +253,12 @@ td.c { text-align: center; }
 
   <section aria-labelledby="s-dec">
     <span class="eyebrow">Decisões</span>
-    <h2 id="s-dec">O que precisa ser decidido antes</h2>
+    <h2 id="s-dec">O que foi decidido</h2>
     <div class="dec">
-      <div><b>Onde guardar dados compartilhados</b><span>Quadro de risco, visões salvas e eventos de uso precisam de um servidor com banco (Vercel ou o servidor do projeto). Afeta N2, C2, A3, D1.</span></div>
-      <div><b>Quem é o usuário principal</b><span>CSM (carteira e ação) ou Head de CS (diagnóstico e mercado). Define a área que abre primeiro e a ordem das fases 3 e 4.</span></div>
-      <div><b>Escrever de volta na SenseData</b><span>Gravar o score num campo customizado e criar tarefas usa um token com permissão de escrita. Afeta C3 e D2.</span></div>
-      <div><b>Canal dos alertas</b><span>Slack, e-mail ou só dentro da SenseData. Afeta D1.</span></div>
+      <div><b>Tudo no navegador</b><span>Qualquer pessoa abre e usa, sem conta nem servidor. Quadro, visões, notas e uso ficam no navegador de cada um.</span></div>
+      <div><b>Usuário principal: CSM e Head de CS</b><span>CSM começa na Carteira; Head de CS, na Visão geral. O caminho de CS Ops saiu do tour.</span></div>
+      <div><b>Sem escrita na SenseData</b><span>No lugar, o relatório exportável: painel com os dados e cada análise em CSV (C3). D2 saiu.</span></div>
+      <div><b>Sem alertas</b><span>D1 saiu do escopo. A importação da SenseData continua sob demanda.</span></div>
     </div>
   </section>
 
@@ -282,35 +287,37 @@ const ITEMS = [
   ["V2", 0, "visual", "KPIs com tendência", 2, 3, "M", 0, "HubSpot (gráfico de tendência do health score), monday (dashboards)", "Os cartões mostram o número do momento, sem dizer se melhorou ou piorou.", "Cartões com mini gráfico dos últimos meses e variação contra o mês anterior, com cor de status.", "Quem lê consegue dizer em 5 segundos se o churn subiu ou caiu (teste com 5 pessoas)."],
   ["V3", 0, "visual", "Linguagem visual de status", 3, 4, "P", 0, "Pipedrive (cartão vermelho quando parado), monday (cores de status)", "Cada seção usa a cor e o ícone de um jeito.", "Uma legenda única de status, ícone por área e chips padronizados em todas as telas.", "Nenhuma informação depende só da cor; auditoria de acessibilidade sem achados de cor."],
   ["N1", 1, "visual", "Barra lateral e áreas", 5, 7, "G", 0, "HubSpot e SenseData (navegação por área)", "Uma página de cerca de 13 telas; a análise começa a 1.433 px.", "Áreas Visão geral, Carteira, Retenção, Diagnóstico, Dados e Integrações, cada uma cabendo em uma tela.", "Primeiro número visível sem rolar em todas as áreas."],
-  ["N2", 1, "uso", "Visões salvas", 7, 8, "M", 1, "HubSpot (visões salvas), monday (várias visões dos mesmos dados)", "Filtro, nível e cortes se perdem quando outra pessoa abre.", "Salvar filtro + nível + cortes com nome e abrir pelo link; visões padrão por perfil.", "Visões salvas por usuário ativo por semana."],
+  ["N2", 1, "uso", "Visões salvas", 7, 8, "M", 1, "HubSpot (visões salvas), monday (várias visões dos mesmos dados)", "Filtro, nível e cortes se perdem quando outra pessoa abre.", "Salvar área, filtro, nível e cortes com nome neste navegador; três visões prontas.", "Visões salvas por usuário ativo por semana."],
   ["A1", 1, "adocao", "Checklist de primeiros passos", 6, 8, "M", 0, "HubSpot (checklist de onboarding com progresso), monday (perguntas iniciais)", "O tour explica, mas não leva até o valor: o usuário pode sair sem carregar os próprios dados.", "Quatro passos com barra de progresso: perfil da empresa, dados, primeira lista de risco, convidar o time. Some quando completo.", "Taxa de ativação (etapa 2 do funil) sobe com o checklist."],
   ["C1", 2, "acao", "Página do cliente (360)", 9, 11, "G", 0, "SenseData (visão 360), HubSpot (cartão de health score), Salesforce (motivos com peso)", "O cliente existe só como linha de tabela; não dá para ver a história dele.", "KPIs ao longo do tempo, score com a contribuição de cada KPI, produtos, contratos, motivo de cancelamento e pares.", "Clientes abertos por usuário por semana."],
-  ["C2", 2, "acao", "Quadro de risco", 10, 12, "G", 1, "Pipedrive (funil visual e rotting), monday (kanban por status)", "A lista de risco não registra o que já foi feito com cada cliente.", "Colunas Alto risco → Em contato → Plano em andamento → Resolvido; o cartão fica vermelho sem ação há X dias.", "Clientes de alto risco com ação registrada em até 7 dias."],
-  ["C3", 2, "integra", "Plano de ação vira tarefa", 11, 12, "M", 1, "SenseData (tarefas e playbooks na API v2)", "A decisão tomada no relatório não chega ao dia a dia do CSM.", "Criar a tarefa na SenseData (POST /v2/tasks) para o CS dono, com o motivo do risco na descrição.", "Tarefas criadas a partir do relatório."],
+  ["C2", 2, "acao", "Quadro de risco", 10, 12, "G", 1, "Pipedrive (funil visual e rotting), monday (kanban por status)", "A lista de risco não registra o que já foi feito com cada cliente.", "Colunas A abordar → Em contato → Plano de ação → Resolvido, com nota; o cartão fica vermelho sem ação há 7 dias. Guardado neste navegador.", "Clientes de alto risco com ação registrada em até 7 dias."],
+  ["C3", 2, "acao", "Relatório exportável", 11, 12, "M", 0, "monday e HubSpot (exportar dashboards e relatórios)", "A análise fica presa na tela de quem a fez.", "Um .zip com o painel de diagnóstico com os dados embutidos e cada análise em CSV (clientes, risco, coortes, perfis, indicadores, série mensal, mercado, quadro e uso).", "Relatórios exportados por semana."],
   ["A2", 3, "adocao", "Dicas contextuais", 13, 14, "M", 0, "Salesforce (prompts flutuantes e acoplados), UserGuiding (hotspots)", "O tour mostra tudo de uma vez, só no primeiro acesso.", "Pontos de destaque em funcionalidades novas ou pouco usadas, mostrados uma vez por pessoa.", "Uso da funcionalidade destacada antes e depois da dica."],
-  ["A3", 3, "adocao", "Medição de uso", 13, 15, "M", 1, "Salesforce (mede visualizações e conclusão de walkthroughs)", "Não há como saber quem usa, onde desiste e o que funciona.", "Eventos do funil (visitou, ativou, entendeu, agiu, voltou) e um painel interno de adoção.", "Funil completo disponível; metas definidas após 4 semanas."],
-  ["A4", 3, "adocao", "Início por perfil", 15, 16, "P", 0, "monday (projeto inicial criado a partir das respostas)", "Todos começam pela mesma tela, embora precisem de coisas diferentes.", "Primeira pergunta define a área inicial: CSM na Carteira, Head no Diagnóstico, CS Ops em Dados.", "Tempo até a primeira ação (etapa 4) cai."],
-  ["D1", 4, "integra", "Sincronização e alertas", 17, 19, "G", 1, "HubSpot (status de saúde aciona alertas e workflows), SenseData (motor de regras)", "Os dados envelhecem até alguém importar de novo.", "Sincronização diária com a SenseData no servidor e alerta semanal de quem entrou em alto risco.", "Alertas abertos e clientes tratados após o alerta."],
-  ["D2", 4, "integra", "Score de volta na SenseData", 18, 19, "M", 1, "SenseData (campos customizados na API v2)", "O score fica preso no relatório.", "Gravar score e classificação num campo customizado (PATCH /v2/customers/custom_fields), visível na própria SenseData.", "Campo preenchido para 100% dos clientes sincronizados."],
-  ["D3", 4, "dados", "Score sem olhar o futuro e NRR", 19, 20, "M", 0, "Prática de validação de modelos", "O teste no tempo ainda usa pesos calculados com a base inteira; NRR não é calculado.", "Pesos escolhidos só com dados anteriores à data do teste; NRR a partir do histórico de contratos.", "AUC do teste sem vazamento publicada no painel."]
+  ["A3", 3, "adocao", "Medição de uso", 13, 15, "M", 1, "Salesforce (mede visualizações e conclusão de walkthroughs)", "Não há como saber quem usa, onde desiste e o que funciona.", "Contagem de uso por ação neste navegador (áreas, fichas, quadro, visões, exportações), em Dados e no relatório exportado.", "Funil completo disponível; metas definidas após 4 semanas."],
+  ["A4", 3, "adocao", "Início por perfil", 15, 16, "P", 0, "monday (projeto inicial criado a partir das respostas)", "Todos começam pela mesma tela, embora precisem de coisas diferentes.", "Primeira pergunta define a área inicial: CSM na Carteira, Head de CS na Visão geral.", "Tempo até a primeira ação (etapa 4) cai."],
+  ["D1", 4, "integra", "Sincronização e alertas", 17, 19, "G", 1, "HubSpot (alertas e workflows)", "Os dados envelhecem até alguém importar de novo.", "Fora do escopo: decidido usar só o navegador, sem alertas. A importação da SenseData continua sob demanda.", "—"],
+  ["D2", 4, "integra", "Score de volta na SenseData", 18, 19, "M", 1, "SenseData (campos customizados na API v2)", "O score fica preso no relatório.", "Substituído pelo relatório exportável (C3): nada é escrito de volta na SenseData.", "—"],
+  ["D3", 4, "dados", "Score sem olhar o futuro e NRR", 19, 20, "M", 0, "Prática de validação de modelos", "O teste no tempo usava pesos calculados com a base inteira; NRR não era calculado.", "Pesos aprendidos só com cancelamentos anteriores à data do teste; NRR pela coluna mrr_12m_atras, que a importação da SenseData calcula pelos contratos.", "AUC do teste sem vazamento publicada no painel."]
 ];
+// entregue em 12/10/2026; D1 e D2 saíram do escopo pelas decisões
+const DONE = new Set(["V1", "V2", "V3", "N1", "N2", "A1", "C1", "C2", "C3", "A2", "A3", "A4", "D3"]), DROPPED = new Set(["D1", "D2"]);
 const INVENTORY = [
-  ["Dados", [["ok", "CSV: anexar, colar em tabela, ver e remapear colunas"], ["ok", "Integração SenseData pela API v2"], ["ok", "Hierarquia: grupo, organização, produto"], ["ok", "Dados lembrados no navegador"], ["mid", "Atualização automática (hoje é manual)"]]],
-  ["Análise", [["ok", "Retenção por coorte e curva de sobrevivência"], ["ok", "Churn por perfil com teste z"], ["ok", "Score de risco com cortes ajustáveis"], ["ok", "Teste no tempo do score"], ["ok", "Comparação com o mercado"], ["no", "NRR e expansão"]]],
-  ["Leitura", [["ok", "Passo a passo do cálculo (i)"], ["ok", "Gráficos interativos e tabela"], ["mid", "Texto demais por seção"], ["mid", "Uma página longa"], ["no", "Tendência nos KPIs"]]],
-  ["Ação", [["ok", "Lista de ativos em risco e cópia em CSV"], ["mid", "Filtrar por perfil com um clique"], ["no", "Página do cliente"], ["no", "Registro do que foi feito"], ["no", "Tarefa ou alerta para o CSM"]]],
-  ["Adoção", [["ok", "Tour por perfil com Pular e Entendi"], ["mid", "Ajuda inline (só o (i))"], ["no", "Checklist de primeiros passos"], ["no", "Dicas contextuais"], ["no", "Medição de uso"]]]
+  ["Dados", [["ok", "CSV: anexar, colar em tabela, ver e remapear colunas"], ["ok", "Integração SenseData pela API v2"], ["ok", "Hierarquia: grupo, organização, produto"], ["ok", "Dados lembrados no navegador"], ["ok", "Atualização sob demanda (decisão: sem servidor)"]]],
+  ["Análise", [["ok", "Retenção por coorte e curva de sobrevivência"], ["ok", "Churn por perfil com teste z"], ["ok", "Score de risco com cortes ajustáveis"], ["ok", "Teste no tempo sem olhar o futuro"], ["ok", "Comparação com o mercado"], ["ok", "NRR com MRR de 12 meses atrás"]]],
+  ["Leitura", [["ok", "Passo a passo do cálculo (i)"], ["ok", "Gráficos interativos e tabela"], ["ok", "Texto sob demanda (Como ler)"], ["ok", "Áreas na barra lateral"], ["ok", "Tendência nos KPIs"]]],
+  ["Ação", [["ok", "Lista de ativos em risco e cópia em CSV"], ["ok", "Ficha do cliente"], ["ok", "Quadro de risco com notas"], ["ok", "Relatório exportável (.zip)"], ["ok", "Visões salvas"]]],
+  ["Adoção", [["ok", "Tour por perfil com Pular e Entendi"], ["ok", "Checklist de primeiros passos"], ["ok", "Dicas pontuais"], ["ok", "Medição de uso local"], ["ok", "Início por perfil"]]]
 ];
 const REFS = [
-  ["Checklist de primeiros passos", [0, 1, 1, 0, 0, 1], ["no", "não existe"], "A1: 4 passos com progresso até a primeira lista de risco"],
-  ["Tour guiado em etapas", [0, 0, 0, 0, 1, 1], ["ok", "tour com 4 caminhos"], "Manter e encurtar; medir conclusão (A3)"],
-  ["Dicas contextuais", [0, 0, 0, 0, 1, 1], ["no", "não existe"], "A2: destaque único em funcionalidades novas"],
-  ["Visão 360 do cliente", [1, 0, 1, 0, 0, 0], ["no", "só linha de tabela"], "C1: página do cliente com história dos KPIs"],
-  ["Motivos do score", [0, 0, 1, 0, 1, 0], ["mid", "sinais em texto"], "C1: contribuição de cada KPI em barras"],
-  ["Funil visual com alerta de parado", [0, 1, 0, 1, 0, 0], ["no", "não existe"], "C2: quadro de risco com cartão vermelho"],
-  ["Várias visões dos mesmos dados", [0, 1, 1, 0, 0, 0], ["mid", "filtros sem salvar"], "N2: visões salvas e compartilháveis"],
-  ["Alerta por limiar", [1, 0, 1, 0, 0, 0], ["no", "não existe"], "D1: alerta semanal de alto risco"],
-  ["Início guiado por perguntas", [0, 1, 0, 0, 0, 0], ["mid", "caminhos do tour"], "A4: a resposta define a área inicial"]
+  ["Checklist de primeiros passos", [0, 1, 1, 0, 0, 1], ["ok", "4 passos na barra lateral"], "A1: entregue"],
+  ["Tour guiado em etapas", [0, 0, 0, 0, 1, 1], ["ok", "tour por papel, troca de área"], "Entregue; conclusão contada em A3"],
+  ["Dicas contextuais", [0, 0, 0, 0, 1, 1], ["ok", "um ponto por vez"], "A2: entregue"],
+  ["Visão 360 do cliente", [1, 0, 1, 0, 0, 0], ["ok", "ficha lateral"], "C1: entregue"],
+  ["Motivos do score", [0, 0, 1, 0, 1, 0], ["ok", "pontos por KPI em barras"], "C1: entregue"],
+  ["Funil visual com alerta de parado", [0, 1, 0, 1, 0, 0], ["ok", "quadro com 7 dias"], "C2: entregue"],
+  ["Várias visões dos mesmos dados", [0, 1, 1, 0, 0, 0], ["ok", "visões salvas"], "N2: entregue"],
+  ["Alerta por limiar", [1, 0, 1, 0, 0, 0], ["no", "fora do escopo"], "D1: decidido não fazer"],
+  ["Início guiado por perguntas", [0, 1, 0, 0, 0, 0], ["ok", "papel define a área"], "A4: entregue"]
 ];
 const $ = s => document.querySelector(s);
 const esc = v => String(v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -330,9 +337,9 @@ function renderGantt() {
   PHASES.forEach(([name, span], pi) => {
     html += `<div class="g-phase"><b>${name}</b><span>${span}</span></div>`;
     ITEMS.filter(it => it[1] === pi).forEach(it => {
-      const [id, , theme, title, a, b, size, dep] = it, dim = !active.has(theme);
-      html += `<div class="g-lab ${dim ? "g-row-dim" : ""}"><code>${id}</code><span title="${esc(title)}">${esc(title)}</span></div>`
-        + `<button type="button" class="g-bar ${dep ? "dep" : ""} ${dim ? "g-row-dim" : ""}" style="grid-column:${a + 1} / ${b + 2};background:var(${THEMES[theme][1]})" data-id="${id}" aria-expanded="${open === id}" aria-controls="detail" aria-label="${id} ${esc(title)}, semanas ${a} a ${b}, ${THEMES[theme][0]}${dep ? ", depende de decisão" : ""}">${id} · ${size}</button>`;
+      const [id, , theme, title, a, b, size, dep] = it, dim = !active.has(theme), st = DONE.has(id) ? "done" : DROPPED.has(id) ? "drop" : "";
+      html += `<div class="g-lab ${dim ? "g-row-dim" : ""} ${st}"><code>${id}</code><span title="${esc(title)}">${esc(title)}</span>${st === "drop" ? `<span class="st off">fora</span>` : ""}</div>`
+        + `<button type="button" class="g-bar ${dep && !st ? "dep" : ""} ${dim ? "g-row-dim" : ""} ${st}" style="grid-column:${a + 1} / ${b + 2};background:var(${THEMES[theme][1]})" data-id="${id}" aria-expanded="${open === id}" aria-controls="detail" aria-label="${id} ${esc(title)}, semanas ${a} a ${b}, ${THEMES[theme][0]}${st === "done" ? ", entregue" : st === "drop" ? ", fora do escopo" : ""}">${st === "done" ? "✓ " : ""}${id} · ${size}</button>`;
     });
     const end = [4, 8, 12, 16, 20][pi];
     html += `<div class="g-lab muted" style="font-size:.78rem">◆ Marco: ${name.split(" · ")[1]}</div><div class="g-ms" style="grid-column:${end + 1}" aria-label="marco na semana ${end}"></div>`;
@@ -344,7 +351,7 @@ function renderDetail() {
   if (!it) { box.hidden = true; return; }
   const [id, pi, theme, title, a, b, size, dep, ref, prob, deliv, metric] = it;
   box.hidden = false;
-  box.innerHTML = `<div class="top"><div style="display:grid;gap:6px"><span class="eyebrow">${PHASES[pi][0]} · semanas ${a}–${b}</span><h3>${id} · ${esc(title)}</h3><div class="pills"><span class="tag" style="background:var(${THEMES[theme][1]})">${THEMES[theme][0]}</span><span class="pill">${SIZE[size]}</span>${dep ? `<span class="pill">depende de decisão</span>` : ""}</div></div><button type="button" class="x" id="closeDetail" aria-label="Fechar detalhe">×</button></div>
+  box.innerHTML = `<div class="top"><div style="display:grid;gap:6px"><span class="eyebrow">${PHASES[pi][0]} · semanas ${a}–${b}</span><h3>${id} · ${esc(title)}</h3><div class="pills"><span class="tag" style="background:var(${THEMES[theme][1]})">${THEMES[theme][0]}</span><span class="pill">${SIZE[size]}</span>${DONE.has(id) ? `<span class="pill">✓ entregue</span>` : DROPPED.has(id) ? `<span class="pill">fora do escopo</span>` : dep ? `<span class="pill">depende de decisão</span>` : ""}</div></div><button type="button" class="x" id="closeDetail" aria-label="Fechar detalhe">×</button></div>
     <div class="kv"><div><b>Problema</b><p>${esc(prob)}</p></div><div><b>Entrega</b><p>${esc(deliv)}</p></div><div><b>Referência</b><p>${esc(ref)}</p></div><div><b>Como medir</b><p>${esc(metric)}</p></div></div>`;
 }
 document.addEventListener("click", e => {

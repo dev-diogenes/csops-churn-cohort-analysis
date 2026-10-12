@@ -34,6 +34,7 @@ TEMPLATE = {
         ("cancel_tag", IMP, "Motivo do cancelamento (tag)."),
         ("cancel_description", IMP, "Descrição do motivo."),
         ("mrr", IMP, "Receita mensal da linha. Ex.: custom_fields->>'mrr'."),
+        ("mrr_12m_atras", OPT, "MRR da linha 12 meses antes. Com ele o relatório calcula o NRR."),
         ("cnpj", OPT, "CNPJ da organização."),
         ("id_legacy", OPT, "ID no sistema anterior."),
         ("name_contract", OPT, "Nome do contrato."),

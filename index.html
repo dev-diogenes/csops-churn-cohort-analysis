@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 /* Layout: ferramenta de leitura vertical — entradas no topo, resumo, depois seções de análise com tabela/gráfico; largura máx. 1180px. */
 :root {
@@ -330,6 +331,65 @@ details.more.panel > summary { color: var(--ink); }
   .area { padding: 6px 10px; white-space: nowrap; }
 }
 
+
+/* ficha do cliente */
+.cbtn { border: 0; background: none; padding: 0; font: inherit; color: var(--ink); font-weight: 600; cursor: pointer; text-align: left; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+.cbtn:hover { color: var(--accent); text-decoration: underline; }
+.c360 { position: fixed; z-index: 42; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--surface); border-left: 1px solid var(--line); box-shadow: var(--sh-3); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); }
+.c360-head { display: flex; gap: 10px; align-items: start; padding: var(--sp-4) var(--sp-4) var(--sp-3); border-bottom: 1px solid var(--line); }
+.c360-head h3 { font-size: var(--fs-lg); overflow-wrap: anywhere; }
+.c360-head .sub { color: var(--muted); font-size: var(--fs-xs); }
+.c360-body { overflow: auto; padding: var(--sp-4); display: grid; gap: var(--sp-4); align-content: start; padding-bottom: calc(var(--sp-5) + env(safe-area-inset-bottom, 0px)); }
+.c360-score { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.c360-score .big { font-size: 2.4rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.c360-score span { color: var(--muted); font-size: var(--fs-sm); }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
+.facts dt { font-size: var(--fs-xs); color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; font-size: var(--fs-sm); overflow-wrap: anywhere; }
+.c360-box { display: grid; gap: var(--sp-2); border-top: 1px solid var(--line); padding-top: var(--sp-3); }
+.c360-box h4 { margin: 0; font-size: var(--fs-sm); }
+.contrib, .khist, .mlines { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.contrib li { display: grid; grid-template-columns: minmax(0, 1.3fr) 1fr 28px; gap: 8px; align-items: center; font-size: var(--fs-sm); }
+.contrib .lab, .khist .lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cbar { height: 8px; background: var(--sunken); border-radius: var(--r-pill); overflow: hidden; }
+.cbar i { display: block; height: 100%; border-radius: var(--r-pill); }
+.khist li { display: grid; grid-template-columns: minmax(0, 1fr) 110px 70px; gap: 8px; align-items: center; font-size: var(--fs-sm); }
+.khist .spark { width: 110px; height: 26px; }
+.khist .mono { text-align: right; }
+.mlines li { display: flex; justify-content: space-between; gap: 8px; font-size: var(--fs-sm); }
+.fld { display: grid; gap: 4px; font-size: var(--fs-xs); color: var(--muted); }
+.fld select, .fld textarea { padding: 7px 9px; border: 1px solid var(--ctl); border-radius: var(--r); background: var(--bg); color: var(--ink); font-size: var(--fs-sm); }
+/* quadro de risco */
+.kanban { display: grid; grid-template-columns: repeat(4, minmax(220px, 1fr)); gap: var(--sp-3); overflow-x: auto; padding-bottom: 4px; }
+.kcol { background: var(--sunken); border-radius: var(--r-lg); padding: var(--sp-2); display: grid; gap: var(--sp-2); align-content: start; min-height: 160px; border: 2px dashed transparent; }
+.kcol.over { border-color: var(--accent); background: var(--accent-soft); }
+.kcol header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; font-size: var(--fs-sm); }
+.kcol header .mono { color: var(--muted); }
+.kcol[data-col="abordar"] header b::before, .kcol[data-col="contato"] header b::before, .kcol[data-col="plano"] header b::before, .kcol[data-col="resolvido"] header b::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.kcol[data-col="abordar"] header b::before { background: var(--st-crit); }
+.kcol[data-col="contato"] header b::before { background: var(--st-warn); }
+.kcol[data-col="plano"] header b::before { background: var(--accent); }
+.kcol[data-col="resolvido"] header b::before { background: var(--st-good); }
+.kcol ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-2); }
+.kcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 10px; display: grid; gap: 6px; box-shadow: var(--sh-1); cursor: grab; min-width: 0; }
+.kcard.dragging { opacity: .5; }
+.kcard.stale { border-color: var(--st-crit); box-shadow: inset 3px 0 0 var(--st-crit), var(--sh-1); }
+.kmeta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: var(--fs-xs); color: var(--muted); }
+.kmeta .chip { min-width: 0; }
+.knote { font-size: var(--fs-xs); color: var(--muted); overflow-wrap: anywhere; }
+.kfoot { display: flex; justify-content: space-between; gap: 6px; align-items: center; font-size: var(--fs-xs); color: var(--faint); }
+.kfoot select { font-size: var(--fs-xs); padding: 2px 4px; border: 1px solid var(--ctl); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); max-width: 120px; }
+.late { color: var(--st-crit); font-weight: 600; }
+.kempty { font-size: var(--fs-xs); color: var(--muted); padding: 10px 6px; text-align: center; }
+@media (max-width: 860px) { .kanban { grid-template-columns: repeat(4, minmax(220px, 80vw)); } }
+
+
+/* dica pontual */
+.hint { position: relative; }
+.hint::after { content: ""; position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--surface); pointer-events: none; z-index: 2; }
+@media (prefers-reduced-motion: no-preference) { .hint::after { animation: hintPulse 1.8s ease-out infinite; } }
+@keyframes hintPulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
 /* menu de integrações e conexão SenseData */
 .menu { position: relative; }
 .menu-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, 86vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--sh-2); padding: 6px; display: grid; gap: 2px; }
@@ -563,7 +623,8 @@ details.more summary { color: var(--accent); }
     <div class="row">
       <div class="title-block"><span class="eyebrow" id="areaEyebrow">Análise de Churn por Coorte</span><h1 id="areaTitle" tabindex="-1">Visão geral</h1></div>
       <div class="actions">
-        <a class="btn primary" id="toDiag" href="diagnostico.html" target="_blank" rel="noopener" data-diag>Diagnóstico de Churn ↗</a>
+        <button class="btn primary" id="btnExport" type="button" title="Baixa um .zip com o painel e as análises em CSV">Exportar relatório</button>
+        <a class="btn" id="toDiag" href="diagnostico.html" target="_blank" rel="noopener" data-diag>Diagnóstico de Churn ↗</a>
         <div class="menu" id="integrMenu">
           <button class="btn" id="btnIntegr" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="integrPop">Integrações ▾</button>
           <div class="menu-pop" id="integrPop" role="menu" hidden>
@@ -615,8 +676,10 @@ details.more summary { color: var(--accent); }
     </div></details>
   </section>
   <section class="rep" id="metodoBox" data-area="dados"></section>
+  <section class="step" id="usoBox" data-area="dados"></section>
 </div>
 </div>
+<aside id="c360" class="c360" role="dialog" aria-modal="false" aria-labelledby="c360Title" hidden></aside>
 <aside id="xp" class="xp" role="dialog" aria-labelledby="xpTitle" hidden>
   <header class="xp-head" id="xpHead" tabindex="0" aria-label="Mover painel: arraste ou use as setas">
     <span class="xp-grip" aria-hidden="true">⋮⋮</span>
@@ -670,8 +733,8 @@ details.more summary { color: var(--accent); }
 <div id="tourWelcome" class="pm-backdrop" hidden>
   <div class="pm tour-w" role="dialog" aria-modal="true" aria-labelledby="twTitle" aria-describedby="twDesc">
     <span class="eyebrow">Boas-vindas</span>
-    <h3 id="twTitle">Em 2 minutos, o que cada parte do relatório responde</h3>
-    <p class="note" id="twDesc" style="font-size:.92rem">O tour usa os dados de exemplo e leva você até cada seção. Escolha por onde começar:</p>
+    <h3 id="twTitle">O que você quer resolver hoje?</h3>
+    <p class="note" id="twDesc" style="font-size:.92rem">O tour mostra só o que importa para o seu papel, com os dados de exemplo, e termina na área por onde você deve começar.</p>
     <div class="tour-paths" id="tourPaths"></div>
     <div class="actions" style="justify-content:flex-end"><button type="button" class="btn ghost" id="tourSkipAll">Pular tour</button></div>
   </div>
@@ -762,7 +825,8 @@ const SOURCES = {
       canc: { label: "Data de cancelamento", syn: ["dt_cancel", "data_cancelamento", "cancel_date", "churn_date", "data_churn", "cancelado_em"] },
       motivo: { label: "Motivo (tag)", syn: ["cancel_tag", "motivo", "motivo_cancelamento", "motivo_churn", "churn_reason"] },
       descricao: { label: "Descrição do motivo", syn: ["cancel_description", "descricao_cancelamento", "motivo_descricao", "cancel_reason_description"] },
-      mrr: { label: "MRR", syn: ["mrr", "receita_mensal", "valor_mensal", "mensalidade", "receita"] }
+      mrr: { label: "MRR", syn: ["mrr", "receita_mensal", "valor_mensal", "mensalidade", "receita"] },
+      mrr12: { label: "MRR há 12 meses", syn: ["mrr_12m_atras", "mrr_12m", "mrr_12_meses", "mrr_ha_12_meses", "mrr_ano_anterior", "mrr_previous_year"] }
     }
   },
   kpis: {
@@ -798,7 +862,7 @@ const state = {
   isSample: false,
   dimBar: null,
   dimPeer: null,
-  area: (() => { const h = (location.hash || "").replace("#", ""); return ["inicio", "carteira", "retencao", "diagnostico", "dados"].includes(h) ? h : "inicio"; })(),
+  area: (() => { const h = (location.hash || "").replace("#", ""); if (["inicio", "carteira", "retencao", "diagnostico", "dados"].includes(h)) return h; let p = ""; try { p = localStorage.getItem("csops-profile") || ""; } catch (e) {} return p === "csm" ? "carteira" : "inicio"; })(),
   viewName: null, savingView: false,
   level: "linha",
   filters: [],
@@ -994,7 +1058,9 @@ function buildFresh() {
   if (!okC && !okK && !okX) return null;
   const clients = new Map(), warnings = [], notes = [];
   const nid = v => String(v ?? "").trim().toLowerCase();
-  const mk = (id, label) => ({ id, label: label || id, nome: "", inicio: null, mrr: NaN, attrs: {}, churned: false, dataCanc: null, motivo: "", descricao: "", mrrPerdido: NaN, kpi: {}, kpiDate: null });
+  const mk = (id, label) => ({ id, label: label || id, nome: "", inicio: null, mrr: NaN, attrs: {}, churned: false, dataCanc: null, motivo: "", descricao: "", mrrPerdido: NaN, kpi: {}, kpiDate: null, hist: {} });
+  // histórico mensal de cada KPI (último valor de cada mês), usado na ficha do cliente
+  const pushHist = (c, col, d, v) => { if (d == null) return; const m = Math.floor(d / 864e5 / 30.44); const h = c.hist[col] || (c.hist[col] = new Map()); const o = h.get(m); if (!o || d >= o[0]) h.set(m, [d, v]); };
   const dims = [];
 
   if (okC) {
@@ -1006,6 +1072,7 @@ function buildFresh() {
       c.nome = mC.nome ? String(r[mC.nome] ?? "").trim() : "";
       c.inicio = mC.inicio ? toDate(r[mC.inicio]) : null;
       c.mrr = mC.mrr ? toNum(r[mC.mrr]) : NaN;
+      c.mrr12 = mC.mrr12 ? toNum(r[mC.mrr12]) : NaN;
       const dc = mC.canc ? toDate(r[mC.canc]) : null;
       if (dc != null) {
         c.churned = true; c.dataCanc = dc;
@@ -1126,6 +1193,7 @@ function buildFresh() {
         const v = toNum(r[mK.valor]); if (!Number.isFinite(v)) continue;
         const c = target(id); if (!c) continue;
         const col = colOf(t), d = mK.data ? toDate(r[mK.data]) : null, key = id + "|" + col;
+        pushHist(c, col, d, v);
         const lim = c.dataCanc ?? Infinity, inWin = d == null || d < lim;
         const prev = best.get(key);
         // prefere leituras antes do cancelamento; entre elas, a mais recente
@@ -1154,6 +1222,7 @@ function buildFresh() {
         if (mK.data) {
           const lim = c.dataCanc ?? Infinity;
           const dated = rows.map(r => [toDate(r[mK.data]), r]).filter(([d]) => d != null);
+          for (const [d, r] of dated) for (const k of kpiCols) { const v = toNum(r[k]); if (Number.isFinite(v)) pushHist(c, k, d, v); }
           let pickRows = dated.filter(([d]) => d < lim);
           if (!pickRows.length) pickRows = dated;
           if (pickRows.length) {
@@ -1172,6 +1241,7 @@ function buildFresh() {
   }
 
   const list = [...clients.values()];
+  for (const c of list) for (const k in c.hist) c.hist[k] = [...c.hist[k].values()].sort((a, b) => a[0] - b[0]);
   for (const c of list) { c.f = {}; for (const d of fdims) c.f[d] = !c.row ? "(sem cadastro)" : c.hl && d in c.hl ? c.hl[d] : (String(c.row[d] ?? "").trim() || "(vazio)"); }
   let ref = -Infinity;
   for (const c of list) for (const d of [c.inicio, c.dataCanc, c.kpiDate]) if (d != null && d > ref) ref = d;
@@ -1265,7 +1335,7 @@ function view(M) {
   const lines = M.clients.filter(c => filters.every(f => f.values.includes(c.f[f.dim])));
   const lv = state.level;
   let ents;
-  if (lv === "linha") ents = lines.map(c => ({ ...c, lines: 1, linesCanc: c.churned ? 1 : 0, partial: false, partialLost: 0 }));
+  if (lv === "linha") ents = lines.map(c => ({ ...c, lines: 1, linesCanc: c.churned ? 1 : 0, partial: false, partialLost: 0, members: [c] }));
   else {
     const keyOf = c => {
       if (lv === "grupo" && c.h && c.h.grupo) return ["g", c.h.grupo, c.f[hier.grupo]];
@@ -1292,7 +1362,7 @@ function view(M) {
         mrr: sumF((churned ? arr : act).map(c => c.mrr)),
         mrrPerdido: churned ? sumF(ch.map(c => c.mrrPerdido)) : NaN,
         partialLost: ch.length && act.length ? sumF(ch.map(c => c.mrrPerdido)) : 0,
-        attrs: {}, f: {}, kpi: {},
+        attrs: {}, f: {}, kpi: {}, members: arr,
         kpiDate: src.some(c => c.kpiDate != null) ? Math.max(...src.filter(c => c.kpiDate != null).map(c => c.kpiDate)) : null
       };
       for (const d of M.dims) e.attrs[d] = mixOf(arr.map(c => c.attrs[d]));
@@ -1343,7 +1413,7 @@ function viewbar(M, M0) {
 function renderReport() {
   const host = $("#report");
   renderAreaNav(); renderChecklist();
-  if (state.area === "dados") $("#metodoBox").innerHTML = method();
+  if (state.area === "dados") { $("#metodoBox").innerHTML = method(); $("#usoBox").innerHTML = usagePanel(); }
   const M0 = build();
   const w = $("#warnings");
   if (!M0) {
@@ -1367,6 +1437,7 @@ function renderReport() {
   LAST = ctx;
   host.innerHTML = state.area === "dados" ? "" : bar + area.sections.map(([, fn]) => fn(ctx)).join("");
   if (state.xp) renderExplain();
+  setTimeout(placeHint, 0);
   renderCompany();
   saveSession();
 }
@@ -1598,7 +1669,7 @@ function tableRows(list, key, cols, limit = 15) {
 }
 const clientCell = c => {
   const sub = [c.nome ? esc(c.label) : "", c.lines > 1 ? `${c.lines} linhas` : "", c.partial ? `${c.linesCanc} cancelada(s)` : ""].filter(Boolean).join(" · ");
-  return `${esc(c.nome || c.label)}${sub ? `<span class="sub mono">${sub}</span>` : ""}`;
+  return `<button type="button" class="cbtn" data-client="${esc(c.id)}">${esc(c.nome || c.label)}</button>${sub ? `<span class="sub mono">${sub}</span>` : ""}`;
 };
 const hierOut = (M, c) => { const o = {}; if (M.hier.grupo) o.grupo_economico = c.f[M.hier.grupo]; if (M.hier.org) o.organizacao = c.f[M.hier.org]; if (M.level !== "linha") { o.linhas = c.lines; o.linhas_canceladas = c.linesCanc; } return o; };
 
@@ -1613,7 +1684,7 @@ function anomaly(M, sig) {
   ch.forEach(c => counts[c.cls]++);
   const scored = ch.length - counts.na;
   const list = ch.filter(c => c.risk != null).sort((a, b) => a.risk - b.risk);
-  EXPORTS.churn = { name: "churn-classificado", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr_perdido: c.mrrPerdido, data_cancelamento: c.dataCanc ? new Date(c.dataCanc).toISOString().slice(0, 10) : "", meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", motivo: c.motivo, descricao_motivo: c.descricao, score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: c.cls === "anormal" ? healthyText(c) : drvText(c) })) };
+  EXPORTS.churn = { name: "churn-classificado", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr_perdido: c.mrrPerdido, data_cancelamento: c.dataCanc ? new Date(c.dataCanc).toISOString().slice(0, 10) : "", meses_de_casa: Number.isFinite(c.tenure) ? Math.round(c.tenure * 10) / 10 : "", motivo: c.motivo, descricao_motivo: c.descricao, score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: c.cls === "anormal" ? healthyText(c) : drvText(c) })) };
   let byDim = "";
   if (M.dims.length) {
     const d = state.dimBar, g = new Map();
@@ -1653,7 +1724,7 @@ function atRisk(M, sig, ctx) {
   const list = act.filter(c => c.cls !== "ok").sort((a, b) => b.risk - a.risk);
   const hi = list.filter(c => c.cls === "alto");
   const mrr = hi.reduce((s, c) => s + (Number.isFinite(c.mrr) ? c.mrr : 0), 0);
-  EXPORTS.risk = { name: "ativos-em-risco", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr: c.mrr, meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: drvText(c) })) };
+  EXPORTS.risk = { name: "ativos-em-risco", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr: c.mrr, meses_de_casa: Number.isFinite(c.tenure) ? Math.round(c.tenure * 10) / 10 : "", score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: drvText(c) })) };
   const body = `<div class="panel">
     <div class="tablebar"><p>${chip("alto")} <b>${hi.length}</b> clientes${mrr ? `, ${fmtBRL(mrr)} de MRR` : ""} &nbsp; ${chip("atencao")} <b>${list.length - hi.length}</b></p><button type="button" class="btn sm" data-copy="risk">Copiar como CSV</button></div>
     ${statusLegend()}
@@ -1701,7 +1772,7 @@ function method() {
     <p><b>Churn mensal médio.</b> Total de cancelamentos dividido pela soma de meses que cada cliente passou na base.</p>
     <p><b>Score de risco.</b> Para cada indicador com efeito (d) de pelo menos 0,2, o relatório calcula o percentil do cliente entre os ativos do seu grupo de pares, invertido quando valores menores indicam risco. O score é a média desses percentis, ponderada pelo efeito. Grupos com menos de 8 ativos usam a base inteira como referência.</p>
     <p><b>Classificação.</b> Cancelados: abaixo de ${state.cut.anormal} é anormal, de ${state.cut.anormal} a ${state.cut.esperado} tem sinais fracos, ${state.cut.esperado} ou mais era esperado. Ativos: ${state.cut.alto} ou mais é alto risco, de ${state.cut.atencao} a ${state.cut.alto} pede atenção. Os cortes mudam nos controles das seções Churn anormal e Ativos em risco.</p>
-    <p><b>Teste no tempo.</b> Recalcula o score com as leituras de KPI de 90 dias atrás, só para quem estava ativo naquela data, e mede quantos dos marcados cancelaram depois. É a forma de saber se o score antecipa o churn, e não só descreve quem já saiu.</p>
+    <p><b>Teste no tempo.</b> Volta 90 dias, aprende a direção e o peso de cada indicador só com os cancelamentos até aquela data e recalcula o score de quem estava ativo. Depois mede quantos dos marcados cancelaram. Nada do período testado entra no cálculo.</p>
     <p><b>Indicadores com histórico.</b> Quando há data de referência, vale a última leitura antes do cancelamento. Sem data, vale a média das linhas do cliente.</p>
   </div>`);
 }
@@ -1756,6 +1827,14 @@ function grr12(lines, ref) {
   const lostL = start.filter(c => c.churned && c.dataCanc != null && c.dataCanc <= ref);
   const lost = lostL.reduce((t, c) => t + (Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : c.mrr), 0);
   return base > 0 ? { grr: 1 - lost / base, base, lost, n: start.length, nLost: lostL.length, from: t0 } : null;
+}
+// NRR: MRR atual de quem já era cliente há 12 meses ÷ MRR dessas mesmas linhas naquela data (inclui upsell e reduções)
+function nrr12(lines, ref) {
+  const base = lines.filter(c => Number.isFinite(c.mrr12) && c.mrr12 > 0);
+  if (base.length < 10) return null;
+  const b = base.reduce((t, c) => t + c.mrr12, 0);
+  const now = base.reduce((t, c) => t + (c.churned && c.dataCanc != null && c.dataCanc <= ref ? 0 : Number.isFinite(c.mrr) ? c.mrr : 0), 0);
+  return b > 0 ? { nrr: now / b, base: b, now, n: base.length } : null;
 }
 function monthlyChurn(M) {
   const ch = M.clients.filter(c => c.churned && Number.isFinite(c.tenure)).length;
@@ -1830,10 +1909,16 @@ function market(M) {
       <div class="mk-v">${g ? fmtPct(1 - g.grr, 1) : "—"}<small>mediana ${fmtPct(BENCH.revChurn.median, 1)} · melhor quartil abaixo de ${fmtPct(BENCH.revChurn.top, 1)}</small></div>
       ${g ? bullet(1 - g.grr, BENCH.revChurn.top, BENCH.revChurn.median, Math.max(0.3, (1 - g.grr) * 1.2), v => fmtPct(v, 0)) : ""}
       ${more("Como é calculado", `Faixa entre o melhor quartil e a mediana. Acima da mediana, o churn de receita está pior que o da metade das empresas comparadas.`)}</div>`);
-  cards.push(`<div class="panel mk">
+  const nr = nrr12(M.lines, M.ref), nrrRef = band ? band.nrr : BENCH.overall.nrr;
+  if (nr) cards.push(`<div class="panel mk">
+      <div class="mk-h"><span class="k">Retenção líquida de receita (NRR) · 12 meses</span>${verdict(nr.nrr, nrrRef - 0.02, nrrRef + 0.02, false)}</div>
+      <div class="mk-v">${fmtPct(nr.nrr, 1)}<small>mediana ${band ? esc(band.label) : "todos os tickets"}: ${fmtPct(nrrRef, 0)}</small></div>
+      ${bullet(nr.nrr, nrrRef - 0.02, nrrRef + 0.02, Math.max(1.4, nr.nrr * 1.1), v => fmtPct(v, 0))}
+      ${more("Como é calculado", `MRR de hoje (${fmtBRL(nr.now)}) das ${fmtInt(nr.n)} linhas que já pagavam há 12 meses ÷ o MRR delas naquela data (${fmtBRL(nr.base)}). Inclui upsell, reduções e cancelamentos.`)}</div>`);
+  else cards.push(`<div class="panel mk">
       <div class="mk-h"><span class="k">Retenção líquida de receita (NRR)</span><span class="chip neu"><i aria-hidden="true">○</i>Sem dado de expansão</span></div>
       <div class="mk-v">${fmtPct(band ? band.nrr : BENCH.overall.nrr, 0)}<small>mediana de mercado ${band ? esc(band.label) : "todos os tickets"}</small></div>
-      ${more("Como é calculado", `Para calcular o seu NRR é preciso o histórico de MRR por cliente (upsell, cross-sell e reduções). Hoje os arquivos trazem só o MRR atual.`)}</div>`);
+      ${more("Como é calculado", `Para calcular o seu NRR, inclua a coluna mrr_12m_atras em Clientes (a importação da SenseData já calcula pelos contratos).`)}</div>`);
   const body = `<div class="mk-grid">${cards.join("")}</div>
     <details class="panel srcs"><summary>Fontes das referências (atualizadas em ${BENCH.updated})</summary>
       <ul>${BENCH.sources.map(x => `<li><a href="${x.url}" target="_blank" rel="noopener">${esc(x.name)}</a><span class="note">${esc(x.what)}</span></li>`).join("")}</ul>
@@ -2058,13 +2143,14 @@ function scoreBacktest(M0, M, sig, days = 90) {
   if (!K || !K.rows.length || !mK.id || !mK.data || !sig.length) return null;
   const ck = [M0, M.level, JSON.stringify(state.filters), state.dimPeer, state.cut.alto, days].map(String).join("|");
   if (BT_CACHE && BT_CACHE.key === ck && BT_CACHE.M0 === M0) return BT_CACHE.res;
-  const T = M.ref - days * 864e5, tcol = mK.tipo || mK.nomeKpi, cols = new Set(sig.map(x => x.col));
+  const T = M.ref - days * 864e5, tcol = mK.tipo || mK.nomeKpi, cols = new Set(M0.kpiCols);
+  const canc = new Map(M.lines.map(c => [c.id, c.churned && c.dataCanc != null ? c.dataCanc : Infinity]));
   const typeToCol = {}; for (const [name, meta] of Object.entries(M0.kpiMeta)) if (meta.type != null) typeToCol[meta.type] = name;
   const ids = new Set(M.lines.map(c => c.id)), val = new Map();
   const put = (id, d, col, v) => { if (!cols.has(col) || !Number.isFinite(v)) return; let o = val.get(id); if (!o) val.set(id, o = {}); if (!o[col] || d >= o[col][0]) o[col] = [d, v]; };
   for (const r of K.rows) {
     const id = String(r[mK.id] ?? "").trim().toLowerCase(); if (!ids.has(id)) continue;
-    const d = toDate(r[mK.data]); if (d == null || d > T) continue;
+    const d = toDate(r[mK.data]); if (d == null || d > T || d >= canc.get(id)) continue;
     if (tcol && mK.valor) put(id, d, typeToCol[String(r[tcol] ?? "").trim()] || String(r[tcol] ?? "").trim(), toNum(r[mK.valor]));
     else for (const col of cols) put(id, d, col, toNum(r[col]));
   }
@@ -2081,6 +2167,27 @@ function scoreBacktest(M0, M, sig, days = 90) {
     if (!Object.keys(kpi).length) continue;
     ents.push({ kpi, churned: arr.every(c => c.churned && c.dataCanc != null && c.dataCanc > T), peer: state.dimPeer ? arr[0].attrs[state.dimPeer] : "*", mrr: sumF(arr.map(c => c.mrr)) });
   }
+  // treino: quem já tinha cancelado até T contra quem estava ativo em T, cada um com a última leitura antes de sair
+  const past = new Map();
+  for (const c of M.lines) {
+    if (!(c.churned && c.dataCanc != null && c.dataCanc <= T)) continue;
+    const k = keyOf(c); if (!past.has(k)) past.set(k, []); past.get(k).push(c);
+  }
+  const pastK = [...past.values()].map(arr => { const kpi = {}; for (const col of cols) { const v = arr.map(c => (val.get(c.id) || {})[col]).filter(Boolean).map(x => x[1]); if (v.length) kpi[col] = mean(v); } return kpi; }).filter(k => Object.keys(k).length);
+  let trained = false;
+  if (pastK.length >= 5) {
+    const sigT = [];
+    for (const col of cols) {
+      const a = ents.map(e => e.kpi[col]).filter(Number.isFinite), b = pastK.map(k => k[col]).filter(Number.isFinite);
+      if (a.length < 3 || b.length < 3) continue;
+      const sp = Math.sqrt(((a.length - 1) * variance(a) + (b.length - 1) * variance(b)) / (a.length + b.length - 2));
+      const d = sp > 0 ? (mean(b) - mean(a)) / sp : 0, meta = M0.kpiMeta[col] || {};
+      const contrary = meta.inv != null && Math.abs(d) >= 0.2 && Math.sign(d) !== (meta.inv ? 1 : -1);
+      if (Math.abs(d) >= 0.2 && !contrary) sigT.push({ col, d });
+    }
+    if (sigT.length) { sig = sigT; trained = true; }
+  }
+  if (!trained) sig = sig.filter(x => cols.has(x.col));
   const pos = ents.filter(e => e.churned).length;
   let res = null;
   if (ents.length >= 20 && pos >= 5 && pos < ents.length) {
@@ -2101,13 +2208,13 @@ function scoreBacktest(M0, M, sig, days = 90) {
       const auc = (rankSum - P * (P + 1) / 2) / (P * N);
       const desc = sc.slice().reverse(), top = desc.slice(0, Math.max(1, Math.round(desc.length / 10)));
       const fl = desc.filter(e => e.score >= state.cut.alto / 100);
-      res = { days, date: T, n: sc.length, pos: P, base: P / sc.length, auc, top: { n: top.length, ch: top.filter(e => e.churned).length }, alto: { cut: state.cut.alto, flagged: fl.length, tp: fl.filter(e => e.churned).length, mrr: sumF(fl.filter(e => e.churned).map(e => e.mrr)) } };
+      res = { days, date: T, n: sc.length, pos: P, base: P / sc.length, auc, trained, train: pastK.length, kpis: sig.length, top: { n: top.length, ch: top.filter(e => e.churned).length }, alto: { cut: state.cut.alto, flagged: fl.length, tp: fl.filter(e => e.churned).length, mrr: sumF(fl.filter(e => e.churned).map(e => e.mrr)) } };
     }
   }
   BT_CACHE = { key: ck, M0, res };
   return res;
 }
-const backtestNote = (bt, noun) => !bt ? "" : `<div class="bt"><b>Teste no tempo.</b> Com os indicadores de ${bt.days} dias atrás (${fmtDate(bt.date)}), o score marcaria <b>${fmtInt(bt.alto.flagged)}</b> ${noun} com ${bt.alto.cut} ou mais; <b>${fmtInt(bt.alto.tp)}</b> delas cancelaram desde então (${fmtPct(bt.alto.flagged ? bt.alto.tp / bt.alto.flagged : NaN, 0)}, contra ${fmtPct(bt.base, 0)} da base). AUC ${bt.auc.toFixed(2).replace(".", ",")}. </div>`;
+const backtestNote = (bt, noun) => !bt ? "" : `<div class="bt"><b>Teste no tempo.</b> Com os indicadores de ${bt.days} dias atrás (${fmtDate(bt.date)}), o score marcaria <b>${fmtInt(bt.alto.flagged)}</b> ${noun} com ${bt.alto.cut} ou mais; <b>${fmtInt(bt.alto.tp)}</b> delas cancelaram desde então (${fmtPct(bt.alto.flagged ? bt.alto.tp / bt.alto.flagged : NaN, 0)}, contra ${fmtPct(bt.base, 0)} da base). AUC ${bt.auc.toFixed(2).replace(".", ",")}. ${more("Como é calculado", bt.trained ? `Direção e peso dos ${bt.kpis} indicadores foram aprendidos só com ${fmtInt(bt.train)} cancelamentos até ${fmtDate(bt.date)}, sem olhar nada depois. O teste mede se o score teria antecipado quem saiu nos ${bt.days} dias seguintes.` : `Havia poucos cancelamentos até ${fmtDate(bt.date)} para aprender os pesos só com o passado; o teste usa os pesos da base inteira e pode ser otimista.`)}</div>`;
 
 
 /* ---------- lembrar dados neste navegador ----------
@@ -2176,7 +2283,7 @@ const ICON = {
 const svgIcon = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
 const AREAS = [
   { id: "inicio", label: "Visão geral", hint: "Resumo e comparação com o mercado", sections: [["resumo", ctx => summary(ctx.M, ctx)], ["mercado", ({ M }) => market(M)]] },
-  { id: "carteira", label: "Carteira", hint: "Quem precisa de atenção agora", sections: [["risco", ctx => atRisk(ctx.M, ctx.sig, ctx)]] },
+  { id: "carteira", label: "Carteira", hint: "Quem precisa de atenção agora", sections: [["quadro", ctx => board(ctx.M)], ["risco", ctx => atRisk(ctx.M, ctx.sig, ctx)]] },
   { id: "retencao", label: "Retenção", hint: "Safras, motivos e momento da saída", sections: [["coortes", ({ M }) => cohort(M)], ["motivos", ({ M }) => reasons(M)]] },
   { id: "diagnostico", label: "Diagnóstico", hint: "Onde está o churn e o que o antecipa", sections: [["perfil", ({ M }) => profile(M)], ["indicadores", ({ M, stats }) => indicators(M, stats)], ["anormal", ({ M, sig }) => anomaly(M, sig)]] },
   { id: "dados", label: "Dados", hint: "Empresa, arquivos e método", sections: [] }
@@ -2336,6 +2443,244 @@ function delta(series, key, fmt, upIsBad) {
   return `<span class="delta ${bad ? "bad" : "good"}">${d > 0 ? "▲" : "▼"} ${fmt(Math.abs(d))} vs mês anterior</span>`;
 }
 const more = (label, html) => `<details class="more"><summary>${label}</summary><div>${html}</div></details>`;
+
+
+/* ---------- C2: quadro de risco (fica neste navegador) ---------- */
+const BOARD_KEY = "csops-board";
+const BOARD_COLS = [["abordar", "A abordar"], ["contato", "Em contato"], ["plano", "Plano de ação"], ["resolvido", "Resolvido"]];
+const STALE_DAYS = 7;
+const boardData = () => { try { return JSON.parse(localStorage.getItem(BOARD_KEY) || "{}"); } catch (e) { return {}; } };
+const boardSave = b => { try { localStorage.setItem(BOARD_KEY, JSON.stringify(b)); } catch (e) {} };
+const boardKey = (M, c) => M.level + "|" + c.id;
+function boardMove(key, col, name) {
+  const b = boardData(), o = b[key] || { note: "" };
+  if (o.col !== col) { o.col = col; o.since = Date.now(); }
+  if (name) o.name = name;
+  b[key] = o; boardSave(b); track("board_move");
+}
+function board(M) {
+  const b = boardData();
+  const scored = M.clients.filter(c => !c.churned && c.risk != null);
+  if (!scored.length) return "";
+  const cards = { abordar: [], contato: [], plano: [], resolvido: [] };
+  for (const c of scored) {
+    const k = boardKey(M, c), o = b[k];
+    if (o && cards[o.col]) cards[o.col].push([c, o]);
+    else if (c.cls === "alto") cards.abordar.push([c, null]);
+  }
+  for (const k in cards) cards[k].sort((x, y) => y[0].risk - x[0].risk);
+  const now = Date.now(), days = o => o && o.since ? Math.floor((now - o.since) / 864e5) : null;
+  const stale = (col, o) => col !== "resolvido" && o && days(o) > STALE_DAYS;
+  const nStale = Object.entries(cards).reduce((t, [col, arr]) => t + arr.filter(([, o]) => stale(col, o)).length, 0);
+  const card = (c, o, col) => `<li class="kcard${stale(col, o) ? " stale" : ""}" draggable="true" data-card="${esc(boardKey(M, c))}" data-name="${esc(c.nome || c.label)}">
+      <button type="button" class="cbtn" data-client="${esc(c.id)}">${esc(c.nome || c.label)}</button>
+      <div class="kmeta">${chip(c.cls)}<span class="mono">${Math.round(c.risk * 100)}</span>${Number.isFinite(c.mrr) ? `<span>${fmtBRL(c.mrr)}</span>` : ""}</div>
+      ${o && o.note ? `<p class="knote">${esc(o.note)}</p>` : ""}
+      <div class="kfoot"><span class="${stale(col, o) ? "late" : ""}">${o ? (days(o) === 0 ? "hoje" : `há ${days(o)} dia${days(o) > 1 ? "s" : ""}`) + (stale(col, o) ? " · sem ação" : "") : "novo"}</span>
+        <label class="sr" for="mv-${esc(boardKey(M, c))}">Mover ${esc(c.nome || c.label)} para</label>
+        <select id="mv-${esc(boardKey(M, c))}" data-move="${esc(boardKey(M, c))}" data-name="${esc(c.nome || c.label)}">${BOARD_COLS.map(([v, t]) => `<option value="${v}" ${v === col ? "selected" : ""}>${t}</option>`).join("")}</select></div>
+    </li>`;
+  const LIMIT = 12;
+  const body = `${nStale ? `<p class="hint-line"><b class="late">${nStale}</b> cartão(ões) parado(s) há mais de ${STALE_DAYS} dias.</p>` : ""}
+    <div class="kanban">${BOARD_COLS.map(([col, t]) => `<section class="kcol" data-col="${col}" aria-label="${t}">
+      <header><b>${t}</b><span class="mono">${cards[col].length}</span></header>
+      <ul>${cards[col].slice(0, state.showAll["k-" + col] ? 999 : LIMIT).map(([c, o]) => card(c, o, col)).join("") || `<li class="kempty">${col === "abordar" ? "Nenhum cliente em alto risco." : "Arraste um cartão para cá."}</li>`}</ul>
+      ${cards[col].length > LIMIT ? `<button type="button" class="btn sm ghost" data-more="k-${col}">${state.showAll["k-" + col] ? "Mostrar menos" : `+ ${cards[col].length - LIMIT}`}</button>` : ""}
+    </section>`).join("")}</div>`;
+  return sec("quadro", "Ação", "Quadro de risco", "Clientes em alto risco entram em A abordar. Mova conforme avança.", body);
+}
+let dragKey = null;
+document.addEventListener("dragstart", e => { const li = e.target.closest && e.target.closest(".kcard"); if (!li) return; dragKey = [li.dataset.card, li.dataset.name]; li.classList.add("dragging"); try { e.dataTransfer.setData("text/plain", li.dataset.card); e.dataTransfer.effectAllowed = "move"; } catch (err) {} });
+document.addEventListener("dragend", e => { const li = e.target.closest && e.target.closest(".kcard"); if (li) li.classList.remove("dragging"); document.querySelectorAll(".kcol.over").forEach(x => x.classList.remove("over")); });
+document.addEventListener("dragover", e => { const col = e.target.closest && e.target.closest(".kcol"); if (!col || !dragKey) return; e.preventDefault(); document.querySelectorAll(".kcol.over").forEach(x => x !== col && x.classList.remove("over")); col.classList.add("over"); });
+document.addEventListener("drop", e => { const col = e.target.closest && e.target.closest(".kcol"); if (!col || !dragKey) return; e.preventDefault(); boardMove(dragKey[0], col.dataset.col, dragKey[1]); dragKey = null; renderReport(); });
+document.addEventListener("change", e => {
+  const s = e.target.closest && e.target.closest("[data-move]"); if (!s) return;
+  const key = s.dataset.move; boardMove(key, s.value, s.dataset.name); renderReport();
+  toast(`Movido para ${BOARD_COLS.find(c => c[0] === s.value)[1]}.`);
+  const again = document.querySelector(`[data-move="${CSS.escape(key)}"]`); if (again) again.focus();
+});
+
+/* ---------- C1: ficha do cliente ---------- */
+let c360Opener = null, c360Id = null;
+function findClient(id) { return LAST && LAST.M.clients.find(c => c.id === id); }
+function histOf(c, col) {
+  // para grupos e organizações, média mensal das linhas ativas (ou de todas, se cancelou)
+  const src = (c.members || [c]).filter(m => c.churned || !m.churned);
+  const by = new Map();
+  for (const m of src) for (const [d, v] of (m.hist && m.hist[col]) || []) { const k = Math.floor(d / 864e5 / 30.44); const o = by.get(k) || { d, s: 0, n: 0 }; o.s += v; o.n++; o.d = Math.max(o.d, d); by.set(k, o); }
+  return [...by.values()].sort((a, b) => a.d - b.d).slice(-12).map(o => [o.d, o.s / o.n]);
+}
+function openClient(id, opener) {
+  const c = findClient(id); if (!c) return;
+  c360Opener = opener || null; c360Id = id; track("client_open");
+  const M = LAST.M, sig = LAST.sig, key = boardKey(M, c), bo = boardData()[key];
+  const sw = (c.allDrv || []).reduce((t, d) => t + d.w, 0);
+  const contrib = (c.allDrv || []).map(d => ({ ...d, share: sw ? d.w * d.comp / sw : 0 })).sort((a, b) => b.share - a.share);
+  const kp = sig.map(s => ({ s, h: histOf(c, s.col), x: c.kpi[s.col] })).filter(o => Number.isFinite(o.x) || o.h.length);
+  const facts = [
+    ["Status", c.churned ? `Cancelou em ${fmtDate(c.dataCanc)}` : c.partial ? `Ativo · ${c.linesCanc} linha(s) cancelada(s)` : "Ativo"],
+    [c.churned ? "MRR perdido" : "MRR", fmtBRL(c.churned ? c.mrrPerdido : c.mrr)],
+    ["Tempo de casa", Number.isFinite(c.tenure) ? nf1.format(c.tenure) + " meses" : "—"],
+    ["Comparado com", c.peerLabel || "base inteira"],
+    ...M.dims.slice(0, 6).map(d => [pretty(d), c.attrs[d] || "—"])
+  ];
+  const box = $("#c360");
+  box.innerHTML = `<div class="c360-head">
+      <div style="min-width:0;flex:1"><span class="eyebrow">Ficha · ${esc(M.noun[0])}</span><h3 id="c360Title">${esc(c.nome || c.label)}</h3><span class="sub mono">${esc(c.label)}</span></div>
+      <button type="button" class="fx" id="c360Close" aria-label="Fechar ficha">×</button></div>
+    <div class="c360-body">
+      <div class="c360-score">${c.risk != null ? `<b class="big">${Math.round(c.risk * 100)}</b><span>score de risco</span>` : `<span>Sem indicadores para calcular o score.</span>`}${chip(c.cls)}</div>
+      <dl class="facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+      ${c.churned && (c.motivo || c.descricao) ? `<div class="c360-box"><h4>Motivo do cancelamento</h4><p>${esc(c.motivo || "—")}${c.descricao ? ` · <span class="muted">${esc(c.descricao)}</span>` : ""}</p></div>` : ""}
+      ${contrib.length ? `<div class="c360-box"><h4>O que puxa o score</h4><ul class="contrib">${contrib.slice(0, 6).map(d => `<li><span class="lab">${esc(pretty(d.col))} <small class="muted">${d.low ? "baixo" : "alto"} · p${Math.round(d.p * 100)}</small></span><span class="cbar"><i style="width:${Math.round(d.share * 100)}%;background:${d.comp >= 0.75 ? "var(--st-crit)" : d.comp <= 0.35 ? "var(--st-good)" : "var(--st-warn)"}"></i></span><span class="mono">${Math.round(d.share * 100)}</span></li>`).join("")}</ul><p class="note">Pontos de cada indicador no score (0–100). Vermelho: pior que 75% dos pares.</p></div>` : ""}
+      ${kp.length ? `<div class="c360-box"><h4>Indicadores nos últimos meses</h4><ul class="khist">${kp.map(o => `<li><span class="lab">${esc(pretty(o.s.col))}</span>${o.h.length > 1 ? spark(o.h.map(x => x[1]), "var(--accent)") : `<span class="note">um mês só</span>`}<span class="mono">${Number.isFinite(o.x) ? nf1.format(o.x) : "—"}${o.s.unit ? " " + esc(o.s.unit) : ""}</span></li>`).join("")}</ul></div>` : ""}
+      ${c.members && c.members.length > 1 ? `<div class="c360-box"><h4>Linhas (${c.members.length})</h4><ul class="mlines">${c.members.map(m => `<li><span>${esc(m.nome || m.label)}</span>${m.churned ? `<span class="chip neu">Cancelada</span>` : `<span class="mono">${fmtBRL(m.mrr)}</span>`}</li>`).join("")}</ul></div>` : ""}
+      ${!c.churned && c.risk != null ? `<div class="c360-box"><h4>Acompanhamento</h4>
+        <label class="fld">Coluna no quadro<select id="c360Col">${[["", "Fora do quadro"], ...BOARD_COLS].map(([v, t]) => `<option value="${v}" ${(bo ? bo.col : "") === v ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+        <label class="fld">Nota (fica neste navegador)<textarea id="c360Note" rows="3" maxlength="500" placeholder="Próximo passo, contato, prazo">${esc(bo ? bo.note : "")}</textarea></label>
+        <div class="actions"><button type="button" class="btn sm primary" id="c360Save">Salvar</button><button type="button" class="btn sm" id="c360Copy">Copiar resumo</button></div></div>` : `<div class="actions"><button type="button" class="btn sm" id="c360Copy">Copiar resumo</button></div>`}
+    </div>`;
+  box.hidden = false; box.dataset.key = key;
+  $("#c360Close").focus();
+}
+function closeClient() { const b = $("#c360"); if (b.hidden) return; b.hidden = true; c360Id = null; if (c360Opener && document.body.contains(c360Opener)) c360Opener.focus(); }
+function clientSummary(c) {
+  return [`${c.nome || c.label} (${c.label})`, c.risk != null ? `Score ${Math.round(c.risk * 100)} · ${CHIP[c.cls][2]}` : "", c.churned ? `Cancelou em ${fmtDate(c.dataCanc)}${c.motivo ? " · " + c.motivo : ""}` : `MRR ${fmtBRL(c.mrr)}`, c.drivers && c.drivers.length ? "Sinais: " + drvText(c) : ""].filter(Boolean).join("\n");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-client]");
+  if (b) { e.preventDefault(); openClient(b.dataset.client, b); return; }
+  if (e.target.id === "c360Close") closeClient();
+  if (e.target.id === "c360Save") {
+    const key = $("#c360").dataset.key, col = $("#c360Col").value, note = $("#c360Note").value.trim(), c = findClient(c360Id);
+    const bd = boardData();
+    if (!col) delete bd[key]; else { const o = bd[key] || {}; if (o.col !== col) { o.col = col; o.since = Date.now(); } o.note = note; o.name = c ? c.nome || c.label : o.name; bd[key] = o; }
+    boardSave(bd); track("board_move"); renderReport(); toast(col ? "Acompanhamento salvo." : "Removido do quadro.");
+    if (c360Id) openClient(c360Id, c360Opener);
+  }
+  if (e.target.id === "c360Copy") { const c = findClient(c360Id); if (!c) return; const t = clientSummary(c); try { navigator.clipboard.writeText(t).then(() => toast("Resumo copiado."), () => toast("Não consegui copiar.")); } catch (err) { toast("Não consegui copiar."); } }
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#c360").hidden) closeClient(); });
+
+/* ---------- C3: relatório exportável (.zip com painel e CSVs) ---------- */
+const isoD = t => t == null || !Number.isFinite(t) ? "" : new Date(t).toISOString().slice(0, 10);
+const r1 = v => Number.isFinite(v) ? Math.round(v * 10) / 10 : "";
+const r4 = v => Number.isFinite(v) ? Math.round(v * 1e4) / 1e4 : "";
+function exportTables() {
+  const ctx = LAST; if (!ctx) return null;
+  const { M, M0, stats, sig } = ctx;
+  anomaly(M, sig); atRisk(M, sig, null); // preenchem EXPORTS.churn e EXPORTS.risk
+  const out = {};
+  out["clientes-analisados.csv"] = M.clients.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), status: c.churned ? "cancelado" : c.partial ? "ativo (parcial)" : "ativo", inicio: isoD(c.inicio), data_cancelamento: isoD(c.dataCanc), meses_de_casa: r1(c.tenure), mrr: r1(c.mrr), mrr_perdido: c.churned ? r1(c.mrrPerdido) : "", ...c.attrs, score_risco: c.risk != null ? Math.round(c.risk * 100) : "", classificacao: CHIP[c.cls] ? CHIP[c.cls][2] : "", grupo_pares: c.peerLabel || "", sinais: c.churned && c.cls === "anormal" ? healthyText(c) : drvText(c || {}), ...Object.fromEntries(M.kpiCols.map(k => ["kpi_" + k, r4(c.kpi[k])])), motivo: c.motivo, descricao_motivo: c.descricao }));
+  if (EXPORTS.churn) out["cancelados-classificados.csv"] = EXPORTS.churn.rows;
+  if (EXPORTS.risk) out["ativos-em-risco.csv"] = EXPORTS.risk.rows;
+  const co = cohortData(M);
+  if (co) out["retencao-por-coorte.csv"] = co.rows.map(r => ({ coorte: r.k, clientes: r.n, cancelados: r.ch, ...Object.fromEntries(co.steps.map((st, i) => ["M" + st, r.cells[i] ? r4(r.cells[i].r) : ""])) }));
+  const prof = [], p = M.clients.filter(c => c.churned).length / (M.clients.length || 1);
+  for (const d of M.dims) { const g = new Map(); for (const c of M.clients) { const k = c.attrs[d]; const o = g.get(k) || { n: 0, ch: 0, lost: 0 }; o.n++; if (c.churned) { o.ch++; o.lost += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; } g.set(k, o); } for (const [k, o] of g) prof.push({ perfil: pretty(d), grupo: k, clientes: o.n, cancelados: o.ch, taxa_churn: r4(o.ch / o.n), media_base: r4(p), mrr_perdido: r1(o.lost) }); }
+  if (prof.length) out["churn-por-perfil.csv"] = prof;
+  if (stats.length) out["indicadores.csv"] = stats.map(s => ({ indicador: pretty(s.col), unidade: s.unit, media_ativos: r4(s.ma), media_cancelados: r4(s.mb), efeito_cohen_d: r4(s.d), entra_no_score: sig.includes(s) ? "sim" : "não", direcao_contraria: s.contrary ? "sim" : "não" }));
+  out["serie-mensal.csv"] = monthlySeries(M, 24).map(x => ({ mes: isoD(x.t).slice(0, 7), ativos_inicio: x.start, cancelamentos: x.ch, taxa_churn: r4(x.rate), mrr_perdido: r1(x.lost), ativos_fim: x.end }));
+  const mc = monthlyChurn(M), g = grr12(M.lines, M.ref), nrr = nrr12(M.lines, M.ref), co2 = state.company || {};
+  out["mercado.csv"] = [
+    { metrica: "Churn de logos ao mês", valor: r4(mc && mc.m), referencia: co2.segmento && BENCH.logo[co2.segmento] ? BENCH.logo[co2.segmento].map(v => r4(v)).join(" a ") : "" },
+    { metrica: "GRR 12 meses", valor: r4(g && g.grr), referencia: "" },
+    { metrica: "NRR 12 meses", valor: r4(nrr && nrr.nrr), referencia: "" }
+  ];
+  const bd = boardData(), names = new Map(M.clients.map(c => [boardKey(M, c), c]));
+  const brows = Object.entries(bd).map(([k, o]) => { const c = names.get(k); return { cliente: o.name || k.split("|")[1], nivel: k.split("|")[0], coluna: (BOARD_COLS.find(x => x[0] === o.col) || [, o.col])[1], desde: isoD(o.since), dias_na_coluna: o.since ? Math.floor((Date.now() - o.since) / 864e5) : "", score_atual: c && c.risk != null ? Math.round(c.risk * 100) : "", nota: o.note || "" }; });
+  if (brows.length) out["quadro-de-risco.csv"] = brows;
+  const u = usage(), urows = USAGE_LABELS.filter(([k]) => u[k]).map(([k, t]) => ({ acao: t, vezes: u[k].n, primeira: isoD(u[k].first), ultima: isoD(u[k].last) }));
+  if (urows.length) out["uso-do-relatorio.csv"] = urows;
+  return out;
+}
+async function exportReport() {
+  if (!LAST) { toast("Carregue dados antes de exportar."); return; }
+  if (typeof JSZip === "undefined") { toast("Não consegui carregar o compactador. Verifique a conexão e tente de novo."); return; }
+  const btn = $("#btnExport"); btn.disabled = true; btn.textContent = "Gerando…";
+  try {
+    const zip = new JSZip(), stamp = new Date().toISOString().slice(0, 10), tables = exportTables();
+    const BOM = "﻿";
+    // Excel em português: vírgula decimal e nomes de coluna legíveis
+    const br = rows => rows.map(r => Object.fromEntries(Object.entries(r).map(([k, v]) => [k.startsWith("__") ? pretty(k).toLowerCase().replace(/\s+/g, "_") : k, typeof v === "number" && Number.isFinite(v) ? String(v).replace(".", ",") : v])));
+    for (const [name, rows] of Object.entries(tables)) if (rows && rows.length) zip.file("analises/" + name, BOM + toCSV(br(rows)));
+    // dados de entrada como foram analisados
+    for (const [src, raw] of Object.entries(state.raw)) if (raw && raw.rows && raw.rows.length) zip.file("dados/" + ({ clientes: "clientes", kpis: "indicadores", cancel: "cancelamentos" }[src]) + ".csv", BOM + toCSV(raw.rows));
+    // painel com os dados embutidos
+    let painel = "";
+    try {
+      const html = await (await fetch("diagnostico.html", { cache: "no-store" })).text();
+      const a = html.indexOf("/*DATA:START*/"), b = html.indexOf("/*DATA:END*/");
+      if (a > 0 && b > a) painel = html.slice(0, a + 14) + JSON.stringify(diagnosticData(state.isSample)).replace(/</g, "\\u003c") + html.slice(b)
+        .replace('const STORED = (() =>', 'const STORED = null && (() =>');
+    } catch (err) {}
+    if (painel) zip.file("painel-diagnostico.html", painel);
+    const co = state.company || {};
+    zip.file("LEIA-ME.txt", [
+      `Relatório de churn${co.nome ? " · " + co.nome : ""} · gerado em ${stamp}`,
+      `Recorte: ${LAST.M.noun[1].toLowerCase()}${state.filters.filter(f => f.values.length).map(f => ` · ${pretty(f.dim)}: ${f.values.join(", ")}`).join("")}`,
+      `Cortes do score: atenção ${state.cut.atencao}, alto risco ${state.cut.alto}, anormal abaixo de ${state.cut.anormal}, esperado a partir de ${state.cut.esperado}.`,
+      state.isSample ? "ATENÇÃO: dados de exemplo, fictícios." : "",
+      "",
+      painel ? "painel-diagnostico.html  abre no navegador, sem internet para os dados (os gráficos usam Chart.js pela CDN)." : "O painel não pôde ser incluído (abra o relatório por http, não pelo arquivo local).",
+      "analises/  uma tabela por análise. Separador ponto e vírgula, UTF-8, abre direto no Excel.",
+      "dados/     os arquivos de entrada como foram lidos.",
+      "",
+      "Nenhum dado saiu do seu navegador para gerar este arquivo."
+    ].filter(x => x !== null).join("\r\n"));
+    const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+    const url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = url; a.download = `relatorio-churn-${stamp}.zip`; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    track("export"); renderChecklist();
+    toast(`Relatório gerado: ${Object.keys(tables).length} análises${painel ? " e o painel" : ""}.`);
+  } catch (err) { toast("Não consegui gerar o arquivo: " + err.message); }
+  finally { btn.disabled = false; btn.textContent = "Exportar relatório"; }
+}
+document.addEventListener("click", e => { if (e.target.id === "btnExport") exportReport(); });
+
+
+/* ---------- dicas pontuais: um ponto pulsante por vez, some no primeiro uso ---------- */
+const HINT_KEY = "csops-hints";
+const HINTS = [
+  { id: "export", area: null, el: "#btnExport", tip: "Novo: baixe o painel e todas as análises num .zip.", done: "#btnExport" },
+  { id: "ficha", area: "carteira", el: "#risco tbody tr:first-child td:first-child", tip: "Clique no nome do cliente para abrir a ficha.", done: "[data-client]" },
+  { id: "quadro", area: "carteira", el: "#quadro .kcol[data-col=abordar] .kcard:first-child .kfoot select", tip: "Mova o cartão quando começar a atender.", done: "[data-move]" },
+  { id: "visao", area: null, el: "#viewSave", tip: "Guarde este recorte para abrir de novo depois.", done: "#viewSave" }
+];
+const hintsSeen = () => { try { return JSON.parse(localStorage.getItem(HINT_KEY) || "[]"); } catch (e) { return []; } };
+function hintSeen(id) { const s = hintsSeen(); if (!s.includes(id)) { s.push(id); try { localStorage.setItem(HINT_KEY, JSON.stringify(s)); } catch (e) {} } }
+function placeHint() {
+  document.querySelectorAll(".hint").forEach(el => { el.classList.remove("hint"); if (el.dataset.hintTip) { el.removeAttribute("data-tip"); delete el.dataset.hintTip; } });
+  if (!getTour() || !$("#tourWelcome").hidden || document.querySelector(".driver-active")) return;
+  const seen = hintsSeen();
+  const h = HINTS.find(x => !seen.includes(x.id) && (!x.area || x.area === state.area) && document.querySelector(x.el));
+  if (!h) return;
+  const el = document.querySelector(h.el);
+  el.classList.add("hint"); el.dataset.hintId = h.id;
+  if (!el.dataset.tip) { el.dataset.tip = h.tip; el.dataset.hintTip = "1"; }
+}
+document.addEventListener("click", e => {
+  for (const h of HINTS) if (e.target.closest && e.target.closest(h.done)) { if (!hintsSeen().includes(h.id)) { hintSeen(h.id); setTimeout(placeHint, 0); } }
+}, true);
+document.addEventListener("change", e => { if (e.target.closest && e.target.closest("[data-move]")) hintSeen("quadro"); }, true);
+
+/* ---------- A3: painel de uso (só deste navegador) ---------- */
+const USAGE_LABELS = [
+  ["area_inicio", "Visão geral aberta"], ["area_carteira", "Carteira aberta"], ["area_retencao", "Retenção aberta"], ["area_diagnostico", "Diagnóstico aberto"], ["area_dados", "Dados aberto"],
+  ["client_open", "Fichas de cliente abertas"], ["board_move", "Cartões movidos no quadro"], ["view_saved", "Visões salvas"], ["view_open", "Visões abertas"], ["export", "Relatórios exportados"],
+  ["tour_csm", "Tour de CSM"], ["tour_head", "Tour de Head de CS"], ["tour_all", "Tour completo"]
+];
+function usagePanel() {
+  const u = usage(), rows = USAGE_LABELS.filter(([k]) => u[k]).map(([k, t]) => [t, u[k].n, u[k].last]);
+  const weeks = (u.__weeks || []).length, first = Object.values(u).filter(o => o && o.first).reduce((m, o) => Math.min(m, o.first), Infinity);
+  return `<div class="stephead"><h2 class="h-step">Uso neste navegador</h2><p class="lede">Quanto o relatório foi usado aqui. Fica só neste navegador e entra no relatório exportado.</p></div>
+    <div class="panel">${rows.length ? `<p class="hint-line">Desde ${fmtDate(first)} · ativo em <b>${weeks}</b> semana(s).</p>
+      <div class="scroll"><table class="dense"><thead><tr><th>Ação</th><th class="n">Vezes</th><th class="n">Última</th></tr></thead><tbody>${rows.map(([t, n, l]) => `<tr><td>${t}</td><td class="n">${fmtInt(n)}</td><td class="n">${fmtDate(l)}</td></tr>`).join("")}</tbody></table></div>
+      <div class="actions" style="margin-top:10px"><button type="button" class="btn sm ghost" id="usageReset">Zerar contagem</button></div>` : `<p class="note">Nada registrado ainda.</p>`}</div>`;
+}
+document.addEventListener("click", e => { if (e.target.id === "usageReset") { try { localStorage.removeItem(USAGE_KEY); } catch (err) {} renderReport(); toast("Contagem de uso zerada."); } });
 
 /* ---------- explicação passo a passo ---------- */
 let LAST = null;
@@ -2548,7 +2893,7 @@ const TEMPLATE = {
     ["id_group", "imp", "Hierarquia: ID do grupo econômico."], ["group", "imp", "Hierarquia: nome do grupo econômico."], ["id_org", "imp", "Hierarquia: ID da organização (o próprio cliente)."],
     ["id_product", "imp", "Hierarquia: ID do produto contratado."], ["product", "imp", "Hierarquia: nome do produto."],
     ["industry", "imp", "Perfil: setor."], ["size", "imp", "Perfil: porte."], ["state", "imp", "Perfil: UF."], ["stage", "imp", "Perfil: etapa."], ["cs_owner", "imp", "Perfil: nome do CSM responsável (texto)."],
-    ["cancel_tag", "imp", "Motivo do cancelamento."], ["cancel_description", "imp", "Descrição do motivo."], ["mrr", "imp", "Receita mensal da linha."],
+    ["cancel_tag", "imp", "Motivo do cancelamento."], ["cancel_description", "imp", "Descrição do motivo."], ["mrr", "imp", "Receita mensal da linha."], ["mrr_12m_atras", "opt", "MRR da linha 12 meses antes. Com ele o relatório calcula o NRR."],
     ["cnpj", "opt", "CNPJ da organização."], ["id_legacy", "opt", "ID no sistema anterior."], ["name_contract", "opt", "Nome do contrato."], ["city", "opt", "Cidade."], ["country", "opt", "País."],
     ["support_owner", "opt", "Responsável de suporte."], ["sales_owner", "opt", "Vendedor."], ["onboarding_owner", "opt", "Responsável pelo onboarding."], ["dt_stage", "opt", "Data da etapa atual."]],
   kpi: [["id_customer", "req", "ID da linha de cliente."], ["type", "req", "ID do tipo de KPI."], ["value", "req", "Valor do KPI."],
@@ -2801,7 +3146,7 @@ async function sdImport(token, base, withMrr) {
     const d = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0), ref = sdDay(d);
     kpis.push(...await sdPaged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, token, base, signal, `KPIs de ${fmtDate(d)}`));
   }
-  let mrrOf = null;
+  let mrrOf = null, mrr12Of = null;
   if (withMrr) {
     const contracts = await sdPaged("/v2/contracts", "contracts", { limit: 1000 }, token, base, signal, "Contratos");
     // MRR de cada cliente: contratos vigentes hoje (ativos) ou na véspera do cancelamento (cancelados)
@@ -2814,13 +3159,20 @@ async function sdImport(token, base, withMrr) {
       const v = (live.length ? live : list.filter(c => !c.status || c.status.enabled !== false)).reduce((t, c) => t + (Number(c.monthly_payment) || 0), 0);
       return v ? v.toFixed(2) : "";
     };
+    const t0 = sdDay(Date.now() - 365 * 864e5);
+    mrr12Of = cust => {
+      if (!cust.dt_register || String(cust.dt_register).slice(0, 10) > t0) return "";
+      const live = (byCust.get(cust.id) || []).filter(c => (!c.start_date || String(c.start_date).slice(0, 10) <= t0) && (!c.end_date || String(c.end_date).slice(0, 10) >= t0));
+      const v = live.reduce((t, c) => t + (Number(c.monthly_payment) || 0), 0);
+      return v ? v.toFixed(2) : "";
+    };
   }
   sdLog("Montando o relatório…");
   const custRows = customers.map(c => ({
     id: c.id, name: c.name || c.name_contract || "", name_contract: c.name_contract || "", group: c.group || "", cnpj: c.cnpj || "",
     industry: c.industry || "", size: c.size || "", state: c.state || "", stage: c.stage || "", cs_owner: userName(c.cs), status: c.status && c.status.description || "",
     dt_register: String(c.dt_register || "").slice(0, 10), dt_cancel: String(c.dt_cancel || "").slice(0, 10), cancel_tag: c.cancel_tag || "", cancel_description: c.cancel_description || "",
-    mrr: mrrOf ? mrrOf(c) : ""
+    mrr: mrrOf ? mrrOf(c) : "", mrr_12m_atras: mrr12Of ? mrr12Of(c) : ""
   }));
   const seen = new Set(), kpiRows = [];
   for (const k of kpis) {
@@ -2887,45 +3239,61 @@ const MOTION_OK = !matchMedia("(prefers-reduced-motion: reduce)").matches;
 const getTour = () => { try { const t = JSON.parse(localStorage.getItem(TOUR_KEY) || "null"); return t && t.v === TOUR_V ? t : null; } catch (e) { return null; } };
 const setTour = o => { try { localStorage.setItem(TOUR_KEY, JSON.stringify({ v: TOUR_V, at: new Date().toISOString(), ...o })); } catch (e) {} };
 const TOUR_STEPS = {
-  empresa: { el: "#empresa .company", title: "Sua empresa e o mercado", text: "Diga o modelo, o segmento e o ticket. Com isso a seção <b>Mercado</b> compara o seu churn com empresas parecidas." },
-  dados: { el: "#inputs .srcbar", title: "Seus dados", text: "Anexe ou cole os CSVs de clientes e indicadores. <b>Ver</b> mostra o que já foi carregado; o modelo de planilha está em <b>Baixar modelo</b>, no topo." },
-  filtros: { el: "#filtros", title: "Recorte e nível", text: "Analise por produto, organização ou grupo econômico e filtre qualquer perfil. Tudo abaixo recalcula." },
-  achados: { el: "#resumo .highlights", title: "Comece por aqui", text: "Os principais achados resumem o relatório numa leitura, com links para a seção de cada um." },
-  mercado: { el: "#mercado .mk-grid, #mercado .empty", title: "Você x mercado", text: "O seu churn ao lado de referências de empresas B2B SaaS do mesmo segmento e ticket. Aparece depois que o perfil do Passo 1 está preenchido." },
-  risco: { el: "#risco .cuts", title: "Quem precisa de atenção agora", text: "Clientes ativos parecidos com quem já cancelou. <b>Experimente:</b> arraste os cortes para ajustar o tamanho da lista ao time." },
-  coortes: { el: "#coortes table.heat", title: "Retenção por safra", text: "Cada linha é um período de entrada; cada coluna, um mês de vida. <b>Experimente:</b> clique numa célula para ver quem saiu até aquele mês." },
-  perfil: { el: "#perfil .bars", title: "Onde está o churn", text: "Grupos com ▲ cancelam acima do que o acaso explica. <b>Experimente:</b> clique numa barra para filtrar o relatório inteiro. O ícone (i) de cada título explica o cálculo." },
-  indicadores: { el: "#indicadores table", title: "Quais indicadores anteciparam o churn", text: "Os KPIs do topo são os que mais separam quem saiu de quem ficou. Clique no nome de um KPI para ver a distribuição completa." },
-  anormal: { el: "#anormal .cuts", title: "Churn esperado x anormal", text: "Cancelado com score baixo saiu com indicadores saudáveis: os números não avisaram. Esses casos pedem conversa com o CSM, não alerta de KPI." },
-  motivos: { el: "#motivos .bars", title: "Motivos e momento", text: "Clique num motivo para ver os cancelamentos dele na tabela. Picos perto de 12 ou 24 meses costumam ser renovação." },
-  diag: { el: "#toDiag", title: "Diagnóstico de Churn", text: "Abre um painel com a história completa destes dados: retenção, sinais, qualidade do score e lista de ação, com o cálculo passo a passo." }
+  areas: { area: null, el: "#areaNav", title: "Cinco áreas, uma pergunta cada", text: "<b>Visão geral</b> resume, <b>Carteira</b> diz quem atender, <b>Retenção</b> mostra quando e por que saem, <b>Diagnóstico</b> explica o que antecipa o churn e <b>Dados</b> recebe seus arquivos." },
+  empresa: { area: "dados", el: "#empresa .company", title: "Sua empresa e o mercado", text: "Diga o modelo, o segmento e o ticket. Com isso a seção <b>Mercado</b> compara o seu churn com empresas parecidas." },
+  dados: { area: "dados", el: "#inputs .srcbar", title: "Seus dados", text: "Anexe ou cole os CSVs, ou importe da SenseData em <b>Integrações</b>. O modelo de planilha está na barra lateral." },
+  filtros: { area: "inicio", el: "#filtros", title: "Recorte, nível e visões", text: "Analise por produto, organização ou grupo e filtre qualquer perfil. <b>Salvar esta visão</b> guarda o recorte para a próxima vez." },
+  achados: { area: "inicio", el: "#resumo .highlights", title: "Comece por aqui", text: "Os principais achados resumem o relatório numa leitura, com links para a seção de cada um." },
+  tiles: { area: "inicio", el: "#resumo .tiles", title: "Números com tendência", text: "Cada cartão mostra os últimos 12 meses e a variação contra o mês anterior. Vermelho é piora." },
+  mercado: { area: "inicio", el: "#mercado .mk-grid, #mercado .empty", title: "Você x mercado", text: "Seu churn, GRR e NRR ao lado de empresas B2B SaaS do mesmo segmento e ticket." },
+  quadro: { area: "carteira", el: "#quadro .kanban", title: "Quadro de risco", text: "Quem está em alto risco entra em <b>A abordar</b>. Arraste ou use o seletor do cartão; parado há mais de 7 dias fica em vermelho." },
+  risco: { area: "carteira", el: "#risco .cuts", title: "Quem precisa de atenção agora", text: "Clientes ativos parecidos com quem já cancelou. <b>Experimente:</b> arraste os cortes para ajustar a lista ao tamanho do time." },
+  cliente: { area: "carteira", el: "#risco tbody tr:first-child td:first-child", title: "Ficha do cliente", text: "Clique no nome para ver o que puxa o score, os indicadores mês a mês e anotar o próximo passo." },
+  coortes: { area: "retencao", el: "#coortes table.heat", title: "Retenção por safra", text: "Cada linha é um período de entrada; cada coluna, um mês de vida. Clique numa célula para ver quem saiu." },
+  motivos: { area: "retencao", el: "#motivos .bars", title: "Motivos e momento", text: "Clique num motivo para ver os casos. Picos perto de 12 ou 24 meses costumam ser renovação." },
+  perfil: { area: "diagnostico", el: "#perfil .bars", title: "Onde está o churn", text: "Grupos com ▲ cancelam acima do que o acaso explica. Clique numa barra para filtrar o relatório inteiro." },
+  indicadores: { area: "diagnostico", el: "#indicadores table", title: "O que antecipou o churn", text: "Os KPIs do topo são os que mais separam quem saiu de quem ficou. Clique no nome para ver a distribuição." },
+  anormal: { area: "diagnostico", el: "#anormal .cuts", title: "Churn esperado x anormal", text: "Cancelado com score baixo saiu com indicadores saudáveis. Esses casos pedem conversa com o CSM, não alerta de KPI." },
+  exportar: { area: null, el: "#btnExport", title: "Leve o relatório", text: "Baixa um .zip com o painel de diagnóstico e cada análise em CSV, pronto para o Excel ou para a reunião." },
+  diag: { area: null, el: "#toDiag", title: "Diagnóstico de Churn", text: "Abre um painel com a história completa destes dados, página por página." }
 };
 const TOUR_PATHS = {
-  csm: { label: "Agir na minha carteira", who: "CSM", keys: ["achados", "risco", "perfil", "coortes", "filtros", "dados"] },
-  head: { label: "Entender o churn da base", who: "Head de CS", keys: ["achados", "mercado", "coortes", "perfil", "risco", "filtros"] },
-  ops: { label: "Preparar e conferir os dados", who: "CS Ops ou analista", keys: ["empresa", "dados", "filtros", "achados", "risco", "coortes"] },
-  all: { label: "Ver tudo, na ordem da página", who: "cerca de 2 minutos", keys: ["empresa", "dados", "filtros", "achados", "mercado", "risco", "coortes", "perfil"] }
+  csm: { label: "Agir na minha carteira", who: "CSM", start: "carteira", keys: ["areas", "quadro", "risco", "cliente", "filtros", "exportar"] },
+  head: { label: "Entender o churn da base", who: "Head de CS", start: "inicio", keys: ["areas", "achados", "tiles", "mercado", "coortes", "perfil", "exportar"] },
+  all: { label: "Ver tudo", who: "cerca de 2 minutos", start: "dados", keys: ["areas", "empresa", "dados", "filtros", "achados", "tiles", "mercado", "quadro", "risco", "cliente", "coortes", "motivos", "perfil", "exportar"] }
 };
+const PROFILE_KEY = "csops-profile";
+const getProfile = () => { try { return localStorage.getItem(PROFILE_KEY) || ""; } catch (e) { return ""; } };
 const TRAIL2 = ["indicadores", "anormal", "motivos", "diag"];
+function tourAvailable(keys) {
+  const keep = state.area, ok = keys.filter(k => { const st = TOUR_STEPS[k]; if (st.area && state.area !== st.area) setArea(st.area, { focus: false }); return !!document.querySelector(st.el); });
+  if (state.area !== keep) setArea(keep, { focus: false });
+  return ok;
+}
 let tourOpener = null;
 function openWelcome(opener) {
   tourOpener = opener || null;
-  $("#tourPaths").innerHTML = Object.entries(TOUR_PATHS).map(([k, p]) => `<button type="button" data-tourpath="${k}"><b>${p.label}</b><span>${p.who}</span></button>`).join("");
+  const prof = getProfile();
+  $("#tourPaths").innerHTML = Object.entries(TOUR_PATHS).map(([k, p]) => `<button type="button" data-tourpath="${k}" ${k === prof ? `aria-describedby="twLast"` : ""}><b>${p.label}</b><span>${p.who}${k === prof ? `<span id="twLast"> · sua última escolha</span>` : ""}</span></button>`).join("");
   $("#tourWelcome").hidden = false; $(".wrap").inert = true;
   $("#tourPaths button").focus();
 }
 function closeWelcome() { $("#tourWelcome").hidden = true; $(".wrap").inert = false; }
-function startUsing() {
-  window.scrollTo({ top: 0, behavior: MOTION_OK ? "smooth" : "auto" });
-  const f = $("#co-nome"); if (f) setTimeout(() => f.focus({ preventScroll: true }), MOTION_OK ? 450 : 0);
+function startUsing(path) {
+  const p = TOUR_PATHS[path] || TOUR_PATHS.all;
+  setArea(state.isSample && path === "all" ? "dados" : p.start, { focus: false });
+  window.scrollTo({ top: 0 });
+  const f = state.area === "dados" ? $("#co-nome") : $("#areaTitle"); if (f) setTimeout(() => f.focus({ preventScroll: true }), 50);
 }
 function runTour(keys, path, trail = 1) {
   const D = window.driver && window.driver.js && window.driver.js.driver;
   if (!D) { toast("O tour não carregou: verifique a conexão com cdn.jsdelivr.net."); return; }
-  const list = keys.map(k => TOUR_STEPS[k]).filter(st => document.querySelector(st.el));
-  const steps = list.map(st => ({ element: st.el, popover: { title: st.title, description: st.text } }));
-  if (trail === 1) steps.push({ element: "#empresa .company", popover: { title: "Agora é com você", description: "Preencha o perfil da empresa e anexe os seus dados; os exemplos saem no primeiro arquivo. Para rever o tour, use <b>Ver tour</b> no topo." } });
-  else steps.push({ element: "#empresa .company", popover: { title: "Pronto", description: "Você viu todas as seções. Comece pelo perfil da empresa e pelos seus dados." } });
+  const list = tourAvailable(keys).map(k => TOUR_STEPS[k]);
+  // o tour troca de área sozinho antes de cada passo (Driver.js só aceita seletor, então a troca acontece no "Entendi")
+  const steps = list.map(st => ({ element: st.el, area: st.area, popover: { title: st.title, description: st.text } }));
+  const endEl = document.querySelector("#checklist .check") ? "#checklist .check" : "#areaNav";
+  if (trail === 1) steps.push({ element: endEl, popover: { title: "Agora é com você", description: "Os primeiros passos ficam aqui na barra lateral: perfil da empresa, seus dados, abrir um cliente e exportar. Para rever o tour, use <b>Ver tour</b>." } });
+  else steps.push({ element: endEl, popover: { title: "Pronto", description: "Você viu todas as seções. Siga os primeiros passos na barra lateral." } });
   let ended = null;
   const tour = D({
     steps, showProgress: true, progressText: "{{current}} de {{total}}", showButtons: ["next"],
@@ -2938,32 +3306,42 @@ function runTour(keys, path, trail = 1) {
       pop.wrapper.setAttribute("aria-labelledby", "tourTitle"); pop.wrapper.setAttribute("aria-describedby", "tourDesc");
       const skip = document.createElement("button");
       skip.type = "button"; skip.className = "tour-skip"; skip.textContent = last ? "Fechar" : "Pular";
-      skip.addEventListener("click", () => { ended = last ? "done" : "skipped"; tour.destroy(); });
+      skip.addEventListener("click", () => { ended = last ? "done" : "skipped"; tour.destroy(); finish(ended); });
       // Entendi vem primeiro no foco (Enter avança); Pular fica à esquerda só visualmente
       skip.style.order = "-2"; pop.footerButtons.append(skip);
       if (last && trail === 1) {
         const more = document.createElement("button");
         more.type = "button"; more.textContent = "Explorar mais 4 seções";
-        more.addEventListener("click", () => { ended = "more"; tour.destroy(); });
+        more.addEventListener("click", () => { ended = "more"; tour.destroy(); finish(ended); });
         more.style.order = "-1"; pop.footerButtons.append(more);
       }
       setTimeout(() => pop.nextButton && pop.nextButton.focus({ preventScroll: true }), 160);
     },
     // "Entendi" no último passo conta como tour concluído
-    onNextClick: () => { if (tour.isLastStep()) { ended = "done"; tour.destroy(); } else tour.moveNext(); },
-    onDestroyed: () => {
-      const how = ended || "skipped";
+    onNextClick: () => {
+      if (tour.isLastStep()) { ended = "done"; tour.destroy(); finish(ended); return; }
+      const nx = steps[tour.getActiveIndex() + 1];
+      if (nx && nx.area && state.area !== nx.area) setArea(nx.area, { focus: false });
+      tour.moveNext();
+    },
+    // o Driver.js só chama onDestroyed quando o elemento do passo ainda está registrado; finish() cobre os dois caminhos
+    onDestroyed: () => finish(ended || "skipped")
+  });
+  let finished = false;
+  function finish(how) {
+      if (finished) return; finished = true;
+      document.querySelectorAll(".driver-active-element").forEach(el => el.classList.remove("driver-active-element"));
       setTour({ status: how === "more" ? "done" : how, path, trail });
       if (how === "more") { runTour(TRAIL2, path, 2); return; }
-      if (how === "done") startUsing();
+      if (how === "done") startUsing(path);
       else if (tourOpener && document.body.contains(tourOpener)) tourOpener.focus();
-    }
-  });
+  }
+  if (steps[0] && steps[0].area && state.area !== steps[0].area) setArea(steps[0].area, { focus: false });
   tour.drive();
 }
 document.addEventListener("click", e => {
   const pb = e.target.closest && e.target.closest("[data-tourpath]");
-  if (pb) { closeWelcome(); const p = TOUR_PATHS[pb.dataset.tourpath]; runTour(p.keys, pb.dataset.tourpath); return; }
+  if (pb) { closeWelcome(); const k = pb.dataset.tourpath, p = TOUR_PATHS[k]; try { localStorage.setItem(PROFILE_KEY, k); } catch (err) {} track("tour_" + k); runTour(p.keys, k); return; }
   if (e.target.id === "tourSkipAll") { closeWelcome(); setTour({ status: "skipped", step: 0 }); toast("Tour pulado. Você pode rever quando quiser em Ver tour."); if (tourOpener) tourOpener.focus(); return; }
   if (e.target.id === "btnTour") { openWelcome(e.target); return; }
   if (e.target.closest && e.target.closest("[data-diag]")) openDiagnostic();
@@ -3054,7 +3432,7 @@ function makeSample() {
   const motS = [["concorrente", "Decisão da diretoria de padronizar outro fornecedor."], ["fusao_aquisicao", "Empresa foi adquirida e adotou o sistema do grupo comprador."], ["corte_custos", "Corte de custos geral, sem queixa sobre o produto."], ["encerramento", "Empresa encerrou as atividades."], ["preco", "Pediu desconto na renovação e não houve acordo."]], motSW = [.3, .24, .22, .14, .1];
   const CASCADE = new Set(["concorrente", "fusao_aquisicao", "encerramento", "corte_custos"]);
   const TYPES = [[1, "Health Score", false], [2, "NPS", false], [3, "Adoção (%)", false], [4, "Usuários ativos", false], [5, "Tickets abertos (30d)", true], [6, "Dias sem acesso", true]];
-  const C = [["id", "hierarchy_type", "id_group", "group", "id_org", "cnpj", "id_product", "product", "name", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description"]];
+  const C = [["id", "hierarchy_type", "id_group", "group", "id_org", "cnpj", "id_product", "product", "name", "dt_register", "industry", "size", "state", "cs_owner", "mrr", "dt_cancel", "cancel_tag", "cancel_description", "mrr_12m_atras"]];
   const prodId = { "Gestão": "PRD-10", Financeiro: "PRD-20", Analytics: "PRD-30" };
   const K = [["id_customer", "ref_date", "type", "kpi_name", "inv_proportional", "value"]];
   const usedNames = new Set();
@@ -3079,11 +3457,11 @@ function makeSample() {
   }
   grupos.forEach((g, i) => {
     const members = orgs.filter(o => o.grp === g); if (!members.length) return;
-    C.push([9001 + i, "grupo", "GRP-" + String(i + 1).padStart(2, "0"), g, "", "", "", "", g, iso(Math.min(...members.map(o => o.start))), "", "", "", "", "", "", "", ""]);
+    C.push([9001 + i, "grupo", "GRP-" + String(i + 1).padStart(2, "0"), g, "", "", "", "", g, iso(Math.min(...members.map(o => o.start))), "", "", "", "", "", "", "", "", ""]);
   });
   let orgRowId = 5001;
   for (const org of orgs) {
-    C.push([orgRowId++, "organizacao", org.idGroup, org.grp, org.idOrg, org.cnpj, "", "", org.nome, iso(org.start), org.ind, org.size, org.uf, org.owner, "", "", "", ""]);
+    C.push([orgRowId++, "organizacao", org.idGroup, org.grp, org.idOrg, org.cnpj, "", "", org.nome, iso(org.start), org.ind, org.size, org.uf, org.owner, "", "", "", "", ""]);
     const ps = [prods[0]].concat(prods.slice(1).sort(() => R() - 0.5)).slice(0, org.nProd);
     const lines = ps.map((prod, j) => {
       const start = j === 0 ? org.start : Math.min(org.start + Math.floor(R() * 365) * DAY, LASTSTART);
@@ -3103,7 +3481,9 @@ function makeSample() {
     const first = lines.filter(l => l.cancel && CASCADE.has(l.mot[0])).sort((a, b) => a.cancel - b.cancel)[0];
     if (first && R() < 0.75) for (const l of lines) if (l !== first && l.start < first.cancel && (!l.cancel || l.cancel > first.cancel)) { l.cancel = first.cancel; l.mot = first.mot; l.surprise = first.surprise; }
     for (const l of lines) {
-      C.push([l.id, "produto", org.idGroup, org.grp, org.idOrg, org.cnpj, prodId[l.prod], l.prod, `${org.nome} - ${l.prod}`, iso(l.start), org.ind, org.size, org.uf, org.owner, l.mrr.toFixed(2), l.cancel ? iso(l.cancel) : "", l.mot[0], l.mot[1]]);
+      C.push([l.id, "produto", org.idGroup, org.grp, org.idOrg, org.cnpj, prodId[l.prod], l.prod, `${org.nome} - ${l.prod}`, iso(l.start), org.ind, org.size, org.uf, org.owner, l.mrr.toFixed(2), l.cancel ? iso(l.cancel) : "", l.mot[0], l.mot[1],
+        // MRR de 12 meses atrás: determinístico (não consome o gerador), com upsell e reduções moderados
+        l.start <= REF - 365 * DAY && (!l.cancel || l.cancel > REF - 365 * DAY) ? (Math.round(l.mrr * (0.84 + ((l.id * 37) % 23) / 100) / 10) * 10).toFixed(2) : ""]);
       const last = l.cancel ? monthStart(l.cancel) - DAY : REF;
       const months = [];
       for (let k = 5; k >= 0; k--) { const t = k === 0 ? last : addMonths(monthStart(last), -k); if (t >= l.start) months.push(t); }
