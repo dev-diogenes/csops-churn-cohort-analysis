@@ -491,12 +491,11 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
       <div><span class="eyebrow">Integrações</span><h3 id="sdTitle">Conectar à SenseData</h3></div>
       <button type="button" class="fx" id="sdClose" aria-label="Fechar">×</button>
     </header>
-    <p class="note" id="sdDesc">Busca os clientes (<span class="mono">/v2/customers</span>), os KPIs (<span class="mono">/v2/kpis</span> e <span class="mono">/v2/kpis/last</span>, com nome e direção de cada KPI) e, se quiser, o MRR dos contratos (<span class="mono">/v2/contracts</span>). Os dados entram no relatório como se fossem os CSVs de customer e kpi.</p>
+    <p class="note" id="sdDesc">Busca os clientes (<span class="mono">/v2/customers</span>), os KPIs do último dia de cada um dos últimos 12 meses (<span class="mono">/v2/kpis</span>, com nome e direção de cada KPI) e, se quiser, o MRR dos contratos (<span class="mono">/v2/contracts</span>). Os dados entram no relatório como se fossem os CSVs de customer e kpi.</p>
     <div class="sd-proxy" id="sdProxy" role="status"></div>
     <form id="sdForm" class="sd-form" autocomplete="off">
       <label for="sdBase">URL da API<input id="sdBase" name="base" type="url" required value="https://api.sensedata.io" spellcheck="false"></label>
       <label for="sdToken">Bearer token<input id="sdToken" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="token de produção do SenseConnect"></label>
-      <label for="sdMonths">Histórico de KPIs<select id="sdMonths" name="months"><option value="6">6 meses</option><option value="12" selected>12 meses</option><option value="24">24 meses</option></select></label>
       <label class="sd-check" for="sdMrr"><input id="sdMrr" name="mrr" type="checkbox" checked> Buscar MRR nos contratos</label>
       <p class="note sd-safe">O token fica só na memória desta aba e segue para a SenseData pela ponte do servidor do relatório. Não é salvo em lugar nenhum.</p>
       <div class="actions">
@@ -2401,8 +2400,8 @@ document.addEventListener("focusin", e => heatHover(e.target.closest && e.target
    Endpoints, conforme https://api.sensedata.io/v2/redoc:
      GET /v2/me                      teste do token
      GET /v2/customers               cliente, hierarquia (group, cnpj), perfil, CS, dt_register, dt_cancel, cancel_tag
-     GET /v2/kpis/last               leitura mais recente de cada KPI (com type: id, description, unit, inv_proportional)
-     GET /v2/kpis?ref_date:start=&ref_date:end=   um retrato por mês (último dia), como a SenseData recomenda: até 1 mês por chamada
+     GET /v2/kpis?ref_date:start=&ref_date:end=   só o último dia de cada um dos últimos 12 meses (uma chamada por dia;
+                                                  cada leitura traz type: id, description, unit, inv_proportional)
      GET /v2/contracts               MRR (monthly_payment) dos contratos vigentes
    Paginação por page/limit e next_page; 429 = limite de requisições (respeita retry-after). */
 const SD_PROXY = "/api/sensedata";
@@ -2466,15 +2465,16 @@ async function sdPaged(path, key, params, token, base, signal, label) {
 }
 const sdDay = t => new Date(t).toISOString().slice(0, 10);
 const userName = u => u && typeof u === "object" ? (u.name || u.username || u.email || "") : (u || "");
-async function sdImport(token, base, months, withMrr) {
+// KPIs: só o último dia de cada mês, dos últimos 12 meses fechados
+const SD_KPI_MONTHS = 12;
+async function sdImport(token, base, withMrr) {
   sd.ctrl = new AbortController(); const signal = sd.ctrl.signal;
   const me = await sdGet("/v2/me", {}, token, base, signal);
   sdLog(`Conectado: ${me.name || me.tenant || "SenseData"}${me.username ? ` (${me.username})` : ""}.`, "ok");
   const customers = await sdPaged("/v2/customers", "customers", { limit: 1000 }, token, base, signal, "Clientes");
   if (!customers.length) throw new Error("A SenseData não devolveu nenhum cliente para este token.");
-  const kpis = await sdPaged("/v2/kpis/last", "kpis", { limit: 10000 }, token, base, signal, "KPIs mais recentes");
-  const now = new Date();
-  for (let i = 1; i <= months; i++) {
+  const kpis = [], now = new Date();
+  for (let i = 1; i <= SD_KPI_MONTHS; i++) {
     const d = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0), ref = sdDay(d);
     kpis.push(...await sdPaged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, token, base, signal, `KPIs de ${fmtDate(d)}`));
   }
@@ -2547,7 +2547,7 @@ async function sdRun(testOnly) {
       sdLog(`Token válido: ${me.name || me.tenant || "SenseData"}${me.username ? ` (${me.username})` : ""}. Clientes acessíveis: sim${c.customers && c.customers.length ? "" : " (nenhum retornado)"}.`, "ok");
     } else {
       sdLog("Importando da SenseData…");
-      await sdImport(token, base, +$("#sdMonths").value || 12, $("#sdMrr").checked);
+      await sdImport(token, base, $("#sdMrr").checked);
       toast("Dados da SenseData importados. O relatório já usa esses clientes.");
       setTimeout(closeSenseData, 900);
     }

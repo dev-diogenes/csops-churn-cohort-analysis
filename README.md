@@ -20,8 +20,7 @@ No topo do relatório, **Integrações → SenseData** importa os dados direto d
 |---|---|
 | `GET /v2/me` | Teste do token (nome da plataforma e usuário) |
 | `GET /v2/customers` | `customer`: id, nome, grupo econômico (`group`), organização (`cnpj`), setor, porte, UF, fase, CS, `dt_register`, `dt_cancel`, `cancel_tag`, `cancel_description` |
-| `GET /v2/kpis/last` | Leitura mais recente de cada KPI |
-| `GET /v2/kpis?ref_date:start=&ref_date:end=` | Um retrato por mês (último dia de cada mês, 6/12/24 meses), como a SenseData recomenda: no máximo 1 mês por chamada |
+| `GET /v2/kpis?ref_date:start=&ref_date:end=` | Só o último dia de cada um dos últimos 12 meses fechados (uma chamada por dia). Para clientes ativos, a leitura mais recente é a do fim do mês passado |
 | `GET /v2/contracts` (opcional) | MRR: soma de `monthly_payment` dos contratos vigentes hoje (ativos) ou na véspera do cancelamento |
 
 O nome, a unidade e a direção (`inv_proportional`) de cada KPI já vêm no objeto `type` de cada leitura. A paginação segue `next_page`; respostas 429 (limite de requisições) são repetidas respeitando `retry-after`. Referência: [api.sensedata.io/v2/redoc](https://api.sensedata.io/v2/redoc).
