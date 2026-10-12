@@ -7,42 +7,71 @@
 <meta name="description" content="Relatório de churn para Customer Success: cruza clientes, indicadores e cancelamentos para separar churn esperado de churn anormal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: ferramenta de leitura vertical — entradas no topo, resumo, depois seções de análise com tabela/gráfico; largura máx. 1180px. */
 :root {
-  --bg: #f4f6f5;
+  /* neutros levemente azulados: superfícies brancas sobre fundo frio, como em apps de CS */
+  --bg: #f5f6fa;
   --surface: #ffffff;
-  --sunken: #eaeeec;
-  --ink: #13201b;
-  --muted: #56645e;
-  --faint: #6b7872;
-  --ctl: #858f8a;
-  --line: #d9e0dc;
-  --accent: #1d6b57;
+  --sunken: #eceef5;
+  --ink: #1f2240;
+  --muted: #565b78;
+  --faint: #5f6485;
+  --ctl: #8a8fa8;
+  --line: #dfe2ec;
+  /* marca: violeta (ações, seleção, foco) */
+  --accent: #5b4fe0;
+  --accent-strong: #4a3fcc;
   --accent-ink: #ffffff;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  /* navegação lateral escura */
+  --nav-bg: #1d2140;
+  --nav-ink: #b9bdd6;
+  --nav-hover: #2a2f55;
+  --nav-on: #ffffff;
+  /* séries dos gráficos (identidade) */
   --s-ativo: #2a78d6;
   --s-canc: #eb6834;
-  --good: #0ca30c;
+  /* estados para marcas e textos */
+  --good: #0b7f49;
   --warn: #fab219;
   --serious: #ec835a;
   --crit: #d03b3b;
-  --focus: #1d6b57;
-  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  /* rótulos de status preenchidos (texto na cor indicada) */
+  --st-crit: #d1344a; --st-crit-ink: #ffffff;
+  --st-warn: #fdab3d; --st-warn-ink: #1f2240;
+  --st-good: #00875a; --st-good-ink: #ffffff;
+  --st-neu: #c9ccda; --st-neu-ink: #1f2240;
+  --focus: #5b4fe0;
+  /* tipografia */
+  --f-display: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --r: 6px;
+  --fs-xs: 0.75rem; --fs-sm: 0.8125rem; --fs-base: 0.9375rem; --fs-md: 1.0625rem; --fs-lg: 1.375rem; --fs-xl: 1.75rem;
+  /* forma, profundidade e espaço */
+  --r-sm: 4px; --r: 8px; --r-lg: 12px; --r-pill: 999px;
+  --sh-1: 0 1px 2px rgba(31, 34, 64, .06), 0 1px 3px rgba(31, 34, 64, .05);
+  --sh-2: 0 6px 20px rgba(31, 34, 64, .12);
+  --sh-3: 0 18px 48px rgba(31, 34, 64, .22);
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993; --ctl: #73807a;
-    --line: #2f3935; --accent: #4fb596; --accent-ink: #0d1512; --s-ativo: #3987e5; --s-canc: #d95926; --focus: #4fb596;
+    --bg: #12142a; --surface: #1b1e38; --sunken: #252946; --ink: #eceefa; --muted: #a9adc8; --faint: #9095b2; --ctl: #737896; --line: #2f3352;
+    --accent: #9d94ff; --accent-strong: #b3acff; --accent-ink: #12142a; --focus: #9d94ff;
+    --nav-bg: #0d0f22; --nav-ink: #a9adc8; --nav-hover: #1f2342; --nav-on: #ffffff;
+    --s-ativo: #3987e5; --s-canc: #d95926; --good: #2fb877; --crit: #e25c5c;
+    --sh-1: 0 1px 2px rgba(0, 0, 0, .4); --sh-2: 0 6px 20px rgba(0, 0, 0, .45); --sh-3: 0 18px 48px rgba(0, 0, 0, .55);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993; --ctl: #73807a;
-  --line: #2f3935; --accent: #4fb596; --accent-ink: #0d1512; --s-ativo: #3987e5; --s-canc: #d95926; --focus: #4fb596;
+  --bg: #12142a; --surface: #1b1e38; --sunken: #252946; --ink: #eceefa; --muted: #a9adc8; --faint: #9095b2; --ctl: #737896; --line: #2f3352;
+  --accent: #9d94ff; --accent-strong: #b3acff; --accent-ink: #12142a; --focus: #9d94ff;
+  --nav-bg: #0d0f22; --nav-ink: #a9adc8; --nav-hover: #1f2342; --nav-on: #ffffff;
+  --s-ativo: #3987e5; --s-canc: #d95926; --good: #2fb877; --crit: #e25c5c;
+  --sh-1: 0 1px 2px rgba(0, 0, 0, .4); --sh-2: 0 6px 20px rgba(0, 0, 0, .45); --sh-3: 0 18px 48px rgba(0, 0, 0, .55);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -220,7 +249,7 @@ th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); 
 
 /* tour de boas-vindas (Driver.js 1.3.1, MIT, CSS copiado abaixo) */
 .driver-active .driver-overlay,.driver-active *{pointer-events:none}.driver-active .driver-active-element,.driver-active .driver-active-element *,.driver-popover,.driver-popover *{pointer-events:auto}@keyframes animate-fade-in{0%{opacity:0}to{opacity:1}}.driver-fade .driver-overlay{animation:animate-fade-in .2s ease-in-out}.driver-fade .driver-popover{animation:animate-fade-in .2s}.driver-popover{all:unset;box-sizing:border-box;color:#2d2d2d;margin:0;padding:15px;border-radius:5px;min-width:250px;max-width:300px;box-shadow:0 1px 10px #0006;z-index:1000000000;position:fixed;top:0;right:0;background-color:#fff}.driver-popover *{font-family:Helvetica Neue,Inter,ui-sans-serif,"Apple Color Emoji",Helvetica,Arial,sans-serif}.driver-popover-title{font:19px/normal sans-serif;font-weight:700;display:block;position:relative;line-height:1.5;zoom:1;margin:0}.driver-popover-close-btn{all:unset;position:absolute;top:0;right:0;width:32px;height:28px;cursor:pointer;font-size:18px;font-weight:500;color:#d2d2d2;z-index:1;text-align:center;transition:color;transition-duration:.2s}.driver-popover-close-btn:hover,.driver-popover-close-btn:focus{color:#2d2d2d}.driver-popover-title[style*=block]+.driver-popover-description{margin-top:5px}.driver-popover-description{margin-bottom:0;font:14px/normal sans-serif;line-height:1.5;font-weight:400;zoom:1}.driver-popover-footer{margin-top:15px;text-align:right;zoom:1;display:flex;align-items:center;justify-content:space-between}.driver-popover-progress-text{font-size:13px;font-weight:400;color:#727272;zoom:1}.driver-popover-footer button{all:unset;display:inline-block;box-sizing:border-box;padding:3px 7px;text-decoration:none;text-shadow:1px 1px 0 #fff;background-color:#fff;color:#2d2d2d;font:12px/normal sans-serif;cursor:pointer;outline:0;zoom:1;line-height:1.3;border:1px solid #ccc;border-radius:3px}.driver-popover-footer .driver-popover-btn-disabled{opacity:.5;pointer-events:none}:not(body):has(>.driver-active-element){overflow:hidden!important}.driver-no-interaction,.driver-no-interaction *{pointer-events:none!important}.driver-popover-footer button:hover,.driver-popover-footer button:focus{background-color:#f7f7f7}.driver-popover-navigation-btns{display:flex;flex-grow:1;justify-content:flex-end}.driver-popover-navigation-btns button+button{margin-left:4px}.driver-popover-arrow{content:"";position:absolute;border:5px solid #fff}.driver-popover-arrow-side-over{display:none}.driver-popover-arrow-side-left{left:100%;border-right-color:transparent;border-bottom-color:transparent;border-top-color:transparent}.driver-popover-arrow-side-right{right:100%;border-left-color:transparent;border-bottom-color:transparent;border-top-color:transparent}.driver-popover-arrow-side-top{top:100%;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}.driver-popover-arrow-side-bottom{bottom:100%;border-left-color:transparent;border-top-color:transparent;border-right-color:transparent}.driver-popover-arrow-side-center{display:none}.driver-popover-arrow-side-left.driver-popover-arrow-align-start,.driver-popover-arrow-side-right.driver-popover-arrow-align-start{top:15px}.driver-popover-arrow-side-top.driver-popover-arrow-align-start,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-start{left:15px}.driver-popover-arrow-align-end.driver-popover-arrow-side-left,.driver-popover-arrow-align-end.driver-popover-arrow-side-right{bottom:15px}.driver-popover-arrow-side-top.driver-popover-arrow-align-end,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-end{right:15px}.driver-popover-arrow-side-left.driver-popover-arrow-align-center,.driver-popover-arrow-side-right.driver-popover-arrow-align-center{top:50%;margin-top:-5px}.driver-popover-arrow-side-top.driver-popover-arrow-align-center,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-center{left:50%;margin-left:-5px}.driver-popover-arrow-none{display:none}
-.driver-popover.csops-tour { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 48px rgba(0, 0, 0, .28); max-width: 360px; min-width: 260px; padding: 16px 18px; font-family: var(--f-body); }
+.driver-popover.csops-tour { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--sh-3); max-width: 360px; min-width: 260px; padding: 16px 18px; font-family: var(--f-body); }
 .driver-popover.csops-tour .driver-popover-title { font-family: var(--f-display); font-size: 1.08rem; font-weight: 700; line-height: 1.25; color: var(--ink); }
 .driver-popover.csops-tour .driver-popover-description { color: var(--muted); font-size: 0.9rem; line-height: 1.5; margin-top: 6px; }
 .driver-popover.csops-tour .driver-popover-description b { color: var(--ink); }
@@ -245,13 +274,65 @@ th.sort[aria-sort="descending"]::after { content: " ▼"; color: var(--accent); 
 .tour-paths b { font-size: 0.95rem; }
 .tour-paths span { font-size: 0.8rem; color: var(--muted); }
 /* durante o tour a barra fixa não cobre o elemento destacado */
-.driver-active nav.topics { position: static; }
 .tab-link { text-decoration: none; margin-left: auto; color: var(--accent); }
 @media (max-width: 560px) { .driver-popover.csops-tour { max-width: calc(100vw - 24px); } }
 
+
+/* casca do app: barra lateral + conteúdo */
+.app { display: grid; grid-template-columns: 228px minmax(0, 1fr); min-height: 100%; }
+.sidenav { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100vh; overflow-y: auto; background: var(--surface); border-right: 1px solid var(--line); padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; z-index: 18; }
+.brand { display: grid; gap: 2px; padding-inline: 6px; }
+.brand b { font-family: var(--f-display); font-size: 1.1rem; }
+.areas { display: grid; gap: 2px; }
+.area { display: flex; gap: 10px; align-items: center; border: 0; background: none; padding: 9px 10px; border-radius: 8px; cursor: pointer; color: var(--muted); font: inherit; font-size: 0.92rem; text-align: left; min-height: 40px; }
+.area:hover { background: var(--sunken); color: var(--ink); }
+.area.on { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--ink); font-weight: 600; }
+.area.on .ico { color: var(--accent); }
+.ico { width: 18px; height: 18px; flex: none; }
+.side-foot { margin-top: auto; display: grid; gap: 6px; }
+.side-foot .btn { justify-content: flex-start; text-align: left; }
+.title-block { display: grid; gap: 4px; min-width: 0; }
+.check { border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; background: var(--bg); }
+.check-h { display: flex; justify-content: space-between; font-size: 0.86rem; }
+.check-h span { color: var(--muted); font-family: var(--f-mono); font-size: 0.76rem; }
+.check-bar { height: 6px; border-radius: 3px; background: var(--sunken); overflow: hidden; }
+.check-bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width .3s; }
+.check ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.check li button { display: flex; gap: 8px; align-items: center; width: 100%; border: 0; background: none; padding: 5px 4px; border-radius: 6px; cursor: pointer; color: var(--ink); font: inherit; font-size: 0.84rem; text-align: left; }
+.check li button:hover { background: var(--sunken); }
+.check .ck { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--ctl); display: grid; place-items: center; font-size: 0.66rem; flex: none; }
+.check li.done button { color: var(--muted); text-decoration: line-through; }
+.check li.done .ck { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.views { padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+.viewform { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.viewform input { padding: 5px 8px; border: 1px solid var(--ctl); border-radius: 6px; background: var(--bg); min-width: 180px; }
+.scope-line { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.tipq { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--ctl); font-size: 0.7rem; cursor: help; color: var(--muted); }
+details.more { font-size: 0.86rem; }
+details.more summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.82rem; width: fit-content; }
+details.more > div { color: var(--muted); padding-top: 6px; max-width: 78ch; }
+details.more.panel > summary { color: var(--ink); }
+.hint-line { font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+.tile .spark { width: 100%; height: 30px; margin-top: 4px; }
+.delta { font-size: 0.74rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.delta.bad { color: var(--crit); }
+.delta.good { color: var(--good); }
+.delta.flat { color: var(--muted); }
+.status-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+.status-legend span { display: inline-flex; gap: 6px; align-items: center; }
+.sl { font-style: normal; font-size: 0.7rem; }
+.sl.crit { color: var(--crit); } .sl.warn { color: var(--serious); } .sl.good { color: var(--good); }
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .sidenav { position: sticky; top: env(safe-area-inset-top, 0px); height: auto; flex-direction: row; align-items: center; padding: 8px 12px; gap: 10px; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .brand, #checklist, .side-foot { display: none; }
+  .areas { display: flex; gap: 4px; }
+  .area { padding: 6px 10px; white-space: nowrap; }
+}
+
 /* menu de integrações e conexão SenseData */
 .menu { position: relative; }
-.menu-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, 86vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 14px 36px rgba(0, 0, 0, .18); padding: 6px; display: grid; gap: 2px; }
+.menu-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, 86vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--sh-2); padding: 6px; display: grid; gap: 2px; }
 .menu-pop [role=menuitem] { display: grid; gap: 2px; text-align: left; border: 0; background: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--ink); font: inherit; }
 .menu-pop [role=menuitem]:hover, .menu-pop [role=menuitem]:focus-visible { background: var(--sunken); }
 .menu-pop [role=menuitem] span { font-size: 0.8rem; color: var(--muted); }
@@ -311,14 +392,10 @@ tr.kpi-x td { background: var(--bg); }
 select, textarea, input:not([type=checkbox]):not([type=range]):not([type=file]):not([type=radio]) { border-color: var(--ctl) !important; }
 
 /* relatório */
-nav.topics { position: sticky; padding-top: 2px; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); display: grid; }
 .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
 .tab { border: 0; background: none; padding: 10px 14px 9px; font-family: var(--f-display); font-weight: 600; font-size: 1rem; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 .tab:hover { color: var(--ink); }
-nav.topics .toc { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; padding-block: 10px; }
-nav.topics .toc a { color: var(--muted); text-decoration: none; padding-block: 4px; display: inline-block; }
-nav.topics .toc a:hover { color: var(--accent); }
 section.rep { display: grid; gap: 16px; scroll-margin-top: 140px; }
 .sec-head { display: grid; gap: 6px; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
@@ -390,46 +467,127 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
   .tile .v { font-size: 1.45rem; }
 }
 @media (prefers-reduced-motion: no-preference) { .bar-fill { transition: width .3s ease; } }
+
+/* ================= design system v2 =================
+   Um token por decisão. Componentes abaixo sobrescrevem os estilos antigos sem mudar a marcação. */
+body { font-size: var(--fs-base); }
+h1 { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: var(--fs-lg); font-weight: 700; }
+h3 { font-weight: 700; }
+.eyebrow { font-family: var(--f-body); font-weight: 600; font-size: var(--fs-xs); letter-spacing: 0.06em; }
+/* botões: 36px, raio único, primário violeta */
+.btn { min-height: 36px; padding: 7px 14px; border-radius: var(--r); border-color: var(--line); font-weight: 600; font-size: var(--fs-sm); box-shadow: var(--sh-1); display: inline-flex; align-items: center; gap: 6px; transition: background .12s, border-color .12s; }
+.btn:hover { border-color: var(--ctl); background: var(--sunken); }
+.btn.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+.btn.ghost { box-shadow: none; }
+.btn.sm { min-height: 30px; padding: 4px 10px; font-size: var(--fs-xs); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+/* cartões: superfície branca, sombra leve, raio grande */
+.panel, .tile, .src, .viewbar, .company, .check { border-radius: var(--r-lg); box-shadow: var(--sh-1); border-color: var(--line); }
+.panel { padding: var(--sp-5); }
+.tile { padding: var(--sp-4); gap: var(--sp-1); }
+.tile .k { font-size: var(--fs-sm); font-weight: 600; color: var(--muted); }
+.tile .v { font-weight: 800; font-size: clamp(1.4rem, 2.2vw, 1.85rem); }
+.tile.hl { border-top: 3px solid var(--st-crit); }
+.xp, .pm, .menu-pop, .fpop { box-shadow: var(--sh-3); border-radius: var(--r-lg); }
+.menu-pop, .fpop { box-shadow: var(--sh-2); }
+/* barra lateral escura com item ativo destacado */
+.sidenav { background: var(--nav-bg); border-right: 0; color: var(--nav-ink); }
+.brand b { color: var(--nav-on); font-weight: 800; }
+.brand .eyebrow { color: color-mix(in srgb, var(--accent) 60%, var(--nav-on)); }
+.area { color: var(--nav-ink); font-weight: 500; position: relative; }
+.area:hover { background: var(--nav-hover); color: var(--nav-on); }
+.area.on { background: var(--nav-hover); color: var(--nav-on); font-weight: 700; }
+.area.on::before { content: ""; position: absolute; left: -14px; top: 8px; bottom: 8px; width: 4px; border-radius: 0 4px 4px 0; background: var(--accent); }
+.area.on .ico { color: color-mix(in srgb, var(--accent) 55%, var(--nav-on)); }
+.sidenav :focus-visible { outline-color: var(--nav-on); }
+.check { background: var(--nav-hover); border-color: transparent; box-shadow: none; color: var(--nav-on); }
+.check-h span { color: var(--nav-ink); }
+.check-bar { background: color-mix(in srgb, var(--nav-on) 14%, transparent); }
+.check li button { color: var(--nav-on); }
+.check li button:hover { background: color-mix(in srgb, var(--nav-on) 8%, transparent); }
+.check .ck { border-color: var(--nav-ink); }
+.check li.done button { color: var(--nav-ink); }
+.check li.done .ck { color: var(--accent-ink); }
+.check .btn { color: var(--nav-on); border-color: color-mix(in srgb, var(--nav-on) 25%, transparent); }
+.side-foot .btn { background: transparent; color: var(--nav-ink); border-color: color-mix(in srgb, var(--nav-on) 18%, transparent); box-shadow: none; }
+.side-foot .btn:hover { color: var(--nav-on); background: var(--nav-hover); }
+/* rótulos de status preenchidos: lidos de relance numa lista longa */
+.chip { border-radius: var(--r-sm); padding: 3px 10px; font-size: var(--fs-xs); font-weight: 600; min-width: 92px; justify-content: center; }
+.chip.crit { background: var(--st-crit); color: var(--st-crit-ink); }
+.chip.warn { background: var(--st-warn); color: var(--st-warn-ink); }
+.chip.good { background: var(--st-good); color: var(--st-good-ink); }
+.chip.neu { background: var(--st-neu); color: var(--st-neu-ink); }
+.chip.crit i, .chip.warn i, .chip.good i, .chip.neu i { color: inherit; }
+.sl.crit { color: var(--st-crit); } .sl.warn { color: var(--st-warn); } .sl.good { color: var(--st-good); }
+.status, .srcchip { border-radius: var(--r-pill); font-family: var(--f-body); font-weight: 600; font-size: var(--fs-xs); }
+.status.ok { background: color-mix(in srgb, var(--st-good) 16%, transparent); }
+.status.err { background: color-mix(in srgb, var(--st-crit) 16%, transparent); }
+/* tabelas: cabeçalho em caixa normal, linhas de 40px */
+th { text-transform: none; letter-spacing: 0; font-size: var(--fs-sm); color: var(--muted); background: var(--sunken); }
+thead th:first-child { border-top-left-radius: var(--r); } thead th:last-child { border-top-right-radius: var(--r); }
+td { padding-block: 9px; }
+tbody tr:hover td { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+.score .m { width: 56px; height: 8px; border-radius: var(--r-pill); }
+.score .m b { border-radius: var(--r-pill); }
+/* abas segmentadas, entradas e filtros com o mesmo raio */
+.seg { border-radius: var(--r); border-color: var(--line); background: var(--sunken); padding: 2px; gap: 2px; }
+.seg button { border-radius: 6px; background: transparent; }
+.seg button + button { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--sh-1); }
+.vb-row select, .controls select, .company input, .company select, .tsearch input, .viewform input, .map select { border-radius: var(--r); min-height: 34px; background: var(--surface); }
+.fchip { border-radius: var(--r-pill); background: var(--accent-soft); border-color: transparent; }
+.info { border-width: 1.5px; font-family: var(--f-body); font-style: normal; font-weight: 700; }
+details.more summary { color: var(--accent); }
+.toast { border-radius: var(--r); box-shadow: var(--sh-2); }
+#tip { border-radius: var(--r-sm); }
+.driver-popover.csops-tour { border-radius: var(--r-lg); box-shadow: var(--sh-3); }
+.driver-popover.csops-tour .driver-popover-next-btn:hover { background: var(--accent-strong); }
+.delta { display: inline-block; }
 </style>
 
 </head>
 <body>
+<div class="app">
+<aside class="sidenav" aria-label="Navegação do relatório">
+  <div class="brand"><span class="eyebrow">CS Ops · Churn</span><b>Análise de Churn</b></div>
+  <nav class="areas" id="areaNav" aria-label="Áreas"></nav>
+  <div id="checklist"></div>
+  <div class="side-foot">
+    <button class="btn ghost sm" id="btnTour" type="button">Ver tour</button>
+    <a class="btn ghost sm" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Baixar modelo (.xlsx)</a>
+  </div>
+</aside>
 <div class="wrap">
   <header class="top">
-    <span class="eyebrow">CS Ops · Churn</span>
     <div class="row">
-      <div style="display:grid;gap:8px;min-width:0">
-        <h1>Análise de Churn por Coorte</h1>
-        <p class="lede">Informe o perfil da empresa e anexe ou cole os CSVs exportados das tabelas <span class="mono">customer</span> e <span class="mono">kpi</span>. O relatório cruza tudo pelo ID do cliente e mostra quais cancelamentos eram esperados para aquele perfil e quais fogem do padrão.</p>
-      </div>
+      <div class="title-block"><span class="eyebrow" id="areaEyebrow">Análise de Churn por Coorte</span><h1 id="areaTitle" tabindex="-1">Visão geral</h1></div>
       <div class="actions">
         <a class="btn primary" id="toDiag" href="diagnostico.html" target="_blank" rel="noopener" data-diag>Diagnóstico de Churn ↗</a>
-        <a class="btn" href="https://github.com/dev-diogenes/csops-churn-cohort-analysis/raw/main/modelos/modelo_churn.xlsx" target="_blank" rel="noopener">Baixar modelo (.xlsx)</a>
         <div class="menu" id="integrMenu">
           <button class="btn" id="btnIntegr" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="integrPop">Integrações ▾</button>
           <div class="menu-pop" id="integrPop" role="menu" hidden>
             <button type="button" role="menuitem" data-integr="sensedata"><b>SenseData</b><span>Importar clientes e KPIs pela API, com URL e token</span></button>
-            <span class="menu-note">Outras fontes: anexe ou cole os CSVs no Passo 2.</span>
+            <span class="menu-note">Outras fontes: anexe ou cole os CSVs em Dados.</span>
           </div>
         </div>
-        <button class="btn ghost" id="btnTour" type="button">Ver tour</button>
         <button class="btn" id="btnSample" type="button">Carregar exemplo</button>
         <button class="btn ghost" id="btnClear" type="button">Limpar tudo</button>
       </div>
     </div>
   </header>
 
-  <section class="step" id="empresa" aria-labelledby="empresaTitle"></section>
+  <section class="step" id="empresa" data-area="dados" aria-labelledby="empresaTitle"></section>
 
   <div class="banner" id="sampleBanner" hidden><b>Dados de exemplo.</b> São clientes fictícios para mostrar o relatório. Anexe ou cole seus arquivos para substituir.</div>
 
-  <section class="step" id="inputs"></section>
+  <section class="step" id="inputs" data-area="dados"></section>
 
   <div id="warnings" class="banner" hidden></div>
 
   <main id="report" style="display:grid;gap:40px"></main>
 
-  <section class="rep" id="como-preparar">
+  <section class="rep" id="como-preparar" data-area="dados">
     <div class="sec-head">
       <span class="eyebrow">Referência</span>
       <h2>Como preparar os arquivos</h2>
@@ -445,17 +603,19 @@ svg text { fill: var(--muted); font-family: var(--f-body); font-size: 11px; }
         </div>
       </div>
       <div id="templateCols" style="display:grid;gap:10px"></div>
-      <p class="note">A planilha abre no Excel e pode ser importada no Google Sheets (Arquivo → Importar). Preencha, exporte cada aba como CSV e anexe no cartão correspondente. Passe o mouse sobre uma coluna para ver o que ela significa.</p>
     </div>
-    <div class="method">
+    <details class="more panel"><summary>Formato dos arquivos</summary><div class="method">
+      <p>A planilha abre no Excel e pode ser importada no Google Sheets (Arquivo → Importar). Preencha, exporte cada aba como CSV e anexe no cartão correspondente.</p>
       <p>Cada pessoa pode exportar só os campos principais; os nomes de coluna são reconhecidos sozinhos e podem ser trocados em <b>Colunas</b>. Separador vírgula, ponto e vírgula ou tab. Datas em <span class="mono">AAAA-MM-DD</span> (com ou sem hora), <span class="mono">DD/MM/AAAA</span> ou <span class="mono">MM/AAAA</span>. Números aceitam <span class="mono">1.234,56</span> e <span class="mono">1234.56</span>.</p>
       <p><b>customer</b>: uma linha por linha de cliente, ativos e cancelados. Mínimo: <span class="mono">id, dt_register, dt_cancel</span>. Recomendado: <span class="mono">name, cancel_tag, cancel_description</span> e os campos de perfil <span class="mono">industry, size, state, stage, cs_owner</span>. Cliente com <span class="mono">dt_cancel</span> preenchido conta como cancelado. Contatos, endereço e <span class="mono">custom_fields</span> são ignorados. MRR é opcional (coluna <span class="mono">mrr</span>, por exemplo extraída de custom_fields).</p>
       <p><b>Hierarquia</b> (opcional, em customer): <span class="mono">group</span> (grupo econômico), uma coluna que identifique a organização (<span class="mono">cnpj</span> ou <span class="mono">name_contract</span>) e <span class="mono">product</span> quando o mesmo cliente tem uma linha por produto contratado (ex.: "Ambev - Produto 1", "Ambev - Produto 2"). Com elas dá para analisar por organização ou por grupo e filtrar qualquer recorte. Uma organização só conta como cancelada quando todas as suas linhas cancelaram; se só parte cancelou, entra em churn parcial.</p>
       <p><b>kpi</b>: <span class="mono">id_customer, ref_date, type, value</span>, e de preferência <span class="mono">kpi_name</span> e <span class="mono">inv_proportional</span> trazidos de kpi_type no próprio export (veja <span class="mono">sql/kpi_snapshot.sql</span>). Pode vir o histórico diário inteiro, mas o arquivo fica grande; a consulta já traz só a última leitura de cada KPI antes do cancelamento. Sem <span class="mono">kpi_name</span>, os KPIs aparecem como "KPI 1", "KPI 2"; sem <span class="mono">inv_proportional</span> (true = valor maior é pior), a direção é deduzida dos dados.</p>
       <p><b>Cancelamentos</b> (opcional): só para quem guarda o cancelamento fora de customer. <span class="mono">id_customer, dt_cancel, cancel_tag</span>.</p>
       <p>Nada sai do seu navegador: os arquivos são lidos e processados localmente.</p>
-    </div>
+    </div></details>
   </section>
+  <section class="rep" id="metodoBox" data-area="dados"></section>
+</div>
 </div>
 <aside id="xp" class="xp" role="dialog" aria-labelledby="xpTitle" hidden>
   <header class="xp-head" id="xpHead" tabindex="0" aria-label="Mover painel: arraste ou use as setas">
@@ -638,7 +798,8 @@ const state = {
   isSample: false,
   dimBar: null,
   dimPeer: null,
-  topic: "churn",
+  area: (() => { const h = (location.hash || "").replace("#", ""); return ["inicio", "carteira", "retencao", "diagnostico", "dados"].includes(h) ? h : "inicio"; })(),
+  viewName: null, savingView: false,
   level: "linha",
   filters: [],
   showAll: { churn: false, risk: false },
@@ -737,7 +898,7 @@ function renderInputs() {
     const raw = state.raw[key];
     return `<span class="srcchip ${raw && raw.rows.length ? (raw.error ? "err" : "ok") : ""}"><b>${s.title}</b> ${raw && raw.rows.length ? `${fmtInt(raw.rows.length)} linhas${raw.error ? " · revisar" : " ✓"}` : s.optional ? "opcional" : "faltando"}</span>`;
   }).join("");
-  host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2>${state.source && !state.isSample ? `<p class="lede">Importado da ${esc(state.source.name)}${state.source.tenant ? ` · ${esc(state.source.tenant)}` : ""} em ${new Date(state.source.at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. Para atualizar, use Integrações → SenseData de novo.</p>` : `<p class="lede">Anexe ou cole os CSVs, ou importe direto da SenseData em <b>Integrações</b>, no topo.</p>`}</div>
+  host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2>${state.source && !state.isSample ? `<p class="lede">Importado da ${esc(state.source.name)}${state.source.tenant ? ` · ${esc(state.source.tenant)}` : ""} em ${new Date(state.source.at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. Para atualizar, use Integrações → SenseData de novo.</p>` : `<p class="lede">Anexe, cole ou importe da SenseData em <b>Integrações</b>.</p>`}</div>
     <div class="srcbar">${summaryChips}<button type="button" class="btn sm" id="btnSources" aria-expanded="${open}">${open ? "Recolher" : "Ver e trocar arquivos"}</button>
       ${state.isSample ? "" : `<span class="remember"><button type="button" role="switch" id="rememberToggle" aria-checked="${rememberOn}" class="switch"><span aria-hidden="true"></span>Lembrar neste navegador</button>${restoredAt ? `<span class="note">restaurado de ${new Date(restoredAt).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</span>` : ""}${rememberOn ? `<button type="button" class="btn sm ghost" id="btnForget">Esquecer dados</button>` : ""}</span>`}</div>
     <div class="inputs" ${open ? "" : "hidden"}>${cards}</div>`;
@@ -1077,11 +1238,13 @@ const CHIP = {
   anormal: ["crit", "▲", "Anormal"], fraco: ["warn", "◆", "Sinais fracos"], esperado: ["neu", "●", "Esperado"],
   alto: ["crit", "▲", "Alto risco"], atencao: ["warn", "◆", "Atenção"], ok: ["good", "●", "Saudável"], na: ["neu", "○", "Sem indicadores"]
 };
+// legenda única de status, igual em todas as áreas
+const statusLegend = () => `<div class="status-legend" aria-label="Legenda de status"><span><i class="sl crit" aria-hidden="true">▲</i>Crítico: alto risco ou churn anormal</span><span><i class="sl warn" aria-hidden="true">◆</i>Atenção ou sinais fracos</span><span><i class="sl good" aria-hidden="true">●</i>Saudável ou esperado</span></div>`;
 const chip = cls => { const [k, i, t] = CHIP[cls] || CHIP.na; return `<span class="chip ${k}"><i aria-hidden="true">${i}</i>${t}</span>`; };
 // neutral: na tabela de cancelados a classificação já vem no chip; a cor da barra só confundiria
 const scoreCell = (r, neutral) => {
   if (r == null) return "—";
-  const col = neutral ? "var(--muted)" : r >= 0.7 ? "var(--crit)" : r >= 0.55 ? "var(--warn)" : "var(--good)";
+  const col = neutral ? "var(--muted)" : r >= state.cut.alto / 100 ? "var(--st-crit)" : r >= state.cut.atencao / 100 ? "var(--st-warn)" : "var(--st-good)";
   return `<span class="score"><span class="m"><b style="width:${Math.round(r * 100)}%;background:${col}"></b></span>${Math.round(r * 100)}</span>`;
 };
 const drvText = c => c.drivers.map(d => `${pretty(d.col)} ${d.low ? "baixo" : "alto"} (p${Math.round(d.p * 100)})`).join(" · ");
@@ -1162,7 +1325,7 @@ function viewbar(M, M0) {
       <button type="button" class="fx" data-fremove="${i}" aria-label="Remover filtro ${esc(pretty(f.dim))}">×</button>
     </span>`;
   }).join("");
-  return `<div class="viewbar" id="filtros">
+  return `<div class="viewbar" id="filtros">${viewsBar()}
     <div class="vb-row">
       <label for="selLevel">Analisar por</label>
       <select id="selLevel">${M.levels.map(l => `<option value="${l}" ${l === M.level ? "selected" : ""}>${LEVELS[l][0]}</option>`).join("")}</select>
@@ -1173,12 +1336,14 @@ function viewbar(M, M0) {
       ${avail.length ? `<select id="addFilter" aria-label="Adicionar filtro"><option value="">+ Adicionar filtro</option>${avail.map(d => `<option value="${esc(d)}">${esc(pretty(d))}</option>`).join("")}</select>` : ""}
       ${state.filters.length ? `<button type="button" class="btn sm ghost" id="btnClearFilters">Remover filtros</button>` : ""}
     </div>
-    <p class="note">${M.filtersOn ? `Filtrado: ${fmtInt(M.lines.length)} de ${fmtInt(total)} linhas de cliente` : `${fmtInt(total)} linhas de cliente`}${M.level !== "linha" ? `, agrupadas em ${fmtInt(M.clients.length)} ${M.noun[1].toLowerCase()}. ${M.noun[3] === "o" ? "Um" : "Uma"} ${M.noun[2]} só conta como cancelad${M.noun[3]} quando todas as suas linhas cancelaram.${M.level === "grupo" ? " Organizações sem grupo contam como um grupo próprio." : ""}` : "."}${M0.notes.length ? " " + esc(M0.notes.join(" ")) : ""}</p>
+    <p class="note scope-line"><b>${fmtInt(M.clients.length)}</b> ${esc(M.noun[1].toLowerCase())}${M.level !== "linha" ? ` · ${fmtInt(M.lines.length)} linhas` : ""}${M.filtersOn ? ` · filtrado de ${fmtInt(total)} linhas` : ""} ${M.level !== "linha" ? `<span class="tipq" tabindex="0" data-tip="${M.noun[3] === "o" ? "Um" : "Uma"} ${M.noun[2]} só conta como cancelad${M.noun[3]} quando todas as suas linhas cancelaram.${M.level === "grupo" ? " Organizações sem grupo contam como um grupo próprio." : ""}${M0.notes.length ? " " + esc(M0.notes.join(" ")) : ""}" aria-label="Regra de contagem">?</span>` : ""}</p>
   </div>`;
 }
 
 function renderReport() {
   const host = $("#report");
+  renderAreaNav(); renderChecklist();
+  if (state.area === "dados") $("#metodoBox").innerHTML = method();
   const M0 = build();
   const w = $("#warnings");
   if (!M0) {
@@ -1197,33 +1362,14 @@ function renderReport() {
 
   const stats = kpiStats(M);
   const sig = computeRisk(M, stats, state.dimPeer || null);
-  const topic = TOPICS.find(t => t.id === state.topic) || TOPICS[0];
+  const area = AREAS.find(a => a.id === state.area) || AREAS[0];
   const ctx = { M, M0, stats, sig };
   LAST = ctx;
-  host.innerHTML = bar + `<nav class="topics" aria-label="Tópicos">
-      <div class="tabs" role="tablist">${TOPICS.map(t => `<button type="button" role="tab" class="tab" data-topic="${t.id}" aria-selected="${t === topic}">${t.label}</button>`).join("")}<a class="tab tab-link" href="diagnostico.html" target="_blank" rel="noopener" data-diag title="Abre o painel com os dados e o recorte desta tela">Diagnóstico de Churn ↗</a></div>
-      <div class="toc">${topic.sections.map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}</div>
-      <div class="scope"><span>Analisando <b>${esc(M.noun[1].toLowerCase())}</b>${state.filters.filter(f => f.values.length).map(f => ` · ${esc(pretty(f.dim))}: ${esc(f.values.length === 1 ? f.values[0] : f.values.length + " valores")}`).join("")}</span><a href="#filtros">Ajustar</a></div>
-    </nav>` + topic.sections.map(([, , fn]) => fn(ctx)).join("");
+  host.innerHTML = state.area === "dados" ? "" : bar + area.sections.map(([, fn]) => fn(ctx)).join("");
   if (state.xp) renderExplain();
   renderCompany();
   saveSession();
 }
-
-// Tópicos do relatório. Cada tópico tem seu submenu de seções; novos tópicos entram aqui.
-const TOPICS = [
-  { id: "churn", label: "Churn", sections: [
-    ["resumo", "Resumo", ctx => summary(ctx.M, ctx)],
-    ["mercado", "Mercado", ({ M }) => market(M)],
-    ["risco", "Ativos em risco", ctx => atRisk(ctx.M, ctx.sig, ctx)],
-    ["coortes", "Retenção por coorte", ({ M }) => cohort(M)],
-    ["perfil", "Churn por perfil", ({ M }) => profile(M)],
-    ["indicadores", "Indicadores", ({ M, stats }) => indicators(M, stats)],
-    ["anormal", "Churn anormal", ({ M, sig }) => anomaly(M, sig)],
-    ["motivos", "Motivos", ({ M }) => reasons(M)],
-    ["metodo", "Método", () => method()]
-  ] }
-];
 
 function sec(id, eyebrow, title, lede, body) {
   const info = INFO[id] ? `<button type="button" class="info" data-info="${id}" data-tip="${esc(INFO[id].short)}\nClique para ver o passo a passo." aria-label="Como é calculado: ${esc(title)}" aria-expanded="${state.xp && state.xp.id === id}">i</button>` : "";
@@ -1239,15 +1385,15 @@ function highlights(M, ctx) {
     for (const c of M.clients) { const k = c.attrs[d]; if (!g.has(k)) g.set(k, [0, 0]); const o = g.get(k); o[0]++; if (c.churned) o[1]++; }
     for (const [k, [n, x]] of g) { if (n < 5 || p <= 0 || p >= 1) continue; const z = (x / n - p) / Math.sqrt(p * (1 - p) / n); if (z >= 1.96 && (!best || z > best.z)) best = { d, k, n, x, z }; }
   }
-  if (best) out.push(`<b>${esc(best.k)}</b> (${esc(pretty(best.d).toLowerCase())}) cancela ${fmtPct(best.x / best.n)}, contra ${fmtPct(p)} da base. <a href="#perfil">Churn por perfil</a>`);
+  if (best) out.push(`<b>${esc(best.k)}</b> (${esc(pretty(best.d).toLowerCase())}) cancela ${fmtPct(best.x / best.n)}, contra ${fmtPct(p)} da base. <a href="#perfil" data-goto="perfil">Churn por perfil</a>`);
   const top = ctx && ctx.stats ? ctx.stats.filter(s => ctx.sig.some(x => x.col === s.col)).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0] : null;
-  if (top) out.push(`<b>${esc(pretty(top.col))}</b> é o indicador que mais separa quem cancela (efeito ${nf1.format(Math.abs(top.d))}). <a href="#indicadores">Indicadores</a>`);
+  if (top) out.push(`<b>${esc(pretty(top.col))}</b> é o indicador que mais separa quem cancela (efeito ${nf1.format(Math.abs(top.d))}). <a href="#indicadores" data-goto="indicadores">Indicadores</a>`);
   const hi = M.clients.filter(c => !c.churned && c.cls === "alto");
-  if (hi.length) out.push(`<b>${fmtInt(hi.length)} ${esc(M.noun[1].toLowerCase())} ativas</b> em alto risco, com ${fmtBRL(hi.reduce((t, c) => t + (Number.isFinite(c.mrr) ? c.mrr : 0), 0))} de MRR. <a href="#risco">Ativos em risco</a>`);
+  if (hi.length) out.push(`<b>${fmtInt(hi.length)} ${esc(M.noun[1].toLowerCase())} ativas</b> em alto risco, com ${fmtBRL(hi.reduce((t, c) => t + (Number.isFinite(c.mrr) ? c.mrr : 0), 0))} de MRR. <a href="#risco" data-goto="risco">Ativos em risco</a>`);
   const an = ch.filter(c => c.cls === "anormal").length;
-  if (an) out.push(`<b>${fmtInt(an)} cancelamentos anormais</b>: saíram com indicadores saudáveis. <a href="#anormal">Churn anormal</a>`);
+  if (an) out.push(`<b>${fmtInt(an)} cancelamentos anormais</b>: saíram com indicadores saudáveis. <a href="#anormal" data-goto="anormal">Churn anormal</a>`);
   const co = state.company, mc = monthlyChurn(M);
-  if (co && co.modelo === "b2b" && co.segmento && mc) { const r = BENCH.logo[co.segmento]; out.push(`Churn de logos de <b>${fmtPct(mc.m, 2)} ao mês</b>: ${mc.m > r[1] ? "acima" : mc.m < r[0] ? "abaixo" : "dentro"} da faixa de ${esc(SEGMENTS[co.segmento])} (${fmtPct(r[0], 1)}–${fmtPct(r[1], 1)}). <a href="#mercado">Mercado</a>`); }
+  if (co && co.modelo === "b2b" && co.segmento && mc) { const r = BENCH.logo[co.segmento]; out.push(`Churn de logos de <b>${fmtPct(mc.m, 2)} ao mês</b>: ${mc.m > r[1] ? "acima" : mc.m < r[0] ? "abaixo" : "dentro"} da faixa de ${esc(SEGMENTS[co.segmento])} (${fmtPct(r[0], 1)}–${fmtPct(r[1], 1)}). <a href="#mercado" data-goto="mercado">Mercado</a>`); }
   return out.length ? `<div class="panel highlights"><h3>Principais achados</h3><ul>${out.map(x => `<li>${x}</li>`).join("")}</ul></div>` : "";
 }
 
@@ -1260,17 +1406,19 @@ function summary(M, ctx) {
   const mrrLost = ch.reduce((s, c) => s + (Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0), 0);
   const ten = ch.map(c => c.tenure).filter(Number.isFinite).sort((a, b) => a - b);
   const anorm = ch.filter(c => c.cls === "anormal").length, scored = ch.filter(c => c.risk != null).length;
+  const ser = monthlySeries(M), cssv = n => `var(${n})`;
+  const cA = cssv("--s-ativo"), cC = cssv("--s-canc"), cR = cssv("--crit");
   const tiles = [
     [`${M.noun[1]} na base`, fmtInt(n), M.level !== "linha" ? `${fmtInt(M.lines.length)} linhas · corte em ${fmtDate(M.ref)}` : `corte em ${fmtDate(M.ref)}`],
-    ["Ativos", fmtInt(act), mrrAct ? `${fmtBRL(mrrAct)} de MRR` : ""],
-    ["Cancelados", fmtInt(ch.length), `${fmtPct(ch.length / n)} da base`],
-    ["Churn mensal médio", fmtPct(monthly, 2), Number.isFinite(monthly) ? `cancelamentos ÷ meses-cliente` : "precisa de data de início"],
-    ["MRR perdido", mrrLost ? fmtBRL(mrrLost) : "—", mrrLost && mrrAct ? `${fmtPct(mrrLost / (mrrLost + mrrAct))} do MRR total` : ""],
+    ["Ativos", fmtInt(act), mrrAct ? `${fmtBRL(mrrAct)} de MRR` : "", false, spark(ser.map(x => x.end), cA), delta(ser, "end", v => fmtInt(v), false)],
+    ["Cancelados no período", fmtInt(ch.length), `${fmtPct(ch.length / n)} da base`, false, spark(ser.map(x => x.ch), cC), delta(ser, "ch", v => fmtInt(v), true)],
+    ["Churn mensal médio", fmtPct(monthly, 2), Number.isFinite(monthly) ? "último mês no gráfico" : "precisa de data de início", false, spark(ser.map(x => x.rate), cR), delta(ser, "rate", v => fmtPct(v, 1).replace("%", " p.p."), true)],
+    ["MRR perdido", mrrLost ? fmtBRL(mrrLost) : "—", mrrLost && mrrAct ? `${fmtPct(mrrLost / (mrrLost + mrrAct))} do MRR total` : "", false, mrrLost ? spark(ser.map(x => x.lost), cC) : "", mrrLost ? delta(ser, "lost", v => fmtBRL(v), true) : ""],
     ["Tempo até cancelar", ten.length ? nf1.format(quantile(ten, 0.5)) + " m" : "—", ten.length ? "mediana, em meses" : "precisa de data de início"],
     ...(M.level !== "linha" ? [["Churn parcial", fmtInt(M.clients.filter(c => c.partial).length), (() => { const v = sumF(M.clients.filter(c => c.partial).map(c => c.partialLost)); return Number.isFinite(v) && v ? `ativas, mas perderam ${fmtBRL(v)} em produtos` : "ativas, mas cancelaram algum produto"; })()]] : []),
     ["Churn anormal", scored ? fmtInt(anorm) : "—", scored ? `${fmtPct(anorm / scored, 0)} dos cancelados com KPIs` : "precisa de Indicadores", true]
   ];
-  return sec("resumo", "Visão geral", "Resumo", "", highlights(M, ctx) + `<div class="tiles">${tiles.map(([k, v, s, hl]) => `<div class="tile${hl && scored ? " hl" : ""}"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${esc(s)}</span></div>`).join("")}</div>`);
+  return sec("resumo", "Visão geral", "Resumo", "", highlights(M, ctx) + `<div class="tiles">${tiles.map(([k, v, s, hl, sp, dl]) => `<div class="tile${hl && scored ? " hl" : ""}"><span class="k">${k}</span><span class="v">${v}</span>${sp || ""}${dl || ""}<span class="s">${esc(s)}</span></div>`).join("")}</div>`);
 }
 
 const RAMP_CANC = ["#fde4d6", "#fbcfb6", "#f8b896", "#f5a177", "#f08a58", "#eb6834", "#d95926", "#c24c1f", "#a84019", "#8e3514", "#742a10", "#5b210c"];
@@ -1319,7 +1467,7 @@ function cohort(M) {
   }
   const val = c => churnView ? 1 - c.r : c.r;
   const body = `<div class="panel" style="display:grid;gap:12px">
-    <div class="controls"><span>Mostrar</span><div class="seg" role="group" aria-label="Métrica do mapa"><button type="button" data-heatmetric="ret" aria-pressed="${!churnView}">Retenção</button><button type="button" data-heatmetric="churn" aria-pressed="${churnView}">Churn acumulado</button></div><span class="note">Passe o mouse ou use Tab para ler a célula; clique para ver quem saiu.</span></div>
+    <div class="controls"><span>Mostrar</span><div class="seg" role="group" aria-label="Métrica do mapa"><button type="button" data-heatmetric="ret" aria-pressed="${!churnView}">Retenção</button><button type="button" data-heatmetric="churn" aria-pressed="${churnView}">Churn acumulado</button></div><span class="hint-line">Clique numa célula para ver quem saiu.</span></div>
     <div class="scroll"><table class="heat">
       <caption class="sr">Retenção por coorte de início e mês de vida</caption>
       <thead><tr><th>Coorte</th><th class="n">Clientes</th><th class="n">Cancel.</th>${steps.map((s, i) => `<th class="n" data-c="${i}">M${s}</th>`).join("")}</tr></thead>
@@ -1330,7 +1478,7 @@ function cohort(M) {
     <div class="legend"><span>${churnView ? "Churn acumulado" : "Retenção de logos"} (%)</span><span class="mono">${churnView ? 0 : Math.round(lo * 100)}</span><span class="ramp" style="background:linear-gradient(90deg,${churnView ? RAMP_CANC.slice().reverse().join(",") : RAMP.join(",")})"></span><span class="mono">${churnView ? Math.round((1 - lo) * 100) : 100}</span><span>· vazio = coorte ainda não chegou nesse mês ou tem menos de 3 clientes</span></div>
     ${detail}
   </div>`;
-  return sec("coortes", "Retenção", "Retenção por coorte", `Cada linha agrupa os clientes pelo ${byMonth ? "mês" : "trimestre"} em que entraram. M6 mostra quantos ainda estavam ativos seis meses depois. Leia na vertical para comparar safras no mesmo ponto da vida do cliente.`, body);
+  return sec("coortes", "Retenção", "Retenção por coorte", `Quanto cada safra de clientes (${byMonth ? "mês" : "trimestre"} de entrada) ainda retém, mês a mês.`, body);
 }
 
 function profile(M) {
@@ -1354,9 +1502,9 @@ function profile(M) {
         <span class="bar-track"><span class="bar-fill" style="width:${(r.r / max) * 100}%;background:var(--s-canc)"></span><span class="bar-ref" style="left:${(p / max) * 100}%"></span></span>
         <span class="val">${fmtPct(r.r)} <small>${r.ch}/${r.n}</small> ${flag(r.z)}</span>
       </div>`; }).join("")}</div>
-    <p class="note">Clique numa barra para filtrar o relatório inteiro por aquele grupo. "Acima do esperado" (▲) marca grupos cuja taxa está a mais de 1,96 desvios-padrão da média da base, considerando o tamanho do grupo. Grupos pequenos raramente recebem a marca, mesmo com taxa alta.</p>
+    ${more("Como ler", `Clique numa barra para filtrar o relatório inteiro por aquele grupo. "Acima do esperado" (▲) marca grupos cuja taxa está a mais de 1,96 desvios-padrão da média da base, considerando o tamanho do grupo. Grupos pequenos raramente recebem a marca, mesmo com taxa alta.`)}
   </div>`;
-  return sec("perfil", "Segmentação", "Churn por perfil", "Qual recorte da base cancela mais do que a média, e se a diferença é grande o bastante para não ser acaso.", body);
+  return sec("perfil", "Segmentação", "Churn por perfil", "Grupos que cancelam acima da média da base.", body);
 }
 
 function strip(lo, hi, rows) {
@@ -1406,9 +1554,9 @@ function indicators(M, stats) {
           <td class="n">${Number.isFinite(s.d) ? s.d.toFixed(2).replace(".", ",") : "—"}</td><td><span class="chip ${k}"><i aria-hidden="true">${i}</i>${t}</span></td></tr>${open ? `<tr class="kpi-x"><td colspan="6">${kpiHist(s)}<p class="note">Barras azuis: % dos ativos em cada faixa; laranja: % dos cancelados. Quanto menos as duas distribuições se sobrepõem, mais o KPI separa quem fica de quem sai.</p></td></tr>` : ""}`;
       }).join("")}</tbody>
     </table></div>
-    <p class="note" style="margin-top:10px">Efeito (d de Cohen) mede a distância entre as médias de cancelados e ativos em desvios-padrão. Acima de 0,5 o indicador separa bem os dois grupos e pesa mais no score de risco. "Contrário ao configurado" quer dizer que os cancelados se saíram melhor nesse KPI do que o <span class="mono">inv_proportional</span> do kpi_type prevê. Esse KPI fica fora do score e vale revisar a configuração dele.</p>
+    ${more("Como ler", `Efeito (d de Cohen) mede a distância entre as médias de cancelados e ativos em desvios-padrão. Acima de 0,5 o indicador separa bem os dois grupos e pesa mais no score de risco. "Contrário ao configurado" quer dizer que os cancelados se saíram melhor nesse KPI do que o <span class="mono">inv_proportional</span> do kpi_type prevê. Esse KPI fica fora do score e vale revisar a configuração dele.`)}
   </div>`;
-  return sec("indicadores", "Indicadores", "Ativos x cancelados", "Como estavam os indicadores de quem cancelou, comparados aos de quem continua. Os indicadores do topo são os que melhor anteciparam o churn nesta base.", body);
+  return sec("indicadores", "Indicadores", "Ativos x cancelados", "O que diferencia quem saiu de quem ficou.", body);
 }
 
 function histo(M) {
@@ -1430,7 +1578,7 @@ function histo(M) {
       <text x="${padL + 4}" y="12" style="fill:var(--ink);font-weight:600">${name} · ${arr.length}</text>
     </svg>`;
   };
-  return `<div style="display:grid;gap:6px">${panel(0)}${panel(1)}<p class="note">Score de risco (0–100) no eixo horizontal; % do grupo no vertical. Linhas tracejadas: cortes de atenção e alto risco (ativos) e de anormal e esperado (cancelados).</p></div>`;
+  return `<div style="display:grid;gap:6px">${panel(0)}${panel(1)}${more("Como ler", `Score de risco (0–100) no eixo horizontal; % do grupo no vertical. Linhas tracejadas: cortes de atenção e alto risco (ativos) e de anormal e esperado (cancelados).`)}</div>`;
 }
 
 function tableRows(list, key, cols, limit = 15) {
@@ -1473,14 +1621,15 @@ function anomaly(M, sig) {
     const rows = [...g.values()].sort((a, b) => b.a / b.n - a.a / a.n);
     byDim = `<div class="panel"><h3 style="margin-bottom:10px">Churn anormal por ${esc(pretty(d).toLowerCase())}</h3><div class="scroll"><table><thead><tr><th>${esc(pretty(d))}</th><th class="n">Cancelados</th><th class="n">Anormais</th><th class="n">% anormal</th></tr></thead>
       <tbody>${rows.map(r => `<tr><td>${esc(r.k)}</td><td class="n">${r.n}</td><td class="n">${r.a}</td><td class="n">${fmtPct(r.a / r.n, 0)}</td></tr>`).join("")}</tbody></table></div>
-      <p class="note" style="margin-top:8px">Muda junto com "Agrupar por" da seção Churn por perfil.</p></div>`;
+</div>`;
   }
   const body = `
     <div class="controls"><label for="selDimPeer">Comparar cada cliente com pares do mesmo</label>
       <select id="selDimPeer"><option value="" ${!peer ? "selected" : ""}>Base inteira</option>${M.dims.map(d => `<option value="${esc(d)}" ${d === peer ? "selected" : ""}>${esc(pretty(d))}</option>`).join("")}</select>
       <span>${chip("anormal")} ${counts.anormal} &nbsp; ${chip("fraco")} ${counts.fraco} &nbsp; ${chip("esperado")} ${counts.esperado}${counts.na ? ` &nbsp; ${chip("na")} ${counts.na}` : ""}</span>
     </div>
-    <div class="cuts" role="group" aria-label="Cortes do score para cancelados">${cutSlider("anormal", "Anormal abaixo de", 20, 64)}${cutSlider("esperado", "Esperado a partir de", 40, 90)}<span class="note">Arraste para testar outros cortes; contagens, gráfico e tabelas mudam juntos.</span></div>
+    ${statusLegend()}
+    <div class="cuts" role="group" aria-label="Cortes do score para cancelados">${cutSlider("anormal", "Anormal abaixo de", 20, 64)}${cutSlider("esperado", "Esperado a partir de", 40, 90)}</div>
     <div class="two"><div class="panel">${histo(M)}</div>${byDim || `<div class="panel"><p class="note">Adicione colunas de perfil em Clientes para ver o churn anormal por grupo.</p></div>`}</div>
     <div class="panel">
       <div class="tablebar"><h3>Cancelados, do mais surpreendente ao mais previsível</h3><button type="button" class="btn sm" data-copy="churn">Copiar como CSV</button></div>
@@ -1495,7 +1644,7 @@ function anomaly(M, sig) {
         { h: "O que os indicadores diziam", f: c => esc(c.cls === "anormal" ? (healthyText(c) || "indicadores na média dos ativos") : (drvText(c) || "piora distribuída em vários indicadores")), one: 1, t: c => c.cls === "anormal" ? healthyText(c) : drvText(c) }
       ])}
     </div>`;
-  return sec("anormal", "Diagnóstico", "Churn esperado x anormal", `Cada cliente recebe um score de risco de 0 a 100 que diz o quanto seus indicadores se parecem com os de quem cancela, comparado aos clientes ativos ${peer ? `do mesmo ${esc(pretty(peer).toLowerCase())}` : "da base"}. Cancelado com score baixo é churn <b>anormal</b>: os números diziam que estava tudo bem. Vale investigar esses casos um a um.`, body);
+  return sec("anormal", "Diagnóstico", "Churn esperado x anormal", "Cancelamentos que os indicadores não anteciparam.", body);
 }
 
 function atRisk(M, sig, ctx) {
@@ -1507,6 +1656,7 @@ function atRisk(M, sig, ctx) {
   EXPORTS.risk = { name: "ativos-em-risco", rows: list.map(c => ({ cliente_id: c.label, nome: c.nome, ...hierOut(M, c), grupo_pares: c.peerLabel, ...c.attrs, mrr: c.mrr, meses_de_casa: Number.isFinite(c.tenure) ? c.tenure.toFixed(1) : "", score_risco: Math.round(c.risk * 100), classificacao: CHIP[c.cls][2], sinais: drvText(c) })) };
   const body = `<div class="panel">
     <div class="tablebar"><p>${chip("alto")} <b>${hi.length}</b> clientes${mrr ? `, ${fmtBRL(mrr)} de MRR` : ""} &nbsp; ${chip("atencao")} <b>${list.length - hi.length}</b></p><button type="button" class="btn sm" data-copy="risk">Copiar como CSV</button></div>
+    ${statusLegend()}
     <div class="cuts" role="group" aria-label="Cortes do score para ativos">${cutSlider("atencao", "Atenção a partir de", 30, 89)}${cutSlider("alto", "Alto risco a partir de", 40, 95)}</div>
     ${ctx ? backtestNote(scoreBacktest(ctx.M0, M, sig), M.noun[1].toLowerCase()) : ""}
     ${list.length ? tableRows(list, "risk", [
@@ -1519,7 +1669,7 @@ function atRisk(M, sig, ctx) {
       { h: "Sinais", f: c => esc(drvText(c) || "piora distribuída em vários indicadores"), one: 1, t: c => drvText(c), s: c => drvText(c) }
     ]) : `<p class="note">Nenhum cliente ativo com score de ${state.cut.atencao} ou mais.</p>`}
   </div>`;
-  return sec("risco", "Ação", "Ativos em risco", "Clientes ativos com indicadores parecidos com os de quem já cancelou. O percentil (p) compara o cliente com os ativos do mesmo grupo de pares: p8 em adoção significa que 92% dos pares têm adoção maior.", body);
+  return sec("risco", "Ação", "Ativos em risco", "Clientes ativos parecidos com quem já cancelou.", body);
 }
 
 function reasons(M) {
@@ -1530,7 +1680,7 @@ function reasons(M) {
     const g = new Map();
     for (const c of ch) { const k = c.motivo || "(não informado)"; if (!g.has(k)) g.set(k, { k, n: 0, mrr: 0, an: 0 }); const o = g.get(k); o.n++; o.mrr += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; if (c.cls === "anormal") o.an++; }
     const rows = [...g.values()].sort((a, b) => b.n - a.n).slice(0, 12), max = Math.max(...rows.map(r => r.n));
-    mot = `<div class="panel"><h3 style="margin-bottom:4px">Motivo declarado</h3><p class="note" style="margin-bottom:10px">Clique num motivo para ver os cancelamentos dele na tabela de cancelados.</p><div class="bars">${rows.map(r => `<div class="bar-row drill" role="button" tabindex="0" data-motivo="${esc(r.k === "(não informado)" ? "" : r.k)}" aria-label="${esc(r.k)}: ${r.n} cancelamentos. Ver na tabela" data-tip="${esc(r.k)}\n${r.n} cancelamento(s) · ${fmtPct(r.n / ch.length)}${r.mrr ? `\nMRR perdido ${fmtBRL(r.mrr)}` : ""}\n${r.an} classificado(s) como anormal\nClique para ver na tabela">
+    mot = `<div class="panel"><h3 style="margin-bottom:4px">Motivo declarado</h3><p class="hint-line">Clique num motivo para ver os casos.</p><div class="bars">${rows.map(r => `<div class="bar-row drill" role="button" tabindex="0" data-motivo="${esc(r.k === "(não informado)" ? "" : r.k)}" aria-label="${esc(r.k)}: ${r.n} cancelamentos. Ver na tabela" data-tip="${esc(r.k)}\n${r.n} cancelamento(s) · ${fmtPct(r.n / ch.length)}${r.mrr ? `\nMRR perdido ${fmtBRL(r.mrr)}` : ""}\n${r.an} classificado(s) como anormal\nClique para ver na tabela">
       <span class="lab" title="${esc(r.k)}">${esc(r.k)}</span><span class="bar-track"><span class="bar-fill" style="width:${(r.n / max) * 100}%;background:var(--s-canc)"></span></span><span class="val">${r.n} <small>${fmtPct(r.n / ch.length, 0)}</small></span></div>`).join("")}</div></div>`;
   }
   let ten = "";
@@ -1539,7 +1689,7 @@ function reasons(M) {
     const B = [[0, 3, "0–3 m"], [3, 6, "3–6 m"], [6, 12, "6–12 m"], [12, 18, "12–18 m"], [18, 24, "18–24 m"], [24, 36, "24–36 m"], [36, Infinity, "36+ m"]];
     const rows = B.map(([a, b, l]) => ({ l, n: t.filter(x => x >= a && x < b).length })), max = Math.max(...rows.map(r => r.n), 1);
     ten = `<div class="panel"><h3 style="margin-bottom:12px">Tempo de casa ao cancelar</h3><div class="bars">${rows.map(r => `<div class="bar-row" tabindex="0" aria-label="${r.l} de casa: ${r.n} cancelamentos" data-tip="${r.l} de casa\n${r.n} cancelamento(s)"><span class="lab mono">${r.l}</span><span class="bar-track"><span class="bar-fill" style="width:${(r.n / max) * 100}%;background:var(--s-canc)"></span></span><span class="val">${r.n} <small>${fmtPct(r.n / t.length, 0)}</small></span></div>`).join("")}</div>
-    <p class="note" style="margin-top:10px">Concentração nos primeiros meses aponta para onboarding. Concentração perto de 12 ou 24 meses costuma coincidir com renovação de contrato.</p></div>`;
+    ${more("Como ler", `Concentração nos primeiros meses aponta para onboarding. Concentração perto de 12 ou 24 meses costuma coincidir com renovação de contrato.`)}</div>`;
   }
   return sec("motivos", "Cancelamentos", "Motivos e momento do cancelamento", "", `<div class="two">${mot || `<div class="panel"><p class="note">Sem coluna de motivo no arquivo de Cancelamentos.</p></div>`}${ten || `<div class="panel"><p class="note">Sem data de início, não dá para calcular o tempo de casa.</p></div>`}</div>`);
 }
@@ -1625,7 +1775,7 @@ function renderCompany() {
         ${seg ? `<div><span class="k">Churn de logos · ${esc(SEGMENTS[co.segmento])}</span><b>${fmtPct(seg[0], 1)}–${fmtPct(seg[1], 1)}</b><span class="k">ao mês</span></div>` : ""}
       </div>`;
   $("#empresa").innerHTML = `<div class="stephead"><span class="eyebrow">Passo 1 · Sua empresa e o mercado</span><h2 class="h-step" id="empresaTitle">Com quem comparar o seu churn</h2>
-      <p class="lede">O perfil escolhe as referências de mercado (empresas privadas B2B SaaS, principalmente dos EUA) usadas na seção Mercado. Fica salvo só neste navegador.</p></div>
+      <p class="lede">Define com quem a seção Mercado compara o seu churn.</p></div>
     <form class="company" id="companyForm" autocomplete="off">
       <label>Empresa<input id="co-nome" name="nome" value="${esc(co.nome || "")}" placeholder="Nome da empresa"></label>
       <label>Modelo<select id="co-modelo" name="modelo"><option value="">Escolha</option><option value="b2b" ${co.modelo === "b2b" ? "selected" : ""}>B2B · vende para empresas</option><option value="b2c" ${co.modelo === "b2c" ? "selected" : ""}>B2C · vende para pessoas</option></select></label>
@@ -1669,21 +1819,21 @@ function market(M) {
       <div class="mk-h"><span class="k">Churn de logos ao mês · ${esc(M.noun[1].toLowerCase())}</span>${verdict(mc && mc.m, seg[0], seg[1])}</div>
       <div class="mk-v">${mc ? fmtPct(mc.m, 2) : "—"}<small>referência ${esc(SEGMENTS[co.segmento])}: ${fmtPct(seg[0], 1)}–${fmtPct(seg[1], 1)}</small></div>
       ${bullet(mc && mc.m, seg[0], seg[1], Math.max(seg[1] * 1.6, (mc ? mc.m : 0) * 1.2), v => fmtPct(v, 1))}
-      <p class="note">${mc ? `${fmtInt(mc.ch)} cancelamentos ÷ ${nf1.format(mc.exp)} meses-cliente. Equivale a ${fmtPct(annual, 0)} ao ano (composto, não × 12).` : "Precisa de data de início."}</p></div>`);
+      ${more("Como é calculado", `${mc ? `${fmtInt(mc.ch)} cancelamentos ÷ ${nf1.format(mc.exp)} meses-cliente. Equivale a ${fmtPct(annual, 0)} ao ano (composto, não × 12).` : "Precisa de data de início."}`)}</div>`);
   cards.push(`<div class="panel mk">
       <div class="mk-h"><span class="k">Retenção bruta de receita (GRR) · 12 meses</span>${g ? verdict(g.grr, grrRef - 0.02, grrRef + 0.02, false) : ""}</div>
       <div class="mk-v">${g ? fmtPct(g.grr, 1) : "—"}<small>mediana ${band ? esc(band.label) : "todos os tickets"}: ${fmtPct(grrRef, 0)}</small></div>
       ${g ? bullet(g.grr, grrRef - 0.02, grrRef + 0.02, 1, v => fmtPct(v, 0)) : ""}
-      <p class="note">${g ? `MRR perdido nos últimos 12 meses (${fmtBRL(g.lost)}, ${g.nLost} linhas) ÷ MRR de quem estava ativo em ${fmtDate(g.from)} (${fmtBRL(g.base)}). Não inclui reduções de plano, que os dados não trazem.` : "Precisa de MRR e de pelo menos 10 linhas ativas há 12 meses."}</p></div>`);
+      ${more("Como é calculado", `${g ? `MRR perdido nos últimos 12 meses (${fmtBRL(g.lost)}, ${g.nLost} linhas) ÷ MRR de quem estava ativo em ${fmtDate(g.from)} (${fmtBRL(g.base)}). Não inclui reduções de plano, que os dados não trazem.` : "Precisa de MRR e de pelo menos 10 linhas ativas há 12 meses."}`)}</div>`);
   cards.push(`<div class="panel mk">
       <div class="mk-h"><span class="k">Churn anual de receita · ARR US$ 1–10 mi</span>${g ? verdict(1 - g.grr, BENCH.revChurn.top, BENCH.revChurn.median) : ""}</div>
       <div class="mk-v">${g ? fmtPct(1 - g.grr, 1) : "—"}<small>mediana ${fmtPct(BENCH.revChurn.median, 1)} · melhor quartil abaixo de ${fmtPct(BENCH.revChurn.top, 1)}</small></div>
       ${g ? bullet(1 - g.grr, BENCH.revChurn.top, BENCH.revChurn.median, Math.max(0.3, (1 - g.grr) * 1.2), v => fmtPct(v, 0)) : ""}
-      <p class="note">Faixa entre o melhor quartil e a mediana. Acima da mediana, o churn de receita está pior que o da metade das empresas comparadas.</p></div>`);
+      ${more("Como é calculado", `Faixa entre o melhor quartil e a mediana. Acima da mediana, o churn de receita está pior que o da metade das empresas comparadas.`)}</div>`);
   cards.push(`<div class="panel mk">
       <div class="mk-h"><span class="k">Retenção líquida de receita (NRR)</span><span class="chip neu"><i aria-hidden="true">○</i>Sem dado de expansão</span></div>
       <div class="mk-v">${fmtPct(band ? band.nrr : BENCH.overall.nrr, 0)}<small>mediana de mercado ${band ? esc(band.label) : "todos os tickets"}</small></div>
-      <p class="note">Para calcular o seu NRR é preciso o histórico de MRR por cliente (upsell, cross-sell e reduções). Hoje os arquivos trazem só o MRR atual.</p></div>`);
+      ${more("Como é calculado", `Para calcular o seu NRR é preciso o histórico de MRR por cliente (upsell, cross-sell e reduções). Hoje os arquivos trazem só o MRR atual.`)}</div>`);
   const body = `<div class="mk-grid">${cards.join("")}</div>
     <details class="panel srcs"><summary>Fontes das referências (atualizadas em ${BENCH.updated})</summary>
       <ul>${BENCH.sources.map(x => `<li><a href="${x.url}" target="_blank" rel="noopener">${esc(x.name)}</a><span class="note">${esc(x.what)}</span></li>`).join("")}</ul>
@@ -1957,7 +2107,7 @@ function scoreBacktest(M0, M, sig, days = 90) {
   BT_CACHE = { key: ck, M0, res };
   return res;
 }
-const backtestNote = (bt, noun) => !bt ? "" : `<div class="bt"><b>Teste no tempo.</b> Com os indicadores de ${bt.days} dias atrás (${fmtDate(bt.date)}), o score marcaria <b>${fmtInt(bt.alto.flagged)}</b> ${noun} com ${bt.alto.cut} ou mais; <b>${fmtInt(bt.alto.tp)}</b> delas cancelaram desde então (${fmtPct(bt.alto.flagged ? bt.alto.tp / bt.alto.flagged : NaN, 0)}, contra ${fmtPct(bt.base, 0)} da base). AUC ${bt.auc.toFixed(2).replace(".", ",")}. <span class="note">Direção e peso dos KPIs vêm da base inteira; o teste mede se o score antecipa, não se o peso foi escolhido sem olhar o futuro.</span></div>`;
+const backtestNote = (bt, noun) => !bt ? "" : `<div class="bt"><b>Teste no tempo.</b> Com os indicadores de ${bt.days} dias atrás (${fmtDate(bt.date)}), o score marcaria <b>${fmtInt(bt.alto.flagged)}</b> ${noun} com ${bt.alto.cut} ou mais; <b>${fmtInt(bt.alto.tp)}</b> delas cancelaram desde então (${fmtPct(bt.alto.flagged ? bt.alto.tp / bt.alto.flagged : NaN, 0)}, contra ${fmtPct(bt.base, 0)} da base). AUC ${bt.auc.toFixed(2).replace(".", ",")}. </div>`;
 
 
 /* ---------- lembrar dados neste navegador ----------
@@ -2013,6 +2163,179 @@ document.addEventListener("click", async e => {
     renderInputs();
   }
 });
+
+
+/* ---------- áreas do relatório (barra lateral) ---------- */
+const ICON = {
+  inicio: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
+  carteira: '<path d="M4 7h16v12H4z"/><path d="M9 7V5h6v2"/><path d="M4 12h16"/>',
+  retencao: '<path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/>',
+  diagnostico: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
+  dados: '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>'
+};
+const svgIcon = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
+const AREAS = [
+  { id: "inicio", label: "Visão geral", hint: "Resumo e comparação com o mercado", sections: [["resumo", ctx => summary(ctx.M, ctx)], ["mercado", ({ M }) => market(M)]] },
+  { id: "carteira", label: "Carteira", hint: "Quem precisa de atenção agora", sections: [["risco", ctx => atRisk(ctx.M, ctx.sig, ctx)]] },
+  { id: "retencao", label: "Retenção", hint: "Safras, motivos e momento da saída", sections: [["coortes", ({ M }) => cohort(M)], ["motivos", ({ M }) => reasons(M)]] },
+  { id: "diagnostico", label: "Diagnóstico", hint: "Onde está o churn e o que o antecipa", sections: [["perfil", ({ M }) => profile(M)], ["indicadores", ({ M, stats }) => indicators(M, stats)], ["anormal", ({ M, sig }) => anomaly(M, sig)]] },
+  { id: "dados", label: "Dados", hint: "Empresa, arquivos e método", sections: [] }
+];
+const SECTION_AREA = {}; AREAS.forEach(a => a.sections.forEach(([id]) => (SECTION_AREA[id] = a.id)));
+Object.assign(SECTION_AREA, { empresa: "dados", inputs: "dados", "como-preparar": "dados", metodoBox: "dados" });
+function setArea(id, { focus = true, section = null } = {}) {
+  if (!AREAS.some(a => a.id === id)) id = "inicio";
+  const changed = state.area !== id;
+  state.area = id;
+  try { history.replaceState(null, "", "#" + id); } catch (e) {}
+  track("area_" + id);
+  renderReport();
+  if (section) { const el = document.getElementById(section); if (el) el.scrollIntoView({ block: "start" }); }
+  else if (changed) window.scrollTo({ top: 0 });
+  if (focus && changed) { const h = $("#areaTitle"); if (h) h.focus({ preventScroll: true }); }
+}
+function renderAreaNav() {
+  $("#areaNav").innerHTML = AREAS.map(a => `<button type="button" class="area${state.area === a.id ? " on" : ""}" data-area-go="${a.id}" aria-current="${state.area === a.id ? "page" : "false"}" title="${esc(a.hint)}">${svgIcon(a.id)}<span>${a.label}</span></button>`).join("");
+  const a = AREAS.find(x => x.id === state.area);
+  $("#areaTitle").textContent = a.label;
+  document.querySelectorAll("[data-area]").forEach(el => (el.hidden = el.dataset.area !== state.area));
+  $("#report").hidden = state.area === "dados";
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-area-go]");
+  if (b) { setArea(b.dataset.areaGo); return; }
+  // links internos para seções de outra área (ex.: principais achados)
+  const g = e.target.closest && e.target.closest("a[data-goto]");
+  if (g) { e.preventDefault(); const sec = g.dataset.goto; setArea(SECTION_AREA[sec] || "inicio", { section: sec, focus: false }); }
+});
+
+window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (AREAS.some(a => a.id === h) && h !== state.area) setArea(h); });
+
+/* ---------- uso neste navegador (fica só aqui; entra no relatório exportado) ---------- */
+const USAGE_KEY = "csops-usage";
+const usage = () => { try { return JSON.parse(localStorage.getItem(USAGE_KEY) || "{}"); } catch (e) { return {}; } };
+function track(name) {
+  try {
+    const u = usage(), now = Date.now(), o = u[name] || { n: 0, first: now };
+    o.n++; o.last = now; u[name] = o;
+    const wk = Math.floor(now / (7 * 864e5)); u.__weeks = Array.from(new Set([...(u.__weeks || []), wk])).slice(-52);
+    localStorage.setItem(USAGE_KEY, JSON.stringify(u));
+  } catch (e) {}
+}
+
+/* ---------- checklist de primeiros passos ---------- */
+const CHECK_KEY = "csops-checklist-hidden";
+function checklistSteps() {
+  const u = usage();
+  return [
+    { id: "perfil", label: "Perfil da empresa", done: !!(state.company && state.company.modelo), go: ["dados", "empresa"] },
+    { id: "dados", label: "Seus dados", done: !state.isSample && !!state.raw.clientes, go: ["dados", "inputs"] },
+    { id: "cliente", label: "Abrir um cliente", done: !!u.client_open, go: ["carteira", "risco"] },
+    { id: "export", label: "Exportar o relatório", done: !!u.export, go: ["inicio", null] }
+  ];
+}
+function renderChecklist() {
+  const box = $("#checklist"); let hidden = false;
+  try { hidden = localStorage.getItem(CHECK_KEY) === "1"; } catch (e) {}
+  if (hidden) { box.innerHTML = ""; return; }
+  const st = checklistSteps(), done = st.filter(x => x.done).length;
+  box.innerHTML = `<div class="check" aria-label="Primeiros passos">
+    <div class="check-h"><b>Primeiros passos</b><span>${done} de ${st.length}</span></div>
+    <div class="check-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${st.length}" aria-valuenow="${done}"><i style="width:${done / st.length * 100}%"></i></div>
+    <ol>${st.map(x => `<li class="${x.done ? "done" : ""}"><button type="button" data-check-go="${x.go[0]}|${x.go[1] || ""}"><span class="ck" aria-hidden="true">${x.done ? "✓" : ""}</span>${x.label}${x.done ? `<span class="sr"> (feito)</span>` : ""}</button></li>`).join("")}</ol>
+    ${done === st.length ? `<button type="button" class="btn sm ghost" id="checkHide">Pronto · esconder</button>` : ""}
+  </div>`;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-check-go]");
+  if (b) { const [a, sec] = b.dataset.checkGo.split("|"); setArea(a, { section: sec || null, focus: !sec }); if (a === "inicio" && !sec) { const x = $("#btnExport"); if (x) x.focus(); } return; }
+  if (e.target.id === "checkHide") { try { localStorage.setItem(CHECK_KEY, "1"); } catch (err) {} renderChecklist(); }
+});
+
+/* ---------- visões salvas (neste navegador) ---------- */
+const VIEWS_KEY = "csops-views";
+const BUILTIN_VIEWS = [
+  { name: "Carteira em risco", builtin: true, area: "carteira", level: null, filters: [], cut: null },
+  { name: "Visão geral da base", builtin: true, area: "inicio", level: null, filters: [], cut: null },
+  { name: "Cancelamentos anormais", builtin: true, area: "diagnostico", level: null, filters: [], cut: null, section: "anormal" }
+];
+const savedViews = () => { try { return JSON.parse(localStorage.getItem(VIEWS_KEY) || "[]"); } catch (e) { return []; } };
+function viewsBar() {
+  const mine = savedViews();
+  return `<div class="vb-row views">
+    <label for="viewSel">Visão</label>
+    <select id="viewSel"><option value="">Escolher visão salva…</option>
+      <optgroup label="Prontas">${BUILTIN_VIEWS.map((v, i) => `<option value="b${i}">${esc(v.name)}</option>`).join("")}</optgroup>
+      ${mine.length ? `<optgroup label="Minhas visões">${mine.map((v, i) => `<option value="m${i}" ${state.viewName === v.name ? "selected" : ""}>${esc(v.name)}</option>`).join("")}</optgroup>` : ""}
+    </select>
+    ${state.savingView ? `<form id="viewForm" class="viewform"><input id="viewName" maxlength="60" required placeholder="Nome da visão" aria-label="Nome da visão"><button type="submit" class="btn sm primary">Salvar</button><button type="button" class="btn sm ghost" id="viewCancel">Cancelar</button></form>`
+      : `<button type="button" class="btn sm" id="viewSave">Salvar esta visão</button>`}
+    ${state.viewName && mine.some(v => v.name === state.viewName) ? `<button type="button" class="btn sm ghost" id="viewDel">Excluir "${esc(state.viewName)}"</button>` : ""}
+  </div>`;
+}
+function applyView(v) {
+  Object.assign(state, { level: v.level || state.level, filters: JSON.parse(JSON.stringify(v.filters || [])), viewName: v.builtin ? null : v.name });
+  if (v.cut) state.cut = { ...state.cut, ...v.cut };
+  if (v.dimBar) state.dimBar = v.dimBar; if (v.dimPeer != null) state.dimPeer = v.dimPeer;
+  track("view_open");
+  setArea(v.area || "inicio", { section: v.section || null });
+}
+document.addEventListener("change", e => {
+  if (e.target.id !== "viewSel" || !e.target.value) return;
+  const k = e.target.value, v = k[0] === "b" ? BUILTIN_VIEWS[+k.slice(1)] : savedViews()[+k.slice(1)];
+  if (v) applyView(v);
+});
+document.addEventListener("click", e => {
+  if (e.target.id === "viewSave") { state.savingView = true; renderReport(); const i = $("#viewName"); if (i) i.focus(); }
+  if (e.target.id === "viewCancel") { state.savingView = false; renderReport(); }
+  if (e.target.id === "viewDel") { const list = savedViews().filter(v => v.name !== state.viewName); try { localStorage.setItem(VIEWS_KEY, JSON.stringify(list)); } catch (err) {} toast(`Visão "${state.viewName}" excluída.`); state.viewName = null; renderReport(); }
+});
+document.addEventListener("submit", e => {
+  if (e.target.id !== "viewForm") return;
+  e.preventDefault();
+  const name = $("#viewName").value.trim(); if (!name) return;
+  const list = savedViews().filter(v => v.name !== name);
+  list.push({ name, area: state.area, level: state.level, filters: state.filters, cut: state.cut, dimBar: state.dimBar, dimPeer: state.dimPeer });
+  try { localStorage.setItem(VIEWS_KEY, JSON.stringify(list)); } catch (err) {}
+  state.savingView = false; state.viewName = name; track("view_saved");
+  renderReport(); toast(`Visão "${name}" salva neste navegador.`);
+});
+
+/* ---------- V2: série mensal para os cartões com tendência ---------- */
+function monthlySeries(M, months = 12) {
+  const ref = new Date(M.ref), out = [];
+  for (let i = months - 1; i >= 0; i--) {
+    const a = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth() - i, 1), b = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth() - i + 1, 1);
+    let start = 0, ch = 0, lost = 0, end = 0;
+    for (const c of M.clients) {
+      if (c.inicio == null) continue;
+      const canc = c.churned ? c.dataCanc : null;
+      if (c.inicio < a && (canc == null || canc >= a)) start++;
+      if (c.inicio < b && (canc == null || canc >= b)) end++;
+      if (canc != null && canc >= a && canc < b) { ch++; lost += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; }
+    }
+    out.push({ t: a, start, end, ch, rate: start ? ch / start : NaN, lost });
+  }
+  return out;
+}
+function spark(vals, color) {
+  const v = vals.map(x => Number.isFinite(x) ? x : null), nums = v.filter(x => x != null);
+  if (nums.length < 2) return "";
+  const W = 120, H = 30, lo = Math.min(...nums), hi = Math.max(...nums), span = hi - lo || 1;
+  const pts = v.map((x, i) => x == null ? null : [i / (v.length - 1) * (W - 4) + 2, H - 3 - (x - lo) / span * (H - 8)]).filter(Boolean);
+  const line = pts.map(p => p.join(",")).join(" "), last = pts[pts.length - 1];
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="${pts[0][0]},${H} ${line} ${last[0]},${H}" fill="${color}" opacity=".12"/><polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${last[0]}" cy="${last[1]}" r="2.6" fill="${color}"/></svg>`;
+}
+// variação do último mês contra o anterior; upIsBad pinta de vermelho quando subir é ruim
+function delta(series, key, fmt, upIsBad) {
+  const n = series.length; if (n < 2) return "";
+  const a = series[n - 2][key], b = series[n - 1][key];
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return "";
+  const d = b - a; if (Math.abs(d) < 1e-9) return `<span class="delta flat" title="igual ao mês anterior">= vs mês anterior</span>`;
+  const bad = upIsBad ? d > 0 : d < 0;
+  return `<span class="delta ${bad ? "bad" : "good"}">${d > 0 ? "▲" : "▼"} ${fmt(Math.abs(d))} vs mês anterior</span>`;
+}
+const more = (label, html) => `<details class="more"><summary>${label}</summary><div>${html}</div></details>`;
 
 /* ---------- explicação passo a passo ---------- */
 let LAST = null;

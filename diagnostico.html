@@ -7,26 +7,26 @@
 <meta name="description" content="Painel de diagnóstico de churn para CS: retenção, onde está o churn, sinais nos KPIs, qualidade do score e lista de ação, com o passo a passo de cada análise.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: narrativa em páginas (abas numeradas); cada página abre com a conclusão e desce para o "como chegamos aqui". Visual escuro de sala de diagnóstico, por escolha. */
 :root {
-  --bg: #0c1210;
-  --surface: #131b18;
-  --raise: #1a2420;
-  --ink: #e9f0ec;
-  --muted: #9fada6;
-  --faint: #7d8b84;
-  --line: #26322d;
-  --accent: #4fb596;
-  --accent-ink: #08110d;
+  --bg: #0d0f22;
+  --surface: #151833;
+  --raise: #1d2140;
+  --ink: #eceefa;
+  --muted: #a9adc8;
+  --faint: #8d91ad;
+  --line: #2a2e4d;
+  --accent: #9d94ff;
+  --accent-ink: #12142a;
   --ativo: #3987e5;
   --canc: #e2692f;
   --crit: #e66767;
   --warn: #fab219;
   --c3: #199e70; --c4: #c98500; --c5: #9085e9;
-  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-display: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
   color-scheme: dark;
 }
@@ -182,8 +182,8 @@ td.one { white-space: nowrap; max-width: 260px; overflow: hidden; text-overflow:
 .score i { width: 52px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; position: relative; }
 .score i b { position: absolute; inset: 0 auto 0 0; border-radius: 3px; }
 .chip { display: inline-flex; gap: 5px; align-items: center; font-size: 0.74rem; font-weight: 600; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
-.chip.crit { background: color-mix(in srgb, var(--crit) 18%, transparent); color: var(--crit); }
-.chip.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.chip.crit { background: #d1344a; color: #fff; border-radius: 4px; }
+.chip.warn { background: #fdab3d; color: #1f2240; border-radius: 4px; }
 
 .anoms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; }
 .anom { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--bg); display: grid; gap: 6px; position: relative; overflow: hidden; align-content: start; }

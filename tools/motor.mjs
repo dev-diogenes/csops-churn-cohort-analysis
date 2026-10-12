@@ -29,7 +29,7 @@ export async function loadEngine() {
   const document = { querySelector: () => E, querySelectorAll: () => [], addEventListener() {}, createElement: () => E, body: E };
   const papa = await (await fetch("https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js")).text();
   const ctx = vm.createContext({
-    document, window: {}, navigator: {}, location: {}, innerWidth: 1200, innerHeight: 800,
+    document, window: { addEventListener() {}, scrollTo() {} }, navigator: {}, location: {}, innerWidth: 1200, innerHeight: 800,
     matchMedia: () => ({ matches: false }), localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
     setTimeout: () => 0, clearTimeout() {}, requestAnimationFrame: () => 0, cancelAnimationFrame() {}, console, Intl, Date, Math, JSON
   });
