@@ -4,6 +4,13 @@ A maioria das empresas SaaS rastreia churn como uma métrica única — mas nem 
 
 Este repositório é um relatório de página única (`index.html`) para times de Customer Success. Você anexa ou cola os CSVs exportados das tabelas `customer` e `kpi`, e ele cruza tudo pelo ID do cliente direto no navegador. Nenhum dado sai da máquina.
 
+## Acesse online
+
+- Relatório: https://dev-diogenes.github.io/csops-churn-cohort-analysis/
+- Painel de diagnóstico: https://dev-diogenes.github.io/csops-churn-cohort-analysis/diagnostico.html
+
+Publicado pelo GitHub Pages a partir da branch `main`. A integração com a SenseData precisa do servidor do projeto (`node tools/servidor.mjs`) ou da Vercel; no GitHub Pages a página explica isso ao abrir Integrações → SenseData.
+
 ## Como usar
 
 1. **Passo 1 · Sua empresa e o mercado**: informe modelo (B2B/B2C), segmento dos clientes, ARR e ticket anual (ou o câmbio, para o ticket ser calculado pelos dados). O perfil fica salvo no navegador e define as referências da seção **Mercado**.
