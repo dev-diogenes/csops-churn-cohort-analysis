@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roadmap do Relatório de Churn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+body { margin: 0; }
+[hidden] { display: none !important; }
+/* Layout: documento de planejamento — números do diagnóstico, matriz de referências, cronograma em grade de semanas com detalhe ao clicar, antes x depois. Mesma família visual do relatório. */
+:root {
+  --bg: #f4f6f5; --surface: #ffffff; --sunken: #eaeeec; --ink: #13201b; --muted: #56645e; --faint: #6b7872; --line: #d9e0dc; --ctl: #858f8a;
+  --accent: #1d6b57; --accent-ink: #ffffff;
+  --t-visual: #2a78d6; --t-uso: #8b5cf6; --t-adocao: #d9771f; --t-acao: #c2410c; --t-integra: #0f8a6b; --t-dados: #64748b;
+  --good: #0ca30c; --warn: #e5a50a; --crit: #d03b3b;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993; --line: #2f3935; --ctl: #73807a;
+    --accent: #4fb596; --accent-ink: #0d1512;
+    --t-visual: #4d93ea; --t-uso: #a78bfa; --t-adocao: #f0a04b; --t-acao: #f2774a; --t-integra: #34c49b; --t-dados: #94a3b8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111715; --surface: #1a211e; --sunken: #232b28; --ink: #e9efec; --muted: #a7b3ad; --faint: #8d9993; --line: #2f3935; --ctl: #73807a;
+  --accent: #4fb596; --accent-ink: #0d1512;
+  --t-visual: #4d93ea; --t-uso: #a78bfa; --t-adocao: #f0a04b; --t-acao: #f2774a; --t-integra: #34c49b; --t-dados: #94a3b8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 72px; display: grid; gap: 48px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.05; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1rem; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+section { display: grid; gap: 16px; }
+.head { display: grid; gap: 12px; }
+.lede { font-size: 1.05rem; color: var(--muted); max-width: 64ch; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font-family: var(--f-mono); font-size: 0.76rem; padding: 3px 10px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); background: var(--surface); }
+
+/* números */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 4px; }
+.stat b { font-family: var(--f-display); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 0.84rem; color: var(--muted); }
+.stat .bar { height: 6px; border-radius: 3px; background: var(--sunken); overflow: hidden; margin-top: 6px; }
+.stat .bar i { display: block; height: 100%; background: var(--crit); border-radius: 3px; }
+.verdict { font-size: 1rem; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 10px 10px 0; }
+
+/* inventário */
+.inv { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 12px; }
+.grp { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 8px; align-content: start; }
+.grp h3 { font-size: 0.92rem; }
+.feat { display: flex; gap: 8px; align-items: baseline; font-size: 0.86rem; }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; transform: translateY(1px); }
+.dot.ok { background: var(--good); }
+.dot.mid { background: var(--warn); }
+.dot.no { background: transparent; border: 2px solid var(--crit); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+
+/* matriz */
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+th { text-align: left; font-weight: 600; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.c { text-align: center; }
+.has { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); font-size: 0.8rem; font-weight: 700; }
+.not { color: var(--faint); }
+.today { font-size: 0.78rem; white-space: nowrap; }
+.take { color: var(--muted); font-size: 0.84rem; min-width: 220px; }
+
+/* cronograma */
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--ctl); background: var(--surface); color: var(--muted); padding: 5px 12px; border-radius: 99px; cursor: pointer; font: inherit; font-size: 0.84rem; display: inline-flex; gap: 6px; align-items: center; min-height: 34px; }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); font-weight: 600; }
+.chip i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.gantt { --label: 230px; display: grid; grid-template-columns: var(--label) repeat(20, minmax(30px, 1fr)); min-width: 860px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.g-h { font-family: var(--f-mono); font-size: 0.68rem; color: var(--faint); padding: 6px 0; text-align: center; border-bottom: 1px solid var(--line); background: var(--sunken); }
+.g-h.m { grid-row: 1; text-align: left; padding-left: 6px; color: var(--ink); font-weight: 500; border-left: 1px solid var(--line); }
+.g-h.lab { grid-column: 1; grid-row: 1 / 3; text-align: left; padding: 8px 12px; display: flex; align-items: end; color: var(--muted); }
+.g-phase { grid-column: 1 / -1; padding: 8px 12px 4px; font-weight: 600; font-size: 0.84rem; display: flex; justify-content: space-between; gap: 8px; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--sunken) 55%, transparent); }
+.g-phase span { font-family: var(--f-mono); font-weight: 400; font-size: 0.74rem; color: var(--muted); }
+.g-lab { grid-column: 1; padding: 6px 12px; font-size: 0.84rem; display: flex; gap: 8px; align-items: center; min-width: 0; }
+.g-lab code { font-family: var(--f-mono); font-size: 0.72rem; color: var(--faint); }
+.g-lab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.g-bar { align-self: center; height: 22px; border-radius: 6px; border: 0; cursor: pointer; margin: 5px 2px; color: #fff; font: 600 0.72rem var(--f-mono); text-align: left; padding: 0 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; position: relative; }
+.g-bar:hover, .g-bar[aria-expanded="true"] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.g-bar.dep { background-image: repeating-linear-gradient(135deg, transparent 0 6px, rgba(255, 255, 255, .28) 6px 9px); }
+.g-row-dim { opacity: .2; }
+.g-ms { grid-column-end: span 1; align-self: center; justify-self: end; width: 12px; height: 12px; transform: rotate(45deg); background: var(--ink); margin-right: -6px; z-index: 1; }
+.detail { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 12px; }
+.detail[hidden] { display: none; }
+.detail .top { display: flex; justify-content: space-between; gap: 12px; align-items: start; flex-wrap: wrap; }
+.detail h3 { font-size: 1.2rem; }
+.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px 20px; }
+.kv div { display: grid; gap: 2px; }
+.kv b { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+.kv p { font-size: 0.92rem; }
+.tag { font-family: var(--f-mono); font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; color: #fff; }
+.x { border: 0; background: none; cursor: pointer; color: var(--muted); font-size: 1.3rem; line-height: 1; padding: 4px 8px; border-radius: 6px; }
+.x:hover { background: var(--sunken); }
+.hint { font-size: 0.82rem; color: var(--muted); }
+
+/* antes x depois */
+.ba { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 16px; }
+.pair { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 12px; }
+.pair-in { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mock { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 6px; align-content: start; background: var(--bg); min-height: 210px; position: relative; }
+.mock .cap { font-family: var(--f-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.mock.before .cap { color: var(--crit); }
+.mock.after .cap { color: var(--good); }
+.ln { height: 6px; border-radius: 3px; background: var(--line); }
+.ln.s { width: 60%; } .ln.m { width: 85%; } .ln.h { height: 10px; width: 45%; background: var(--ink); opacity: .7; }
+.mbar { display: grid; grid-template-columns: 40px 1fr; gap: 6px; align-items: center; }
+.mbar i { height: 8px; border-radius: 0 4px 4px 0; background: var(--t-acao); display: block; }
+.mbar .ln { width: 100%; }
+.mtile { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.mtile div { border: 1px solid var(--line); border-radius: 6px; padding: 6px; display: grid; gap: 4px; background: var(--surface); }
+.mtile b { font: 700 0.9rem var(--f-display); }
+.spark { height: 16px; }
+.shell { display: grid; grid-template-columns: 34px 1fr; gap: 6px; min-height: 160px; }
+.side { background: var(--sunken); border-radius: 6px; display: grid; gap: 6px; padding: 6px; align-content: start; }
+.side i { height: 8px; border-radius: 3px; background: var(--ctl); opacity: .5; }
+.side i.on { background: var(--accent); opacity: 1; }
+.tall { width: 34px; border-radius: 4px; background: repeating-linear-gradient(180deg, var(--line) 0 6px, transparent 6px 10px); height: 180px; justify-self: center; }
+.pair p { font-size: 0.86rem; color: var(--muted); }
+
+/* funil */
+.funnel { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.step { padding: 14px; display: grid; gap: 6px; border-right: 1px solid var(--line); position: relative; }
+.step:last-child { border-right: 0; }
+.step b { font-family: var(--f-display); font-size: 1.05rem; }
+.step span { font-size: 0.82rem; color: var(--muted); }
+.step em { font-style: normal; font-family: var(--f-mono); font-size: 0.72rem; color: var(--accent); }
+.dec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.dec div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 6px; }
+.dec b { font-size: 0.95rem; }
+.dec span { font-size: 0.84rem; color: var(--muted); }
+.src { font-size: 0.8rem; color: var(--muted); display: grid; gap: 4px; }
+.src ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+@media (max-width: 560px) { .pair-in { grid-template-columns: 1fr; } .gantt { --label: 170px; } }
+@media (prefers-reduced-motion: no-preference) { .g-bar { transition: opacity .2s; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <span class="eyebrow">CS Ops · Produto</span>
+    <h1>Roadmap do Relatório de Churn</h1>
+    <p class="lede">Menos texto, mais leitura visual e um caminho claro do número até a ação, usando como referência SenseData, monday, HubSpot, Pipedrive, Salesforce e UserGuiding.</p>
+    <div class="pills"><span class="pill">out/2026 → mar/2027</span><span class="pill">20 semanas · 10 sprints de 2 semanas</span><span class="pill">5 fases · 15 iniciativas</span><span class="pill">versão de 11/10/2026</span></div>
+  </header>
+
+  <section aria-labelledby="s-diag">
+    <span class="eyebrow">Onde estamos</span>
+    <h2 id="s-diag">O relatório explica demais e mostra de menos</h2>
+    <div class="stats">
+      <div class="stat"><b>10.078 px</b><span>de página, cerca de 13 telas de rolagem</span><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="stat"><b>1.279</b><span>palavras de texto explicativo em 53 parágrafos</span><div class="bar"><i style="width:85%"></i></div></div>
+      <div class="stat"><b>22</b><span>notas de rodapé visíveis nas seções</span><div class="bar"><i style="width:70%"></i></div></div>
+      <div class="stat"><b>1.433 px</b><span>até o primeiro número da análise</span><div class="bar"><i style="width:55%"></i></div></div>
+    </div>
+    <p class="verdict">A análise é forte e confiável. O que trava a adoção é a forma: uma página única e longa, com explicação na frente do resultado e sem uma tela por cliente onde a ação acontece.</p>
+  </section>
+
+  <section aria-labelledby="s-inv">
+    <span class="eyebrow">O que já temos</span>
+    <h2 id="s-inv">Inventário de funcionalidades</h2>
+    <div class="legend"><span><i class="dot ok"></i>Pronto</span><span><i class="dot mid"></i>Parcial</span><span><i class="dot no"></i>Não existe</span></div>
+    <div class="inv" id="inv"></div>
+  </section>
+
+  <section aria-labelledby="s-ref">
+    <span class="eyebrow">Referências</span>
+    <h2 id="s-ref">O que os líderes fazem e o que vamos trazer</h2>
+    <div class="scroll"><table>
+      <caption class="muted" style="text-align:left;caption-side:bottom;padding-top:8px;font-size:.78rem">● = padrão documentado na fonte consultada (lista no fim). Ausência de ● quer dizer só que não foi verificado.</caption>
+      <thead><tr><th>Padrão</th><th>SenseData</th><th>monday</th><th>HubSpot</th><th>Pipedrive</th><th>Salesforce</th><th>UserGuiding</th><th>Hoje no relatório</th><th>O que vamos fazer</th></tr></thead>
+      <tbody id="refs"></tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="s-road">
+    <span class="eyebrow">Cronograma</span>
+    <h2 id="s-road">Cinco fases, cada uma entregável sozinha</h2>
+    <div class="filters" role="group" aria-label="Filtrar por tema" id="filters"></div>
+    <div class="scroll"><div class="gantt" id="gantt" role="grid" aria-label="Cronograma por semana"></div></div>
+    <p class="hint">Clique numa barra para ver problema, entrega, referência e como medir. Barra listrada = depende de uma decisão da lista "Decisões" abaixo. ◆ = marco de fim de fase.</p>
+    <div class="detail" id="detail" hidden aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="s-ba">
+    <span class="eyebrow">Antes x depois</span>
+    <h2 id="s-ba">Como fica na prática</h2>
+    <div class="ba">
+      <div class="pair">
+        <h3>Uma seção de análise (V1, V2)</h3>
+        <div class="pair-in">
+          <div class="mock before" aria-label="Hoje: título, dois parágrafos, controles, barras e nota de três linhas"><span class="cap">Hoje</span><div class="ln h"></div><div class="ln m"></div><div class="ln m"></div><div class="ln s"></div>
+            <div class="mbar"><div class="ln"></div><i style="width:90%"></i></div><div class="mbar"><div class="ln"></div><i style="width:65%"></i></div><div class="mbar"><div class="ln"></div><i style="width:45%"></i></div><div class="ln m"></div><div class="ln m"></div><div class="ln s"></div></div>
+          <div class="mock after" aria-label="Proposta: título com ícone de ajuda, números com tendência e barras, sem parágrafos"><span class="cap">Proposta</span><div class="ln h"></div>
+            <div class="mtile"><div><b>22%</b><svg class="spark" viewBox="0 0 40 16" aria-hidden="true"><polyline points="0,12 10,10 20,11 30,6 40,4" fill="none" stroke="var(--t-acao)" stroke-width="2"/></svg></div><div><b>1,5%</b><svg class="spark" viewBox="0 0 40 16" aria-hidden="true"><polyline points="0,8 10,9 20,7 30,8 40,6" fill="none" stroke="var(--t-visual)" stroke-width="2"/></svg></div><div><b>▲ 7</b><svg class="spark" viewBox="0 0 40 16" aria-hidden="true"><polyline points="0,14 10,12 20,12 30,9 40,5" fill="none" stroke="var(--crit)" stroke-width="2"/></svg></div></div>
+            <div class="mbar"><div class="ln"></div><i style="width:90%"></i></div><div class="mbar"><div class="ln"></div><i style="width:65%"></i></div><div class="mbar"><div class="ln"></div><i style="width:45%"></i></div></div>
+        </div>
+        <p>A explicação continua a um clique, no (i). O que fica na tela é o número, a tendência e o sinal de alerta.</p>
+      </div>
+      <div class="pair">
+        <h3>Navegação (N1, C1)</h3>
+        <div class="pair-in">
+          <div class="mock before" aria-label="Hoje: uma página única de 13 telas"><span class="cap">Hoje</span><div class="tall"></div><p class="muted" style="font-size:.76rem;text-align:center">1 página · 13 telas</p></div>
+          <div class="mock after" aria-label="Proposta: barra lateral com áreas e telas curtas"><span class="cap">Proposta</span>
+            <div class="shell"><div class="side"><i class="on"></i><i></i><i></i><i></i><i></i></div><div style="display:grid;gap:6px;align-content:start"><div class="ln h"></div><div class="mtile"><div><b>27</b></div><div><b>R$ 78k</b></div><div><b>▲</b></div></div><div class="ln m"></div><div class="ln s"></div></div></div></div>
+        </div>
+        <p>Cada área cabe em uma tela. Clicar num cliente abre a página dele, com KPIs no tempo e os motivos do score.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-met">
+    <span class="eyebrow">Como saber se funcionou</span>
+    <h2 id="s-met">Funil de adoção</h2>
+    <div class="funnel">
+      <div class="step"><em>1</em><b>Visitou</b><span>abriu o relatório</span></div>
+      <div class="step"><em>2</em><b>Ativou</b><span>carregou dados próprios ou importou da SenseData</span></div>
+      <div class="step"><em>3</em><b>Entendeu</b><span>concluiu o tour ou o checklist</span></div>
+      <div class="step"><em>4</em><b>Agiu</b><span>abriu um cliente, moveu um card ou exportou a lista</span></div>
+      <div class="step"><em>5</em><b>Voltou</b><span>usou de novo na semana seguinte</span></div>
+    </div>
+    <p class="hint">Hoje nada disso é medido. A iniciativa A3 cria a medição; as metas de cada etapa saem das primeiras 4 semanas de dados, não de chute.</p>
+  </section>
+
+  <section aria-labelledby="s-dec">
+    <span class="eyebrow">Decisões</span>
+    <h2 id="s-dec">O que precisa ser decidido antes</h2>
+    <div class="dec">
+      <div><b>Onde guardar dados compartilhados</b><span>Quadro de risco, visões salvas e eventos de uso precisam de um servidor com banco (Vercel ou o servidor do projeto). Afeta N2, C2, A3, D1.</span></div>
+      <div><b>Quem é o usuário principal</b><span>CSM (carteira e ação) ou Head de CS (diagnóstico e mercado). Define a área que abre primeiro e a ordem das fases 3 e 4.</span></div>
+      <div><b>Escrever de volta na SenseData</b><span>Gravar o score num campo customizado e criar tarefas usa um token com permissão de escrita. Afeta C3 e D2.</span></div>
+      <div><b>Canal dos alertas</b><span>Slack, e-mail ou só dentro da SenseData. Afeta D1.</span></div>
+    </div>
+  </section>
+
+  <footer class="src">
+    <b>Fontes consultadas</b>
+    <ul>
+      <li>SenseData: <a href="https://apps.apple.com/mx/app/sensedata/id1600527649" target="_blank" rel="noopener">app SenseData</a> (visão 360 da carteira e do cliente), <a href="https://www.g2.com/products/sensedata/competitors/alternatives" target="_blank" rel="noopener">G2</a> (health score, motor de regras, jornadas), <a href="https://api.sensedata.io/v2/redoc" target="_blank" rel="noopener">API v2</a> (jornadas, playbooks, tarefas, campos customizados)</li>
+      <li>monday: <a href="https://learn.g2.com/monday-review" target="_blank" rel="noopener">review G2</a> (várias visões dos mesmos dados, onboarding por perguntas), <a href="https://monday.com/blog/product/how-to-use-monday-com/" target="_blank" rel="noopener">monday.com</a></li>
+      <li>HubSpot: <a href="https://knowledge.hubspot.com/customer-success/access-the-customer-success-health-score-card-on-records" target="_blank" rel="noopener">cartão de health score no registro</a>, <a href="https://knowledge.hubspot.com/help-desk/customize-a-health-score-in-the-customer-success-workspace" target="_blank" rel="noopener">health score no workspace de CS</a>, <a href="https://oneims.com/hubspot-onboarding-checklist" target="_blank" rel="noopener">checklist de onboarding</a> (guia de terceiros)</li>
+      <li>Pipedrive: <a href="https://support.pipedrive.com/en/article/the-rotting-feature" target="_blank" rel="noopener">Rotting</a> (negócio parado fica vermelho no funil)</li>
+      <li>Salesforce: <a href="https://www.salesforceben.com/salesforce-in-app-guidance/" target="_blank" rel="noopener">In-App Guidance</a> (prompts e walkthroughs), <a href="https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/api/sforce_api_objects_aiinsightreason.htm" target="_blank" rel="noopener">Einstein insight reasons</a> (motivos com peso)</li>
+      <li>Medições do relatório feitas em 11/10/2026 com os dados de exemplo, tela de 800 px de altura.</li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const THEMES = { visual: ["Visual", "--t-visual"], uso: ["Usabilidade", "--t-uso"], adocao: ["Adoção", "--t-adocao"], acao: ["Ação", "--t-acao"], integra: ["Integração", "--t-integra"], dados: ["Dados", "--t-dados"] };
+const PHASES = [
+  ["Fase 1 · Leitura rápida", "sem. 1–4"], ["Fase 2 · Navegação de app", "sem. 5–8"], ["Fase 3 · Do número à ação", "sem. 9–12"], ["Fase 4 · Adoção contínua", "sem. 13–16"], ["Fase 5 · Dados que se atualizam", "sem. 17–20"]
+];
+// [id, fase, tema, título, semana inicial, semana final, esforço, depende de decisão, referência, problema, entrega, métrica]
+const ITEMS = [
+  ["V1", 0, "visual", "Texto sob demanda", 1, 2, "P", 0, "Salesforce (prompts acoplados), UserGuiding (tooltips)", "1.279 palavras e 22 notas competem com os números.", "Ledes de uma linha; notas, método e preparo de arquivos vão para o (i) e para um painel de ajuda.", "Palavras visíveis na primeira tela de cada seção caem 60% ou mais."],
+  ["V2", 0, "visual", "KPIs com tendência", 2, 3, "M", 0, "HubSpot (gráfico de tendência do health score), monday (dashboards)", "Os cartões mostram o número do momento, sem dizer se melhorou ou piorou.", "Cartões com mini gráfico dos últimos meses e variação contra o mês anterior, com cor de status.", "Quem lê consegue dizer em 5 segundos se o churn subiu ou caiu (teste com 5 pessoas)."],
+  ["V3", 0, "visual", "Linguagem visual de status", 3, 4, "P", 0, "Pipedrive (cartão vermelho quando parado), monday (cores de status)", "Cada seção usa a cor e o ícone de um jeito.", "Uma legenda única de status, ícone por área e chips padronizados em todas as telas.", "Nenhuma informação depende só da cor; auditoria de acessibilidade sem achados de cor."],
+  ["N1", 1, "visual", "Barra lateral e áreas", 5, 7, "G", 0, "HubSpot e SenseData (navegação por área)", "Uma página de cerca de 13 telas; a análise começa a 1.433 px.", "Áreas Visão geral, Carteira, Retenção, Diagnóstico, Dados e Integrações, cada uma cabendo em uma tela.", "Primeiro número visível sem rolar em todas as áreas."],
+  ["N2", 1, "uso", "Visões salvas", 7, 8, "M", 1, "HubSpot (visões salvas), monday (várias visões dos mesmos dados)", "Filtro, nível e cortes se perdem quando outra pessoa abre.", "Salvar filtro + nível + cortes com nome e abrir pelo link; visões padrão por perfil.", "Visões salvas por usuário ativo por semana."],
+  ["A1", 1, "adocao", "Checklist de primeiros passos", 6, 8, "M", 0, "HubSpot (checklist de onboarding com progresso), monday (perguntas iniciais)", "O tour explica, mas não leva até o valor: o usuário pode sair sem carregar os próprios dados.", "Quatro passos com barra de progresso: perfil da empresa, dados, primeira lista de risco, convidar o time. Some quando completo.", "Taxa de ativação (etapa 2 do funil) sobe com o checklist."],
+  ["C1", 2, "acao", "Página do cliente (360)", 9, 11, "G", 0, "SenseData (visão 360), HubSpot (cartão de health score), Salesforce (motivos com peso)", "O cliente existe só como linha de tabela; não dá para ver a história dele.", "KPIs ao longo do tempo, score com a contribuição de cada KPI, produtos, contratos, motivo de cancelamento e pares.", "Clientes abertos por usuário por semana."],
+  ["C2", 2, "acao", "Quadro de risco", 10, 12, "G", 1, "Pipedrive (funil visual e rotting), monday (kanban por status)", "A lista de risco não registra o que já foi feito com cada cliente.", "Colunas Alto risco → Em contato → Plano em andamento → Resolvido; o cartão fica vermelho sem ação há X dias.", "Clientes de alto risco com ação registrada em até 7 dias."],
+  ["C3", 2, "integra", "Plano de ação vira tarefa", 11, 12, "M", 1, "SenseData (tarefas e playbooks na API v2)", "A decisão tomada no relatório não chega ao dia a dia do CSM.", "Criar a tarefa na SenseData (POST /v2/tasks) para o CS dono, com o motivo do risco na descrição.", "Tarefas criadas a partir do relatório."],
+  ["A2", 3, "adocao", "Dicas contextuais", 13, 14, "M", 0, "Salesforce (prompts flutuantes e acoplados), UserGuiding (hotspots)", "O tour mostra tudo de uma vez, só no primeiro acesso.", "Pontos de destaque em funcionalidades novas ou pouco usadas, mostrados uma vez por pessoa.", "Uso da funcionalidade destacada antes e depois da dica."],
+  ["A3", 3, "adocao", "Medição de uso", 13, 15, "M", 1, "Salesforce (mede visualizações e conclusão de walkthroughs)", "Não há como saber quem usa, onde desiste e o que funciona.", "Eventos do funil (visitou, ativou, entendeu, agiu, voltou) e um painel interno de adoção.", "Funil completo disponível; metas definidas após 4 semanas."],
+  ["A4", 3, "adocao", "Início por perfil", 15, 16, "P", 0, "monday (projeto inicial criado a partir das respostas)", "Todos começam pela mesma tela, embora precisem de coisas diferentes.", "Primeira pergunta define a área inicial: CSM na Carteira, Head no Diagnóstico, CS Ops em Dados.", "Tempo até a primeira ação (etapa 4) cai."],
+  ["D1", 4, "integra", "Sincronização e alertas", 17, 19, "G", 1, "HubSpot (status de saúde aciona alertas e workflows), SenseData (motor de regras)", "Os dados envelhecem até alguém importar de novo.", "Sincronização diária com a SenseData no servidor e alerta semanal de quem entrou em alto risco.", "Alertas abertos e clientes tratados após o alerta."],
+  ["D2", 4, "integra", "Score de volta na SenseData", 18, 19, "M", 1, "SenseData (campos customizados na API v2)", "O score fica preso no relatório.", "Gravar score e classificação num campo customizado (PATCH /v2/customers/custom_fields), visível na própria SenseData.", "Campo preenchido para 100% dos clientes sincronizados."],
+  ["D3", 4, "dados", "Score sem olhar o futuro e NRR", 19, 20, "M", 0, "Prática de validação de modelos", "O teste no tempo ainda usa pesos calculados com a base inteira; NRR não é calculado.", "Pesos escolhidos só com dados anteriores à data do teste; NRR a partir do histórico de contratos.", "AUC do teste sem vazamento publicada no painel."]
+];
+const INVENTORY = [
+  ["Dados", [["ok", "CSV: anexar, colar em tabela, ver e remapear colunas"], ["ok", "Integração SenseData pela API v2"], ["ok", "Hierarquia: grupo, organização, produto"], ["ok", "Dados lembrados no navegador"], ["mid", "Atualização automática (hoje é manual)"]]],
+  ["Análise", [["ok", "Retenção por coorte e curva de sobrevivência"], ["ok", "Churn por perfil com teste z"], ["ok", "Score de risco com cortes ajustáveis"], ["ok", "Teste no tempo do score"], ["ok", "Comparação com o mercado"], ["no", "NRR e expansão"]]],
+  ["Leitura", [["ok", "Passo a passo do cálculo (i)"], ["ok", "Gráficos interativos e tabela"], ["mid", "Texto demais por seção"], ["mid", "Uma página longa"], ["no", "Tendência nos KPIs"]]],
+  ["Ação", [["ok", "Lista de ativos em risco e cópia em CSV"], ["mid", "Filtrar por perfil com um clique"], ["no", "Página do cliente"], ["no", "Registro do que foi feito"], ["no", "Tarefa ou alerta para o CSM"]]],
+  ["Adoção", [["ok", "Tour por perfil com Pular e Entendi"], ["mid", "Ajuda inline (só o (i))"], ["no", "Checklist de primeiros passos"], ["no", "Dicas contextuais"], ["no", "Medição de uso"]]]
+];
+const REFS = [
+  ["Checklist de primeiros passos", [0, 1, 1, 0, 0, 1], ["no", "não existe"], "A1: 4 passos com progresso até a primeira lista de risco"],
+  ["Tour guiado em etapas", [0, 0, 0, 0, 1, 1], ["ok", "tour com 4 caminhos"], "Manter e encurtar; medir conclusão (A3)"],
+  ["Dicas contextuais", [0, 0, 0, 0, 1, 1], ["no", "não existe"], "A2: destaque único em funcionalidades novas"],
+  ["Visão 360 do cliente", [1, 0, 1, 0, 0, 0], ["no", "só linha de tabela"], "C1: página do cliente com história dos KPIs"],
+  ["Motivos do score", [0, 0, 1, 0, 1, 0], ["mid", "sinais em texto"], "C1: contribuição de cada KPI em barras"],
+  ["Funil visual com alerta de parado", [0, 1, 0, 1, 0, 0], ["no", "não existe"], "C2: quadro de risco com cartão vermelho"],
+  ["Várias visões dos mesmos dados", [0, 1, 1, 0, 0, 0], ["mid", "filtros sem salvar"], "N2: visões salvas e compartilháveis"],
+  ["Alerta por limiar", [1, 0, 1, 0, 0, 0], ["no", "não existe"], "D1: alerta semanal de alto risco"],
+  ["Início guiado por perguntas", [0, 1, 0, 0, 0, 0], ["mid", "caminhos do tour"], "A4: a resposta define a área inicial"]
+];
+const $ = s => document.querySelector(s);
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const SIZE = { P: "Pequeno (até 1 semana)", M: "Médio (1–2 semanas)", G: "Grande (3+ semanas)" };
+
+$("#inv").innerHTML = INVENTORY.map(([g, list]) => `<div class="grp"><h3>${g}</h3>${list.map(([s, t]) => `<div class="feat"><i class="dot ${s}" aria-label="${s === "ok" ? "pronto" : s === "mid" ? "parcial" : "não existe"}"></i><span>${esc(t)}</span></div>`).join("")}</div>`).join("");
+$("#refs").innerHTML = REFS.map(([p, has, [st, today], take]) => `<tr><td><b>${esc(p)}</b></td>${has.map(h => `<td class="c">${h ? `<span class="has" aria-label="sim">●</span>` : `<span class="not" aria-label="não verificado">·</span>`}</td>`).join("")}<td class="today"><span class="feat"><i class="dot ${st}"></i>${esc(today)}</span></td><td class="take">${esc(take)}</td></tr>`).join("");
+
+let active = new Set(Object.keys(THEMES)), open = null;
+function renderFilters() {
+  $("#filters").innerHTML = `<span class="hint">Tema</span>` + Object.entries(THEMES).map(([k, [l, v]]) => `<button type="button" class="chip" data-theme="${k}" aria-pressed="${active.has(k)}"><i style="background:var(${v})"></i>${l}</button>`).join("");
+}
+function renderGantt() {
+  const months = [["out", 1, 2], ["nov", 3, 6], ["dez", 7, 10], ["jan", 11, 15], ["fev", 16, 19], ["mar", 20, 20]];
+  let html = `<div class="g-h lab">Iniciativa</div>` + months.map(([m, a, b]) => `<div class="g-h m" style="grid-column:${a + 1} / ${b + 2}">${m}</div>`).join("")
+    + Array.from({ length: 20 }, (_, i) => `<div class="g-h" style="grid-row:2;grid-column:${i + 2}">S${i + 1}</div>`).join("");
+  PHASES.forEach(([name, span], pi) => {
+    html += `<div class="g-phase"><b>${name}</b><span>${span}</span></div>`;
+    ITEMS.filter(it => it[1] === pi).forEach(it => {
+      const [id, , theme, title, a, b, size, dep] = it, dim = !active.has(theme);
+      html += `<div class="g-lab ${dim ? "g-row-dim" : ""}"><code>${id}</code><span title="${esc(title)}">${esc(title)}</span></div>`
+        + `<button type="button" class="g-bar ${dep ? "dep" : ""} ${dim ? "g-row-dim" : ""}" style="grid-column:${a + 1} / ${b + 2};background:var(${THEMES[theme][1]})" data-id="${id}" aria-expanded="${open === id}" aria-controls="detail" aria-label="${id} ${esc(title)}, semanas ${a} a ${b}, ${THEMES[theme][0]}${dep ? ", depende de decisão" : ""}">${id} · ${size}</button>`;
+    });
+    const end = [4, 8, 12, 16, 20][pi];
+    html += `<div class="g-lab muted" style="font-size:.78rem">◆ Marco: ${name.split(" · ")[1]}</div><div class="g-ms" style="grid-column:${end + 1}" aria-label="marco na semana ${end}"></div>`;
+  });
+  $("#gantt").innerHTML = html;
+}
+function renderDetail() {
+  const box = $("#detail"), it = ITEMS.find(x => x[0] === open);
+  if (!it) { box.hidden = true; return; }
+  const [id, pi, theme, title, a, b, size, dep, ref, prob, deliv, metric] = it;
+  box.hidden = false;
+  box.innerHTML = `<div class="top"><div style="display:grid;gap:6px"><span class="eyebrow">${PHASES[pi][0]} · semanas ${a}–${b}</span><h3>${id} · ${esc(title)}</h3><div class="pills"><span class="tag" style="background:var(${THEMES[theme][1]})">${THEMES[theme][0]}</span><span class="pill">${SIZE[size]}</span>${dep ? `<span class="pill">depende de decisão</span>` : ""}</div></div><button type="button" class="x" id="closeDetail" aria-label="Fechar detalhe">×</button></div>
+    <div class="kv"><div><b>Problema</b><p>${esc(prob)}</p></div><div><b>Entrega</b><p>${esc(deliv)}</p></div><div><b>Referência</b><p>${esc(ref)}</p></div><div><b>Como medir</b><p>${esc(metric)}</p></div></div>`;
+}
+document.addEventListener("click", e => {
+  const f = e.target.closest("[data-theme]");
+  if (f && f.closest("#filters")) { const k = f.dataset.theme; if (active.has(k) && active.size === Object.keys(THEMES).length) active = new Set([k]); else if (active.has(k)) { active.delete(k); if (!active.size) active = new Set(Object.keys(THEMES)); } else active.add(k); renderFilters(); renderGantt(); return; }
+  const bar = e.target.closest(".g-bar");
+  if (bar) { open = open === bar.dataset.id ? null : bar.dataset.id; renderGantt(); renderDetail(); if (open) $("#detail").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" }); const again = document.querySelector(`.g-bar[data-id="${bar.dataset.id}"]`); if (again) again.focus({ preventScroll: true }); return; }
+  if (e.target.id === "closeDetail") { const id = open; open = null; renderGantt(); renderDetail(); const b = document.querySelector(`.g-bar[data-id="${id}"]`); if (b) b.focus(); }
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && open) { const id = open; open = null; renderGantt(); renderDetail(); const b = document.querySelector(`.g-bar[data-id="${id}"]`); if (b) b.focus(); } });
+renderFilters(); renderGantt(); open = "C1"; renderGantt(); renderDetail();
+</script>
+</body>
+</html>

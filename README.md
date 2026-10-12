@@ -8,6 +8,7 @@ Este repositório é um relatório de página única (`index.html`) para times d
 
 - Relatório: https://dev-diogenes.github.io/csops-churn-cohort-analysis/
 - Painel de diagnóstico: https://dev-diogenes.github.io/csops-churn-cohort-analysis/diagnostico.html
+- Roadmap do produto: https://dev-diogenes.github.io/csops-churn-cohort-analysis/docs/roadmap.html
 
 Publicado pelo GitHub Pages a partir da branch `main`. A integração com a SenseData precisa do servidor do projeto (`node tools/servidor.mjs`) ou da Vercel; no GitHub Pages a página explica isso ao abrir Integrações → SenseData.
 
