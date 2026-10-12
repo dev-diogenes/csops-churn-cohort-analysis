@@ -20,450 +20,450 @@ id,hierarchy_type,id_group,group,id_org,cnpj,id_product,product,name,dt_register
 5001,organizacao,GRP-01,Grupo Pampa,ORG-001,16.541.638/0001-39,,,Studio Lagoa,2024-11-25,Educação,Médio,MG,Bruno Lima,,,,,,
 1001,produto,GRP-01,Grupo Pampa,ORG-001,16.541.638/0001-39,PRD-10,Gestão,Studio Lagoa - Gestão,2024-11-25,Educação,Médio,MG,Bruno Lima,1460.00,,,,1330.00,2025-12-05
 1002,produto,GRP-01,Grupo Pampa,ORG-001,16.541.638/0001-39,PRD-20,Financeiro,Studio Lagoa - Financeiro,2025-10-17,Educação,Médio,MG,Bruno Lima,850.00,2026-03-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2026-09-05
-1003,produto,GRP-01,Grupo Pampa,ORG-001,16.541.638/0001-39,PRD-30,Analytics,Studio Lagoa - Analytics,2025-08-06,Educação,Médio,MG,Bruno Lima,740.00,,,,710.00,2025-10-25
+1003,produto,GRP-01,Grupo Pampa,ORG-001,16.541.638/0001-39,PRD-30,Analytics,Studio Lagoa - Analytics,2025-08-06,Educação,Médio,MG,Bruno Lima,740.00,,,,710.00,2026-01-27
 5002,organizacao,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,,,Mercado Cerrado,2025-03-24,Indústria,Pequeno,BA,Elisa Prado,,,,,,
-1004,produto,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,PRD-10,Gestão,Mercado Cerrado - Gestão,2025-03-24,Indústria,Pequeno,BA,Elisa Prado,630.00,,,,550.00,2026-04-17
-1005,produto,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,PRD-30,Analytics,Mercado Cerrado - Analytics,2025-11-02,Indústria,Pequeno,BA,Elisa Prado,280.00,,,,,2026-04-11
-1006,produto,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,PRD-20,Financeiro,Mercado Cerrado - Financeiro,2026-02-21,Indústria,Pequeno,BA,Elisa Prado,300.00,,,,,2026-06-08
+1004,produto,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,PRD-10,Gestão,Mercado Cerrado - Gestão,2025-03-24,Indústria,Pequeno,BA,Elisa Prado,630.00,,,,550.00,2025-10-10
+1005,produto,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,PRD-30,Analytics,Mercado Cerrado - Analytics,2025-11-02,Indústria,Pequeno,BA,Elisa Prado,280.00,,,,,2026-09-30
+1006,produto,GRP-01,Grupo Pampa,ORG-002,81.402.830/0001-87,PRD-20,Financeiro,Mercado Cerrado - Financeiro,2026-02-21,Indústria,Pequeno,BA,Elisa Prado,300.00,,,,,2026-09-30
 5003,organizacao,,,ORG-003,51.093.547/0001-59,,,Indústria Pinhal,2025-08-28,Varejo,Médio,RS,Bruno Lima,,,,,,
-1007,produto,,,ORG-003,51.093.547/0001-59,PRD-10,Gestão,Indústria Pinhal - Gestão,2025-08-28,Varejo,Médio,RS,Bruno Lima,2480.00,,,,2630.00,2026-04-23
+1007,produto,,,ORG-003,51.093.547/0001-59,PRD-10,Gestão,Indústria Pinhal - Gestão,2025-08-28,Varejo,Médio,RS,Bruno Lima,2480.00,,,,2630.00,2025-12-09
 5004,organizacao,GRP-01,Grupo Pampa,ORG-004,06.262.906/0001-50,,,Clínica Tocantins,2025-05-28,Indústria,Médio,GO,Carla Mendes,,,,,,
-1008,produto,GRP-01,Grupo Pampa,ORG-004,06.262.906/0001-50,PRD-10,Gestão,Clínica Tocantins - Gestão,2025-05-28,Indústria,Médio,GO,Carla Mendes,1600.00,,,,1550.00,2026-04-01
+1008,produto,GRP-01,Grupo Pampa,ORG-004,06.262.906/0001-50,PRD-10,Gestão,Clínica Tocantins - Gestão,2025-05-28,Indústria,Médio,GO,Carla Mendes,1600.00,,,,1550.00,2025-06-02
 5005,organizacao,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,,,Indústria Araucária,2024-07-01,Educação,Pequeno,SP,Diego Rocha,,,,,,
-1009,produto,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,PRD-10,Gestão,Indústria Araucária - Gestão,2024-07-01,Educação,Pequeno,SP,Diego Rocha,560.00,,,,490.00,2024-11-27
-1010,produto,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,PRD-30,Analytics,Indústria Araucária - Analytics,2024-12-26,Educação,Pequeno,SP,Diego Rocha,160.00,,,,160.00,2025-05-21
-1011,produto,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,PRD-20,Financeiro,Indústria Araucária - Financeiro,2024-09-27,Educação,Pequeno,SP,Diego Rocha,310.00,,,,290.00,2025-05-26
+1009,produto,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,PRD-10,Gestão,Indústria Araucária - Gestão,2024-07-01,Educação,Pequeno,SP,Diego Rocha,560.00,,,,490.00,2024-12-15
+1010,produto,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,PRD-30,Analytics,Indústria Araucária - Analytics,2024-12-26,Educação,Pequeno,SP,Diego Rocha,160.00,,,,160.00,2025-11-04
+1011,produto,GRP-02,Grupo Sertão,ORG-005,32.592.819/0001-16,PRD-20,Financeiro,Indústria Araucária - Financeiro,2024-09-27,Educação,Pequeno,SP,Diego Rocha,310.00,,,,290.00,2024-11-22
 5006,organizacao,,,ORG-006,39.698.613/0001-61,,,Colégio Bandeirante,2025-10-14,Indústria,Pequeno,SP,Diego Rocha,,,,,,
-1012,produto,,,ORG-006,39.698.613/0001-61,PRD-10,Gestão,Colégio Bandeirante - Gestão,2025-10-14,Indústria,Pequeno,SP,Diego Rocha,530.00,,,,,2025-10-15
-1013,produto,,,ORG-006,39.698.613/0001-61,PRD-30,Analytics,Colégio Bandeirante - Analytics,2026-02-14,Indústria,Pequeno,SP,Diego Rocha,140.00,2026-07-01,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2026-08-09
+1012,produto,,,ORG-006,39.698.613/0001-61,PRD-10,Gestão,Colégio Bandeirante - Gestão,2025-10-14,Indústria,Pequeno,SP,Diego Rocha,530.00,,,,,2026-09-30
+1013,produto,,,ORG-006,39.698.613/0001-61,PRD-30,Analytics,Colégio Bandeirante - Analytics,2026-02-14,Indústria,Pequeno,SP,Diego Rocha,140.00,2026-07-01,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2026-09-16
 5007,organizacao,,,ORG-007,47.462.317/0001-14,,,Comercial Atlântica,2024-11-09,Varejo,Grande,PE,Bruno Lima,,,,,,
-1014,produto,,,ORG-007,47.462.317/0001-14,PRD-10,Gestão,Comercial Atlântica - Gestão,2024-11-09,Varejo,Grande,PE,Bruno Lima,7200.00,,,,6410.00,2025-01-31
-1015,produto,,,ORG-007,47.462.317/0001-14,PRD-20,Financeiro,Comercial Atlântica - Financeiro,2024-11-30,Varejo,Grande,PE,Bruno Lima,3340.00,,,,3440.00,2024-12-25
+1014,produto,,,ORG-007,47.462.317/0001-14,PRD-10,Gestão,Comercial Atlântica - Gestão,2024-11-09,Varejo,Grande,PE,Bruno Lima,7200.00,,,,6410.00,2025-05-24
+1015,produto,,,ORG-007,47.462.317/0001-14,PRD-20,Financeiro,Comercial Atlântica - Financeiro,2024-11-30,Varejo,Grande,PE,Bruno Lima,3340.00,,,,3440.00,2025-04-17
 5008,organizacao,GRP-02,Grupo Sertão,ORG-008,05.701.348/0001-83,,,Farmácia Aurora,2026-01-16,Educação,Médio,PE,Ana Ribeiro,,,,,,
-1016,produto,GRP-02,Grupo Sertão,ORG-008,05.701.348/0001-83,PRD-10,Gestão,Farmácia Aurora - Gestão,2026-01-16,Educação,Médio,PE,Ana Ribeiro,1740.00,,,,,2026-02-05
+1016,produto,GRP-02,Grupo Sertão,ORG-008,05.701.348/0001-83,PRD-10,Gestão,Farmácia Aurora - Gestão,2026-01-16,Educação,Médio,PE,Ana Ribeiro,1740.00,,,,,2026-09-30
 1017,produto,GRP-02,Grupo Sertão,ORG-008,05.701.348/0001-83,PRD-30,Analytics,Farmácia Aurora - Analytics,2026-08-31,Educação,Médio,PE,Ana Ribeiro,600.00,,,,,2026-09-30
 5009,organizacao,GRP-02,Grupo Sertão,ORG-009,44.886.122/0001-91,,,Comercial Mantiqueira,2026-01-13,Educação,Médio,PR,Elisa Prado,,,,,,
-1018,produto,GRP-02,Grupo Sertão,ORG-009,44.886.122/0001-91,PRD-10,Gestão,Comercial Mantiqueira - Gestão,2026-01-13,Educação,Médio,PR,Elisa Prado,1900.00,,,,,2026-09-13
+1018,produto,GRP-02,Grupo Sertão,ORG-009,44.886.122/0001-91,PRD-10,Gestão,Comercial Mantiqueira - Gestão,2026-01-13,Educação,Médio,PR,Elisa Prado,1900.00,,,,,2026-06-06
 1019,produto,GRP-02,Grupo Sertão,ORG-009,44.886.122/0001-91,PRD-30,Analytics,Comercial Mantiqueira - Analytics,2026-06-09,Educação,Médio,PR,Elisa Prado,680.00,,,,,2026-09-30
 5010,organizacao,GRP-03,Grupo Planalto,ORG-010,02.489.815/0001-18,,,Comercial Carvalho,2025-06-16,Varejo,Médio,PR,Elisa Prado,,,,,,
-1020,produto,GRP-03,Grupo Planalto,ORG-010,02.489.815/0001-18,PRD-10,Gestão,Comercial Carvalho - Gestão,2025-06-16,Varejo,Médio,PR,Elisa Prado,1320.00,2025-10-19,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,1370.00,2026-01-20
+1020,produto,GRP-03,Grupo Planalto,ORG-010,02.489.815/0001-18,PRD-10,Gestão,Comercial Carvalho - Gestão,2025-06-16,Varejo,Médio,PR,Elisa Prado,1320.00,2025-10-19,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,1370.00,2025-09-21
 5011,organizacao,GRP-03,Grupo Planalto,ORG-011,68.016.915/0001-89,,,Laboratório Araucária,2024-04-06,Educação,Médio,SP,Bruno Lima,,,,,,
-1021,produto,GRP-03,Grupo Planalto,ORG-011,68.016.915/0001-89,PRD-10,Gestão,Laboratório Araucária - Gestão,2024-04-06,Educação,Médio,SP,Bruno Lima,1730.00,2024-09-12,concorrente,Migrou para outra solução.,,2024-07-04
-1022,produto,GRP-03,Grupo Planalto,ORG-011,68.016.915/0001-89,PRD-20,Financeiro,Laboratório Araucária - Financeiro,2024-07-09,Educação,Médio,SP,Bruno Lima,1030.00,2024-09-12,concorrente,Migrou para outra solução.,,2024-05-25
+1021,produto,GRP-03,Grupo Planalto,ORG-011,68.016.915/0001-89,PRD-10,Gestão,Laboratório Araucária - Gestão,2024-04-06,Educação,Médio,SP,Bruno Lima,1730.00,2024-09-12,concorrente,Migrou para outra solução.,,2024-06-18
+1022,produto,GRP-03,Grupo Planalto,ORG-011,68.016.915/0001-89,PRD-20,Financeiro,Laboratório Araucária - Financeiro,2024-07-09,Educação,Médio,SP,Bruno Lima,1030.00,2024-09-12,concorrente,Migrou para outra solução.,,2024-05-09
 5012,organizacao,GRP-03,Grupo Planalto,ORG-012,94.286.643/0001-79,,,Clínica Cerrado,2024-08-21,Indústria,Grande,DF,Elisa Prado,,,,,,
-1023,produto,GRP-03,Grupo Planalto,ORG-012,94.286.643/0001-79,PRD-10,Gestão,Clínica Cerrado - Gestão,2024-08-21,Indústria,Grande,DF,Elisa Prado,4370.00,,,,4370.00,2024-11-10
+1023,produto,GRP-03,Grupo Planalto,ORG-012,94.286.643/0001-79,PRD-10,Gestão,Clínica Cerrado - Gestão,2024-08-21,Indústria,Grande,DF,Elisa Prado,4370.00,,,,4370.00,2025-03-16
 5013,organizacao,,,ORG-013,71.741.310/0001-74,,,Mercado Maré,2024-08-21,Indústria,Pequeno,MG,Bruno Lima,,,,,,
-1024,produto,,,ORG-013,71.741.310/0001-74,PRD-10,Gestão,Mercado Maré - Gestão,2024-08-21,Indústria,Pequeno,MG,Bruno Lima,530.00,,,,480.00,2024-10-15
+1024,produto,,,ORG-013,71.741.310/0001-74,PRD-10,Gestão,Mercado Maré - Gestão,2024-08-21,Indústria,Pequeno,MG,Bruno Lima,530.00,,,,480.00,2025-05-10
 5014,organizacao,GRP-03,Grupo Planalto,ORG-014,68.716.861/0001-00,,,Farmácia Araucária,2024-06-10,Saúde,Médio,SP,Carla Mendes,,,,,,
-1025,produto,GRP-03,Grupo Planalto,ORG-014,68.716.861/0001-00,PRD-10,Gestão,Farmácia Araucária - Gestão,2024-06-10,Saúde,Médio,SP,Carla Mendes,1310.00,,,,1380.00,2025-03-18
-1026,produto,GRP-03,Grupo Planalto,ORG-014,68.716.861/0001-00,PRD-30,Analytics,Farmácia Araucária - Analytics,2025-05-24,Saúde,Médio,SP,Carla Mendes,700.00,2025-08-07,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2025-11-09
+1025,produto,GRP-03,Grupo Planalto,ORG-014,68.716.861/0001-00,PRD-10,Gestão,Farmácia Araucária - Gestão,2024-06-10,Saúde,Médio,SP,Carla Mendes,1310.00,,,,1380.00,2025-05-16
+1026,produto,GRP-03,Grupo Planalto,ORG-014,68.716.861/0001-00,PRD-30,Analytics,Farmácia Araucária - Analytics,2025-05-24,Saúde,Médio,SP,Carla Mendes,700.00,2025-08-07,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2026-01-30
 5015,organizacao,GRP-04,Grupo Litoral,ORG-015,11.537.370/0001-26,,,Colégio Serra Azul,2024-08-26,Saúde,Grande,SP,Carla Mendes,,,,,,
-1027,produto,GRP-04,Grupo Litoral,ORG-015,11.537.370/0001-26,PRD-10,Gestão,Colégio Serra Azul - Gestão,2024-08-26,Saúde,Grande,SP,Carla Mendes,4480.00,,,,3900.00,2024-09-20
+1027,produto,GRP-04,Grupo Litoral,ORG-015,11.537.370/0001-26,PRD-10,Gestão,Colégio Serra Azul - Gestão,2024-08-26,Saúde,Grande,SP,Carla Mendes,4480.00,,,,3900.00,2025-06-11
 5016,organizacao,GRP-04,Grupo Litoral,ORG-016,41.255.292/0001-82,,,Colégio Araucária,2025-01-24,Saúde,Médio,SP,Diego Rocha,,,,,,
-1028,produto,GRP-04,Grupo Litoral,ORG-016,41.255.292/0001-82,PRD-10,Gestão,Colégio Araucária - Gestão,2025-01-24,Saúde,Médio,SP,Diego Rocha,2280.00,2025-04-06,preco,Considerou o valor alto para o uso atual.,,2025-11-18
+1028,produto,GRP-04,Grupo Litoral,ORG-016,41.255.292/0001-82,PRD-10,Gestão,Colégio Araucária - Gestão,2025-01-24,Saúde,Médio,SP,Diego Rocha,2280.00,2025-04-06,preco,Considerou o valor alto para o uso atual.,,2025-09-11
 5017,organizacao,GRP-04,Grupo Litoral,ORG-017,63.600.088/0001-58,,,Farmácia Tocantins,2025-10-02,Educação,Pequeno,GO,Diego Rocha,,,,,,
-1029,produto,GRP-04,Grupo Litoral,ORG-017,63.600.088/0001-58,PRD-10,Gestão,Farmácia Tocantins - Gestão,2025-10-02,Educação,Pequeno,GO,Diego Rocha,400.00,2026-07-19,preco,Pediu desconto na renovação e não houve acordo.,,2026-01-03
-1030,produto,GRP-04,Grupo Litoral,ORG-017,63.600.088/0001-58,PRD-30,Analytics,Farmácia Tocantins - Analytics,2025-11-09,Educação,Pequeno,GO,Diego Rocha,260.00,2026-03-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2026-09-30
+1029,produto,GRP-04,Grupo Litoral,ORG-017,63.600.088/0001-58,PRD-10,Gestão,Farmácia Tocantins - Gestão,2025-10-02,Educação,Pequeno,GO,Diego Rocha,400.00,2026-07-19,preco,Pediu desconto na renovação e não houve acordo.,,2025-10-20
+1030,produto,GRP-04,Grupo Litoral,ORG-017,63.600.088/0001-58,PRD-30,Analytics,Farmácia Tocantins - Analytics,2025-11-09,Educação,Pequeno,GO,Diego Rocha,260.00,2026-03-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2026-09-02
 5018,organizacao,GRP-04,Grupo Litoral,ORG-018,20.978.243/0001-81,,,Rede Aurora,2025-05-11,Serviços,Médio,RS,Bruno Lima,,,,,,
-1031,produto,GRP-04,Grupo Litoral,ORG-018,20.978.243/0001-81,PRD-10,Gestão,Rede Aurora - Gestão,2025-05-11,Serviços,Médio,RS,Bruno Lima,1540.00,2026-03-29,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,1490.00,2025-12-19
+1031,produto,GRP-04,Grupo Litoral,ORG-018,20.978.243/0001-81,PRD-10,Gestão,Rede Aurora - Gestão,2025-05-11,Serviços,Médio,RS,Bruno Lima,1540.00,2026-03-29,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,1490.00,2025-08-17
 5019,organizacao,GRP-04,Grupo Litoral,ORG-019,23.334.371/0001-10,,,Distribuidora Boa Vista,2024-07-04,Varejo,Médio,SP,Diego Rocha,,,,,,
-1032,produto,GRP-04,Grupo Litoral,ORG-019,23.334.371/0001-10,PRD-10,Gestão,Distribuidora Boa Vista - Gestão,2024-07-04,Varejo,Médio,SP,Diego Rocha,1130.00,,,,990.00,2025-01-30
+1032,produto,GRP-04,Grupo Litoral,ORG-019,23.334.371/0001-10,PRD-10,Gestão,Distribuidora Boa Vista - Gestão,2024-07-04,Varejo,Médio,SP,Diego Rocha,1130.00,,,,990.00,2024-08-11
 5020,organizacao,GRP-05,Grupo Capital,ORG-020,91.351.679/0001-70,,,Clínica Juriti,2024-04-22,Serviços,Pequeno,RS,Bruno Lima,,,,,,
-1033,produto,GRP-05,Grupo Capital,ORG-020,91.351.679/0001-70,PRD-10,Gestão,Clínica Juriti - Gestão,2024-04-22,Serviços,Pequeno,RS,Bruno Lima,350.00,2025-08-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.,,2025-06-02
-1034,produto,GRP-05,Grupo Capital,ORG-020,91.351.679/0001-70,PRD-20,Financeiro,Clínica Juriti - Financeiro,2024-08-11,Serviços,Pequeno,RS,Bruno Lima,230.00,2025-08-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.,,2025-07-08
+1033,produto,GRP-05,Grupo Capital,ORG-020,91.351.679/0001-70,PRD-10,Gestão,Clínica Juriti - Gestão,2024-04-22,Serviços,Pequeno,RS,Bruno Lima,350.00,2025-08-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.,,2025-02-15
+1034,produto,GRP-05,Grupo Capital,ORG-020,91.351.679/0001-70,PRD-20,Financeiro,Clínica Juriti - Financeiro,2024-08-11,Serviços,Pequeno,RS,Bruno Lima,230.00,2025-08-31,concorrente,Decisão da diretoria de padronizar outro fornecedor.,,2025-06-14
 5021,organizacao,GRP-05,Grupo Capital,ORG-021,09.658.872/0001-40,,,Indústria Mantiqueira,2024-05-30,Indústria,Médio,DF,Ana Ribeiro,,,,,,
-1035,produto,GRP-05,Grupo Capital,ORG-021,09.658.872/0001-40,PRD-10,Gestão,Indústria Mantiqueira - Gestão,2024-05-30,Indústria,Médio,DF,Ana Ribeiro,1400.00,2024-07-14,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.,,2024-04-25
-1036,produto,GRP-05,Grupo Capital,ORG-021,09.658.872/0001-40,PRD-30,Analytics,Indústria Mantiqueira - Analytics,2024-07-28,Indústria,Médio,DF,Ana Ribeiro,840.00,,,,820.00,2024-09-23
+1035,produto,GRP-05,Grupo Capital,ORG-021,09.658.872/0001-40,PRD-10,Gestão,Indústria Mantiqueira - Gestão,2024-05-30,Indústria,Médio,DF,Ana Ribeiro,1400.00,2024-07-14,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.,,2024-03-21
+1036,produto,GRP-05,Grupo Capital,ORG-021,09.658.872/0001-40,PRD-30,Analytics,Indústria Mantiqueira - Analytics,2024-07-28,Indústria,Médio,DF,Ana Ribeiro,840.00,,,,820.00,2024-10-27
 5022,organizacao,GRP-06,Grupo Ribeira,ORG-022,48.253.229/0001-03,,,Laboratório Vale Verde,2025-09-21,Serviços,Médio,RJ,Elisa Prado,,,,,,
-1037,produto,GRP-06,Grupo Ribeira,ORG-022,48.253.229/0001-03,PRD-10,Gestão,Laboratório Vale Verde - Gestão,2025-09-21,Serviços,Médio,RJ,Elisa Prado,1660.00,,,,1480.00,2026-05-06
-1038,produto,GRP-06,Grupo Ribeira,ORG-022,48.253.229/0001-03,PRD-20,Financeiro,Laboratório Vale Verde - Financeiro,2025-12-16,Serviços,Médio,RJ,Elisa Prado,1310.00,,,,,2025-12-17
+1037,produto,GRP-06,Grupo Ribeira,ORG-022,48.253.229/0001-03,PRD-10,Gestão,Laboratório Vale Verde - Gestão,2025-09-21,Serviços,Médio,RJ,Elisa Prado,1660.00,,,,1480.00,2026-04-25
+1038,produto,GRP-06,Grupo Ribeira,ORG-022,48.253.229/0001-03,PRD-20,Financeiro,Laboratório Vale Verde - Financeiro,2025-12-16,Serviços,Médio,RJ,Elisa Prado,1310.00,,,,,2026-06-13
 5023,organizacao,GRP-06,Grupo Ribeira,ORG-023,40.811.083/0001-01,,,Clínica Araucária,2025-10-17,Varejo,Médio,SC,Diego Rocha,,,,,,
-1039,produto,GRP-06,Grupo Ribeira,ORG-023,40.811.083/0001-01,PRD-10,Gestão,Clínica Araucária - Gestão,2025-10-17,Varejo,Médio,SC,Diego Rocha,1900.00,,,,,2026-07-28
+1039,produto,GRP-06,Grupo Ribeira,ORG-023,40.811.083/0001-01,PRD-10,Gestão,Clínica Araucária - Gestão,2025-10-17,Varejo,Médio,SC,Diego Rocha,1900.00,,,,,2026-09-13
 1040,produto,GRP-06,Grupo Ribeira,ORG-023,40.811.083/0001-01,PRD-20,Financeiro,Clínica Araucária - Financeiro,2026-05-16,Varejo,Médio,SC,Diego Rocha,860.00,,,,,2026-09-30
-1041,produto,GRP-06,Grupo Ribeira,ORG-023,40.811.083/0001-01,PRD-30,Analytics,Clínica Araucária - Analytics,2026-01-07,Varejo,Médio,SC,Diego Rocha,740.00,,,,,2026-09-30
+1041,produto,GRP-06,Grupo Ribeira,ORG-023,40.811.083/0001-01,PRD-30,Analytics,Clínica Araucária - Analytics,2026-01-07,Varejo,Médio,SC,Diego Rocha,740.00,,,,,2026-08-07
 5024,organizacao,GRP-06,Grupo Ribeira,ORG-024,56.625.018/0001-12,,,Farmácia Lagoa,2026-05-22,Varejo,Médio,GO,Bruno Lima,,,,,,
-1042,produto,GRP-06,Grupo Ribeira,ORG-024,56.625.018/0001-12,PRD-10,Gestão,Farmácia Lagoa - Gestão,2026-05-22,Varejo,Médio,GO,Bruno Lima,2460.00,,,,,2026-09-29
+1042,produto,GRP-06,Grupo Ribeira,ORG-024,56.625.018/0001-12,PRD-10,Gestão,Farmácia Lagoa - Gestão,2026-05-22,Varejo,Médio,GO,Bruno Lima,2460.00,,,,,2026-08-19
 5025,organizacao,GRP-06,Grupo Ribeira,ORG-025,04.329.584/0001-34,,,Studio Paraty,2025-05-28,Saúde,Médio,RS,Elisa Prado,,,,,,
-1043,produto,GRP-06,Grupo Ribeira,ORG-025,04.329.584/0001-34,PRD-10,Gestão,Studio Paraty - Gestão,2025-05-28,Saúde,Médio,RS,Elisa Prado,2470.00,,,,2570.00,2026-01-04
-1044,produto,GRP-06,Grupo Ribeira,ORG-025,04.329.584/0001-34,PRD-30,Analytics,Studio Paraty - Analytics,2025-06-11,Saúde,Médio,RS,Elisa Prado,1000.00,,,,950.00,2026-04-18
+1043,produto,GRP-06,Grupo Ribeira,ORG-025,04.329.584/0001-34,PRD-10,Gestão,Studio Paraty - Gestão,2025-05-28,Saúde,Médio,RS,Elisa Prado,2470.00,,,,2570.00,2025-12-15
+1044,produto,GRP-06,Grupo Ribeira,ORG-025,04.329.584/0001-34,PRD-30,Analytics,Studio Paraty - Analytics,2025-06-11,Saúde,Médio,RS,Elisa Prado,1000.00,,,,950.00,2025-08-30
 5026,organizacao,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,,,Colégio Carvalho,2024-05-29,Indústria,Pequeno,PR,Elisa Prado,,,,,,
-1045,produto,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,PRD-10,Gestão,Colégio Carvalho - Gestão,2024-05-29,Indústria,Pequeno,PR,Elisa Prado,660.00,,,,570.00,2025-01-07
-1046,produto,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,PRD-30,Analytics,Colégio Carvalho - Analytics,2024-12-21,Indústria,Pequeno,PR,Elisa Prado,300.00,,,,300.00,2026-01-04
-1047,produto,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,PRD-20,Financeiro,Colégio Carvalho - Financeiro,2024-07-05,Indústria,Pequeno,PR,Elisa Prado,190.00,2026-02-09,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,170.00,2025-05-30
+1045,produto,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,PRD-10,Gestão,Colégio Carvalho - Gestão,2024-05-29,Indústria,Pequeno,PR,Elisa Prado,660.00,,,,570.00,2024-05-30
+1046,produto,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,PRD-30,Analytics,Colégio Carvalho - Analytics,2024-12-21,Indústria,Pequeno,PR,Elisa Prado,300.00,,,,300.00,2026-01-10
+1047,produto,GRP-06,Grupo Ribeira,ORG-026,07.062.241/0001-66,PRD-20,Financeiro,Colégio Carvalho - Financeiro,2024-07-05,Indústria,Pequeno,PR,Elisa Prado,190.00,2026-02-09,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,170.00,2024-08-22
 5027,organizacao,GRP-07,Grupo Guará,ORG-027,37.172.683/0001-27,,,Laboratório Serra Azul,2024-01-27,Varejo,Médio,DF,Carla Mendes,,,,,,
-1048,produto,GRP-07,Grupo Guará,ORG-027,37.172.683/0001-27,PRD-10,Gestão,Laboratório Serra Azul - Gestão,2024-01-27,Varejo,Médio,DF,Carla Mendes,1080.00,,,,1130.00,2024-06-28
+1048,produto,GRP-07,Grupo Guará,ORG-027,37.172.683/0001-27,PRD-10,Gestão,Laboratório Serra Azul - Gestão,2024-01-27,Varejo,Médio,DF,Carla Mendes,1080.00,,,,1130.00,2024-11-18
 5028,organizacao,GRP-07,Grupo Guará,ORG-028,21.258.329/0001-16,,,Rede Cerrado,2026-05-22,Educação,Médio,RJ,Diego Rocha,,,,,,
 1049,produto,GRP-07,Grupo Guará,ORG-028,21.258.329/0001-16,PRD-10,Gestão,Rede Cerrado - Gestão,2026-05-22,Educação,Médio,RJ,Diego Rocha,2030.00,,,,,2026-09-30
 5029,organizacao,GRP-07,Grupo Guará,ORG-029,35.985.746/0001-53,,,Indústria Atlântica,2024-04-11,Educação,Médio,SP,Diego Rocha,,,,,,
-1050,produto,GRP-07,Grupo Guará,ORG-029,35.985.746/0001-53,PRD-10,Gestão,Indústria Atlântica - Gestão,2024-04-11,Educação,Médio,SP,Diego Rocha,2170.00,2025-04-25,preco,Considerou o valor alto para o uso atual.,,2024-06-22
-1051,produto,GRP-07,Grupo Guará,ORG-029,35.985.746/0001-53,PRD-20,Financeiro,Indústria Atlântica - Financeiro,2025-01-19,Educação,Médio,SP,Diego Rocha,880.00,2026-02-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,890.00,2026-01-24
+1050,produto,GRP-07,Grupo Guará,ORG-029,35.985.746/0001-53,PRD-10,Gestão,Indústria Atlântica - Gestão,2024-04-11,Educação,Médio,SP,Diego Rocha,2170.00,2025-04-25,preco,Considerou o valor alto para o uso atual.,,2025-02-27
+1051,produto,GRP-07,Grupo Guará,ORG-029,35.985.746/0001-53,PRD-20,Financeiro,Indústria Atlântica - Financeiro,2025-01-19,Educação,Médio,SP,Diego Rocha,880.00,2026-02-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,890.00,2025-06-06
 5030,organizacao,GRP-07,Grupo Guará,ORG-030,72.148.574/0001-59,,,Clínica Paraty,2024-12-05,Varejo,Pequeno,MG,Bruno Lima,,,,,,
-1052,produto,GRP-07,Grupo Guará,ORG-030,72.148.574/0001-59,PRD-10,Gestão,Clínica Paraty - Gestão,2024-12-05,Varejo,Pequeno,MG,Bruno Lima,530.00,,,,490.00,2025-03-29
+1052,produto,GRP-07,Grupo Guará,ORG-030,72.148.574/0001-59,PRD-10,Gestão,Clínica Paraty - Gestão,2024-12-05,Varejo,Pequeno,MG,Bruno Lima,530.00,,,,490.00,2025-05-13
 5031,organizacao,GRP-07,Grupo Guará,ORG-031,27.232.606/0001-00,,,Escola Vale Verde,2024-08-30,Serviços,Médio,PE,Ana Ribeiro,,,,,,
-1053,produto,GRP-07,Grupo Guará,ORG-031,27.232.606/0001-00,PRD-10,Gestão,Escola Vale Verde - Gestão,2024-08-30,Serviços,Médio,PE,Ana Ribeiro,1040.00,,,,1100.00,2024-09-23
+1053,produto,GRP-07,Grupo Guará,ORG-031,27.232.606/0001-00,PRD-10,Gestão,Escola Vale Verde - Gestão,2024-08-30,Serviços,Médio,PE,Ana Ribeiro,1040.00,,,,1100.00,2024-09-15
 5032,organizacao,GRP-08,Grupo Tapajós,ORG-032,56.371.998/0001-03,,,Farmácia Vale Verde,2026-01-02,Educação,Médio,SP,Bruno Lima,,,,,,
-1054,produto,GRP-08,Grupo Tapajós,ORG-032,56.371.998/0001-03,PRD-10,Gestão,Farmácia Vale Verde - Gestão,2026-01-02,Educação,Médio,SP,Bruno Lima,1390.00,,,,,2026-09-30
+1054,produto,GRP-08,Grupo Tapajós,ORG-032,56.371.998/0001-03,PRD-10,Gestão,Farmácia Vale Verde - Gestão,2026-01-02,Educação,Médio,SP,Bruno Lima,1390.00,,,,,2026-03-25
 1055,produto,GRP-08,Grupo Tapajós,ORG-032,56.371.998/0001-03,PRD-20,Financeiro,Farmácia Vale Verde - Financeiro,2026-08-31,Educação,Médio,SP,Bruno Lima,750.00,,,,,2026-09-30
 5033,organizacao,GRP-08,Grupo Tapajós,ORG-033,15.024.924/0001-45,,,Studio Itapuã,2024-02-10,Educação,Pequeno,SP,Elisa Prado,,,,,,
-1056,produto,GRP-08,Grupo Tapajós,ORG-033,15.024.924/0001-45,PRD-10,Gestão,Studio Itapuã - Gestão,2024-02-10,Educação,Pequeno,SP,Elisa Prado,520.00,,,,530.00,2024-12-30
+1056,produto,GRP-08,Grupo Tapajós,ORG-033,15.024.924/0001-45,PRD-10,Gestão,Studio Itapuã - Gestão,2024-02-10,Educação,Pequeno,SP,Elisa Prado,520.00,,,,530.00,2024-02-26
 5034,organizacao,GRP-09,Grupo Cantareira,ORG-034,65.629.353/0001-60,,,Rede Vale Verde,2024-12-25,Educação,Pequeno,RS,Ana Ribeiro,,,,,,
-1057,produto,GRP-09,Grupo Cantareira,ORG-034,65.629.353/0001-60,PRD-10,Gestão,Rede Vale Verde - Gestão,2024-12-25,Educação,Pequeno,RS,Ana Ribeiro,320.00,,,,300.00,2025-05-30
+1057,produto,GRP-09,Grupo Cantareira,ORG-034,65.629.353/0001-60,PRD-10,Gestão,Rede Vale Verde - Gestão,2024-12-25,Educação,Pequeno,RS,Ana Ribeiro,320.00,,,,300.00,2025-10-02
 5035,organizacao,GRP-09,Grupo Cantareira,ORG-035,98.112.539/0001-16,,,Instituto Mantiqueira,2025-11-09,Varejo,Pequeno,SP,Carla Mendes,,,,,,
-1058,produto,GRP-09,Grupo Cantareira,ORG-035,98.112.539/0001-16,PRD-10,Gestão,Instituto Mantiqueira - Gestão,2025-11-09,Varejo,Pequeno,SP,Carla Mendes,630.00,,,,,2026-09-12
+1058,produto,GRP-09,Grupo Cantareira,ORG-035,98.112.539/0001-16,PRD-10,Gestão,Instituto Mantiqueira - Gestão,2025-11-09,Varejo,Pequeno,SP,Carla Mendes,630.00,,,,,2026-09-30
 1059,produto,GRP-09,Grupo Cantareira,ORG-035,98.112.539/0001-16,PRD-30,Analytics,Instituto Mantiqueira - Analytics,2026-08-31,Varejo,Pequeno,SP,Carla Mendes,250.00,,,,,2026-09-30
 5036,organizacao,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,,,Laboratório Paraty,2025-03-16,Saúde,Médio,SP,Diego Rocha,,,,,,
-1060,produto,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,PRD-10,Gestão,Laboratório Paraty - Gestão,2025-03-16,Saúde,Médio,SP,Diego Rocha,1930.00,,,,1720.00,2026-04-02
-1061,produto,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,PRD-30,Analytics,Laboratório Paraty - Analytics,2025-06-11,Saúde,Médio,SP,Diego Rocha,800.00,,,,820.00,2026-05-10
-1062,produto,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,PRD-20,Financeiro,Laboratório Paraty - Financeiro,2025-10-01,Saúde,Médio,SP,Diego Rocha,800.00,,,,,2026-09-30
+1060,produto,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,PRD-10,Gestão,Laboratório Paraty - Gestão,2025-03-16,Saúde,Médio,SP,Diego Rocha,1930.00,,,,1720.00,2025-11-13
+1061,produto,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,PRD-30,Analytics,Laboratório Paraty - Analytics,2025-06-11,Saúde,Médio,SP,Diego Rocha,800.00,,,,820.00,2025-06-19
+1062,produto,GRP-09,Grupo Cantareira,ORG-036,95.407.151/0001-72,PRD-20,Financeiro,Laboratório Paraty - Financeiro,2025-10-01,Saúde,Médio,SP,Diego Rocha,800.00,,,,,2026-01-09
 5037,organizacao,GRP-10,Grupo Jequitibá,ORG-037,92.362.415/0001-16,,,Distribuidora Atlântica,2024-10-03,Indústria,Pequeno,SC,Elisa Prado,,,,,,
-1063,produto,GRP-10,Grupo Jequitibá,ORG-037,92.362.415/0001-16,PRD-10,Gestão,Distribuidora Atlântica - Gestão,2024-10-03,Indústria,Pequeno,SC,Elisa Prado,600.00,,,,510.00,2025-07-14
+1063,produto,GRP-10,Grupo Jequitibá,ORG-037,92.362.415/0001-16,PRD-10,Gestão,Distribuidora Atlântica - Gestão,2024-10-03,Indústria,Pequeno,SC,Elisa Prado,600.00,,,,510.00,2024-12-03
 5038,organizacao,GRP-10,Grupo Jequitibá,ORG-038,64.005.260/0001-33,,,Mercado Horizonte,2025-11-08,Varejo,Pequeno,BA,Elisa Prado,,,,,,
-1064,produto,GRP-10,Grupo Jequitibá,ORG-038,64.005.260/0001-33,PRD-10,Gestão,Mercado Horizonte - Gestão,2025-11-08,Varejo,Pequeno,BA,Elisa Prado,650.00,,,,,2026-09-15
+1064,produto,GRP-10,Grupo Jequitibá,ORG-038,64.005.260/0001-33,PRD-10,Gestão,Mercado Horizonte - Gestão,2025-11-08,Varejo,Pequeno,BA,Elisa Prado,650.00,,,,,2026-08-08
 5039,organizacao,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,,,Instituto Serra Azul,2024-06-01,Educação,Pequeno,MG,Diego Rocha,,,,,,
-1065,produto,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,PRD-10,Gestão,Instituto Serra Azul - Gestão,2024-06-01,Educação,Pequeno,MG,Diego Rocha,650.00,2025-08-09,corte_custos,Revisão de orçamento cortou ferramentas.,,2025-05-09
-1066,produto,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,PRD-20,Financeiro,Instituto Serra Azul - Financeiro,2025-05-20,Educação,Pequeno,MG,Diego Rocha,290.00,2025-07-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-07-30
-1067,produto,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,PRD-30,Analytics,Instituto Serra Azul - Analytics,2025-04-18,Educação,Pequeno,MG,Diego Rocha,270.00,2025-07-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2026-04-12
+1065,produto,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,PRD-10,Gestão,Instituto Serra Azul - Gestão,2024-06-01,Educação,Pequeno,MG,Diego Rocha,650.00,2025-08-09,corte_custos,Revisão de orçamento cortou ferramentas.,,2025-04-17
+1066,produto,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,PRD-20,Financeiro,Instituto Serra Azul - Financeiro,2025-05-20,Educação,Pequeno,MG,Diego Rocha,290.00,2025-07-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2026-04-07
+1067,produto,GRP-10,Grupo Jequitibá,ORG-039,21.611.232/0001-36,PRD-30,Analytics,Instituto Serra Azul - Analytics,2025-04-18,Educação,Pequeno,MG,Diego Rocha,270.00,2025-07-07,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-11-22
 5040,organizacao,GRP-10,Grupo Jequitibá,ORG-040,93.745.408/0001-93,,,Rede Boa Vista,2025-09-29,Varejo,Médio,SP,Elisa Prado,,,,,,
-1068,produto,GRP-10,Grupo Jequitibá,ORG-040,93.745.408/0001-93,PRD-10,Gestão,Rede Boa Vista - Gestão,2025-09-29,Varejo,Médio,SP,Elisa Prado,1500.00,,,,1290.00,2026-07-14
+1068,produto,GRP-10,Grupo Jequitibá,ORG-040,93.745.408/0001-93,PRD-10,Gestão,Rede Boa Vista - Gestão,2025-09-29,Varejo,Médio,SP,Elisa Prado,1500.00,,,,1290.00,2026-04-21
 5041,organizacao,GRP-10,Grupo Jequitibá,ORG-041,20.186.219/0001-61,,,Laboratório Bandeirante,2025-09-14,Saúde,Grande,SP,Diego Rocha,,,,,,
-1069,produto,GRP-10,Grupo Jequitibá,ORG-041,20.186.219/0001-61,PRD-10,Gestão,Laboratório Bandeirante - Gestão,2025-09-14,Saúde,Grande,SP,Diego Rocha,8390.00,,,,8390.00,2025-11-17
+1069,produto,GRP-10,Grupo Jequitibá,ORG-041,20.186.219/0001-61,PRD-10,Gestão,Laboratório Bandeirante - Gestão,2025-09-14,Saúde,Grande,SP,Diego Rocha,8390.00,,,,8390.00,2026-08-19
 1070,produto,GRP-10,Grupo Jequitibá,ORG-041,20.186.219/0001-61,PRD-20,Financeiro,Laboratório Bandeirante - Financeiro,2026-06-28,Saúde,Grande,SP,Diego Rocha,4060.00,,,,,2026-09-30
 1071,produto,GRP-10,Grupo Jequitibá,ORG-041,20.186.219/0001-61,PRD-30,Analytics,Laboratório Bandeirante - Analytics,2026-08-29,Saúde,Grande,SP,Diego Rocha,3530.00,,,,,2026-09-30
 5042,organizacao,,,ORG-042,10.331.869/0001-61,,,Comercial Maré,2024-02-18,Serviços,Pequeno,PE,Ana Ribeiro,,,,,,
-1072,produto,,,ORG-042,10.331.869/0001-61,PRD-10,Gestão,Comercial Maré - Gestão,2024-02-18,Serviços,Pequeno,PE,Ana Ribeiro,640.00,2024-10-02,encerramento,Empresa encerrou as atividades.,,2024-12-13
-1073,produto,,,ORG-042,10.331.869/0001-61,PRD-30,Analytics,Comercial Maré - Analytics,2024-04-27,Serviços,Pequeno,PE,Ana Ribeiro,160.00,2024-10-02,encerramento,Empresa encerrou as atividades.,,2025-05-09
+1072,produto,,,ORG-042,10.331.869/0001-61,PRD-10,Gestão,Comercial Maré - Gestão,2024-02-18,Serviços,Pequeno,PE,Ana Ribeiro,640.00,2024-10-02,encerramento,Empresa encerrou as atividades.,,2024-04-29
+1073,produto,,,ORG-042,10.331.869/0001-61,PRD-30,Analytics,Comercial Maré - Analytics,2024-04-27,Serviços,Pequeno,PE,Ana Ribeiro,160.00,2024-10-02,encerramento,Empresa encerrou as atividades.,,2024-12-10
 5043,organizacao,GRP-11,Grupo Aroeira,ORG-043,93.220.550/0001-59,,,Instituto Jacarandá,2025-02-15,Serviços,Médio,SC,Ana Ribeiro,,,,,,
-1074,produto,GRP-11,Grupo Aroeira,ORG-043,93.220.550/0001-59,PRD-10,Gestão,Instituto Jacarandá - Gestão,2025-02-15,Serviços,Médio,SC,Ana Ribeiro,1590.00,,,,1610.00,2025-03-27
+1074,produto,GRP-11,Grupo Aroeira,ORG-043,93.220.550/0001-59,PRD-10,Gestão,Instituto Jacarandá - Gestão,2025-02-15,Serviços,Médio,SC,Ana Ribeiro,1590.00,,,,1610.00,2025-02-26
 5044,organizacao,,,ORG-044,13.143.005/0001-98,,,Escola Paraty,2025-10-26,Varejo,Pequeno,MG,Bruno Lima,,,,,,
-1075,produto,,,ORG-044,13.143.005/0001-98,PRD-10,Gestão,Escola Paraty - Gestão,2025-10-26,Varejo,Pequeno,MG,Bruno Lima,470.00,,,,,2026-02-19
-1076,produto,,,ORG-044,13.143.005/0001-98,PRD-20,Financeiro,Escola Paraty - Financeiro,2025-10-28,Varejo,Pequeno,MG,Bruno Lima,210.00,,,,,2026-04-21
+1075,produto,,,ORG-044,13.143.005/0001-98,PRD-10,Gestão,Escola Paraty - Gestão,2025-10-26,Varejo,Pequeno,MG,Bruno Lima,470.00,,,,,2025-11-02
+1076,produto,,,ORG-044,13.143.005/0001-98,PRD-20,Financeiro,Escola Paraty - Financeiro,2025-10-28,Varejo,Pequeno,MG,Bruno Lima,210.00,,,,,2026-09-30
 5045,organizacao,GRP-11,Grupo Aroeira,ORG-045,55.533.792/0001-12,,,Laboratório Tocantins,2024-07-07,Varejo,Médio,PE,Diego Rocha,,,,,,
-1077,produto,GRP-11,Grupo Aroeira,ORG-045,55.533.792/0001-12,PRD-10,Gestão,Laboratório Tocantins - Gestão,2024-07-07,Varejo,Médio,PE,Diego Rocha,1320.00,,,,1280.00,2024-09-08
-1078,produto,GRP-11,Grupo Aroeira,ORG-045,55.533.792/0001-12,PRD-30,Analytics,Laboratório Tocantins - Analytics,2024-11-27,Varejo,Médio,PE,Diego Rocha,950.00,2025-05-10,concorrente,Decisão da diretoria de padronizar outro fornecedor.,,2025-02-20
+1077,produto,GRP-11,Grupo Aroeira,ORG-045,55.533.792/0001-12,PRD-10,Gestão,Laboratório Tocantins - Gestão,2024-07-07,Varejo,Médio,PE,Diego Rocha,1320.00,,,,1280.00,2025-07-21
+1078,produto,GRP-11,Grupo Aroeira,ORG-045,55.533.792/0001-12,PRD-30,Analytics,Laboratório Tocantins - Analytics,2024-11-27,Varejo,Médio,PE,Diego Rocha,950.00,2025-05-10,concorrente,Decisão da diretoria de padronizar outro fornecedor.,,2025-03-01
 5046,organizacao,GRP-12,Grupo Paranapanema,ORG-046,41.207.887/0001-61,,,Colégio Paraty,2025-11-13,Varejo,Médio,SP,Diego Rocha,,,,,,
-1079,produto,GRP-12,Grupo Paranapanema,ORG-046,41.207.887/0001-61,PRD-10,Gestão,Colégio Paraty - Gestão,2025-11-13,Varejo,Médio,SP,Diego Rocha,2070.00,,,,,2026-05-15
+1079,produto,GRP-12,Grupo Paranapanema,ORG-046,41.207.887/0001-61,PRD-10,Gestão,Colégio Paraty - Gestão,2025-11-13,Varejo,Médio,SP,Diego Rocha,2070.00,,,,,2026-05-25
 5047,organizacao,GRP-12,Grupo Paranapanema,ORG-047,03.303.530/0001-41,,,Studio Cerrado,2024-01-29,Varejo,Pequeno,DF,Ana Ribeiro,,,,,,
-1080,produto,GRP-12,Grupo Paranapanema,ORG-047,03.303.530/0001-41,PRD-10,Gestão,Studio Cerrado - Gestão,2024-01-29,Varejo,Pequeno,DF,Ana Ribeiro,500.00,2024-05-14,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2024-06-02
+1080,produto,GRP-12,Grupo Paranapanema,ORG-047,03.303.530/0001-41,PRD-10,Gestão,Studio Cerrado - Gestão,2024-01-29,Varejo,Pequeno,DF,Ana Ribeiro,500.00,2024-05-14,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2024-08-28
 5048,organizacao,GRP-12,Grupo Paranapanema,ORG-048,39.129.939/0001-43,,,Clínica Itapuã,2026-04-08,Saúde,Médio,BA,Bruno Lima,,,,,,
 1081,produto,GRP-12,Grupo Paranapanema,ORG-048,39.129.939/0001-43,PRD-10,Gestão,Clínica Itapuã - Gestão,2026-04-08,Saúde,Médio,BA,Bruno Lima,2010.00,,,,,2026-09-30
 5049,organizacao,GRP-12,Grupo Paranapanema,ORG-049,12.172.067/0001-48,,,Indústria Bandeirante,2025-06-11,Saúde,Médio,PR,Bruno Lima,,,,,,
-1082,produto,GRP-12,Grupo Paranapanema,ORG-049,12.172.067/0001-48,PRD-10,Gestão,Indústria Bandeirante - Gestão,2025-06-11,Saúde,Médio,PR,Bruno Lima,2290.00,,,,2240.00,2025-09-16
+1082,produto,GRP-12,Grupo Paranapanema,ORG-049,12.172.067/0001-48,PRD-10,Gestão,Indústria Bandeirante - Gestão,2025-06-11,Saúde,Médio,PR,Bruno Lima,2290.00,,,,2240.00,2026-06-16
 5050,organizacao,GRP-12,Grupo Paranapanema,ORG-050,90.496.178/0001-10,,,Clínica Ipê,2025-07-08,Serviços,Grande,RJ,Bruno Lima,,,,,,
-1083,produto,GRP-12,Grupo Paranapanema,ORG-050,90.496.178/0001-10,PRD-10,Gestão,Clínica Ipê - Gestão,2025-07-08,Serviços,Grande,RJ,Bruno Lima,8100.00,,,,7210.00,2025-12-22
+1083,produto,GRP-12,Grupo Paranapanema,ORG-050,90.496.178/0001-10,PRD-10,Gestão,Clínica Ipê - Gestão,2025-07-08,Serviços,Grande,RJ,Bruno Lima,8100.00,,,,7210.00,2026-04-22
 5051,organizacao,,,ORG-051,65.071.466/0001-34,,,Clínica Serra Azul,2024-07-13,Varejo,Pequeno,SP,Ana Ribeiro,,,,,,
-1084,produto,,,ORG-051,65.071.466/0001-34,PRD-10,Gestão,Clínica Serra Azul - Gestão,2024-07-13,Varejo,Pequeno,SP,Ana Ribeiro,310.00,,,,320.00,2024-10-07
+1084,produto,,,ORG-051,65.071.466/0001-34,PRD-10,Gestão,Clínica Serra Azul - Gestão,2024-07-13,Varejo,Pequeno,SP,Ana Ribeiro,310.00,,,,320.00,2025-05-16
 5052,organizacao,GRP-13,Grupo Iguaçu,ORG-052,06.261.957/0001-59,,,Indústria Boa Vista,2024-10-26,Varejo,Pequeno,GO,Carla Mendes,,,,,,
-1085,produto,GRP-13,Grupo Iguaçu,ORG-052,06.261.957/0001-59,PRD-10,Gestão,Indústria Boa Vista - Gestão,2024-10-26,Varejo,Pequeno,GO,Carla Mendes,310.00,,,,290.00,2024-11-04
+1085,produto,GRP-13,Grupo Iguaçu,ORG-052,06.261.957/0001-59,PRD-10,Gestão,Indústria Boa Vista - Gestão,2024-10-26,Varejo,Pequeno,GO,Carla Mendes,310.00,,,,290.00,2025-05-07
 5053,organizacao,GRP-13,Grupo Iguaçu,ORG-053,53.506.435/0001-53,,,Indústria Horizonte,2026-01-21,Varejo,Pequeno,MG,Elisa Prado,,,,,,
 1086,produto,GRP-13,Grupo Iguaçu,ORG-053,53.506.435/0001-53,PRD-10,Gestão,Indústria Horizonte - Gestão,2026-01-21,Varejo,Pequeno,MG,Elisa Prado,430.00,,,,,2026-09-30
 5054,organizacao,,,ORG-054,81.289.112/0001-85,,,Distribuidora Tocantins,2024-08-21,Educação,Pequeno,RS,Carla Mendes,,,,,,
-1087,produto,,,ORG-054,81.289.112/0001-85,PRD-10,Gestão,Distribuidora Tocantins - Gestão,2024-08-21,Educação,Pequeno,RS,Carla Mendes,610.00,,,,600.00,2025-02-21
+1087,produto,,,ORG-054,81.289.112/0001-85,PRD-10,Gestão,Distribuidora Tocantins - Gestão,2024-08-21,Educação,Pequeno,RS,Carla Mendes,610.00,,,,600.00,2025-02-24
 5055,organizacao,GRP-13,Grupo Iguaçu,ORG-055,67.619.232/0001-64,,,Studio Vale Verde,2025-12-04,Indústria,Grande,PR,Diego Rocha,,,,,,
-1088,produto,GRP-13,Grupo Iguaçu,ORG-055,67.619.232/0001-64,PRD-10,Gestão,Studio Vale Verde - Gestão,2025-12-04,Indústria,Grande,PR,Diego Rocha,9430.00,,,,,2025-12-17
-1089,produto,GRP-13,Grupo Iguaçu,ORG-055,67.619.232/0001-64,PRD-30,Analytics,Studio Vale Verde - Analytics,2026-05-26,Indústria,Grande,PR,Diego Rocha,2790.00,,,,,2026-07-08
+1088,produto,GRP-13,Grupo Iguaçu,ORG-055,67.619.232/0001-64,PRD-10,Gestão,Studio Vale Verde - Gestão,2025-12-04,Indústria,Grande,PR,Diego Rocha,9430.00,,,,,2025-12-09
+1089,produto,GRP-13,Grupo Iguaçu,ORG-055,67.619.232/0001-64,PRD-30,Analytics,Studio Vale Verde - Analytics,2026-05-26,Indústria,Grande,PR,Diego Rocha,2790.00,,,,,2026-09-30
 5056,organizacao,GRP-14,Grupo Xingu,ORG-056,15.546.032/0001-62,,,Farmácia Cerrado,2024-04-26,Serviços,Grande,SP,Carla Mendes,,,,,,
-1090,produto,GRP-14,Grupo Xingu,ORG-056,15.546.032/0001-62,PRD-10,Gestão,Farmácia Cerrado - Gestão,2024-04-26,Serviços,Grande,SP,Carla Mendes,8460.00,,,,8040.00,2024-05-02
-1091,produto,GRP-14,Grupo Xingu,ORG-056,15.546.032/0001-62,PRD-30,Analytics,Farmácia Cerrado - Analytics,2024-07-08,Serviços,Grande,SP,Carla Mendes,2570.00,,,,2210.00,2025-08-10
+1090,produto,GRP-14,Grupo Xingu,ORG-056,15.546.032/0001-62,PRD-10,Gestão,Farmácia Cerrado - Gestão,2024-04-26,Serviços,Grande,SP,Carla Mendes,8460.00,,,,8040.00,2025-03-28
+1091,produto,GRP-14,Grupo Xingu,ORG-056,15.546.032/0001-62,PRD-30,Analytics,Farmácia Cerrado - Analytics,2024-07-08,Serviços,Grande,SP,Carla Mendes,2570.00,,,,2210.00,2024-07-26
 5057,organizacao,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,,,Escola Bandeirante,2024-03-06,Varejo,Pequeno,BA,Bruno Lima,,,,,,
-1092,produto,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,PRD-10,Gestão,Escola Bandeirante - Gestão,2024-03-06,Varejo,Pequeno,BA,Bruno Lima,480.00,2025-10-22,encerramento,Empresa encerrou as atividades.,480.00,2025-03-27
-1093,produto,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,PRD-30,Analytics,Escola Bandeirante - Analytics,2024-12-11,Varejo,Pequeno,BA,Bruno Lima,300.00,2026-05-30,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,270.00,2025-02-13
-1094,produto,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,PRD-20,Financeiro,Escola Bandeirante - Financeiro,2024-08-14,Varejo,Pequeno,BA,Bruno Lima,200.00,2025-06-22,concorrente,Migrou para outra solução.,,2025-03-11
+1092,produto,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,PRD-10,Gestão,Escola Bandeirante - Gestão,2024-03-06,Varejo,Pequeno,BA,Bruno Lima,480.00,2025-10-22,encerramento,Empresa encerrou as atividades.,480.00,2025-01-22
+1093,produto,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,PRD-30,Analytics,Escola Bandeirante - Analytics,2024-12-11,Varejo,Pequeno,BA,Bruno Lima,300.00,2026-05-30,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,270.00,2025-11-25
+1094,produto,GRP-14,Grupo Xingu,ORG-057,91.596.921/0001-80,PRD-20,Financeiro,Escola Bandeirante - Financeiro,2024-08-14,Varejo,Pequeno,BA,Bruno Lima,200.00,2025-06-22,concorrente,Migrou para outra solução.,,2025-04-03
 5058,organizacao,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,,,Colégio Atlântica,2025-06-01,Serviços,Pequeno,SP,Bruno Lima,,,,,,
-1095,produto,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,PRD-10,Gestão,Colégio Atlântica - Gestão,2025-06-01,Serviços,Pequeno,SP,Bruno Lima,400.00,,,,380.00,2025-11-19
-1096,produto,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,PRD-20,Financeiro,Colégio Atlântica - Financeiro,2026-04-20,Serviços,Pequeno,SP,Bruno Lima,220.00,,,,,2026-08-21
-1097,produto,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,PRD-30,Analytics,Colégio Atlântica - Analytics,2026-02-11,Serviços,Pequeno,SP,Bruno Lima,200.00,,,,,2026-04-05
+1095,produto,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,PRD-10,Gestão,Colégio Atlântica - Gestão,2025-06-01,Serviços,Pequeno,SP,Bruno Lima,400.00,,,,380.00,2025-10-31
+1096,produto,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,PRD-20,Financeiro,Colégio Atlântica - Financeiro,2026-04-20,Serviços,Pequeno,SP,Bruno Lima,220.00,,,,,2026-09-30
+1097,produto,GRP-14,Grupo Xingu,ORG-058,10.868.438/0001-62,PRD-30,Analytics,Colégio Atlântica - Analytics,2026-02-11,Serviços,Pequeno,SP,Bruno Lima,200.00,,,,,2026-09-30
 5059,organizacao,GRP-15,Grupo Borborema,ORG-059,76.370.320/0001-19,,,Laboratório Jacarandá,2026-01-29,Indústria,Médio,MG,Bruno Lima,,,,,,
-1098,produto,GRP-15,Grupo Borborema,ORG-059,76.370.320/0001-19,PRD-10,Gestão,Laboratório Jacarandá - Gestão,2026-01-29,Indústria,Médio,MG,Bruno Lima,1520.00,,,,,2026-09-30
+1098,produto,GRP-15,Grupo Borborema,ORG-059,76.370.320/0001-19,PRD-10,Gestão,Laboratório Jacarandá - Gestão,2026-01-29,Indústria,Médio,MG,Bruno Lima,1520.00,,,,,2026-06-11
 1099,produto,GRP-15,Grupo Borborema,ORG-059,76.370.320/0001-19,PRD-20,Financeiro,Laboratório Jacarandá - Financeiro,2026-08-31,Indústria,Médio,MG,Bruno Lima,1310.00,,,,,2026-09-30
 5060,organizacao,GRP-15,Grupo Borborema,ORG-060,75.851.551/0001-85,,,Clínica Atlântica,2026-05-04,Serviços,Pequeno,SP,Ana Ribeiro,,,,,,
 1100,produto,GRP-15,Grupo Borborema,ORG-060,75.851.551/0001-85,PRD-10,Gestão,Clínica Atlântica - Gestão,2026-05-04,Serviços,Pequeno,SP,Ana Ribeiro,350.00,,,,,2026-09-30
 5061,organizacao,GRP-16,Grupo Caparaó,ORG-061,73.158.789/0001-20,,,Farmácia Mantiqueira,2025-11-22,Saúde,Pequeno,RS,Diego Rocha,,,,,,
-1101,produto,GRP-16,Grupo Caparaó,ORG-061,73.158.789/0001-20,PRD-10,Gestão,Farmácia Mantiqueira - Gestão,2025-11-22,Saúde,Pequeno,RS,Diego Rocha,490.00,,,,,2026-03-12
+1101,produto,GRP-16,Grupo Caparaó,ORG-061,73.158.789/0001-20,PRD-10,Gestão,Farmácia Mantiqueira - Gestão,2025-11-22,Saúde,Pequeno,RS,Diego Rocha,490.00,,,,,2026-09-30
 5062,organizacao,GRP-16,Grupo Caparaó,ORG-062,24.295.739/0001-93,,,Rede Mantiqueira,2025-03-03,Varejo,Médio,PE,Elisa Prado,,,,,,
-1102,produto,GRP-16,Grupo Caparaó,ORG-062,24.295.739/0001-93,PRD-10,Gestão,Rede Mantiqueira - Gestão,2025-03-03,Varejo,Médio,PE,Elisa Prado,2030.00,,,,2070.00,2026-02-05
+1102,produto,GRP-16,Grupo Caparaó,ORG-062,24.295.739/0001-93,PRD-10,Gestão,Rede Mantiqueira - Gestão,2025-03-03,Varejo,Médio,PE,Elisa Prado,2030.00,,,,2070.00,2026-02-12
 5063,organizacao,GRP-16,Grupo Caparaó,ORG-063,57.872.553/0001-98,,,Indústria Lagoa,2025-07-18,Serviços,Grande,SP,Diego Rocha,,,,,,
-1103,produto,GRP-16,Grupo Caparaó,ORG-063,57.872.553/0001-98,PRD-10,Gestão,Indústria Lagoa - Gestão,2025-07-18,Serviços,Grande,SP,Diego Rocha,7270.00,,,,6760.00,2026-07-17
-1104,produto,GRP-16,Grupo Caparaó,ORG-063,57.872.553/0001-98,PRD-20,Financeiro,Indústria Lagoa - Financeiro,2026-03-02,Serviços,Grande,SP,Diego Rocha,3620.00,,,,,2026-05-24
+1103,produto,GRP-16,Grupo Caparaó,ORG-063,57.872.553/0001-98,PRD-10,Gestão,Indústria Lagoa - Gestão,2025-07-18,Serviços,Grande,SP,Diego Rocha,7270.00,,,,6760.00,2025-09-19
+1104,produto,GRP-16,Grupo Caparaó,ORG-063,57.872.553/0001-98,PRD-20,Financeiro,Indústria Lagoa - Financeiro,2026-03-02,Serviços,Grande,SP,Diego Rocha,3620.00,,,,,2026-05-28
 5064,organizacao,GRP-16,Grupo Caparaó,ORG-064,05.847.012/0001-14,,,Clínica Jacarandá,2025-08-04,Serviços,Pequeno,SP,Ana Ribeiro,,,,,,
-1105,produto,GRP-16,Grupo Caparaó,ORG-064,05.847.012/0001-14,PRD-10,Gestão,Clínica Jacarandá - Gestão,2025-08-04,Serviços,Pequeno,SP,Ana Ribeiro,520.00,2025-10-06,corte_custos,Revisão de orçamento cortou ferramentas.,510.00,2026-02-22
+1105,produto,GRP-16,Grupo Caparaó,ORG-064,05.847.012/0001-14,PRD-10,Gestão,Clínica Jacarandá - Gestão,2025-08-04,Serviços,Pequeno,SP,Ana Ribeiro,520.00,2025-10-06,corte_custos,Revisão de orçamento cortou ferramentas.,510.00,2026-05-23
 5065,organizacao,GRP-17,Grupo Pantanal,ORG-065,44.708.365/0001-46,,,Distribuidora Bandeirante,2025-08-18,Indústria,Pequeno,RS,Carla Mendes,,,,,,
-1106,produto,GRP-17,Grupo Pantanal,ORG-065,44.708.365/0001-46,PRD-10,Gestão,Distribuidora Bandeirante - Gestão,2025-08-18,Indústria,Pequeno,RS,Carla Mendes,520.00,2026-07-26,corte_custos,Revisão de orçamento cortou ferramentas.,460.00,2025-12-22
-1107,produto,GRP-17,Grupo Pantanal,ORG-065,44.708.365/0001-46,PRD-30,Analytics,Distribuidora Bandeirante - Analytics,2025-08-24,Indústria,Pequeno,RS,Carla Mendes,270.00,2026-07-26,corte_custos,Revisão de orçamento cortou ferramentas.,280.00,2026-07-08
+1106,produto,GRP-17,Grupo Pantanal,ORG-065,44.708.365/0001-46,PRD-10,Gestão,Distribuidora Bandeirante - Gestão,2025-08-18,Indústria,Pequeno,RS,Carla Mendes,520.00,2026-07-26,corte_custos,Revisão de orçamento cortou ferramentas.,460.00,2025-08-26
+1107,produto,GRP-17,Grupo Pantanal,ORG-065,44.708.365/0001-46,PRD-30,Analytics,Distribuidora Bandeirante - Analytics,2025-08-24,Indústria,Pequeno,RS,Carla Mendes,270.00,2026-07-26,corte_custos,Revisão de orçamento cortou ferramentas.,280.00,2025-11-14
 5066,organizacao,GRP-17,Grupo Pantanal,ORG-066,39.702.870/0001-53,,,Colégio Ipê,2026-06-03,Varejo,Médio,SP,Elisa Prado,,,,,,
 1108,produto,GRP-17,Grupo Pantanal,ORG-066,39.702.870/0001-53,PRD-10,Gestão,Colégio Ipê - Gestão,2026-06-03,Varejo,Médio,SP,Elisa Prado,2040.00,,,,,2026-09-30
 5067,organizacao,,,ORG-067,33.503.610/0001-08,,,Farmácia Maré,2026-03-07,Serviços,Pequeno,MG,Bruno Lima,,,,,,
-1109,produto,,,ORG-067,33.503.610/0001-08,PRD-10,Gestão,Farmácia Maré - Gestão,2026-03-07,Serviços,Pequeno,MG,Bruno Lima,410.00,,,,,2026-05-30
+1109,produto,,,ORG-067,33.503.610/0001-08,PRD-10,Gestão,Farmácia Maré - Gestão,2026-03-07,Serviços,Pequeno,MG,Bruno Lima,410.00,,,,,2026-07-01
 5068,organizacao,GRP-17,Grupo Pantanal,ORG-068,91.703.703/0001-64,,,Studio Maré,2025-07-29,Varejo,Grande,SP,Carla Mendes,,,,,,
-1110,produto,GRP-17,Grupo Pantanal,ORG-068,91.703.703/0001-64,PRD-10,Gestão,Studio Maré - Gestão,2025-07-29,Varejo,Grande,SP,Carla Mendes,4870.00,,,,4820.00,2026-01-27
-1111,produto,GRP-17,Grupo Pantanal,ORG-068,91.703.703/0001-64,PRD-30,Analytics,Studio Maré - Analytics,2026-05-12,Varejo,Grande,SP,Carla Mendes,3070.00,,,,,2026-06-23
+1110,produto,GRP-17,Grupo Pantanal,ORG-068,91.703.703/0001-64,PRD-10,Gestão,Studio Maré - Gestão,2025-07-29,Varejo,Grande,SP,Carla Mendes,4870.00,,,,4820.00,2026-03-16
+1111,produto,GRP-17,Grupo Pantanal,ORG-068,91.703.703/0001-64,PRD-30,Analytics,Studio Maré - Analytics,2026-05-12,Varejo,Grande,SP,Carla Mendes,3070.00,,,,,2026-09-30
 1112,produto,GRP-17,Grupo Pantanal,ORG-068,91.703.703/0001-64,PRD-20,Financeiro,Studio Maré - Financeiro,2026-06-29,Varejo,Grande,SP,Carla Mendes,2940.00,,,,,2026-09-30
 5069,organizacao,GRP-17,Grupo Pantanal,ORG-069,85.492.206/0001-52,,,Clínica Boa Vista,2025-10-19,Serviços,Médio,SP,Diego Rocha,,,,,,
-1113,produto,GRP-17,Grupo Pantanal,ORG-069,85.492.206/0001-52,PRD-10,Gestão,Clínica Boa Vista - Gestão,2025-10-19,Serviços,Médio,SP,Diego Rocha,2430.00,,,,,2026-09-30
+1113,produto,GRP-17,Grupo Pantanal,ORG-069,85.492.206/0001-52,PRD-10,Gestão,Clínica Boa Vista - Gestão,2025-10-19,Serviços,Médio,SP,Diego Rocha,2430.00,,,,,2026-03-24
 5070,organizacao,GRP-18,Grupo Ibiapaba,ORG-070,23.581.429/0001-71,,,Studio Aurora,2025-10-24,Indústria,Médio,DF,Bruno Lima,,,,,,
-1114,produto,GRP-18,Grupo Ibiapaba,ORG-070,23.581.429/0001-71,PRD-10,Gestão,Studio Aurora - Gestão,2025-10-24,Indústria,Médio,DF,Bruno Lima,2340.00,,,,,2026-02-21
+1114,produto,GRP-18,Grupo Ibiapaba,ORG-070,23.581.429/0001-71,PRD-10,Gestão,Studio Aurora - Gestão,2025-10-24,Indústria,Médio,DF,Bruno Lima,2340.00,,,,,2026-09-12
 5071,organizacao,GRP-18,Grupo Ibiapaba,ORG-071,90.057.458/0001-93,,,Instituto Horizonte,2025-10-20,Indústria,Pequeno,GO,Ana Ribeiro,,,,,,
-1115,produto,GRP-18,Grupo Ibiapaba,ORG-071,90.057.458/0001-93,PRD-10,Gestão,Instituto Horizonte - Gestão,2025-10-20,Indústria,Pequeno,GO,Ana Ribeiro,390.00,,,,,2026-09-30
-1116,produto,GRP-18,Grupo Ibiapaba,ORG-071,90.057.458/0001-93,PRD-20,Financeiro,Instituto Horizonte - Financeiro,2025-11-23,Indústria,Pequeno,GO,Ana Ribeiro,320.00,,,,,2026-02-28
+1115,produto,GRP-18,Grupo Ibiapaba,ORG-071,90.057.458/0001-93,PRD-10,Gestão,Instituto Horizonte - Gestão,2025-10-20,Indústria,Pequeno,GO,Ana Ribeiro,390.00,,,,,2026-09-03
+1116,produto,GRP-18,Grupo Ibiapaba,ORG-071,90.057.458/0001-93,PRD-20,Financeiro,Instituto Horizonte - Financeiro,2025-11-23,Indústria,Pequeno,GO,Ana Ribeiro,320.00,,,,,2026-07-02
 5072,organizacao,GRP-18,Grupo Ibiapaba,ORG-072,75.982.739/0001-77,,,Colégio Tocantins,2025-04-24,Saúde,Pequeno,SC,Diego Rocha,,,,,,
-1117,produto,GRP-18,Grupo Ibiapaba,ORG-072,75.982.739/0001-77,PRD-10,Gestão,Colégio Tocantins - Gestão,2025-04-24,Saúde,Pequeno,SC,Diego Rocha,480.00,,,,500.00,2025-05-31
+1117,produto,GRP-18,Grupo Ibiapaba,ORG-072,75.982.739/0001-77,PRD-10,Gestão,Colégio Tocantins - Gestão,2025-04-24,Saúde,Pequeno,SC,Diego Rocha,480.00,,,,500.00,2025-12-02
 5073,organizacao,GRP-18,Grupo Ibiapaba,ORG-073,58.757.609/0001-64,,,Instituto Pinhal,2024-08-01,Indústria,Pequeno,SC,Elisa Prado,,,,,,
-1118,produto,GRP-18,Grupo Ibiapaba,ORG-073,58.757.609/0001-64,PRD-10,Gestão,Instituto Pinhal - Gestão,2024-08-01,Indústria,Pequeno,SC,Elisa Prado,330.00,,,,320.00,2025-07-21
+1118,produto,GRP-18,Grupo Ibiapaba,ORG-073,58.757.609/0001-64,PRD-10,Gestão,Instituto Pinhal - Gestão,2024-08-01,Indústria,Pequeno,SC,Elisa Prado,330.00,,,,320.00,2025-02-19
 5074,organizacao,,,ORG-074,53.868.848/0001-63,,,Studio Carvalho,2024-07-02,Serviços,Pequeno,GO,Ana Ribeiro,,,,,,
-1119,produto,,,ORG-074,53.868.848/0001-63,PRD-10,Gestão,Studio Carvalho - Gestão,2024-07-02,Serviços,Pequeno,GO,Ana Ribeiro,330.00,,,,290.00,2025-06-29
+1119,produto,,,ORG-074,53.868.848/0001-63,PRD-10,Gestão,Studio Carvalho - Gestão,2024-07-02,Serviços,Pequeno,GO,Ana Ribeiro,330.00,,,,290.00,2025-03-06
 5075,organizacao,,,ORG-075,67.830.013/0001-09,,,Farmácia Ipê,2025-07-17,Serviços,Médio,PE,Ana Ribeiro,,,,,,
-1120,produto,,,ORG-075,67.830.013/0001-09,PRD-10,Gestão,Farmácia Ipê - Gestão,2025-07-17,Serviços,Médio,PE,Ana Ribeiro,1790.00,,,,1810.00,2025-11-10
+1120,produto,,,ORG-075,67.830.013/0001-09,PRD-10,Gestão,Farmácia Ipê - Gestão,2025-07-17,Serviços,Médio,PE,Ana Ribeiro,1790.00,,,,1810.00,2026-02-06
 5076,organizacao,,,ORG-076,68.123.255/0001-83,,,Escola Atlântica,2026-01-09,Serviços,Pequeno,SP,Elisa Prado,,,,,,
-1121,produto,,,ORG-076,68.123.255/0001-83,PRD-10,Gestão,Escola Atlântica - Gestão,2026-01-09,Serviços,Pequeno,SP,Elisa Prado,550.00,,,,,2026-01-15
+1121,produto,,,ORG-076,68.123.255/0001-83,PRD-10,Gestão,Escola Atlântica - Gestão,2026-01-09,Serviços,Pequeno,SP,Elisa Prado,550.00,,,,,2026-09-30
 5077,organizacao,,,ORG-077,00.179.957/0001-72,,,Rede Serra Azul,2024-02-28,Saúde,Grande,GO,Bruno Lima,,,,,,
-1122,produto,,,ORG-077,00.179.957/0001-72,PRD-10,Gestão,Rede Serra Azul - Gestão,2024-02-28,Saúde,Grande,GO,Bruno Lima,8520.00,,,,9030.00,2024-03-30
+1122,produto,,,ORG-077,00.179.957/0001-72,PRD-10,Gestão,Rede Serra Azul - Gestão,2024-02-28,Saúde,Grande,GO,Bruno Lima,8520.00,,,,9030.00,2024-12-15
 5078,organizacao,,,ORG-078,66.452.157/0001-79,,,Mercado Paraty,2025-03-26,Serviços,Médio,SC,Bruno Lima,,,,,,
-1123,produto,,,ORG-078,66.452.157/0001-79,PRD-10,Gestão,Mercado Paraty - Gestão,2025-03-26,Serviços,Médio,SC,Bruno Lima,2470.00,2026-03-10,concorrente,Migrou para outra solução.,2400.00,2025-11-19
+1123,produto,,,ORG-078,66.452.157/0001-79,PRD-10,Gestão,Mercado Paraty - Gestão,2025-03-26,Serviços,Médio,SC,Bruno Lima,2470.00,2026-03-10,concorrente,Migrou para outra solução.,2400.00,2025-12-21
 5079,organizacao,,,ORG-079,78.492.984/0001-29,,,Colégio Itapuã,2026-05-10,Indústria,Médio,PE,Diego Rocha,,,,,,
 1124,produto,,,ORG-079,78.492.984/0001-29,PRD-10,Gestão,Colégio Itapuã - Gestão,2026-05-10,Indústria,Médio,PE,Diego Rocha,1310.00,,,,,2026-09-30
 1125,produto,,,ORG-079,78.492.984/0001-29,PRD-20,Financeiro,Colégio Itapuã - Financeiro,2026-08-31,Indústria,Médio,PE,Diego Rocha,1470.00,,,,,2026-09-30
 5080,organizacao,,,ORG-080,06.503.790/0001-09,,,Laboratório Mantiqueira,2024-11-20,Saúde,Médio,SP,Carla Mendes,,,,,,
-1126,produto,,,ORG-080,06.503.790/0001-09,PRD-10,Gestão,Laboratório Mantiqueira - Gestão,2024-11-20,Saúde,Médio,SP,Carla Mendes,1520.00,,,,1410.00,2025-04-22
-1127,produto,,,ORG-080,06.503.790/0001-09,PRD-20,Financeiro,Laboratório Mantiqueira - Financeiro,2025-11-03,Saúde,Médio,SP,Carla Mendes,1150.00,,,,,2026-05-07
+1126,produto,,,ORG-080,06.503.790/0001-09,PRD-10,Gestão,Laboratório Mantiqueira - Gestão,2024-11-20,Saúde,Médio,SP,Carla Mendes,1520.00,,,,1410.00,2025-02-18
+1127,produto,,,ORG-080,06.503.790/0001-09,PRD-20,Financeiro,Laboratório Mantiqueira - Financeiro,2025-11-03,Saúde,Médio,SP,Carla Mendes,1150.00,,,,,2026-05-15
 5081,organizacao,,,ORG-081,72.508.511/0001-49,,,Rede Horizonte,2024-10-04,Educação,Pequeno,BA,Diego Rocha,,,,,,
-1128,produto,,,ORG-081,72.508.511/0001-49,PRD-10,Gestão,Rede Horizonte - Gestão,2024-10-04,Educação,Pequeno,BA,Diego Rocha,540.00,2025-05-08,preco,Considerou o valor alto para o uso atual.,,2024-10-24
+1128,produto,,,ORG-081,72.508.511/0001-49,PRD-10,Gestão,Rede Horizonte - Gestão,2024-10-04,Educação,Pequeno,BA,Diego Rocha,540.00,2025-05-08,preco,Considerou o valor alto para o uso atual.,,2025-05-28
 5082,organizacao,,,ORG-082,97.765.542/0001-70,,,Colégio Horizonte,2024-12-08,Varejo,Pequeno,SP,Diego Rocha,,,,,,
-1129,produto,,,ORG-082,97.765.542/0001-70,PRD-10,Gestão,Colégio Horizonte - Gestão,2024-12-08,Varejo,Pequeno,SP,Diego Rocha,440.00,2025-05-21,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-12-19
+1129,produto,,,ORG-082,97.765.542/0001-70,PRD-10,Gestão,Colégio Horizonte - Gestão,2024-12-08,Varejo,Pequeno,SP,Diego Rocha,440.00,2025-05-21,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-10-04
 5083,organizacao,,,ORG-083,87.853.026/0001-67,,,Instituto Lagoa,2024-09-01,Indústria,Médio,MG,Diego Rocha,,,,,,
-1130,produto,,,ORG-083,87.853.026/0001-67,PRD-10,Gestão,Instituto Lagoa - Gestão,2024-09-01,Indústria,Médio,MG,Diego Rocha,1490.00,2026-02-09,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,1530.00,2025-03-15
+1130,produto,,,ORG-083,87.853.026/0001-67,PRD-10,Gestão,Instituto Lagoa - Gestão,2024-09-01,Indústria,Médio,MG,Diego Rocha,1490.00,2026-02-09,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,1530.00,2024-12-25
 5084,organizacao,,,ORG-084,75.490.046/0001-16,,,Studio Bandeirante,2024-08-20,Serviços,Pequeno,RS,Ana Ribeiro,,,,,,
-1131,produto,,,ORG-084,75.490.046/0001-16,PRD-10,Gestão,Studio Bandeirante - Gestão,2024-08-20,Serviços,Pequeno,RS,Ana Ribeiro,370.00,,,,350.00,2025-07-16
+1131,produto,,,ORG-084,75.490.046/0001-16,PRD-10,Gestão,Studio Bandeirante - Gestão,2024-08-20,Serviços,Pequeno,RS,Ana Ribeiro,370.00,,,,350.00,2025-01-23
 5085,organizacao,,,ORG-085,67.610.880/0001-95,,,Laboratório Itapuã,2024-08-06,Serviços,Pequeno,PR,Carla Mendes,,,,,,
-1132,produto,,,ORG-085,67.610.880/0001-95,PRD-10,Gestão,Laboratório Itapuã - Gestão,2024-08-06,Serviços,Pequeno,PR,Carla Mendes,610.00,2026-07-31,corte_custos,Revisão de orçamento cortou ferramentas.,520.00,2025-05-23
-1133,produto,,,ORG-085,67.610.880/0001-95,PRD-20,Financeiro,Laboratório Itapuã - Financeiro,2025-01-14,Serviços,Pequeno,PR,Carla Mendes,230.00,2025-08-30,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2025-08-03
-1134,produto,,,ORG-085,67.610.880/0001-95,PRD-30,Analytics,Laboratório Itapuã - Analytics,2025-01-17,Serviços,Pequeno,PR,Carla Mendes,230.00,2026-07-31,corte_custos,Revisão de orçamento cortou ferramentas.,210.00,2025-04-17
+1132,produto,,,ORG-085,67.610.880/0001-95,PRD-10,Gestão,Laboratório Itapuã - Gestão,2024-08-06,Serviços,Pequeno,PR,Carla Mendes,610.00,2026-07-31,corte_custos,Revisão de orçamento cortou ferramentas.,520.00,2025-05-11
+1133,produto,,,ORG-085,67.610.880/0001-95,PRD-20,Financeiro,Laboratório Itapuã - Financeiro,2025-01-14,Serviços,Pequeno,PR,Carla Mendes,230.00,2025-08-30,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2025-12-12
+1134,produto,,,ORG-085,67.610.880/0001-95,PRD-30,Analytics,Laboratório Itapuã - Analytics,2025-01-17,Serviços,Pequeno,PR,Carla Mendes,230.00,2026-07-31,corte_custos,Revisão de orçamento cortou ferramentas.,210.00,2025-03-13
 5086,organizacao,,,ORG-086,59.494.695/0001-60,,,Mercado Aurora,2024-11-27,Serviços,Grande,PE,Ana Ribeiro,,,,,,
-1135,produto,,,ORG-086,59.494.695/0001-60,PRD-10,Gestão,Mercado Aurora - Gestão,2024-11-27,Serviços,Grande,PE,Ana Ribeiro,9550.00,2025-06-07,corte_custos,"Corte de custos geral, sem queixa sobre o produto.",,2025-12-17
+1135,produto,,,ORG-086,59.494.695/0001-60,PRD-10,Gestão,Mercado Aurora - Gestão,2024-11-27,Serviços,Grande,PE,Ana Ribeiro,9550.00,2025-06-07,corte_custos,"Corte de custos geral, sem queixa sobre o produto.",,2025-10-12
 5087,organizacao,,,ORG-087,15.157.643/0001-11,,,Escola Ipê,2025-09-30,Educação,Médio,SP,Elisa Prado,,,,,,
-1136,produto,,,ORG-087,15.157.643/0001-11,PRD-10,Gestão,Escola Ipê - Gestão,2025-09-30,Educação,Médio,SP,Elisa Prado,1790.00,2026-08-15,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,1700.00,2026-01-30
+1136,produto,,,ORG-087,15.157.643/0001-11,PRD-10,Gestão,Escola Ipê - Gestão,2025-09-30,Educação,Médio,SP,Elisa Prado,1790.00,2026-08-15,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,1700.00,2026-08-13
 5088,organizacao,,,ORG-088,83.456.599/0001-04,,,Mercado Mantiqueira,2026-08-15,Indústria,Médio,SP,Bruno Lima,,,,,,
 1137,produto,,,ORG-088,83.456.599/0001-04,PRD-10,Gestão,Mercado Mantiqueira - Gestão,2026-08-15,Indústria,Médio,SP,Bruno Lima,2330.00,,,,,2026-09-30
 1138,produto,,,ORG-088,83.456.599/0001-04,PRD-20,Financeiro,Mercado Mantiqueira - Financeiro,2026-08-24,Indústria,Médio,SP,Bruno Lima,1040.00,,,,,2026-09-30
 1139,produto,,,ORG-088,83.456.599/0001-04,PRD-30,Analytics,Mercado Mantiqueira - Analytics,2026-08-23,Indústria,Médio,SP,Bruno Lima,990.00,,,,,2026-09-30
 5089,organizacao,,,ORG-089,82.793.932/0001-53,,,Indústria Maré,2025-06-22,Varejo,Pequeno,SC,Bruno Lima,,,,,,
-1140,produto,,,ORG-089,82.793.932/0001-53,PRD-10,Gestão,Indústria Maré - Gestão,2025-06-22,Varejo,Pequeno,SC,Bruno Lima,630.00,2025-07-28,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2026-03-19
+1140,produto,,,ORG-089,82.793.932/0001-53,PRD-10,Gestão,Indústria Maré - Gestão,2025-06-22,Varejo,Pequeno,SC,Bruno Lima,630.00,2025-07-28,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2026-04-21
 5090,organizacao,,,ORG-090,68.272.285/0001-89,,,Rede Ipê,2024-12-15,Indústria,Pequeno,RJ,Diego Rocha,,,,,,
-1141,produto,,,ORG-090,68.272.285/0001-89,PRD-10,Gestão,Rede Ipê - Gestão,2024-12-15,Indústria,Pequeno,RJ,Diego Rocha,330.00,2025-03-28,corte_custos,Revisão de orçamento cortou ferramentas.,,2025-03-26
+1141,produto,,,ORG-090,68.272.285/0001-89,PRD-10,Gestão,Rede Ipê - Gestão,2024-12-15,Indústria,Pequeno,RJ,Diego Rocha,330.00,2025-03-28,corte_custos,Revisão de orçamento cortou ferramentas.,,2025-11-13
 5091,organizacao,,,ORG-091,68.711.121/0001-04,,,Studio Tocantins,2026-03-26,Indústria,Pequeno,SC,Elisa Prado,,,,,,
-1142,produto,,,ORG-091,68.711.121/0001-04,PRD-10,Gestão,Studio Tocantins - Gestão,2026-03-26,Indústria,Pequeno,SC,Elisa Prado,640.00,,,,,2026-05-20
+1142,produto,,,ORG-091,68.711.121/0001-04,PRD-10,Gestão,Studio Tocantins - Gestão,2026-03-26,Indústria,Pequeno,SC,Elisa Prado,640.00,,,,,2026-09-30
 5092,organizacao,,,ORG-092,63.880.710/0001-61,,,Mercado Lagoa,2025-07-22,Educação,Pequeno,GO,Bruno Lima,,,,,,
-1143,produto,,,ORG-092,63.880.710/0001-61,PRD-10,Gestão,Mercado Lagoa - Gestão,2025-07-22,Educação,Pequeno,GO,Bruno Lima,400.00,2026-07-01,concorrente,Migrou para outra solução.,400.00,2026-03-17
+1143,produto,,,ORG-092,63.880.710/0001-61,PRD-10,Gestão,Mercado Lagoa - Gestão,2025-07-22,Educação,Pequeno,GO,Bruno Lima,400.00,2026-07-01,concorrente,Migrou para outra solução.,400.00,2026-04-30
 5093,organizacao,,,ORG-093,75.588.766/0001-33,,,Laboratório Pinhal,2025-04-08,Serviços,Pequeno,GO,Carla Mendes,,,,,,
-1144,produto,,,ORG-093,75.588.766/0001-33,PRD-10,Gestão,Laboratório Pinhal - Gestão,2025-04-08,Serviços,Pequeno,GO,Carla Mendes,690.00,2025-10-26,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,630.00,2025-10-31
+1144,produto,,,ORG-093,75.588.766/0001-33,PRD-10,Gestão,Laboratório Pinhal - Gestão,2025-04-08,Serviços,Pequeno,GO,Carla Mendes,690.00,2025-10-26,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,630.00,2025-09-07
 5094,organizacao,,,ORG-094,61.258.126/0001-41,,,Mercado Itapuã,2024-04-01,Varejo,Grande,PR,Carla Mendes,,,,,,
-1145,produto,,,ORG-094,61.258.126/0001-41,PRD-10,Gestão,Mercado Itapuã - Gestão,2024-04-01,Varejo,Grande,PR,Carla Mendes,4230.00,2026-06-25,concorrente,Migrou para outra solução.,4480.00,2024-05-28
-1146,produto,,,ORG-094,61.258.126/0001-41,PRD-30,Analytics,Mercado Itapuã - Analytics,2024-08-13,Varejo,Grande,PR,Carla Mendes,2870.00,2026-06-25,concorrente,Migrou para outra solução.,2780.00,2026-03-10
-1147,produto,,,ORG-094,61.258.126/0001-41,PRD-20,Financeiro,Mercado Itapuã - Financeiro,2024-11-12,Varejo,Grande,PR,Carla Mendes,5310.00,2025-04-24,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2025-02-28
+1145,produto,,,ORG-094,61.258.126/0001-41,PRD-10,Gestão,Mercado Itapuã - Gestão,2024-04-01,Varejo,Grande,PR,Carla Mendes,4230.00,2026-06-25,concorrente,Migrou para outra solução.,4480.00,2024-10-22
+1146,produto,,,ORG-094,61.258.126/0001-41,PRD-30,Analytics,Mercado Itapuã - Analytics,2024-08-13,Varejo,Grande,PR,Carla Mendes,2870.00,2026-06-25,concorrente,Migrou para outra solução.,2780.00,2026-03-27
+1147,produto,,,ORG-094,61.258.126/0001-41,PRD-20,Financeiro,Mercado Itapuã - Financeiro,2024-11-12,Varejo,Grande,PR,Carla Mendes,5310.00,2025-04-24,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2025-10-30
 5095,organizacao,,,ORG-095,64.964.451/0001-58,,,Studio Serra Azul,2024-11-23,Indústria,Grande,SP,Ana Ribeiro,,,,,,
-1148,produto,,,ORG-095,64.964.451/0001-58,PRD-10,Gestão,Studio Serra Azul - Gestão,2024-11-23,Indústria,Grande,SP,Ana Ribeiro,9800.00,,,,10000.00,2025-02-03
+1148,produto,,,ORG-095,64.964.451/0001-58,PRD-10,Gestão,Studio Serra Azul - Gestão,2024-11-23,Indústria,Grande,SP,Ana Ribeiro,9800.00,,,,10000.00,2025-09-15
 5096,organizacao,,,ORG-096,11.902.100/0001-03,,,Indústria Carvalho,2024-12-01,Indústria,Grande,SP,Elisa Prado,,,,,,
-1149,produto,,,ORG-096,11.902.100/0001-03,PRD-10,Gestão,Indústria Carvalho - Gestão,2024-12-01,Indústria,Grande,SP,Elisa Prado,7130.00,,,,6630.00,2025-01-03
+1149,produto,,,ORG-096,11.902.100/0001-03,PRD-10,Gestão,Indústria Carvalho - Gestão,2024-12-01,Indústria,Grande,SP,Elisa Prado,7130.00,,,,6630.00,2025-11-26
 5097,organizacao,,,ORG-097,74.383.368/0001-49,,,Instituto Bandeirante,2026-04-17,Educação,Médio,BA,Bruno Lima,,,,,,
 1150,produto,,,ORG-097,74.383.368/0001-49,PRD-10,Gestão,Instituto Bandeirante - Gestão,2026-04-17,Educação,Médio,BA,Bruno Lima,1040.00,,,,,2026-09-30
 5098,organizacao,,,ORG-098,32.457.514/0001-11,,,Mercado Serra Azul,2026-03-07,Serviços,Médio,PR,Elisa Prado,,,,,,
-1151,produto,,,ORG-098,32.457.514/0001-11,PRD-10,Gestão,Mercado Serra Azul - Gestão,2026-03-07,Serviços,Médio,PR,Elisa Prado,1210.00,,,,,2026-09-17
+1151,produto,,,ORG-098,32.457.514/0001-11,PRD-10,Gestão,Mercado Serra Azul - Gestão,2026-03-07,Serviços,Médio,PR,Elisa Prado,1210.00,,,,,2026-05-17
 5099,organizacao,,,ORG-099,20.365.985/0001-59,,,Farmácia Pinhal,2024-12-30,Serviços,Pequeno,SC,Diego Rocha,,,,,,
-1152,produto,,,ORG-099,20.365.985/0001-59,PRD-10,Gestão,Farmácia Pinhal - Gestão,2024-12-30,Serviços,Pequeno,SC,Diego Rocha,630.00,,,,560.00,2025-04-07
+1152,produto,,,ORG-099,20.365.985/0001-59,PRD-10,Gestão,Farmácia Pinhal - Gestão,2024-12-30,Serviços,Pequeno,SC,Diego Rocha,630.00,,,,560.00,2025-03-08
 5100,organizacao,,,ORG-100,13.087.340/0001-11,,,Escola Maré,2025-03-08,Saúde,Grande,GO,Bruno Lima,,,,,,
-1153,produto,,,ORG-100,13.087.340/0001-11,PRD-10,Gestão,Escola Maré - Gestão,2025-03-08,Saúde,Grande,GO,Bruno Lima,3850.00,2026-03-18,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,3970.00,2025-05-09
-1154,produto,,,ORG-100,13.087.340/0001-11,PRD-30,Analytics,Escola Maré - Analytics,2025-04-09,Saúde,Grande,GO,Bruno Lima,2450.00,,,,2300.00,2025-07-02
+1153,produto,,,ORG-100,13.087.340/0001-11,PRD-10,Gestão,Escola Maré - Gestão,2025-03-08,Saúde,Grande,GO,Bruno Lima,3850.00,2026-03-18,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,3970.00,2025-08-30
+1154,produto,,,ORG-100,13.087.340/0001-11,PRD-30,Analytics,Escola Maré - Analytics,2025-04-09,Saúde,Grande,GO,Bruno Lima,2450.00,,,,2300.00,2026-03-22
 5101,organizacao,,,ORG-101,77.309.682/0001-55,,,Rede Atlântica,2025-11-26,Serviços,Grande,SP,Ana Ribeiro,,,,,,
-1155,produto,,,ORG-101,77.309.682/0001-55,PRD-10,Gestão,Rede Atlântica - Gestão,2025-11-26,Serviços,Grande,SP,Ana Ribeiro,7430.00,,,,,2026-05-04
-1156,produto,,,ORG-101,77.309.682/0001-55,PRD-30,Analytics,Rede Atlântica - Analytics,2026-02-09,Serviços,Grande,SP,Ana Ribeiro,2910.00,,,,,2026-07-02
-1157,produto,,,ORG-101,77.309.682/0001-55,PRD-20,Financeiro,Rede Atlântica - Financeiro,2026-02-07,Serviços,Grande,SP,Ana Ribeiro,5200.00,,,,,2026-08-02
+1155,produto,,,ORG-101,77.309.682/0001-55,PRD-10,Gestão,Rede Atlântica - Gestão,2025-11-26,Serviços,Grande,SP,Ana Ribeiro,7430.00,,,,,2026-02-26
+1156,produto,,,ORG-101,77.309.682/0001-55,PRD-30,Analytics,Rede Atlântica - Analytics,2026-02-09,Serviços,Grande,SP,Ana Ribeiro,2910.00,,,,,2026-08-24
+1157,produto,,,ORG-101,77.309.682/0001-55,PRD-20,Financeiro,Rede Atlântica - Financeiro,2026-02-07,Serviços,Grande,SP,Ana Ribeiro,5200.00,,,,,2026-08-13
 5102,organizacao,,,ORG-102,43.576.319/0001-92,,,Rede Paraty,2025-10-28,Varejo,Médio,SP,Diego Rocha,,,,,,
-1158,produto,,,ORG-102,43.576.319/0001-92,PRD-10,Gestão,Rede Paraty - Gestão,2025-10-28,Varejo,Médio,SP,Diego Rocha,1480.00,,,,,2026-02-23
+1158,produto,,,ORG-102,43.576.319/0001-92,PRD-10,Gestão,Rede Paraty - Gestão,2025-10-28,Varejo,Médio,SP,Diego Rocha,1480.00,,,,,2026-08-16
 5103,organizacao,,,ORG-103,05.007.072/0001-06,,,Distribuidora Paraty,2025-03-18,Varejo,Pequeno,SP,Bruno Lima,,,,,,
-1159,produto,,,ORG-103,05.007.072/0001-06,PRD-10,Gestão,Distribuidora Paraty - Gestão,2025-03-18,Varejo,Pequeno,SP,Bruno Lima,370.00,,,,350.00,2025-09-30
-1160,produto,,,ORG-103,05.007.072/0001-06,PRD-20,Financeiro,Distribuidora Paraty - Financeiro,2025-11-16,Varejo,Pequeno,SP,Bruno Lima,190.00,2026-02-02,preco,Considerou o valor alto para o uso atual.,,2026-09-20
-1161,produto,,,ORG-103,05.007.072/0001-06,PRD-30,Analytics,Distribuidora Paraty - Analytics,2026-01-28,Varejo,Pequeno,SP,Bruno Lima,190.00,,,,,2026-06-20
+1159,produto,,,ORG-103,05.007.072/0001-06,PRD-10,Gestão,Distribuidora Paraty - Gestão,2025-03-18,Varejo,Pequeno,SP,Bruno Lima,370.00,,,,350.00,2026-04-04
+1160,produto,,,ORG-103,05.007.072/0001-06,PRD-20,Financeiro,Distribuidora Paraty - Financeiro,2025-11-16,Varejo,Pequeno,SP,Bruno Lima,190.00,2026-02-02,preco,Considerou o valor alto para o uso atual.,,2026-05-26
+1161,produto,,,ORG-103,05.007.072/0001-06,PRD-30,Analytics,Distribuidora Paraty - Analytics,2026-01-28,Varejo,Pequeno,SP,Bruno Lima,190.00,,,,,2026-09-30
 5104,organizacao,,,ORG-104,87.957.895/0001-55,,,Colégio Pinhal,2024-02-05,Serviços,Grande,RJ,Ana Ribeiro,,,,,,
-1162,produto,,,ORG-104,87.957.895/0001-55,PRD-10,Gestão,Colégio Pinhal - Gestão,2024-02-05,Serviços,Grande,RJ,Ana Ribeiro,7560.00,2025-10-06,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,6880.00,2025-01-29
+1162,produto,,,ORG-104,87.957.895/0001-55,PRD-10,Gestão,Colégio Pinhal - Gestão,2024-02-05,Serviços,Grande,RJ,Ana Ribeiro,7560.00,2025-10-06,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,6880.00,2024-06-23
 5105,organizacao,,,ORG-105,37.251.667/0001-76,,,Comercial Tocantins,2025-12-17,Indústria,Grande,BA,Bruno Lima,,,,,,
-1163,produto,,,ORG-105,37.251.667/0001-76,PRD-10,Gestão,Comercial Tocantins - Gestão,2025-12-17,Indústria,Grande,BA,Bruno Lima,7490.00,,,,,2026-09-27
+1163,produto,,,ORG-105,37.251.667/0001-76,PRD-10,Gestão,Comercial Tocantins - Gestão,2025-12-17,Indústria,Grande,BA,Bruno Lima,7490.00,,,,,2026-09-30
 1164,produto,,,ORG-105,37.251.667/0001-76,PRD-30,Analytics,Comercial Tocantins - Analytics,2026-02-12,Indústria,Grande,BA,Bruno Lima,3970.00,,,,,2026-09-30
 5106,organizacao,,,ORG-106,12.686.114/0001-70,,,Farmácia Bandeirante,2025-11-23,Serviços,Médio,GO,Elisa Prado,,,,,,
-1165,produto,,,ORG-106,12.686.114/0001-70,PRD-10,Gestão,Farmácia Bandeirante - Gestão,2025-11-23,Serviços,Médio,GO,Elisa Prado,1070.00,,,,,2026-06-18
+1165,produto,,,ORG-106,12.686.114/0001-70,PRD-10,Gestão,Farmácia Bandeirante - Gestão,2025-11-23,Serviços,Médio,GO,Elisa Prado,1070.00,,,,,2026-09-21
 5107,organizacao,,,ORG-107,60.796.566/0001-34,,,Escola Jacarandá,2024-02-12,Varejo,Pequeno,PR,Ana Ribeiro,,,,,,
-1166,produto,,,ORG-107,60.796.566/0001-34,PRD-10,Gestão,Escola Jacarandá - Gestão,2024-02-12,Varejo,Pequeno,PR,Ana Ribeiro,340.00,,,,340.00,2024-05-04
-1167,produto,,,ORG-107,60.796.566/0001-34,PRD-20,Financeiro,Escola Jacarandá - Financeiro,2024-08-14,Varejo,Pequeno,PR,Ana Ribeiro,380.00,2024-10-17,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-02-17
-1168,produto,,,ORG-107,60.796.566/0001-34,PRD-30,Analytics,Escola Jacarandá - Analytics,2024-02-16,Varejo,Pequeno,PR,Ana Ribeiro,190.00,,,,200.00,2025-01-26
+1166,produto,,,ORG-107,60.796.566/0001-34,PRD-10,Gestão,Escola Jacarandá - Gestão,2024-02-12,Varejo,Pequeno,PR,Ana Ribeiro,340.00,,,,340.00,2025-02-05
+1167,produto,,,ORG-107,60.796.566/0001-34,PRD-20,Financeiro,Escola Jacarandá - Financeiro,2024-08-14,Varejo,Pequeno,PR,Ana Ribeiro,380.00,2024-10-17,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-04-16
+1168,produto,,,ORG-107,60.796.566/0001-34,PRD-30,Analytics,Escola Jacarandá - Analytics,2024-02-16,Varejo,Pequeno,PR,Ana Ribeiro,190.00,,,,200.00,2025-02-06
 5108,organizacao,,,ORG-108,47.459.928/0001-34,,,Farmácia Serra Azul,2025-05-04,Varejo,Pequeno,RS,Carla Mendes,,,,,,
-1169,produto,,,ORG-108,47.459.928/0001-34,PRD-10,Gestão,Farmácia Serra Azul - Gestão,2025-05-04,Varejo,Pequeno,RS,Carla Mendes,430.00,,,,420.00,2025-07-30
-1170,produto,,,ORG-108,47.459.928/0001-34,PRD-30,Analytics,Farmácia Serra Azul - Analytics,2025-10-16,Varejo,Pequeno,RS,Carla Mendes,290.00,,,,,2025-12-05
-1171,produto,,,ORG-108,47.459.928/0001-34,PRD-20,Financeiro,Farmácia Serra Azul - Financeiro,2026-02-10,Varejo,Pequeno,RS,Carla Mendes,340.00,,,,,2026-03-18
+1169,produto,,,ORG-108,47.459.928/0001-34,PRD-10,Gestão,Farmácia Serra Azul - Gestão,2025-05-04,Varejo,Pequeno,RS,Carla Mendes,430.00,,,,420.00,2026-02-09
+1170,produto,,,ORG-108,47.459.928/0001-34,PRD-30,Analytics,Farmácia Serra Azul - Analytics,2025-10-16,Varejo,Pequeno,RS,Carla Mendes,290.00,,,,,2026-09-30
+1171,produto,,,ORG-108,47.459.928/0001-34,PRD-20,Financeiro,Farmácia Serra Azul - Financeiro,2026-02-10,Varejo,Pequeno,RS,Carla Mendes,340.00,,,,,2026-09-30
 5109,organizacao,,,ORG-109,91.532.399/0001-75,,,Instituto Paraty,2024-11-22,Indústria,Médio,BA,Elisa Prado,,,,,,
-1172,produto,,,ORG-109,91.532.399/0001-75,PRD-10,Gestão,Instituto Paraty - Gestão,2024-11-22,Indústria,Médio,BA,Elisa Prado,2040.00,,,,1900.00,2025-06-08
-1173,produto,,,ORG-109,91.532.399/0001-75,PRD-20,Financeiro,Instituto Paraty - Financeiro,2025-04-02,Indústria,Médio,BA,Elisa Prado,800.00,2026-09-18,concorrente,Migrou para outra solução.,670.00,2026-07-03
-1174,produto,,,ORG-109,91.532.399/0001-75,PRD-30,Analytics,Instituto Paraty - Analytics,2025-05-10,Indústria,Médio,BA,Elisa Prado,480.00,,,,470.00,2025-10-09
+1172,produto,,,ORG-109,91.532.399/0001-75,PRD-10,Gestão,Instituto Paraty - Gestão,2024-11-22,Indústria,Médio,BA,Elisa Prado,2040.00,,,,1900.00,2025-03-20
+1173,produto,,,ORG-109,91.532.399/0001-75,PRD-20,Financeiro,Instituto Paraty - Financeiro,2025-04-02,Indústria,Médio,BA,Elisa Prado,800.00,2026-09-18,concorrente,Migrou para outra solução.,670.00,2026-07-18
+1174,produto,,,ORG-109,91.532.399/0001-75,PRD-30,Analytics,Instituto Paraty - Analytics,2025-05-10,Indústria,Médio,BA,Elisa Prado,480.00,,,,470.00,2026-05-31
 5110,organizacao,,,ORG-110,31.707.999/0001-51,,,Mercado Atlântica,2024-01-03,Serviços,Grande,DF,Diego Rocha,,,,,,
-1175,produto,,,ORG-110,31.707.999/0001-51,PRD-10,Gestão,Mercado Atlântica - Gestão,2024-01-03,Serviços,Grande,DF,Diego Rocha,6300.00,2026-03-21,corte_custos,"Corte de custos geral, sem queixa sobre o produto.",5610.00,2024-11-27
+1175,produto,,,ORG-110,31.707.999/0001-51,PRD-10,Gestão,Mercado Atlântica - Gestão,2024-01-03,Serviços,Grande,DF,Diego Rocha,6300.00,2026-03-21,corte_custos,"Corte de custos geral, sem queixa sobre o produto.",5610.00,2024-08-03
 5111,organizacao,,,ORG-111,69.312.717/0001-27,,,Studio Boa Vista,2024-11-19,Varejo,Médio,SP,Ana Ribeiro,,,,,,
-1176,produto,,,ORG-111,69.312.717/0001-27,PRD-10,Gestão,Studio Boa Vista - Gestão,2024-11-19,Varejo,Médio,SP,Ana Ribeiro,2430.00,,,,2500.00,2024-12-09
-1177,produto,,,ORG-111,69.312.717/0001-27,PRD-30,Analytics,Studio Boa Vista - Analytics,2025-07-05,Varejo,Médio,SP,Ana Ribeiro,640.00,2025-09-06,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2025-10-19
-1178,produto,,,ORG-111,69.312.717/0001-27,PRD-20,Financeiro,Studio Boa Vista - Financeiro,2025-03-08,Varejo,Médio,SP,Ana Ribeiro,1390.00,,,,1180.00,2026-02-05
+1176,produto,,,ORG-111,69.312.717/0001-27,PRD-10,Gestão,Studio Boa Vista - Gestão,2024-11-19,Varejo,Médio,SP,Ana Ribeiro,2430.00,,,,2500.00,2025-11-17
+1177,produto,,,ORG-111,69.312.717/0001-27,PRD-30,Analytics,Studio Boa Vista - Analytics,2025-07-05,Varejo,Médio,SP,Ana Ribeiro,640.00,2025-09-06,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,,2026-01-11
+1178,produto,,,ORG-111,69.312.717/0001-27,PRD-20,Financeiro,Studio Boa Vista - Financeiro,2025-03-08,Varejo,Médio,SP,Ana Ribeiro,1390.00,,,,1180.00,2026-04-07
 5112,organizacao,,,ORG-112,29.424.448/0001-38,,,Laboratório Juriti,2025-07-03,Indústria,Pequeno,RJ,Diego Rocha,,,,,,
-1179,produto,,,ORG-112,29.424.448/0001-38,PRD-10,Gestão,Laboratório Juriti - Gestão,2025-07-03,Indústria,Pequeno,RJ,Diego Rocha,440.00,,,,440.00,2026-05-09
+1179,produto,,,ORG-112,29.424.448/0001-38,PRD-10,Gestão,Laboratório Juriti - Gestão,2025-07-03,Indústria,Pequeno,RJ,Diego Rocha,440.00,,,,440.00,2025-09-12
 5113,organizacao,,,ORG-113,65.620.052/0001-32,,,Studio Ipê,2024-04-11,Serviços,Médio,SP,Elisa Prado,,,,,,
-1180,produto,,,ORG-113,65.620.052/0001-32,PRD-10,Gestão,Studio Ipê - Gestão,2024-04-11,Serviços,Médio,SP,Elisa Prado,2340.00,,,,2110.00,2024-06-21
+1180,produto,,,ORG-113,65.620.052/0001-32,PRD-10,Gestão,Studio Ipê - Gestão,2024-04-11,Serviços,Médio,SP,Elisa Prado,2340.00,,,,2110.00,2025-05-15
 5114,organizacao,,,ORG-114,37.394.522/0001-25,,,Rede Araucária,2026-05-27,Saúde,Pequeno,SC,Bruno Lima,,,,,,
 1181,produto,,,ORG-114,37.394.522/0001-25,PRD-10,Gestão,Rede Araucária - Gestão,2026-05-27,Saúde,Pequeno,SC,Bruno Lima,420.00,,,,,2026-09-30
 5115,organizacao,,,ORG-115,84.364.964/0001-57,,,Comercial Paraty,2024-02-11,Educação,Médio,SP,Bruno Lima,,,,,,
-1182,produto,,,ORG-115,84.364.964/0001-57,PRD-10,Gestão,Comercial Paraty - Gestão,2024-02-11,Educação,Médio,SP,Bruno Lima,2310.00,2026-02-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,2190.00,2024-11-13
+1182,produto,,,ORG-115,84.364.964/0001-57,PRD-10,Gestão,Comercial Paraty - Gestão,2024-02-11,Educação,Médio,SP,Bruno Lima,2310.00,2026-02-25,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,2190.00,2024-10-04
 5116,organizacao,,,ORG-116,67.744.448/0001-00,,,Studio Mantiqueira,2024-12-16,Varejo,Grande,MG,Ana Ribeiro,,,,,,
-1183,produto,,,ORG-116,67.744.448/0001-00,PRD-10,Gestão,Studio Mantiqueira - Gestão,2024-12-16,Varejo,Grande,MG,Ana Ribeiro,4500.00,,,,3870.00,2025-10-10
+1183,produto,,,ORG-116,67.744.448/0001-00,PRD-10,Gestão,Studio Mantiqueira - Gestão,2024-12-16,Varejo,Grande,MG,Ana Ribeiro,4500.00,,,,3870.00,2025-09-13
 5117,organizacao,,,ORG-117,51.010.225/0001-05,,,Instituto Carvalho,2025-07-21,Indústria,Pequeno,PR,Diego Rocha,,,,,,
-1184,produto,,,ORG-117,51.010.225/0001-05,PRD-10,Gestão,Instituto Carvalho - Gestão,2025-07-21,Indústria,Pequeno,PR,Diego Rocha,690.00,,,,690.00,2025-07-27
+1184,produto,,,ORG-117,51.010.225/0001-05,PRD-10,Gestão,Instituto Carvalho - Gestão,2025-07-21,Indústria,Pequeno,PR,Diego Rocha,690.00,,,,690.00,2025-12-18
 5118,organizacao,,,ORG-118,74.215.636/0001-24,,,Instituto Maré,2025-05-26,Indústria,Grande,RJ,Bruno Lima,,,,,,
-1185,produto,,,ORG-118,74.215.636/0001-24,PRD-10,Gestão,Instituto Maré - Gestão,2025-05-26,Indústria,Grande,RJ,Bruno Lima,4480.00,,,,4080.00,2026-05-07
+1185,produto,,,ORG-118,74.215.636/0001-24,PRD-10,Gestão,Instituto Maré - Gestão,2025-05-26,Indústria,Grande,RJ,Bruno Lima,4480.00,,,,4080.00,2026-06-09
 5119,organizacao,,,ORG-119,12.885.703/0001-77,,,Laboratório Lagoa,2024-06-02,Varejo,Pequeno,BA,Bruno Lima,,,,,,
-1186,produto,,,ORG-119,12.885.703/0001-77,PRD-10,Gestão,Laboratório Lagoa - Gestão,2024-06-02,Varejo,Pequeno,BA,Bruno Lima,350.00,2025-09-19,preco,Pediu desconto na renovação e não houve acordo.,,2024-11-27
-1187,produto,,,ORG-119,12.885.703/0001-77,PRD-20,Financeiro,Laboratório Lagoa - Financeiro,2025-04-15,Varejo,Pequeno,BA,Bruno Lima,250.00,,,,240.00,2025-10-29
-1188,produto,,,ORG-119,12.885.703/0001-77,PRD-30,Analytics,Laboratório Lagoa - Analytics,2024-09-14,Varejo,Pequeno,BA,Bruno Lima,290.00,,,,250.00,2025-08-16
+1186,produto,,,ORG-119,12.885.703/0001-77,PRD-10,Gestão,Laboratório Lagoa - Gestão,2024-06-02,Varejo,Pequeno,BA,Bruno Lima,350.00,2025-09-19,preco,Pediu desconto na renovação e não houve acordo.,,2025-07-01
+1187,produto,,,ORG-119,12.885.703/0001-77,PRD-20,Financeiro,Laboratório Lagoa - Financeiro,2025-04-15,Varejo,Pequeno,BA,Bruno Lima,250.00,,,,240.00,2025-11-30
+1188,produto,,,ORG-119,12.885.703/0001-77,PRD-30,Analytics,Laboratório Lagoa - Analytics,2024-09-14,Varejo,Pequeno,BA,Bruno Lima,290.00,,,,250.00,2025-01-04
 5120,organizacao,,,ORG-120,29.383.043/0001-18,,,Escola Boa Vista,2026-05-24,Varejo,Pequeno,SP,Elisa Prado,,,,,,
-1189,produto,,,ORG-120,29.383.043/0001-18,PRD-10,Gestão,Escola Boa Vista - Gestão,2026-05-24,Varejo,Pequeno,SP,Elisa Prado,400.00,,,,,2026-07-20
+1189,produto,,,ORG-120,29.383.043/0001-18,PRD-10,Gestão,Escola Boa Vista - Gestão,2026-05-24,Varejo,Pequeno,SP,Elisa Prado,400.00,,,,,2026-09-30
 5121,organizacao,,,ORG-121,40.622.038/0001-43,,,Escola Juriti,2024-08-21,Indústria,Pequeno,SP,Elisa Prado,,,,,,
-1190,produto,,,ORG-121,40.622.038/0001-43,PRD-10,Gestão,Escola Juriti - Gestão,2024-08-21,Indústria,Pequeno,SP,Elisa Prado,580.00,2026-08-31,encerramento,Empresa encerrou as atividades.,530.00,2025-05-12
-1191,produto,,,ORG-121,40.622.038/0001-43,PRD-30,Analytics,Escola Juriti - Analytics,2025-02-06,Indústria,Pequeno,SP,Elisa Prado,200.00,2026-08-31,encerramento,Empresa encerrou as atividades.,210.00,2025-04-25
+1190,produto,,,ORG-121,40.622.038/0001-43,PRD-10,Gestão,Escola Juriti - Gestão,2024-08-21,Indústria,Pequeno,SP,Elisa Prado,580.00,2026-08-31,encerramento,Empresa encerrou as atividades.,530.00,2024-11-13
+1191,produto,,,ORG-121,40.622.038/0001-43,PRD-30,Analytics,Escola Juriti - Analytics,2025-02-06,Indústria,Pequeno,SP,Elisa Prado,200.00,2026-08-31,encerramento,Empresa encerrou as atividades.,210.00,2026-02-25
 5122,organizacao,,,ORG-122,48.203.763/0001-73,,,Comercial Jacarandá,2024-05-20,Educação,Pequeno,GO,Carla Mendes,,,,,,
-1192,produto,,,ORG-122,48.203.763/0001-73,PRD-10,Gestão,Comercial Jacarandá - Gestão,2024-05-20,Educação,Pequeno,GO,Carla Mendes,570.00,2024-06-28,concorrente,Migrou para outra solução.,,2024-04-21
+1192,produto,,,ORG-122,48.203.763/0001-73,PRD-10,Gestão,Comercial Jacarandá - Gestão,2024-05-20,Educação,Pequeno,GO,Carla Mendes,570.00,2024-06-28,concorrente,Migrou para outra solução.,,2024-02-25
 5123,organizacao,,,ORG-123,81.650.115/0001-63,,,Instituto Araucária,2024-11-08,Serviços,Médio,MG,Ana Ribeiro,,,,,,
-1193,produto,,,ORG-123,81.650.115/0001-63,PRD-10,Gestão,Instituto Araucária - Gestão,2024-11-08,Serviços,Médio,MG,Ana Ribeiro,1160.00,,,,1020.00,2025-08-31
+1193,produto,,,ORG-123,81.650.115/0001-63,PRD-10,Gestão,Instituto Araucária - Gestão,2024-11-08,Serviços,Médio,MG,Ana Ribeiro,1160.00,,,,1020.00,2025-09-03
 5124,organizacao,,,ORG-124,03.844.619/0001-41,,,Comercial Itapuã,2026-08-14,Varejo,Pequeno,MG,Bruno Lima,,,,,,
 1194,produto,,,ORG-124,03.844.619/0001-41,PRD-10,Gestão,Comercial Itapuã - Gestão,2026-08-14,Varejo,Pequeno,MG,Bruno Lima,670.00,,,,,2026-09-30
 5125,organizacao,,,ORG-125,34.970.353/0001-76,,,Comercial Bandeirante,2025-07-24,Serviços,Médio,PE,Elisa Prado,,,,,,
-1195,produto,,,ORG-125,34.970.353/0001-76,PRD-10,Gestão,Comercial Bandeirante - Gestão,2025-07-24,Serviços,Médio,PE,Elisa Prado,1800.00,,,,1670.00,2026-08-16
+1195,produto,,,ORG-125,34.970.353/0001-76,PRD-10,Gestão,Comercial Bandeirante - Gestão,2025-07-24,Serviços,Médio,PE,Elisa Prado,1800.00,,,,1670.00,2025-11-09
 5126,organizacao,,,ORG-126,93.718.222/0001-01,,,Clínica Horizonte,2026-02-23,Varejo,Médio,SP,Bruno Lima,,,,,,
-1196,produto,,,ORG-126,93.718.222/0001-01,PRD-10,Gestão,Clínica Horizonte - Gestão,2026-02-23,Varejo,Médio,SP,Bruno Lima,2360.00,,,,,2026-07-09
-1197,produto,,,ORG-126,93.718.222/0001-01,PRD-20,Financeiro,Clínica Horizonte - Financeiro,2026-03-20,Varejo,Médio,SP,Bruno Lima,1030.00,,,,,2026-07-07
+1196,produto,,,ORG-126,93.718.222/0001-01,PRD-10,Gestão,Clínica Horizonte - Gestão,2026-02-23,Varejo,Médio,SP,Bruno Lima,2360.00,,,,,2026-08-15
+1197,produto,,,ORG-126,93.718.222/0001-01,PRD-20,Financeiro,Clínica Horizonte - Financeiro,2026-03-20,Varejo,Médio,SP,Bruno Lima,1030.00,,,,,2026-09-30
 5127,organizacao,,,ORG-127,82.925.195/0001-60,,,Mercado Ipê,2025-03-04,Indústria,Grande,MG,Bruno Lima,,,,,,
-1198,produto,,,ORG-127,82.925.195/0001-60,PRD-10,Gestão,Mercado Ipê - Gestão,2025-03-04,Indústria,Grande,MG,Bruno Lima,5990.00,,,,5330.00,2026-03-22
-1199,produto,,,ORG-127,82.925.195/0001-60,PRD-20,Financeiro,Mercado Ipê - Financeiro,2026-02-18,Indústria,Grande,MG,Bruno Lima,2630.00,,,,,2026-09-30
+1198,produto,,,ORG-127,82.925.195/0001-60,PRD-10,Gestão,Mercado Ipê - Gestão,2025-03-04,Indústria,Grande,MG,Bruno Lima,5990.00,,,,5330.00,2025-04-05
+1199,produto,,,ORG-127,82.925.195/0001-60,PRD-20,Financeiro,Mercado Ipê - Financeiro,2026-02-18,Indústria,Grande,MG,Bruno Lima,2630.00,,,,,2026-09-25
 5128,organizacao,,,ORG-128,71.193.976/0001-04,,,Laboratório Ipê,2025-03-29,Serviços,Pequeno,BA,Ana Ribeiro,,,,,,
-1200,produto,,,ORG-128,71.193.976/0001-04,PRD-10,Gestão,Laboratório Ipê - Gestão,2025-03-29,Serviços,Pequeno,BA,Ana Ribeiro,540.00,,,,510.00,2026-01-30
+1200,produto,,,ORG-128,71.193.976/0001-04,PRD-10,Gestão,Laboratório Ipê - Gestão,2025-03-29,Serviços,Pequeno,BA,Ana Ribeiro,540.00,,,,510.00,2026-03-27
 5129,organizacao,,,ORG-129,72.890.452/0001-51,,,Escola Aurora,2024-09-19,Indústria,Pequeno,RJ,Ana Ribeiro,,,,,,
-1201,produto,,,ORG-129,72.890.452/0001-51,PRD-10,Gestão,Escola Aurora - Gestão,2024-09-19,Indústria,Pequeno,RJ,Ana Ribeiro,560.00,2024-11-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-06-12
+1201,produto,,,ORG-129,72.890.452/0001-51,PRD-10,Gestão,Escola Aurora - Gestão,2024-09-19,Indústria,Pequeno,RJ,Ana Ribeiro,560.00,2024-11-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,,2025-05-02
 5130,organizacao,,,ORG-130,86.338.995/0001-72,,,Escola Horizonte,2025-10-15,Varejo,Médio,SC,Elisa Prado,,,,,,
-1202,produto,,,ORG-130,86.338.995/0001-72,PRD-10,Gestão,Escola Horizonte - Gestão,2025-10-15,Varejo,Médio,SC,Elisa Prado,1750.00,2026-03-29,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.,,2026-01-09
+1202,produto,,,ORG-130,86.338.995/0001-72,PRD-10,Gestão,Escola Horizonte - Gestão,2025-10-15,Varejo,Médio,SC,Elisa Prado,1750.00,2026-03-29,fusao_aquisicao,Empresa foi adquirida e adotou o sistema do grupo comprador.,,2025-12-25
 5131,organizacao,,,ORG-131,49.154.766/0001-43,,,Distribuidora Araucária,2024-10-24,Educação,Médio,MG,Diego Rocha,,,,,,
-1203,produto,,,ORG-131,49.154.766/0001-43,PRD-10,Gestão,Distribuidora Araucária - Gestão,2024-10-24,Educação,Médio,MG,Diego Rocha,2010.00,,,,1810.00,2025-10-19
-1204,produto,,,ORG-131,49.154.766/0001-43,PRD-30,Analytics,Distribuidora Araucária - Analytics,2025-02-07,Educação,Médio,MG,Diego Rocha,540.00,2026-08-09,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,560.00,2025-08-11
+1203,produto,,,ORG-131,49.154.766/0001-43,PRD-10,Gestão,Distribuidora Araucária - Gestão,2024-10-24,Educação,Médio,MG,Diego Rocha,2010.00,,,,1810.00,2025-10-13
+1204,produto,,,ORG-131,49.154.766/0001-43,PRD-30,Analytics,Distribuidora Araucária - Analytics,2025-02-07,Educação,Médio,MG,Diego Rocha,540.00,2026-08-09,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,560.00,2025-10-04
 5132,organizacao,,,ORG-132,40.749.085/0001-93,,,Mercado Carvalho,2025-11-30,Serviços,Médio,PR,Bruno Lima,,,,,,
-1205,produto,,,ORG-132,40.749.085/0001-93,PRD-10,Gestão,Mercado Carvalho - Gestão,2025-11-30,Serviços,Médio,PR,Bruno Lima,1160.00,,,,,2026-07-16
-1206,produto,,,ORG-132,40.749.085/0001-93,PRD-20,Financeiro,Mercado Carvalho - Financeiro,2026-05-14,Serviços,Médio,PR,Bruno Lima,1330.00,,,,,2026-07-16
+1205,produto,,,ORG-132,40.749.085/0001-93,PRD-10,Gestão,Mercado Carvalho - Gestão,2025-11-30,Serviços,Médio,PR,Bruno Lima,1160.00,,,,,2025-12-04
+1206,produto,,,ORG-132,40.749.085/0001-93,PRD-20,Financeiro,Mercado Carvalho - Financeiro,2026-05-14,Serviços,Médio,PR,Bruno Lima,1330.00,,,,,2026-08-30
 5133,organizacao,,,ORG-133,42.510.001/0001-40,,,Rede Tocantins,2025-07-23,Serviços,Pequeno,RJ,Bruno Lima,,,,,,
-1207,produto,,,ORG-133,42.510.001/0001-40,PRD-10,Gestão,Rede Tocantins - Gestão,2025-07-23,Serviços,Pequeno,RJ,Bruno Lima,610.00,2026-06-02,concorrente,Migrou para outra solução.,610.00,2026-02-24
+1207,produto,,,ORG-133,42.510.001/0001-40,PRD-10,Gestão,Rede Tocantins - Gestão,2025-07-23,Serviços,Pequeno,RJ,Bruno Lima,610.00,2026-06-02,concorrente,Migrou para outra solução.,610.00,2026-03-12
 5134,organizacao,,,ORG-134,51.899.875/0001-59,,,Clínica Lagoa,2025-09-24,Varejo,Médio,GO,Ana Ribeiro,,,,,,
-1208,produto,,,ORG-134,51.899.875/0001-59,PRD-10,Gestão,Clínica Lagoa - Gestão,2025-09-24,Varejo,Médio,GO,Ana Ribeiro,1070.00,,,,970.00,2026-04-19
+1208,produto,,,ORG-134,51.899.875/0001-59,PRD-10,Gestão,Clínica Lagoa - Gestão,2025-09-24,Varejo,Médio,GO,Ana Ribeiro,1070.00,,,,970.00,2026-09-04
 1209,produto,,,ORG-134,51.899.875/0001-59,PRD-30,Analytics,Clínica Lagoa - Analytics,2026-01-04,Varejo,Médio,GO,Ana Ribeiro,690.00,,,,,2026-09-30
 5135,organizacao,,,ORG-135,52.677.156/0001-36,,,Laboratório Aurora,2025-05-15,Serviços,Pequeno,RJ,Elisa Prado,,,,,,
-1210,produto,,,ORG-135,52.677.156/0001-36,PRD-10,Gestão,Laboratório Aurora - Gestão,2025-05-15,Serviços,Pequeno,RJ,Elisa Prado,690.00,2026-05-03,corte_custos,Revisão de orçamento cortou ferramentas.,660.00,2025-05-15
-1211,produto,,,ORG-135,52.677.156/0001-36,PRD-30,Analytics,Laboratório Aurora - Analytics,2025-07-28,Serviços,Pequeno,RJ,Elisa Prado,300.00,2026-09-29,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,260.00,2026-01-10
+1210,produto,,,ORG-135,52.677.156/0001-36,PRD-10,Gestão,Laboratório Aurora - Gestão,2025-05-15,Serviços,Pequeno,RJ,Elisa Prado,690.00,2026-05-03,corte_custos,Revisão de orçamento cortou ferramentas.,660.00,2026-02-09
+1211,produto,,,ORG-135,52.677.156/0001-36,PRD-30,Analytics,Laboratório Aurora - Analytics,2025-07-28,Serviços,Pequeno,RJ,Elisa Prado,300.00,2026-09-29,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,260.00,2025-09-17
 5136,organizacao,,,ORG-136,48.533.278/0001-00,,,Mercado Tocantins,2024-07-20,Varejo,Médio,SP,Elisa Prado,,,,,,
-1212,produto,,,ORG-136,48.533.278/0001-00,PRD-10,Gestão,Mercado Tocantins - Gestão,2024-07-20,Varejo,Médio,SP,Elisa Prado,1750.00,2025-04-01,preco,Considerou o valor alto para o uso atual.,,2025-05-02
-1213,produto,,,ORG-136,48.533.278/0001-00,PRD-30,Analytics,Mercado Tocantins - Analytics,2024-11-11,Varejo,Médio,SP,Elisa Prado,770.00,,,,710.00,2025-05-14
+1212,produto,,,ORG-136,48.533.278/0001-00,PRD-10,Gestão,Mercado Tocantins - Gestão,2024-07-20,Varejo,Médio,SP,Elisa Prado,1750.00,2025-04-01,preco,Considerou o valor alto para o uso atual.,,2025-07-06
+1213,produto,,,ORG-136,48.533.278/0001-00,PRD-30,Analytics,Mercado Tocantins - Analytics,2024-11-11,Varejo,Médio,SP,Elisa Prado,770.00,,,,710.00,2025-01-04
 5137,organizacao,,,ORG-137,11.961.737/0001-33,,,Distribuidora Ipê,2026-04-18,Saúde,Médio,SP,Bruno Lima,,,,,,
-1214,produto,,,ORG-137,11.961.737/0001-33,PRD-10,Gestão,Distribuidora Ipê - Gestão,2026-04-18,Saúde,Médio,SP,Bruno Lima,2360.00,,,,,2026-09-30
+1214,produto,,,ORG-137,11.961.737/0001-33,PRD-10,Gestão,Distribuidora Ipê - Gestão,2026-04-18,Saúde,Médio,SP,Bruno Lima,2360.00,,,,,2026-09-17
 5138,organizacao,,,ORG-138,77.112.414/0001-23,,,Rede Pinhal,2025-10-05,Educação,Médio,SC,Bruno Lima,,,,,,
-1215,produto,,,ORG-138,77.112.414/0001-23,PRD-10,Gestão,Rede Pinhal - Gestão,2025-10-05,Educação,Médio,SC,Bruno Lima,1990.00,,,,,2025-11-28
+1215,produto,,,ORG-138,77.112.414/0001-23,PRD-10,Gestão,Rede Pinhal - Gestão,2025-10-05,Educação,Médio,SC,Bruno Lima,1990.00,,,,,2025-10-14
 5139,organizacao,,,ORG-139,04.661.105/0001-84,,,Distribuidora Horizonte,2024-03-12,Varejo,Médio,MG,Ana Ribeiro,,,,,,
-1216,produto,,,ORG-139,04.661.105/0001-84,PRD-10,Gestão,Distribuidora Horizonte - Gestão,2024-03-12,Varejo,Médio,MG,Ana Ribeiro,2380.00,,,,2090.00,2024-03-18
+1216,produto,,,ORG-139,04.661.105/0001-84,PRD-10,Gestão,Distribuidora Horizonte - Gestão,2024-03-12,Varejo,Médio,MG,Ana Ribeiro,2380.00,,,,2090.00,2024-10-19
 5140,organizacao,,,ORG-140,48.425.860/0001-49,,,Studio Horizonte,2025-06-10,Educação,Pequeno,SP,Diego Rocha,,,,,,
-1217,produto,,,ORG-140,48.425.860/0001-49,PRD-10,Gestão,Studio Horizonte - Gestão,2025-06-10,Educação,Pequeno,SP,Diego Rocha,620.00,2026-02-10,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,630.00,2025-12-28
+1217,produto,,,ORG-140,48.425.860/0001-49,PRD-10,Gestão,Studio Horizonte - Gestão,2025-06-10,Educação,Pequeno,SP,Diego Rocha,620.00,2026-02-10,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,630.00,2026-02-06
 5141,organizacao,,,ORG-141,53.970.359/0001-62,,,Clínica Bandeirante,2026-06-28,Varejo,Pequeno,SC,Bruno Lima,,,,,,
 1218,produto,,,ORG-141,53.970.359/0001-62,PRD-10,Gestão,Clínica Bandeirante - Gestão,2026-06-28,Varejo,Pequeno,SC,Bruno Lima,490.00,,,,,2026-09-30
-1219,produto,,,ORG-141,53.970.359/0001-62,PRD-20,Financeiro,Clínica Bandeirante - Financeiro,2026-08-31,Varejo,Pequeno,SC,Bruno Lima,200.00,,,,,2026-09-30
+1219,produto,,,ORG-141,53.970.359/0001-62,PRD-20,Financeiro,Clínica Bandeirante - Financeiro,2026-08-31,Varejo,Pequeno,SC,Bruno Lima,200.00,,,,,2026-09-12
 5142,organizacao,,,ORG-142,93.286.936/0001-46,,,Distribuidora Jacarandá,2025-05-22,Varejo,Pequeno,MG,Carla Mendes,,,,,,
-1220,produto,,,ORG-142,93.286.936/0001-46,PRD-10,Gestão,Distribuidora Jacarandá - Gestão,2025-05-22,Varejo,Pequeno,MG,Carla Mendes,560.00,,,,550.00,2025-12-06
-1221,produto,,,ORG-142,93.286.936/0001-46,PRD-20,Financeiro,Distribuidora Jacarandá - Financeiro,2026-03-31,Varejo,Pequeno,MG,Carla Mendes,360.00,,,,,2026-08-26
+1220,produto,,,ORG-142,93.286.936/0001-46,PRD-10,Gestão,Distribuidora Jacarandá - Gestão,2025-05-22,Varejo,Pequeno,MG,Carla Mendes,560.00,,,,550.00,2026-04-09
+1221,produto,,,ORG-142,93.286.936/0001-46,PRD-20,Financeiro,Distribuidora Jacarandá - Financeiro,2026-03-31,Varejo,Pequeno,MG,Carla Mendes,360.00,,,,,2026-07-21
 5143,organizacao,,,ORG-143,15.171.334/0001-51,,,Instituto Vale Verde,2024-11-05,Serviços,Pequeno,SP,Carla Mendes,,,,,,
-1222,produto,,,ORG-143,15.171.334/0001-51,PRD-10,Gestão,Instituto Vale Verde - Gestão,2024-11-05,Serviços,Pequeno,SP,Carla Mendes,680.00,,,,700.00,2025-12-05
-1223,produto,,,ORG-143,15.171.334/0001-51,PRD-20,Financeiro,Instituto Vale Verde - Financeiro,2025-03-06,Serviços,Pequeno,SP,Carla Mendes,180.00,,,,170.00,2026-02-01
+1222,produto,,,ORG-143,15.171.334/0001-51,PRD-10,Gestão,Instituto Vale Verde - Gestão,2024-11-05,Serviços,Pequeno,SP,Carla Mendes,680.00,,,,700.00,2025-01-17
+1223,produto,,,ORG-143,15.171.334/0001-51,PRD-20,Financeiro,Instituto Vale Verde - Financeiro,2025-03-06,Serviços,Pequeno,SP,Carla Mendes,180.00,,,,170.00,2025-06-27
 5144,organizacao,,,ORG-144,81.405.775/0001-51,,,Clínica Maré,2025-11-12,Serviços,Médio,SP,Bruno Lima,,,,,,
-1224,produto,,,ORG-144,81.405.775/0001-51,PRD-10,Gestão,Clínica Maré - Gestão,2025-11-12,Serviços,Médio,SP,Bruno Lima,1260.00,,,,,2026-09-20
-1225,produto,,,ORG-144,81.405.775/0001-51,PRD-20,Financeiro,Clínica Maré - Financeiro,2025-12-28,Serviços,Médio,SP,Bruno Lima,670.00,,,,,2026-07-17
-1226,produto,,,ORG-144,81.405.775/0001-51,PRD-30,Analytics,Clínica Maré - Analytics,2026-05-02,Serviços,Médio,SP,Bruno Lima,820.00,,,,,2026-09-30
+1224,produto,,,ORG-144,81.405.775/0001-51,PRD-10,Gestão,Clínica Maré - Gestão,2025-11-12,Serviços,Médio,SP,Bruno Lima,1260.00,,,,,2026-02-17
+1225,produto,,,ORG-144,81.405.775/0001-51,PRD-20,Financeiro,Clínica Maré - Financeiro,2025-12-28,Serviços,Médio,SP,Bruno Lima,670.00,,,,,2026-04-26
+1226,produto,,,ORG-144,81.405.775/0001-51,PRD-30,Analytics,Clínica Maré - Analytics,2026-05-02,Serviços,Médio,SP,Bruno Lima,820.00,,,,,2026-07-10
 5145,organizacao,,,ORG-145,39.031.157/0001-48,,,Colégio Aurora,2025-01-08,Educação,Grande,PE,Elisa Prado,,,,,,
-1227,produto,,,ORG-145,39.031.157/0001-48,PRD-10,Gestão,Colégio Aurora - Gestão,2025-01-08,Educação,Grande,PE,Elisa Prado,7950.00,,,,8270.00,2025-05-21
-1228,produto,,,ORG-145,39.031.157/0001-48,PRD-20,Financeiro,Colégio Aurora - Financeiro,2025-02-15,Educação,Grande,PE,Elisa Prado,3110.00,,,,2950.00,2025-05-23
-1229,produto,,,ORG-145,39.031.157/0001-48,PRD-30,Analytics,Colégio Aurora - Analytics,2025-08-27,Educação,Grande,PE,Elisa Prado,2440.00,,,,2100.00,2025-09-04
+1227,produto,,,ORG-145,39.031.157/0001-48,PRD-10,Gestão,Colégio Aurora - Gestão,2025-01-08,Educação,Grande,PE,Elisa Prado,7950.00,,,,8270.00,2025-05-07
+1228,produto,,,ORG-145,39.031.157/0001-48,PRD-20,Financeiro,Colégio Aurora - Financeiro,2025-02-15,Educação,Grande,PE,Elisa Prado,3110.00,,,,2950.00,2026-03-03
+1229,produto,,,ORG-145,39.031.157/0001-48,PRD-30,Analytics,Colégio Aurora - Analytics,2025-08-27,Educação,Grande,PE,Elisa Prado,2440.00,,,,2100.00,2026-01-23
 5146,organizacao,,,ORG-146,27.419.701/0001-74,,,Distribuidora Aurora,2025-08-28,Varejo,Pequeno,MG,Bruno Lima,,,,,,
-1230,produto,,,ORG-146,27.419.701/0001-74,PRD-10,Gestão,Distribuidora Aurora - Gestão,2025-08-28,Varejo,Pequeno,MG,Bruno Lima,520.00,,,,520.00,2026-07-10
+1230,produto,,,ORG-146,27.419.701/0001-74,PRD-10,Gestão,Distribuidora Aurora - Gestão,2025-08-28,Varejo,Pequeno,MG,Bruno Lima,520.00,,,,520.00,2026-04-20
 5147,organizacao,,,ORG-147,38.751.703/0001-42,,,Farmácia Itapuã,2025-05-16,Saúde,Pequeno,SP,Diego Rocha,,,,,,
-1231,produto,,,ORG-147,38.751.703/0001-42,PRD-10,Gestão,Farmácia Itapuã - Gestão,2025-05-16,Saúde,Pequeno,SP,Diego Rocha,300.00,,,,270.00,2025-05-23
+1231,produto,,,ORG-147,38.751.703/0001-42,PRD-10,Gestão,Farmácia Itapuã - Gestão,2025-05-16,Saúde,Pequeno,SP,Diego Rocha,300.00,,,,270.00,2026-03-30
 5148,organizacao,,,ORG-148,93.104.816/0001-37,,,Distribuidora Cerrado,2025-11-25,Serviços,Médio,SC,Elisa Prado,,,,,,
-1232,produto,,,ORG-148,93.104.816/0001-37,PRD-10,Gestão,Distribuidora Cerrado - Gestão,2025-11-25,Serviços,Médio,SC,Elisa Prado,1920.00,,,,,2026-05-02
+1232,produto,,,ORG-148,93.104.816/0001-37,PRD-10,Gestão,Distribuidora Cerrado - Gestão,2025-11-25,Serviços,Médio,SC,Elisa Prado,1920.00,,,,,2026-07-03
 5149,organizacao,,,ORG-149,17.186.664/0001-63,,,Distribuidora Juriti,2026-08-25,Educação,Médio,DF,Diego Rocha,,,,,,
 1233,produto,,,ORG-149,17.186.664/0001-63,PRD-10,Gestão,Distribuidora Juriti - Gestão,2026-08-25,Educação,Médio,DF,Diego Rocha,2330.00,,,,,2026-09-30
 1234,produto,,,ORG-149,17.186.664/0001-63,PRD-30,Analytics,Distribuidora Juriti - Analytics,2026-08-31,Educação,Médio,DF,Diego Rocha,620.00,,,,,2026-09-30
 5150,organizacao,,,ORG-150,50.647.439/0001-73,,,Escola Tocantins,2025-07-27,Varejo,Grande,SC,Carla Mendes,,,,,,
-1235,produto,,,ORG-150,50.647.439/0001-73,PRD-10,Gestão,Escola Tocantins - Gestão,2025-07-27,Varejo,Grande,SC,Carla Mendes,9210.00,,,,9300.00,2025-08-25
+1235,produto,,,ORG-150,50.647.439/0001-73,PRD-10,Gestão,Escola Tocantins - Gestão,2025-07-27,Varejo,Grande,SC,Carla Mendes,9210.00,,,,9300.00,2026-06-04
 5151,organizacao,,,ORG-151,40.204.953/0001-25,,,Colégio Jacarandá,2025-02-19,Saúde,Grande,SC,Carla Mendes,,,,,,
-1236,produto,,,ORG-151,40.204.953/0001-25,PRD-10,Gestão,Colégio Jacarandá - Gestão,2025-02-19,Saúde,Grande,SC,Carla Mendes,8430.00,,,,7760.00,2025-07-18
+1236,produto,,,ORG-151,40.204.953/0001-25,PRD-10,Gestão,Colégio Jacarandá - Gestão,2025-02-19,Saúde,Grande,SC,Carla Mendes,8430.00,,,,7760.00,2025-11-22
 5152,organizacao,,,ORG-152,21.730.125/0001-17,,,Instituto Tocantins,2025-05-24,Serviços,Pequeno,SC,Bruno Lima,,,,,,
-1237,produto,,,ORG-152,21.730.125/0001-17,PRD-10,Gestão,Instituto Tocantins - Gestão,2025-05-24,Serviços,Pequeno,SC,Bruno Lima,530.00,,,,560.00,2026-05-07
+1237,produto,,,ORG-152,21.730.125/0001-17,PRD-10,Gestão,Instituto Tocantins - Gestão,2025-05-24,Serviços,Pequeno,SC,Bruno Lima,530.00,,,,560.00,2025-07-25
 5153,organizacao,,,ORG-153,84.613.349/0001-83,,,Clínica Aurora,2024-07-01,Indústria,Pequeno,PE,Diego Rocha,,,,,,
-1238,produto,,,ORG-153,84.613.349/0001-83,PRD-10,Gestão,Clínica Aurora - Gestão,2024-07-01,Indústria,Pequeno,PE,Diego Rocha,360.00,2025-11-19,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,350.00,2024-07-29
+1238,produto,,,ORG-153,84.613.349/0001-83,PRD-10,Gestão,Clínica Aurora - Gestão,2024-07-01,Indústria,Pequeno,PE,Diego Rocha,360.00,2025-11-19,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,350.00,2025-05-03
 5154,organizacao,,,ORG-154,94.564.621/0001-89,,,Comercial Pinhal,2026-02-15,Varejo,Pequeno,SP,Ana Ribeiro,,,,,,
-1239,produto,,,ORG-154,94.564.621/0001-89,PRD-10,Gestão,Comercial Pinhal - Gestão,2026-02-15,Varejo,Pequeno,SP,Ana Ribeiro,670.00,,,,,2026-04-06
+1239,produto,,,ORG-154,94.564.621/0001-89,PRD-10,Gestão,Comercial Pinhal - Gestão,2026-02-15,Varejo,Pequeno,SP,Ana Ribeiro,670.00,,,,,2026-09-30
 1240,produto,,,ORG-154,94.564.621/0001-89,PRD-20,Financeiro,Comercial Pinhal - Financeiro,2026-08-26,Varejo,Pequeno,SP,Ana Ribeiro,390.00,,,,,2026-09-30
 1241,produto,,,ORG-154,94.564.621/0001-89,PRD-30,Analytics,Comercial Pinhal - Analytics,2026-08-31,Varejo,Pequeno,SP,Ana Ribeiro,260.00,,,,,2026-09-30
 5155,organizacao,,,ORG-155,28.209.601/0001-15,,,Rede Juriti,2024-10-23,Indústria,Grande,GO,Elisa Prado,,,,,,
-1242,produto,,,ORG-155,28.209.601/0001-15,PRD-10,Gestão,Rede Juriti - Gestão,2024-10-23,Indústria,Grande,GO,Elisa Prado,4610.00,,,,3870.00,2025-07-30
-1243,produto,,,ORG-155,28.209.601/0001-15,PRD-20,Financeiro,Rede Juriti - Financeiro,2025-05-19,Indústria,Grande,GO,Elisa Prado,2550.00,,,,2500.00,2025-11-23
+1242,produto,,,ORG-155,28.209.601/0001-15,PRD-10,Gestão,Rede Juriti - Gestão,2024-10-23,Indústria,Grande,GO,Elisa Prado,4610.00,,,,3870.00,2024-12-07
+1243,produto,,,ORG-155,28.209.601/0001-15,PRD-20,Financeiro,Rede Juriti - Financeiro,2025-05-19,Indústria,Grande,GO,Elisa Prado,2550.00,,,,2500.00,2025-11-12
 5156,organizacao,,,ORG-156,52.270.562/0001-58,,,Studio Juriti,2026-08-05,Serviços,Médio,SP,Elisa Prado,,,,,,
 1244,produto,,,ORG-156,52.270.562/0001-58,PRD-10,Gestão,Studio Juriti - Gestão,2026-08-05,Serviços,Médio,SP,Elisa Prado,1840.00,,,,,2026-09-30
 5157,organizacao,,,ORG-157,36.336.084/0001-64,,,Laboratório Cerrado,2026-01-19,Serviços,Médio,GO,Elisa Prado,,,,,,
-1245,produto,,,ORG-157,36.336.084/0001-64,PRD-10,Gestão,Laboratório Cerrado - Gestão,2026-01-19,Serviços,Médio,GO,Elisa Prado,2170.00,,,,,2026-04-24
+1245,produto,,,ORG-157,36.336.084/0001-64,PRD-10,Gestão,Laboratório Cerrado - Gestão,2026-01-19,Serviços,Médio,GO,Elisa Prado,2170.00,,,,,2026-09-30
 1246,produto,,,ORG-157,36.336.084/0001-64,PRD-20,Financeiro,Laboratório Cerrado - Financeiro,2026-08-31,Serviços,Médio,GO,Elisa Prado,710.00,,,,,2026-09-30
 5158,organizacao,,,ORG-158,86.049.867/0001-46,,,Rede Bandeirante,2026-07-08,Saúde,Grande,SP,Diego Rocha,,,,,,
 1247,produto,,,ORG-158,86.049.867/0001-46,PRD-10,Gestão,Rede Bandeirante - Gestão,2026-07-08,Saúde,Grande,SP,Diego Rocha,9570.00,,,,,2026-09-30
 1248,produto,,,ORG-158,86.049.867/0001-46,PRD-30,Analytics,Rede Bandeirante - Analytics,2026-08-31,Saúde,Grande,SP,Diego Rocha,1830.00,,,,,2026-09-30
 5159,organizacao,,,ORG-159,57.568.906/0001-82,,,Farmácia Horizonte,2025-11-22,Varejo,Pequeno,SP,Carla Mendes,,,,,,
-1249,produto,,,ORG-159,57.568.906/0001-82,PRD-10,Gestão,Farmácia Horizonte - Gestão,2025-11-22,Varejo,Pequeno,SP,Carla Mendes,440.00,2026-03-30,preco,Considerou o valor alto para o uso atual.,,2026-08-20
-1250,produto,,,ORG-159,57.568.906/0001-82,PRD-20,Financeiro,Farmácia Horizonte - Financeiro,2025-11-28,Varejo,Pequeno,SP,Carla Mendes,380.00,,,,,2026-04-12
+1249,produto,,,ORG-159,57.568.906/0001-82,PRD-10,Gestão,Farmácia Horizonte - Gestão,2025-11-22,Varejo,Pequeno,SP,Carla Mendes,440.00,2026-03-30,preco,Considerou o valor alto para o uso atual.,,2026-05-20
+1250,produto,,,ORG-159,57.568.906/0001-82,PRD-20,Financeiro,Farmácia Horizonte - Financeiro,2025-11-28,Varejo,Pequeno,SP,Carla Mendes,380.00,,,,,2025-12-19
 1251,produto,,,ORG-159,57.568.906/0001-82,PRD-30,Analytics,Farmácia Horizonte - Analytics,2026-08-31,Varejo,Pequeno,SP,Carla Mendes,300.00,,,,,2026-09-30
 5160,organizacao,,,ORG-160,79.650.007/0001-03,,,Indústria Juriti,2026-06-11,Educação,Pequeno,RJ,Elisa Prado,,,,,,
 1252,produto,,,ORG-160,79.650.007/0001-03,PRD-10,Gestão,Indústria Juriti - Gestão,2026-06-11,Educação,Pequeno,RJ,Elisa Prado,690.00,,,,,2026-09-30
 5161,organizacao,,,ORG-161,25.852.233/0001-35,,,Distribuidora Mantiqueira,2025-02-11,Serviços,Médio,SP,Elisa Prado,,,,,,
-1253,produto,,,ORG-161,25.852.233/0001-35,PRD-10,Gestão,Distribuidora Mantiqueira - Gestão,2025-02-11,Serviços,Médio,SP,Elisa Prado,2420.00,,,,2420.00,2025-05-09
-1254,produto,,,ORG-161,25.852.233/0001-35,PRD-30,Analytics,Distribuidora Mantiqueira - Analytics,2025-09-12,Serviços,Médio,SP,Elisa Prado,690.00,2026-01-20,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,630.00,2026-09-30
+1253,produto,,,ORG-161,25.852.233/0001-35,PRD-10,Gestão,Distribuidora Mantiqueira - Gestão,2025-02-11,Serviços,Médio,SP,Elisa Prado,2420.00,,,,2420.00,2025-06-04
+1254,produto,,,ORG-161,25.852.233/0001-35,PRD-30,Analytics,Distribuidora Mantiqueira - Analytics,2025-09-12,Serviços,Médio,SP,Elisa Prado,690.00,2026-01-20,baixa_adocao,Equipe não incorporou a ferramenta na rotina.,630.00,2025-11-25
 5162,organizacao,,,ORG-162,96.240.832/0001-40,,,Instituto Juriti,2025-09-25,Saúde,Pequeno,PR,Elisa Prado,,,,,,
-1255,produto,,,ORG-162,96.240.832/0001-40,PRD-10,Gestão,Instituto Juriti - Gestão,2025-09-25,Saúde,Pequeno,PR,Elisa Prado,350.00,2025-12-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,370.00,2025-09-25
+1255,produto,,,ORG-162,96.240.832/0001-40,PRD-10,Gestão,Instituto Juriti - Gestão,2025-09-25,Saúde,Pequeno,PR,Elisa Prado,350.00,2025-12-26,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,370.00,2025-11-23
 5163,organizacao,,,ORG-163,48.083.051/0001-29,,,Comercial Aurora,2025-12-13,Varejo,Pequeno,SC,Bruno Lima,,,,,,
-1256,produto,,,ORG-163,48.083.051/0001-29,PRD-10,Gestão,Comercial Aurora - Gestão,2025-12-13,Varejo,Pequeno,SC,Bruno Lima,660.00,,,,,2026-04-13
+1256,produto,,,ORG-163,48.083.051/0001-29,PRD-10,Gestão,Comercial Aurora - Gestão,2025-12-13,Varejo,Pequeno,SC,Bruno Lima,660.00,,,,,2025-12-31
 1257,produto,,,ORG-163,48.083.051/0001-29,PRD-20,Financeiro,Comercial Aurora - Financeiro,2026-08-31,Varejo,Pequeno,SC,Bruno Lima,310.00,,,,,2026-09-30
 5164,organizacao,,,ORG-164,87.132.834/0001-25,,,Colégio Juriti,2026-06-14,Serviços,Grande,SP,Elisa Prado,,,,,,
-1258,produto,,,ORG-164,87.132.834/0001-25,PRD-10,Gestão,Colégio Juriti - Gestão,2026-06-14,Serviços,Grande,SP,Elisa Prado,8530.00,,,,,2026-07-13
+1258,produto,,,ORG-164,87.132.834/0001-25,PRD-10,Gestão,Colégio Juriti - Gestão,2026-06-14,Serviços,Grande,SP,Elisa Prado,8530.00,,,,,2026-08-23
 1259,produto,,,ORG-164,87.132.834/0001-25,PRD-30,Analytics,Colégio Juriti - Analytics,2026-08-31,Serviços,Grande,SP,Elisa Prado,2320.00,,,,,2026-09-30
 5165,organizacao,,,ORG-165,88.226.870/0001-63,,,Colégio Cerrado,2024-07-05,Serviços,Médio,GO,Elisa Prado,,,,,,
-1260,produto,,,ORG-165,88.226.870/0001-63,PRD-10,Gestão,Colégio Cerrado - Gestão,2024-07-05,Serviços,Médio,GO,Elisa Prado,1300.00,,,,1380.00,2024-08-04
+1260,produto,,,ORG-165,88.226.870/0001-63,PRD-10,Gestão,Colégio Cerrado - Gestão,2024-07-05,Serviços,Médio,GO,Elisa Prado,1300.00,,,,1380.00,2025-03-20
 5166,organizacao,,,ORG-166,24.283.662/0001-60,,,Indústria Aurora,2024-11-27,Saúde,Pequeno,SP,Ana Ribeiro,,,,,,
-1261,produto,,,ORG-166,24.283.662/0001-60,PRD-10,Gestão,Indústria Aurora - Gestão,2024-11-27,Saúde,Pequeno,SP,Ana Ribeiro,660.00,,,,640.00,2025-06-08
-1262,produto,,,ORG-166,24.283.662/0001-60,PRD-30,Analytics,Indústria Aurora - Analytics,2024-12-17,Saúde,Pequeno,SP,Ana Ribeiro,280.00,,,,250.00,2025-04-17
-1263,produto,,,ORG-166,24.283.662/0001-60,PRD-20,Financeiro,Indústria Aurora - Financeiro,2025-08-09,Saúde,Pequeno,SP,Ana Ribeiro,240.00,,,,240.00,2026-02-14
+1261,produto,,,ORG-166,24.283.662/0001-60,PRD-10,Gestão,Indústria Aurora - Gestão,2024-11-27,Saúde,Pequeno,SP,Ana Ribeiro,660.00,,,,640.00,2025-09-02
+1262,produto,,,ORG-166,24.283.662/0001-60,PRD-30,Analytics,Indústria Aurora - Analytics,2024-12-17,Saúde,Pequeno,SP,Ana Ribeiro,280.00,,,,250.00,2025-12-31
+1263,produto,,,ORG-166,24.283.662/0001-60,PRD-20,Financeiro,Indústria Aurora - Financeiro,2025-08-09,Saúde,Pequeno,SP,Ana Ribeiro,240.00,,,,240.00,2026-04-13
 5167,organizacao,,,ORG-167,47.567.395/0001-51,,,Escola Serra Azul,2024-03-21,Serviços,Médio,RJ,Diego Rocha,,,,,,
-1264,produto,,,ORG-167,47.567.395/0001-51,PRD-10,Gestão,Escola Serra Azul - Gestão,2024-03-21,Serviços,Médio,RJ,Diego Rocha,1240.00,,,,1150.00,2024-06-25
-1265,produto,,,ORG-167,47.567.395/0001-51,PRD-20,Financeiro,Escola Serra Azul - Financeiro,2024-04-29,Serviços,Médio,RJ,Diego Rocha,1100.00,2025-05-30,corte_custos,Revisão de orçamento cortou ferramentas.,,2024-08-29
+1264,produto,,,ORG-167,47.567.395/0001-51,PRD-10,Gestão,Escola Serra Azul - Gestão,2024-03-21,Serviços,Médio,RJ,Diego Rocha,1240.00,,,,1150.00,2025-02-12
+1265,produto,,,ORG-167,47.567.395/0001-51,PRD-20,Financeiro,Escola Serra Azul - Financeiro,2024-04-29,Serviços,Médio,RJ,Diego Rocha,1100.00,2025-05-30,corte_custos,Revisão de orçamento cortou ferramentas.,,2025-01-31
 5168,organizacao,,,ORG-168,55.190.805/0001-56,,,Instituto Itapuã,2024-09-11,Serviços,Médio,SP,Diego Rocha,,,,,,
-1266,produto,,,ORG-168,55.190.805/0001-56,PRD-10,Gestão,Instituto Itapuã - Gestão,2024-09-11,Serviços,Médio,SP,Diego Rocha,2110.00,,,,2070.00,2024-11-11
+1266,produto,,,ORG-168,55.190.805/0001-56,PRD-10,Gestão,Instituto Itapuã - Gestão,2024-09-11,Serviços,Médio,SP,Diego Rocha,2110.00,,,,2070.00,2024-10-03
 5169,organizacao,,,ORG-169,07.291.816/0001-71,,,Studio Atlântica,2024-02-07,Indústria,Pequeno,GO,Ana Ribeiro,,,,,,
-1267,produto,,,ORG-169,07.291.816/0001-71,PRD-10,Gestão,Studio Atlântica - Gestão,2024-02-07,Indústria,Pequeno,GO,Ana Ribeiro,360.00,,,,320.00,2025-02-01
-1268,produto,,,ORG-169,07.291.816/0001-71,PRD-30,Analytics,Studio Atlântica - Analytics,2024-11-09,Indústria,Pequeno,GO,Ana Ribeiro,300.00,,,,310.00,2024-12-26
+1267,produto,,,ORG-169,07.291.816/0001-71,PRD-10,Gestão,Studio Atlântica - Gestão,2024-02-07,Indústria,Pequeno,GO,Ana Ribeiro,360.00,,,,320.00,2024-08-02
+1268,produto,,,ORG-169,07.291.816/0001-71,PRD-30,Analytics,Studio Atlântica - Analytics,2024-11-09,Indústria,Pequeno,GO,Ana Ribeiro,300.00,,,,310.00,2025-07-26
 5170,organizacao,,,ORG-170,35.268.245/0001-12,,,Studio Pinhal,2025-08-24,Serviços,Médio,SP,Carla Mendes,,,,,,
-1269,produto,,,ORG-170,35.268.245/0001-12,PRD-10,Gestão,Studio Pinhal - Gestão,2025-08-24,Serviços,Médio,SP,Carla Mendes,1450.00,2026-03-08,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,1360.00,2026-03-03
+1269,produto,,,ORG-170,35.268.245/0001-12,PRD-10,Gestão,Studio Pinhal - Gestão,2025-08-24,Serviços,Médio,SP,Carla Mendes,1450.00,2026-03-08,suporte,Reclamações recorrentes sobre tempo de resposta do suporte.,1360.00,2026-08-26
 5171,organizacao,,,ORG-171,53.519.838/0001-27,,,Laboratório Atlântica,2026-03-30,Saúde,Pequeno,DF,Carla Mendes,,,,,,
 1270,produto,,,ORG-171,53.519.838/0001-27,PRD-10,Gestão,Laboratório Atlântica - Gestão,2026-03-30,Saúde,Pequeno,DF,Carla Mendes,650.00,,,,,2026-09-30
 5172,organizacao,,,ORG-172,54.488.056/0001-80,,,Rede Maré,2026-03-11,Varejo,Médio,DF,Carla Mendes,,,,,,
 1271,produto,,,ORG-172,54.488.056/0001-80,PRD-10,Gestão,Rede Maré - Gestão,2026-03-11,Varejo,Médio,DF,Carla Mendes,1610.00,,,,,2026-09-30
 1272,produto,,,ORG-172,54.488.056/0001-80,PRD-20,Financeiro,Rede Maré - Financeiro,2026-08-31,Varejo,Médio,DF,Carla Mendes,1130.00,,,,,2026-09-30
 5173,organizacao,,,ORG-173,18.992.042/0001-11,,,Indústria Vale Verde,2024-05-15,Saúde,Pequeno,DF,Ana Ribeiro,,,,,,
-1273,produto,,,ORG-173,18.992.042/0001-11,PRD-10,Gestão,Indústria Vale Verde - Gestão,2024-05-15,Saúde,Pequeno,DF,Ana Ribeiro,670.00,,,,700.00,2025-02-27
+1273,produto,,,ORG-173,18.992.042/0001-11,PRD-10,Gestão,Indústria Vale Verde - Gestão,2024-05-15,Saúde,Pequeno,DF,Ana Ribeiro,670.00,,,,700.00,2025-05-17
 5174,organizacao,,,ORG-174,16.631.060/0001-64,,,Mercado Boa Vista,2025-04-10,Indústria,Médio,RS,Diego Rocha,,,,,,
-1274,produto,,,ORG-174,16.631.060/0001-64,PRD-10,Gestão,Mercado Boa Vista - Gestão,2025-04-10,Indústria,Médio,RS,Diego Rocha,1290.00,,,,1230.00,2025-07-09
+1274,produto,,,ORG-174,16.631.060/0001-64,PRD-10,Gestão,Mercado Boa Vista - Gestão,2025-04-10,Indústria,Médio,RS,Diego Rocha,1290.00,,,,1230.00,2025-12-01
 5175,organizacao,,,ORG-175,96.334.929/0001-68,,,Colégio Vale Verde,2025-07-15,Varejo,Médio,PE,Diego Rocha,,,,,,
-1275,produto,,,ORG-175,96.334.929/0001-68,PRD-10,Gestão,Colégio Vale Verde - Gestão,2025-07-15,Varejo,Médio,PE,Diego Rocha,2040.00,2026-07-17,preco,Considerou o valor alto para o uso atual.,1750.00,2025-10-04
+1275,produto,,,ORG-175,96.334.929/0001-68,PRD-10,Gestão,Colégio Vale Verde - Gestão,2025-07-15,Varejo,Médio,PE,Diego Rocha,2040.00,2026-07-17,preco,Considerou o valor alto para o uso atual.,1750.00,2026-05-08

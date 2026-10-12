@@ -65,14 +65,18 @@ Todos os endpoints aceitam filtro de data e paginação (`limit`, `page`, `next_
 - Tempo de casa e produtos cancelados na mesma organização nos 90 dias anteriores
 - Perfil: porte, setor, etapa, CSM (para comparar com pares, como o score atual)
 
-**Contrato (próxima etapa):** dias até o fim do contrato, renovação automática e variação do MRR. Ficaram fora da primeira versão porque, nos cancelados, a data de fim do contrato costuma ser a própria data de saída, e isso vazaria o resultado. Vão entrar quando a importação trouxer o histórico de contratos vigentes em cada foto.
+**Contrato** (`/v2/contracts`, fonte Contratos)
+- `ct_mrr_d90`: variação do valor dos contratos vigentes em T contra os vigentes 90 dias antes; `ct_reducao`: teve redução
+- `ct_encerrados`: contratos encerrados nos 90 dias até T
+- `ct_renov`: dias até a próxima renovação, contados pelo aniversário do início do contrato e pelo ciclo (`cycle`, 12 meses quando vazio)
+
+Para não vazar a saída, a data de fim de um contrato que ainda está vigente em T nunca é lida (nos cancelados, ela costuma ser a própria data de saída). Só contam encerramentos que já aconteceram até T.
 
 ## Cuidados contra resultado enganoso
 
 - **Nada depois de T.** Isso vale também para o `dt_cancel`: a foto em que o cliente já saiu não entra.
 - **Registros da própria saída ficam de fora.** Tickets, tarefas e playbooks cujo tipo, categoria, tag ou playbook contenha "cancel", "churn", "rescis" ou "retenção" não contam (a lista é editável). Eles são consequência da decisão, não sinal antecipado.
-- **O histórico de CSM não existe na API.** Só existe o CSM atual, então troca de CSM fica fora.
-- **A troca de sponsor é estimada.** `sp_novo` usa a data de cadastro do contato, não um histórico de troca.
+- **Troca de CSM e histórico real de sponsor ficam fora por decisão (12/10/2026).** `sp_novo` continua como estimativa pela data de cadastro do contato.
 - **Comentários de NPS e notas não são lidos como texto.** Entram só as tags e as contagens, e o texto fica no navegador.
 
 ## O que aparece no relatório
@@ -83,7 +87,7 @@ Todos os endpoints aceitam filtro de data e paginação (`limit`, `page`, `next_
 
 ## Status (12/10/2026)
 
-Semanas 1 a 3 entregues: fontes e modelos de CSV, importação da SenseData, exemplo com os mesmos sinais, API simulada, fotos mensais, assinaturas na área Diagnóstico, aviso na ficha do cliente e CSVs no relatório exportado. Falta a etapa 4: entrevistas com os CSMs.
+Semanas 1 a 3 entregues, com contratos incluídos. Semana 4: os casos para entrevista estão em Diagnóstico → Assinatura de cada motivo e o roteiro em [`roteiro-entrevistas.md`](roteiro-entrevistas.md). Falta conduzir as entrevistas.
 
 ## Etapas
 

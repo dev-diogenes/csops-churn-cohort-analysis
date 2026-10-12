@@ -52,11 +52,17 @@ check("tabelas do relatório exportado", ex && ["ativos-em-risco.csv", "cancelad
 const sg = run(`(() => { state.level = "org"; renderReport(); const M0 = build(); const m = signalModel(M0, view(M0));
   const top = mot => (m.sigs.find(x => x.motivo === mot) || { top: [] }).top.map(x => x.fam + "|" + x.f);
   const S = signalSources(), exitTk = [...S.tk.values()].flat().filter(e => e.exit).length;
-  return { motivos: m.sigs.length, suporte: top("suporte"), concorrente: top("concorrente"), exitTk, fotos: m.snapshots }; })()`);
+  // contrato vigente em T: o valor não pode mudar só porque a linha vai cancelar depois
+  const lc = M0.clients.find(c => c.churned && (S.ct.get(c.id) || []).length === 1 && c.dataCanc - c.inicio > 200 * 864e5);
+  const T = lc.dataCanc - 40 * 864e5, f = featuresAt(lc, T, S, null, []);
+  return { motivos: m.sigs.length, suporte: top("suporte"), concorrente: top("concorrente"), corte: top("corte_custos"), exitTk, fotos: m.snapshots, semVazamento: f.ct_mrr_d90 === 0 && f.ct_encerrados === 0 && f.ct_renov > 0, casos: interviewCases(m).length }; })()`);
 check("assinaturas por motivo", sg.motivos >= 4, true);
 check("suporte aparece em tickets", sg.suporte.some(x => x.startsWith("Suporte|")), true);
 check("concorrente aparece em sponsor novo", sg.concorrente.includes("Relacionamento|sp_novo"), true);
 check("pedidos de cancelamento marcados para sair das variáveis", sg.exitTk > 30, true);
+check("contrato aparece em corte de custos", sg.corte.some(x => x.startsWith("Contrato|")), true);
+check("fim do contrato vigente não vaza a saída", sg.semVazamento, true);
+check("casos para entrevista por motivo", sg.casos >= 3, true);
 
 // hierarquia: linhas de grupo/organização não contam como cliente
 check("linhas de hierarquia ignoradas", run("build().notes.length"), 1);

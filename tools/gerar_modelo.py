@@ -96,6 +96,13 @@ TEMPLATE = {
         ("usage_time", OPT, "Tempo de uso no mês."),
         ("modules", OPT, "Quantos módulos foram usados no mês."),
     ],
+    "contratos": [
+        ("id_customer", REQ, "ID da linha de cliente."),
+        ("start_date", REQ, "Início da vigência."),
+        ("end_date", IMP, "Fim da vigência. Vazio = vigente."),
+        ("monthly_payment", REQ, "Valor mensal do contrato."),
+        ("cycle", IMP, "Ciclo de renovação em meses (12, anual, semestral...). Sem ele, conta 12."),
+    ],
 }
 
 FILL = {REQ: PatternFill("solid", fgColor="F4B6B6"), IMP: PatternFill("solid", fgColor="FBE29A"), OPT: None}

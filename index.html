@@ -399,6 +399,7 @@ table.sigmx tr.on td { background: var(--accent-soft); }
 td.dcell { font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(--fs-sm); }
 .c360-box.match { border: 1px solid var(--st-warn); border-radius: var(--r); padding: var(--sp-3); background: color-mix(in srgb, var(--st-warn) 10%, transparent); }
 
+.guide { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
 /* menu de integrações e conexão SenseData */
 .menu { position: relative; }
 .menu-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, 86vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--sh-2); padding: 6px; display: grid; gap: 2px; }
@@ -729,7 +730,7 @@ details.more summary { color: var(--accent); }
       <label for="sdBase">URL da API<input id="sdBase" name="base" type="url" required value="https://api.sensedata.io" spellcheck="false"></label>
       <label for="sdToken">Bearer token<input id="sdToken" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="token de produção do SenseConnect"></label>
       <label class="sd-check" for="sdMrr"><input id="sdMrr" name="mrr" type="checkbox" checked> Buscar MRR nos contratos</label>
-      <label class="sd-check" for="sdSig"><input id="sdSig" name="sig" type="checkbox" checked> Buscar sinais de churn (tickets, NPS, tarefas, uso e sponsor dos últimos 18 meses)</label>
+      <label class="sd-check" for="sdSig"><input id="sdSig" name="sig" type="checkbox" checked> Buscar sinais de churn (tickets, NPS, tarefas, uso, contratos e sponsor dos últimos 18 meses)</label>
       <p class="note sd-safe">O token fica só na memória desta aba e segue para a SenseData pela ponte do servidor do relatório. Não é salvo em lugar nenhum.</p>
       <div class="actions">
         <button type="button" class="btn sm" id="sdTest">Testar conexão</button>
@@ -914,10 +915,21 @@ const SOURCES = {
       tempo: { label: "Tempo de uso", syn: ["usage_time", "tempo_uso", "minutos"] },
       modulos: { label: "Módulos usados", syn: ["modules", "modulos", "modulos_usados"] }
     }
+  },
+  contratos: {
+    title: "Contratos", table: "contracts", hint: "histórico de contratos e valores", optional: true, group: "sinais",
+    expect: "<code>id_customer</code>, <code>start_date</code>, <code>end_date</code>, <code>monthly_payment</code>; opcional <code>cycle</code>",
+    fields: {
+      id: { label: "ID do cliente", syn: ID_SYN },
+      inicio: { label: "Início", syn: ["start_date", "data_inicio", "inicio", "vigencia_inicio"] },
+      fim: { label: "Fim", syn: ["end_date", "data_fim", "fim", "vigencia_fim"] },
+      valor: { label: "Valor mensal", syn: ["monthly_payment", "valor_mensal", "mrr", "mensalidade", "valor"] },
+      ciclo: { label: "Ciclo de renovação", syn: ["cycle", "ciclo", "periodicidade", "renewal_cycle"] }
+    }
   }
 };
-const EMPTY_RAW = () => ({ clientes: null, kpis: null, cancel: null, tickets: null, nps: null, tarefas: null, uso: null });
-const EMPTY_MAP = () => ({ clientes: {}, kpis: {}, cancel: {}, tickets: {}, nps: {}, tarefas: {}, uso: {} });
+const EMPTY_RAW = () => ({ clientes: null, kpis: null, cancel: null, tickets: null, nps: null, tarefas: null, uso: null, contratos: null });
+const EMPTY_MAP = () => ({ clientes: {}, kpis: {}, cancel: {}, tickets: {}, nps: {}, tarefas: {}, uso: {}, contratos: {} });
 
 const state = {
   raw: EMPTY_RAW(),
@@ -1027,12 +1039,12 @@ function renderInputs() {
   const summaryChips = Object.entries(SOURCES).filter(([, s]) => !s.group).map(([key, s]) => {
     const raw = state.raw[key];
     return `<span class="srcchip ${raw && raw.rows.length ? (raw.error ? "err" : "ok") : ""}"><b>${s.title}</b> ${raw && raw.rows.length ? `${fmtInt(raw.rows.length)} linhas${raw.error ? " · revisar" : " ✓"}` : s.optional ? "opcional" : "faltando"}</span>`;
-  }).join("") + `<span class="srcchip ${sigN ? "ok" : ""}"><b>Sinais</b> ${sigN ? `${sigN} de 4 fontes ✓` : "opcional"}</span>`;
+  }).join("") + `<span class="srcchip ${sigN ? "ok" : ""}"><b>Sinais</b> ${sigN ? `${sigN} de 5 fontes ✓` : "opcional"}</span>`;
   host.innerHTML = `<div class="stephead"><span class="eyebrow">Passo 2 · Seus dados</span><h2 class="h-step">Clientes, indicadores e cancelamentos</h2>${state.source && !state.isSample ? `<p class="lede">Importado da ${esc(state.source.name)}${state.source.tenant ? ` · ${esc(state.source.tenant)}` : ""} em ${new Date(state.source.at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. Para atualizar, use Integrações → SenseData de novo.</p>` : `<p class="lede">Anexe, cole ou importe da SenseData em <b>Integrações</b>.</p>`}</div>
     <div class="srcbar">${summaryChips}<button type="button" class="btn sm" id="btnSources" aria-expanded="${open}">${open ? "Recolher" : "Ver e trocar arquivos"}</button>
       ${state.isSample ? "" : `<span class="remember"><button type="button" role="switch" id="rememberToggle" aria-checked="${rememberOn}" class="switch"><span aria-hidden="true"></span>Lembrar neste navegador</button>${restoredAt ? `<span class="note">restaurado de ${new Date(restoredAt).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</span>` : ""}${rememberOn ? `<button type="button" class="btn sm ghost" id="btnForget">Esquecer dados</button>` : ""}</span>`}</div>
     <div class="inputs" ${open ? "" : "hidden"}>${cards}</div>
-    <div ${open ? "" : "hidden"} class="sig-src"><h3 class="h-sub">Sinais de churn <span class="note">opcional · tickets, NPS, tarefas e uso, para a assinatura de cada motivo</span></h3><div class="inputs">${sigCards}</div></div>`;
+    <div ${open ? "" : "hidden"} class="sig-src"><h3 class="h-sub">Sinais de churn <span class="note">opcional · tickets, NPS, tarefas, uso e contratos, para a assinatura de cada motivo</span></h3><div class="inputs">${sigCards}</div></div>`;
   $("#sampleBanner").hidden = !state.isSample;
 }
 
@@ -2620,6 +2632,8 @@ function clientSummary(c) {
 document.addEventListener("click", e => {
   const b = e.target.closest && e.target.closest("[data-client]");
   if (b) { e.preventDefault(); openClient(b.dataset.client, b); return; }
+  const bl = e.target.closest && e.target.closest("[data-client-line]");
+  if (bl && LAST) { const ent = LAST.M.clients.find(c => (c.members || [c]).some(m => m.id === bl.dataset.clientLine)); if (ent) openClient(ent.id, bl); return; }
   if (e.target.id === "c360Close") closeClient();
   if (e.target.id === "c360Save") {
     const key = $("#c360").dataset.key, col = $("#c360Col").value, note = $("#c360Note").value.trim(), c = findClient(c360Id);
@@ -2662,6 +2676,7 @@ function exportTables() {
   if (brows.length) out["quadro-de-risco.csv"] = brows;
   const sm = signalModel(M0, M);
   if (sm.sigs.length) out["assinaturas-por-motivo.csv"] = sm.sigs.flatMap(sg => sg.list.map(x => ({ motivo: sg.motivo, saidas: sg.people, familia: x.fam, sinal: featLabel(x.f), media_quem_saiu: r4(x.mPos), media_quem_ficou: r4(x.mNeg), efeito_d: r4(x.d), aparece: x.lead || "perto da saída", estavel: x.stable ? "sim" : "não", d_3_meses: r4(x.byLead[0].d), d_2_meses: r4(x.byLead[1].d), d_1_mes: r4(x.byLead[2].d) })));
+  signatures(M, ctx); if (EXPORTS.cases && EXPORTS.cases.rows.length) out["casos-para-entrevista.csv"] = EXPORTS.cases.rows;
   if (sm.rows.length) out["fotos-mensais.csv"] = sm.rows.map(r => ({ cliente_id: r.c.label, data_foto: isoD(r.T), saiu_em_90_dias: r.label ? "sim" : "não", motivo: r.label || "", dias_ate_sair: Number.isFinite(r.lead) ? Math.round(r.lead) : "", ...Object.fromEntries(sm.feats.map(f => [featLabel(f), r4(r.f[f])])) }));
   const u = usage(), urows = USAGE_LABELS.filter(([k]) => u[k]).map(([k, t]) => ({ acao: t, vezes: u[k].n, primeira: isoD(u[k].first), ultima: isoD(u[k].last) }));
   if (urows.length) out["uso-do-relatorio.csv"] = urows;
@@ -2773,12 +2788,17 @@ const FEAT = {
   nps: ["Voz do cliente", "Última nota de NPS"], nps_delta: ["Voz do cliente", "NPS: variação contra a anterior"], nps_det: ["Voz do cliente", "Detrator na última resposta"],
   nps_sem: ["Voz do cliente", "Dias sem responder NPS"],
   rel_reuniao: ["Relacionamento", "Dias desde a última reunião"], rel_atrasadas: ["Relacionamento", "Tarefas atrasadas"],
-  rel_visitas: ["Relacionamento", "Visitas em 90 dias"], rel_notas: ["Relacionamento", "Notas em 90 dias"]
+  rel_visitas: ["Relacionamento", "Visitas em 90 dias"], rel_notas: ["Relacionamento", "Notas em 90 dias"],
+  ct_mrr_d90: ["Contrato", "MRR contratado: variação em 90 dias (%)"], ct_reducao: ["Contrato", "Teve redução de valor em 90 dias"],
+  ct_encerrados: ["Contrato", "Contratos encerrados em 90 dias"], ct_renov: ["Contrato", "Dias até a próxima renovação"]
 };
-const FAMILIES = ["Uso", "Suporte", "Voz do cliente", "Relacionamento", "Indicadores", "Estrutura"];
+const FAMILIES = ["Uso", "Suporte", "Voz do cliente", "Relacionamento", "Contrato", "Indicadores", "Estrutura"];
+// ciclo de renovação em meses a partir do texto do contrato (12 quando não informado)
+const cycleMonths = v => { const t = norm(v); if (!t) return 12; const n = parseInt(t, 10); if (Number.isFinite(n) && n > 0) return n; return /mens|month/.test(t) ? 1 : /bimes/.test(t) ? 2 : /trimes|quarter/.test(t) ? 3 : /semes/.test(t) ? 6 : /bienal|bianual|24/.test(t) ? 24 : 12; };
 const featLabel = k => FEAT[k] ? FEAT[k][1] : k.replace(/ · d3$/, ": variação contra 3 meses (%)");
 const featFam = k => FEAT[k] ? FEAT[k][0] : "Indicadores";
 let SIG_CACHE = null;
+const SIG_SRC = ["tickets", "nps", "tarefas", "uso", "contratos"];
 function eventsBy(src, fn) {
   const raw = state.raw[src], m = state.map[src];
   if (!raw || !raw.rows.length || !m.id) return null;
@@ -2800,8 +2820,9 @@ function signalSources() {
     const kind = norm(txt(r, m.origem)), tipo = txt(r, m.tipo);
     return { d, kind: /visit/.test(kind) || /visita/i.test(tipo) ? "visita" : /nota|note/.test(kind) ? "nota" : "tarefa", due: m.prazo ? toDate(r[m.prazo]) : null, done: m.concluida ? toDate(r[m.concluida]) : null, meet: MEET_RE.test(tipo) || /visit/.test(kind), exit: EXIT_RE.test([tipo, txt(r, m.playbook), txt(r, m.tags)].join(" ")) };
   });
+  const ct = eventsBy("contratos", (r, m) => { const d = toDate(r[m.inicio]); if (d == null) return null; return { d, end: m.fim ? toDate(r[m.fim]) : null, v: m.valor ? toNum(r[m.valor]) : NaN, cyc: cycleMonths(m.ciclo ? r[m.ciclo] : "") }; });
   const us = eventsBy("uso", (r, m) => { const d = toDate(r[m.data]); if (d == null) return null; return { d, act: m.ativos ? toNum(r[m.ativos]) : NaN, con: m.contratados ? toNum(r[m.contratados]) : NaN, time: m.tempo ? toNum(r[m.tempo]) : NaN, mod: m.modulos ? toNum(r[m.modulos]) : NaN }; });
-  return { tk, np, ta, us };
+  return { tk, np, ta, us, ct };
 }
 const medianOf = a => { if (!a.length) return NaN; const b = a.slice().sort((x, y) => x - y), h = b.length >> 1; return b.length % 2 ? b[h] : (b[h - 1] + b[h]) / 2; };
 const rel = (x, base) => Number.isFinite(x) && Number.isFinite(base) ? (Math.abs(base) > 1e-9 ? (x - base) / Math.abs(base) * 100 : x - base) : NaN;
@@ -2842,11 +2863,25 @@ function featuresAt(c, T, S, orgLines, kpiCols) {
     f.rel_visitas = t.filter(e => e.kind === "visita" && e.d > T - W).length;
     f.rel_notas = t.filter(e => e.kind === "nota" && e.d > T - W).length;
   }
+  if (S.ct) {
+    // só o que já estava valendo em T: início, valor e encerramentos passados. A data de fim de um contrato
+    // vigente em T nunca é lida (nos cancelados ela é a própria saída); a renovação sai do aniversário do início.
+    const list = S.ct.get(id) || [], live = t => list.filter(e => e.d <= t && (e.end == null || e.end > t));
+    const sum = a => a.reduce((x, e) => x + (Number.isFinite(e.v) ? e.v : 0), 0);
+    const now = live(T), before = live(T - W);
+    if (now.length || before.length) {
+      const a = sum(now), b = sum(before);
+      if (b > 0) { f.ct_mrr_d90 = (a - b) / b * 100; f.ct_reducao = a < b - 0.01 ? 1 : 0; }
+      f.ct_encerrados = list.filter(e => e.end != null && e.end > T - W && e.end <= T).length;
+      const anniv = now.filter(e => e.cyc >= 3).map(e => { const d = new Date(e.d); let k = 1, nx; do { nx = Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + e.cyc * k, d.getUTCDate()); k++; } while (nx <= T && k < 400); return (nx - T) / DAYMS; });
+      if (anniv.length) f.ct_renov = Math.min(...anniv);
+    }
+  }
   return f;
 }
 const monthEnd = (t, k) => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() - k + 1, 0); };
 function signalModel(M0, M) {
-  const key = [M0, JSON.stringify(state.filters), ...["tickets", "nps", "tarefas", "uso"].map(k => state.raw[k]), JSON.stringify(state.map)];
+  const key = [M0, JSON.stringify(state.filters), ...SIG_SRC.map(k => state.raw[k]), JSON.stringify(state.map)];
   if (SIG_CACHE && SIG_CACHE.key.length === key.length && SIG_CACHE.key.every((x, i) => x === key[i])) return SIG_CACHE.res;
   const S = signalSources(), lines = M.lines, orgLines = new Map();
   for (const c of lines) if (c.h && c.h.org) { if (!orgLines.has(c.h.org)) orgLines.set(c.h.org, []); orgLines.get(c.h.org).push(c); }
@@ -2886,10 +2921,26 @@ function signalModel(M0, M) {
     list.sort((x, y) => Math.abs(y.d) - Math.abs(x.d));
     return { motivo: m, people, rows: pos.length, list, top: list.filter(x => Math.abs(x.d) >= 0.3).slice(0, 6) };
   }).filter(x => x.people >= 3).sort((a, b) => b.people - a.people);
-  const hasExtra = ["tickets", "nps", "tarefas", "uso"].filter(k => state.raw[k] && state.raw[k].rows.length);
+  const hasExtra = SIG_SRC.filter(k => state.raw[k] && state.raw[k].rows.length);
   const res = { rows, nowRows, sigs, feats, snapshots: new Set(rows.map(r => r.T)).size, positives: rows.filter(r => r.label).length, people: new Set(rows.filter(r => r.label).map(r => r.c.id)).size, sources: hasExtra, neg: neg.length };
   SIG_CACHE = { key, res };
   return res;
+}
+// casos para entrevista: por motivo, a saída que a assinatura antecipou e a que ela não viu
+function interviewCases(model) {
+  const pops = new Map(), negs = model.rows.filter(r => r.label == null);
+  const pop = f => { if (!pops.has(f)) pops.set(f, negs.map(r => r.f[f]).filter(Number.isFinite).sort((a, b) => a - b)); return pops.get(f); };
+  const csmCol = (state.map.clientes && Object.keys((model.rows[0] && model.rows[0].c.row) || {}).find(k => /owner|csm|responsavel/.test(norm(k)))) || null;
+  const score = (r, sg) => { let sw = 0, sc = 0; for (const x of sg.top.slice(0, 5)) { const v = r.f[x.f], ps = pop(x.f); if (!Number.isFinite(v) || ps.length < 10) continue; const pr = pctRank(ps, v), w = Math.min(Math.abs(x.d), 2); sw += w; sc += w * (x.d > 0 ? pr : 1 - pr); } return sw ? sc / sw : null; };
+  return model.sigs.filter(sg => sg.motivo !== "Outros" && sg.top.length).map(sg => {
+    // para cada saída, a foto mais antiga dentro dos 90 dias (o aviso que o time teria tido)
+    const by = new Map();
+    for (const r of model.rows) if (r.label === sg.motivo && r.lead > 30) { const o = by.get(r.c.id); if (!o || r.lead > o.lead) by.set(r.c.id, r); }
+    const scored = [...by.values()].map(r => ({ r, s: score(r, sg) })).filter(x => x.s != null).sort((a, b) => b.s - a.s);
+    if (scored.length < 2) return null;
+    const pickCase = x => ({ c: x.r.c, s: x.s, foto: x.r.T, dias: Math.round(x.r.lead), csm: csmCol && x.r.c.row ? String(x.r.c.row[csmCol] || "") : "", sinais: sg.top.slice(0, 5).filter(t => { const v = x.r.f[t.f], ps = pop(t.f); if (!Number.isFinite(v) || ps.length < 10) return false; const pr = pctRank(ps, v); return (t.d > 0 ? pr : 1 - pr) >= 0.75; }).map(t => featLabel(t.f)) });
+    return { motivo: sg.motivo, previsto: pickCase(scored[0]), naoPrevisto: pickCase(scored[scored.length - 1]), n: scored.length };
+  }).filter(Boolean);
 }
 // ficha: o cliente ativo lembra a assinatura de algum motivo?
 function motiveMatch(c, model) {
@@ -2912,7 +2963,7 @@ function motiveMatch(c, model) {
   }
   return best && best.score >= 0.75 && best.hits.length >= 2 ? best : null;
 }
-const fmtFeat = (f, v) => !Number.isFinite(v) ? "—" : /^(sp_novo|nps_det)$/.test(f) ? fmtPct(v, 0) : /lic$/.test(f) ? nf1.format(v) + "%" : /d3$/.test(f) && !/^(lic_d3|mod_d3)$/.test(f) ? (v > 0 ? "+" : "") + nf1.format(v) + "%" : nf1.format(v);
+const fmtFeat = (f, v) => !Number.isFinite(v) ? "—" : /^(sp_novo|nps_det|ct_reducao)$/.test(f) ? fmtPct(v, 0) : f === "ct_mrr_d90" ? (v > 0 ? "+" : "") + nf1.format(v) + "%" : /lic$/.test(f) ? nf1.format(v) + "%" : /d3$/.test(f) && !/^(lic_d3|mod_d3)$/.test(f) ? (v > 0 ? "+" : "") + nf1.format(v) + "%" : nf1.format(v);
 const dCell = d => { const a = Math.min(1, Math.abs(d) / 1.2); return `<td class="n dcell" style="background:color-mix(in srgb, var(${d > 0 ? "--st-crit" : "--s-ativo"}) ${Math.round(a * 55)}%, transparent)">${d > 0 ? "▲" : "▼"} ${nf1.format(Math.abs(d))}</td>`; };
 function signatures(M, ctx) {
   const model = signalModel(ctx.M0, M);
@@ -2926,11 +2977,19 @@ function signatures(M, ctx) {
   const detail = sel.top.length ? `<div class="scroll"><table class="dense"><thead><tr><th>Sinal</th><th>Família</th><th class="n">Quem saiu <span class="muted">(média)</span></th><th class="n">Quem ficou</th><th class="n">Efeito</th><th>Aparece</th><th>Estável</th></tr></thead>
     <tbody>${sel.top.map(x => `<tr><td>${esc(featLabel(x.f))}</td><td class="muted">${esc(x.fam)}</td><td class="n">${fmtFeat(x.f, x.mPos)}</td><td class="n">${fmtFeat(x.f, x.mNeg)}</td>${dCell(x.d)}<td>${x.lead ? `${x.lead} antes` : `<span class="muted">perto da saída</span>`}</td><td>${x.stable ? `<span class="chip good"><i aria-hidden="true">●</i>Sim</span>` : `<span class="chip neu"><i aria-hidden="true">○</i>Não</span>`}</td></tr>`).join("")}</tbody></table></div>`
     : `<p class="note">Nenhum sinal com efeito de 0,3 ou mais para este motivo. Ou a saída não deu aviso nos dados, ou falta a fonte que mostraria o aviso.</p>`;
-  const body = `<p class="hint-line">${fmtInt(model.snapshots)} fotos mensais · ${fmtInt(model.people)} linhas canceladas em até 90 dias · fontes: KPIs${model.sources.length ? ", " + model.sources.map(k => SOURCES[k].title.toLowerCase()).join(", ") : ""}.${model.sources.length < 4 ? ` <a href="#inputs" data-goto="inputs">Adicionar sinais</a>` : ""}</p>
+  const body = `<p class="hint-line">${fmtInt(model.snapshots)} fotos mensais · ${fmtInt(model.people)} linhas canceladas em até 90 dias · fontes: KPIs${model.sources.length ? ", " + model.sources.map(k => SOURCES[k].title.toLowerCase()).join(", ") : ""}.${model.sources.length < SIG_SRC.length ? ` <a href="#inputs" data-goto="inputs">Adicionar sinais</a>` : ""}</p>
     <div class="panel"><h3 style="margin-bottom:8px">Onde cada motivo dá aviso</h3>${matrix}<p class="note" style="margin-top:8px">▲ maior em quem saiu · ▼ menor · número = efeito (d de Cohen). Clique num motivo para ver os sinais.</p></div>
     <div class="panel"><h3 style="margin-bottom:8px">${esc(pretty(sel.motivo))}: ${sel.people} saída(s)</h3>${detail}
       ${more("Como é calculado", `No fim de cada mês, cada linha ativa recebe as variáveis calculadas só com registros até aquela data. Quem cancelou nos 90 dias seguintes por este motivo é comparado com quem continuou ativo. <b>Aparece</b> é a primeira janela (3, 2 ou 1 mês antes) em que o sinal já se destaca; <b>estável</b> quer dizer que ele aparece na primeira e na segunda metade do período. Pedidos de cancelamento e tarefas de retenção ficam de fora, porque são consequência da decisão.`)}</div>`;
-  return sec("assinaturas", "Diagnóstico", "Assinatura de cada motivo", "Que sinais aparecem antes de cada tipo de saída.", body);
+  const cases = interviewCases(model);
+  const caseCell = x => `<button type="button" class="cbtn" data-client-line="${esc(x.c.id)}">${esc(x.c.nome || x.c.label)}</button><span class="sub">${x.csm ? esc(x.csm) + " · " : ""}saiu em ${fmtDate(x.c.dataCanc)} · ${Math.round(x.s * 100)}% de semelhança ${x.dias} dias antes${x.sinais.length ? " · " + esc(x.sinais.slice(0, 2).join(", ").toLowerCase()) : ""}</span>`;
+  const casesHtml = cases.length ? `<div class="panel" id="entrevistas"><div class="tablebar"><h3>Casos para entrevista com os CSMs</h3><button type="button" class="btn sm" data-copy="cases">Copiar como CSV</button></div>
+    <p class="hint-line">Por motivo: a saída que os sinais anteciparam e a que eles não viram. Leve as duas para a conversa com o CSM de cada caso.</p>
+    <div class="scroll"><table class="dense"><thead><tr><th>Motivo</th><th>Os sinais anteciparam</th><th>Os sinais não viram</th></tr></thead>
+    <tbody>${cases.map(k => `<tr><td>${esc(pretty(k.motivo))}<span class="sub">${k.n} saídas</span></td><td class="one">${caseCell(k.previsto)}</td><td class="one">${caseCell(k.naoPrevisto)}</td></tr>`).join("")}</tbody></table></div>
+    ${more("Roteiro da conversa (30 min)", `<ol class="guide"><li><b>Contexto (5 min).</b> Como era a relação com o cliente nos 6 meses antes da saída? Quem era o contato do dia a dia e quem decidia?</li><li><b>Linha do tempo (10 min).</b> Quando você percebeu que ia sair? O que aconteceu antes disso? Mostre os sinais de 90 dias antes e pergunte se batem com o que viu.</li><li><b>O que os dados não mostram (10 min).</b> Para o caso que os sinais não viram: houve aviso fora do sistema (e-mail, WhatsApp, reunião sem registro, mudança na empresa do cliente)? Onde isso poderia ser registrado?</li><li><b>Ação (5 min).</b> Com 90 dias de antecedência, o que você teria feito? O que faltou: tempo, playbook, apoio de outra área?</li></ol><p>Registre cada aviso citado como <b>sinal novo</b> (e onde ele vive hoje) ou <b>sinal confirmado</b>. Os confirmados viram regra da ficha do cliente.</p>`)}</div>` : "";
+  EXPORTS.cases = { name: "casos-para-entrevista", rows: cases.flatMap(k => [["antecipado", k.previsto], ["nao_antecipado", k.naoPrevisto]].map(([tipo, x]) => ({ motivo: k.motivo, tipo, cliente_id: x.c.label, nome: x.c.nome, csm: x.csm, data_saida: isoD(x.c.dataCanc), foto: isoD(x.foto), dias_antes: x.dias, semelhanca: Math.round(x.s * 100), sinais_presentes: x.sinais.join(" · ") }))) };
+  return sec("assinaturas", "Diagnóstico", "Assinatura de cada motivo", "Que sinais aparecem antes de cada tipo de saída.", body + casesHtml);
 }
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-sig]"); if (b) { state.sigSel = b.dataset.sig; renderReport(); const again = document.querySelector(`[data-sig="${CSS.escape(b.dataset.sig)}"]`); if (again) again.focus(); } });
 
@@ -3154,13 +3213,14 @@ const TEMPLATE = {
   tickets: [["id_customer", "req", "ID da linha de cliente."], ["created_on", "req", "Data de abertura do ticket."], ["end_date", "imp", "Data de resolução. Vazio = aberto."], ["expire_date", "imp", "Prazo (SLA)."], ["priority", "imp", "Prioridade. Alta e urgente contam como graves."], ["category", "imp", "Categoria."], ["type", "opt", "Tipo."], ["title", "opt", "Título. Usado só para tirar pedidos de cancelamento."]],
   nps: [["id_customer", "req", "ID da linha de cliente."], ["survey_date", "req", "Data da resposta."], ["score", "req", "Nota de 0 a 10."], ["role", "imp", "Cargo de quem respondeu. Sponsor, decisor ou diretor contam como sponsor."], ["tags", "opt", "Tags da resposta."]],
   tarefas: [["id_customer", "req", "ID da linha de cliente."], ["kind", "imp", "tarefa, visita ou nota."], ["type", "imp", "Tipo da tarefa. Reunião, call, QBR ou visita contam como reunião."], ["created_on", "req", "Data de criação."], ["due_date", "imp", "Prazo."], ["end_date", "imp", "Data de conclusão."], ["playbook", "opt", "Nome do playbook que gerou a tarefa."], ["tags", "opt", "Tags."]],
-  uso: [["id_customer", "req", "ID da linha de cliente."], ["ref_date", "req", "Mês de referência."], ["active_users", "req", "Usuários ativos no mês."], ["contracted_users", "imp", "Usuários contratados."], ["usage_time", "opt", "Tempo de uso no mês."], ["modules", "opt", "Quantos módulos foram usados no mês."]]
+  uso: [["id_customer", "req", "ID da linha de cliente."], ["ref_date", "req", "Mês de referência."], ["active_users", "req", "Usuários ativos no mês."], ["contracted_users", "imp", "Usuários contratados."], ["usage_time", "opt", "Tempo de uso no mês."], ["modules", "opt", "Quantos módulos foram usados no mês."]],
+  contratos: [["id_customer", "req", "ID da linha de cliente."], ["start_date", "req", "Início da vigência."], ["end_date", "imp", "Fim da vigência. Vazio = vigente."], ["monthly_payment", "req", "Valor mensal do contrato."], ["cycle", "imp", "Ciclo de renovação em meses (12, anual, semestral…). Sem ele, conta 12."]]
 };
-$("#templateCols").innerHTML = Object.entries(TEMPLATE).map(([t, cols]) => `<div class="tcols"><b>${t}${["cancelamentos", "tickets", "nps", "tarefas", "uso"].includes(t) ? " (opcional)" : ""}</b>${cols.map(([n, k, d]) => `<span class="col ${k === "opt" ? "" : k}" data-tip="${esc(d)}">${n}</span>`).join("")}</div>`).join("");
+$("#templateCols").innerHTML = Object.entries(TEMPLATE).map(([t, cols]) => `<div class="tcols"><b>${t}${["cancelamentos", "tickets", "nps", "tarefas", "uso", "contratos"].includes(t) ? " (opcional)" : ""}</b>${cols.map(([n, k, d]) => `<span class="col ${k === "opt" ? "" : k}" data-tip="${esc(d)}">${n}</span>`).join("")}</div>`).join("");
 
 
 /* ---------- modal de colar ---------- */
-const TPL_OF = { clientes: "customer", kpis: "kpi", cancel: "cancelamentos", tickets: "tickets", nps: "nps", tarefas: "tarefas", uso: "uso" };
+const TPL_OF = { clientes: "customer", kpis: "kpi", cancel: "cancelamentos", tickets: "tickets", nps: "nps", tarefas: "tarefas", uso: "uso", contratos: "contratos" };
 // campo do relatório → nome da coluna no modelo
 const FIELD_TPL = {
   clientes: { id: "id", nome: "name", inicio: "dt_register", canc: "dt_cancel", motivo: "cancel_tag", descricao: "cancel_description", mrr: "mrr", tipo: "hierarchy_type", grupo: "id_group", grupoNome: "group", organizacao: "id_org", produto: "id_product", produtoNome: "product" },
@@ -3169,7 +3229,8 @@ const FIELD_TPL = {
   tickets: { id: "id_customer", aberto: "created_on", fechado: "end_date", prazo: "expire_date", prioridade: "priority", categoria: "category", tipo: "type", titulo: "title" },
   nps: { id: "id_customer", data: "survey_date", nota: "score", papel: "role", tags: "tags" },
   tarefas: { id: "id_customer", origem: "kind", tipo: "type", criada: "created_on", prazo: "due_date", concluida: "end_date", playbook: "playbook", tags: "tags" },
-  uso: { id: "id_customer", data: "ref_date", ativos: "active_users", contratados: "contracted_users", tempo: "usage_time", modulos: "modules" }
+  uso: { id: "id_customer", data: "ref_date", ativos: "active_users", contratados: "contracted_users", tempo: "usage_time", modulos: "modules" },
+  contratos: { id: "id_customer", inicio: "start_date", fim: "end_date", valor: "monthly_payment", ciclo: "cycle" }
 };
 const pm = { src: null, rows: [], targets: [], header: null, opener: null, viewing: false };
 const tplCols = src => TEMPLATE[TPL_OF[src]];
@@ -3435,9 +3496,10 @@ async function sdImport(token, base, withMrr, withSignals) {
     const d = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0), ref = sdDay(d);
     kpis.push(...await sdPaged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, token, base, signal, `KPIs de ${fmtDate(d)}`));
   }
-  let mrrOf = null, mrr12Of = null;
-  if (withMrr) {
-    const contracts = await sdPaged("/v2/contracts", "contracts", { limit: 1000 }, token, base, signal, "Contratos");
+  let mrrOf = null, mrr12Of = null, contractRows = null;
+  const contracts = withMrr || withSignals ? await sdOptional("Contratos", () => sdPaged("/v2/contracts", "contracts", { limit: 1000 }, token, base, signal, "Contratos")) : null;
+  if (contracts && withSignals) contractRows = contracts.map(c => ({ id_customer: idOf(c), start_date: String(c.start_date || "").slice(0, 10), end_date: String(c.end_date || "").slice(0, 10), monthly_payment: c.monthly_payment, cycle: c.cycle || "", plan: c.plan || "", status: (c.status && c.status.description) || "" })).filter(r => r.id_customer != null && r.start_date);
+  if (withMrr && contracts) {
     // MRR de cada cliente: contratos vigentes hoje (ativos) ou na véspera do cancelamento (cancelados)
     const byCust = new Map();
     for (const c of contracts) { const id = c.id_customer ?? (c.customer && c.customer.id); if (id == null) continue; if (!byCust.has(id)) byCust.set(id, []); byCust.get(id).push(c); }
@@ -3476,10 +3538,11 @@ async function sdImport(token, base, withMrr, withSignals) {
   if (!state.isSample) { state.raw = EMPTY_RAW(); state.map = EMPTY_MAP(); }
   loadText("clientes", Papa.unparse(custRows));
   if (kpiRows.length) loadText("kpis", Papa.unparse(kpiRows), false);
-  for (const k of ["tickets", "nps", "tarefas", "uso"]) if (sig[k] && sig[k].length) loadText(k, Papa.unparse(sig[k]), false);
+  if (contractRows && contractRows.length) sig.contratos = contractRows;
+  for (const k of SIG_SRC) if (sig[k] && sig[k].length) loadText(k, Papa.unparse(sig[k]), false);
   state.source = { name: "SenseData", tenant: me.name || me.tenant || "", at: Date.now() };
   renderInputs();
-  const extra = ["tickets", "nps", "tarefas", "uso"].filter(k => sig[k] && sig[k].length).map(k => `${fmtInt(sig[k].length)} ${SOURCES[k].title.toLowerCase()}`);
+  const extra = SIG_SRC.filter(k => sig[k] && sig[k].length).map(k => `${fmtInt(sig[k].length)} ${SOURCES[k].title.toLowerCase()}`);
   sdLog(`Pronto: ${fmtInt(custRows.length)} clientes e ${fmtInt(kpiRows.length)} leituras de KPI importados${extra.length ? `, mais ${extra.join(", ")}` : ""}.`, "ok");
   return { customers: custRows.length, kpis: kpiRows.length };
 }
@@ -3737,13 +3800,23 @@ function makeSample() {
   const NP = [["id_customer", "survey_date", "score", "role", "tags"]];
   const TA = [["id_customer", "kind", "type", "created_on", "due_date", "end_date", "playbook", "tags"]];
   const US = [["id_customer", "ref_date", "active_users", "contracted_users", "usage_time", "modules"]];
+  const CT = [["id_customer", "start_date", "end_date", "monthly_payment", "cycle"]];
   const SIG_FROM = Date.UTC(2025, 3, 1);
   const sponsorDate = l => {
     // quem sai para concorrente ou por aquisição costuma trocar de decisor meses antes
     if (l.cancel && ["concorrente", "fusao_aquisicao"].includes(l.mot[0]) && R2() < 0.7) return iso(l.cancel - Math.round(60 + R2() * 70) * DAY);
     return iso(Math.min(REF, l.start + Math.round(R2() * 400) * DAY));
   };
+  function contracts(l) {
+    // um contrato anual por linha; antes de sair por preço ou corte de custos, parte dos clientes reduz o valor
+    const cyc = R2() < 0.8 ? 12 : 6;
+    if (l.cancel && ["preco", "corte_custos"].includes(l.mot[0]) && R2() < 0.7 && l.cancel - l.start > 150 * DAY) {
+      const cut = l.cancel - Math.round(45 + R2() * 40) * DAY;
+      CT.push([l.id, iso(l.start), iso(cut), (l.mrr * 1.25).toFixed(2), cyc], [l.id, iso(cut), iso(l.cancel), l.mrr.toFixed(2), cyc]);
+    } else CT.push([l.id, iso(l.start), l.cancel ? iso(l.cancel) : "", l.mrr.toFixed(2), cyc]);
+  }
   function signals(l, org) {
+    contracts(l);
     const end = l.cancel || REF, users = Math.max(2, Math.round(usersB[org.size] * prodM[l.prod] * 1.2)), mot = l.mot[0];
     for (let t = Math.max(monthStart(l.start), SIG_FROM); t < end; t = addMonths(t, 1)) {
       const me = Math.min(addMonths(t, 1) - DAY, end), toC = l.cancel ? (l.cancel - t) / (30.4 * DAY) : 99, near = toC <= 3.2, k = near ? (3.4 - toC) / 3 : 0;
@@ -3860,14 +3933,14 @@ function makeSample() {
     }
   }
   const csv = rows => rows.map(r => r.map(v => { const s = String(v); return /[,"\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }).join(",")).join("\n");
-  return { clientes: csv(C), kpis: csv(K), tickets: csv(TK), nps: csv(NP), tarefas: csv(TA), uso: csv(US) };
+  return { clientes: csv(C), kpis: csv(K), tickets: csv(TK), nps: csv(NP), tarefas: csv(TA), uso: csv(US), contratos: csv(CT) };
 }
 // SAMPLE-END
 function loadSample() {
   const s = makeSample();
   state.isSample = true; state.source = null; state.dimBar = null; state.dimPeer = null; state.level = "org"; state.filters = []; state.openFilter = null;
   state.raw = EMPTY_RAW(); state.map = EMPTY_MAP();
-  for (const k of ["clientes", "kpis", "tickets", "nps", "tarefas", "uso"]) { state.raw[k] = parseCSV(s[k]); state.raw[k].text = s[k]; autoMap(k); }
+  for (const k of ["clientes", "kpis", "tickets", "nps", "tarefas", "uso", "contratos"]) { state.raw[k] = parseCSV(s[k]); state.raw[k].text = s[k]; autoMap(k); }
   renderInputs(); renderReport();
 }
 
