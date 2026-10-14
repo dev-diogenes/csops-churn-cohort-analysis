@@ -407,7 +407,14 @@ td.dcell { font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(
 .menu-pop [role=menuitem]:hover, .menu-pop [role=menuitem]:focus-visible { background: var(--sunken); }
 .menu-pop [role=menuitem] span { font-size: 0.8rem; color: var(--muted); }
 .menu-note { font-size: 0.76rem; color: var(--muted); padding: 6px 12px 4px; border-top: 1px solid var(--line); }
-.pm.sd { width: min(620px, 100%); }
+.pm.sd { width: min(640px, 100%); overflow: auto; }
+.sd-opts { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+#sdMode { align-self: start; }
+.sd-steps { margin: 0; padding-left: 20px; display: grid; gap: 12px; font-size: var(--fs-sm); }
+.sd-steps li { padding-left: 2px; }
+.sd-steps li > span { display: block; margin-bottom: 6px; }
+.pm.sd > * { flex-shrink: 0; }
+.sd-steps .note { font-size: var(--fs-xs); }
 .sd-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; align-items: end; }
 .sd-form label { display: grid; gap: 4px; font-size: 0.82rem; color: var(--muted); min-width: 0; }
 .sd-form input[type=url], .sd-form input[type=password], .sd-form select { padding: 8px 10px; border: 1px solid var(--ctl); border-radius: 6px; background: var(--bg); color: var(--ink); min-height: 38px; width: 100%; font-family: var(--f-mono); font-size: 0.84rem; }
@@ -724,20 +731,39 @@ details.more summary { color: var(--accent); }
       <div><span class="eyebrow">Integrações</span><h3 id="sdTitle">Conectar à SenseData</h3></div>
       <button type="button" class="fx" id="sdClose" aria-label="Fechar">×</button>
     </header>
-    <p class="note" id="sdDesc">Busca os clientes (<span class="mono">/v2/customers</span>), os KPIs do último dia de cada um dos últimos 12 meses (<span class="mono">/v2/kpis</span>, com nome e direção de cada KPI) e, se quiser, o MRR dos contratos (<span class="mono">/v2/contracts</span>). Os dados entram no relatório como se fossem os CSVs de customer e kpi.</p>
-    <div class="sd-proxy" id="sdProxy" role="status"></div>
-    <form id="sdForm" class="sd-form" autocomplete="off">
-      <label for="sdBase">URL da API<input id="sdBase" name="base" type="url" required value="https://api.sensedata.io" spellcheck="false"></label>
-      <label for="sdToken">Bearer token<input id="sdToken" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="token de produção do SenseConnect"></label>
-      <label class="sd-check" for="sdMrr"><input id="sdMrr" name="mrr" type="checkbox" checked> Buscar MRR nos contratos</label>
-      <label class="sd-check" for="sdSig"><input id="sdSig" name="sig" type="checkbox" checked> Buscar sinais de churn (tickets, NPS, tarefas, uso, contratos e sponsor dos últimos 18 meses)</label>
-      <p class="note sd-safe">O token fica só na memória desta aba e segue para a SenseData pela ponte do servidor do relatório. Não é salvo em lugar nenhum.</p>
-      <div class="actions">
-        <button type="button" class="btn sm" id="sdTest">Testar conexão</button>
-        <button type="submit" class="btn sm primary" id="sdImport">Importar dados</button>
-        <button type="button" class="btn sm ghost" id="sdCancel" hidden>Cancelar importação</button>
-      </div>
-    </form>
+    <p class="note" id="sdDesc">Busca clientes, KPIs do último dia de cada um dos últimos 12 meses e, se marcado, MRR dos contratos e sinais de churn (tickets, NPS, tarefas, uso, contratos e sponsor dos últimos 18 meses).</p>
+    <div class="sd-opts">
+      <label class="sd-check" for="sdMrr"><input id="sdMrr" type="checkbox" checked> MRR dos contratos</label>
+      <label class="sd-check" for="sdSig"><input id="sdSig" type="checkbox" checked> Sinais de churn</label>
+    </div>
+    <div class="seg" role="group" aria-label="Como conectar" id="sdMode">
+      <button type="button" data-sdmode="fav" aria-pressed="true">Sem instalar nada</button>
+      <button type="button" data-sdmode="proxy" aria-pressed="false">Servidor do projeto</button>
+    </div>
+    <div id="sdFav" class="sd-fav">
+      <ol class="sd-steps">
+        <li><span><b>Uma vez só:</b> arraste o botão abaixo para a barra de favoritos do navegador.</span>
+          <span class="actions"><a class="btn sm primary" id="sdBookmarklet" href="#" title="Arraste para a barra de favoritos">Importar SenseData</a><button type="button" class="btn sm" id="sdCopyBm">Copiar código do favorito</button></span>
+          <span class="note">Sem barra de favoritos: Ctrl+Shift+B mostra a barra. Se o arraste não funcionar, crie um favorito qualquer, edite e cole o código no campo do endereço.</span></li>
+        <li><span>Abra a página da API da SenseData numa aba nova.</span><span class="actions"><button type="button" class="btn sm" id="sdOpenApi">Abrir a SenseData</button></span></li>
+        <li><span>Nessa aba, clique no favorito <b>Importar SenseData</b> e informe o token. Os dados voltam para cá sozinhos; se não voltarem, um arquivo <span class="mono">.json</span> é baixado.</span></li>
+        <li><span>Se baixou o arquivo, anexe aqui.</span><span class="actions"><label class="btn sm" for="sdFile" style="cursor:pointer">Anexar arquivo .json</label><input type="file" id="sdFile" accept=".json,application/json" hidden></span></li>
+      </ol>
+      <p class="note sd-safe">O token é digitado na aba da SenseData e só vai para a própria SenseData. Ele não passa por este relatório nem por servidor nenhum, e não é salvo.</p>
+    </div>
+    <div id="sdProxyWrap" hidden>
+      <div class="sd-proxy" id="sdProxy" role="status"></div>
+      <form id="sdForm" class="sd-form" autocomplete="off">
+        <label for="sdBase">URL da API<input id="sdBase" name="base" type="url" required value="https://api.sensedata.io" spellcheck="false"></label>
+        <label for="sdToken">Bearer token<input id="sdToken" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="token de produção do SenseConnect"></label>
+        <p class="note sd-safe">O token fica só na memória desta aba e segue para a SenseData pela ponte do servidor do relatório. Não é salvo em lugar nenhum.</p>
+        <div class="actions">
+          <button type="button" class="btn sm" id="sdTest">Testar conexão</button>
+          <button type="submit" class="btn sm primary" id="sdImport">Importar dados</button>
+          <button type="button" class="btn sm ghost" id="sdCancel" hidden>Cancelar importação</button>
+        </div>
+      </form>
+    </div>
     <ol class="sd-log" id="sdLog" aria-live="polite"></ol>
   </div>
 </div>
@@ -3413,14 +3439,20 @@ async function sdCheckProxy() {
     box.innerHTML = `<b>Para conectar, abra o relatório pelo servidor que acompanha o projeto.</b><span>A SenseData não aceita chamadas feitas direto do navegador${/claude/.test(location.hostname) ? ", e o link publicado bloqueia chamadas externas" : ""}. No terminal, na pasta do projeto:</span><pre>node tools/servidor.mjs</pre><span>e abra <span class="mono">http://localhost:8787</span>. Publicando o repositório na Vercel, a função <span class="mono">api/sensedata</span> faz o mesmo papel.</span>`;
   }
   $("#sdTest").disabled = $("#sdImport").disabled = !sd.proxy;
+  sdMode(sd.proxy ? "proxy" : "fav");
+}
+function sdMode(m) {
+  document.querySelectorAll("[data-sdmode]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.sdmode === m)));
+  $("#sdFav").hidden = m !== "fav"; $("#sdProxyWrap").hidden = m !== "proxy";
+  sdRefreshBookmarklet();
 }
 let sdOpener = null;
 function openSenseData(opener) {
   sdOpener = opener || null;
   $("#sdBase").value = sdBase(); $("#sdLog").innerHTML = "";
   $("#sdModal").hidden = false; $(".wrap").inert = true;
-  sdCheckProxy();
-  $("#sdToken").focus();
+  sdMode("fav"); sdCheckProxy();
+  $("#sdBookmarklet").focus();
 }
 function closeSenseData() {
   if (sd.busy && sd.ctrl) sd.ctrl.abort();
@@ -3456,96 +3488,184 @@ const sdDay = t => new Date(t).toISOString().slice(0, 10);
 const userName = u => u && typeof u === "object" ? (u.name || u.username || u.email || "") : (u || "");
 // KPIs: só o último dia de cada mês, dos últimos 12 meses fechados
 const SD_KPI_MONTHS = 12;
-// fontes opcionais: sem permissão ou sem o módulo, a importação segue sem elas
-async function sdOptional(label, fn) { try { return await fn(); } catch (e) { if (e.name === "AbortError") throw e; sdLog(`${label}: não foi possível buscar (${e.message.split(".")[0]}). Sigo sem esta fonte.`, "err", label); return null; } }
-const idOf = x => x.id_customer ?? (x.customer && x.customer.id) ?? (x.task && x.task.customer && x.task.customer.id);
-async function sdSignals(token, base, signal) {
-  const from = sdDay(Date.now() - 548 * DAYMS), day = v => String(v || "").slice(0, 10), out = {};
-  const tk = await sdOptional("Tickets", () => sdPaged("/v2/support_tickets", "support_tickets", { "created_on:start": from, limit: 1000 }, token, base, signal, "Tickets"));
-  if (tk) out.tickets = tk.map(t => ({ id_customer: idOf(t), created_on: day(t.created_on), end_date: day(t.end_date), expire_date: day(t.expire_date), priority: t.priority || "", category: t.category || "", type: t.type || "", title: t.title || "" })).filter(r => r.id_customer != null);
-  const np = await sdOptional("NPS", () => sdPaged("/v2/nps", "nps", { "survey_date:start": from, limit: 1000 }, token, base, signal, "NPS"));
-  if (np) out.nps = np.map(n => ({ id_customer: idOf(n), survey_date: day(n.survey_date || n.ref_date), score: n.score, role: n.role || "", tags: n.tags || "" })).filter(r => r.id_customer != null && r.score != null);
-  const ta = [];
-  const tasks = await sdOptional("Tarefas", () => sdPaged("/v2/tasks", "tasks", { "created_at:start": from, limit: 1000 }, token, base, signal, "Tarefas"));
-  if (tasks) for (const t of tasks) ta.push({ id_customer: idOf(t), kind: "tarefa", type: (t.type && (t.type.description || t.type.caption)) || "", created_on: day(t.created_on || t.created_at), due_date: day(t.due_date), end_date: day(t.end_date), playbook: (t.playbook && t.playbook.name) || "", tags: t.tags || "" });
-  const ck = await sdOptional("Visitas", () => sdPaged("/v2/tasks_checkin", "tasks_checkin", { "checkin_at:start": from, limit: 1000 }, token, base, signal, "Visitas"));
-  if (ck) for (const v of ck) ta.push({ id_customer: idOf(v), kind: "visita", type: "Visita", created_on: day(v.checkin_at), due_date: "", end_date: day(v.checkout_at || v.checkin_at), playbook: "", tags: "" });
-  const nt = await sdOptional("Notas", () => sdPaged("/v2/customers_notes", "customers_notes", { "created_on:start": from, deleted: "false", limit: 1000 }, token, base, signal, "Notas"));
-  if (nt) for (const n of nt) ta.push({ id_customer: idOf(n), kind: "nota", type: "Nota", created_on: day(n.created_on), due_date: "", end_date: "", playbook: "", tags: "" });
-  if (ta.length) out.tarefas = ta.filter(r => r.id_customer != null);
-  const ut = await sdOptional("Uso", () => sdPaged("/v2/usage_time", "usage_time", { "ref_date:start": from, limit: 1000 }, token, base, signal, "Uso"));
-  // módulos usados por cliente e mês, a partir do uso por ação
-  const du = await sdOptional("Uso por módulo", () => sdPaged("/v2/default_usage", "default_usage", { "ref_date:start": from, limit: 1000 }, token, base, signal, "Uso por módulo"));
-  const mods = new Map();
-  if (du) for (const u of du) { if (!(+u.amount > 0)) continue; const k = idOf(u) + "|" + day(u.ref_date).slice(0, 7); if (!mods.has(k)) mods.set(k, new Set()); mods.get(k).add((u.product || "") + "/" + (u.module || "")); }
-  if (ut && ut.length) out.uso = ut.map(u => ({ id_customer: idOf(u), ref_date: day(u.ref_date), active_users: u.active_users, contracted_users: u.contracted_users, usage_time: u.usage_time, modules: (mods.get(idOf(u) + "|" + day(u.ref_date).slice(0, 7)) || new Set()).size || "" })).filter(r => r.id_customer != null);
-  else if (mods.size) out.uso = [...mods].map(([k, set]) => ({ id_customer: k.split("|")[0], ref_date: k.split("|")[1] + "-28", active_users: "", contracted_users: "", usage_time: "", modules: set.size }));
-  // sponsor atual: data de cadastro do contato marcado como sponsor principal
-  const ct = await sdOptional("Sponsors", () => sdPaged("/v2/contacts", "contacts", { is_main_sponsor: "true", limit: 1000 }, token, base, signal, "Sponsors"));
-  if (ct) { out.sponsor = new Map(); for (const c of ct) { if (c.is_active === false || !c.is_main_sponsor) continue; const id = idOf(c), d = day(c.created_at); if (id != null && d && (!out.sponsor.get(id) || d > out.sponsor.get(id))) out.sponsor.set(id, d); } }
+// Busca na API v2. Autocontida de propósito: o mesmo código roda aqui (pela ponte do servidor) e dentro
+// da página da SenseData pelo favorito "Importar SenseData" (get = fetch na mesma origem, sem CORS).
+async function sdCollect(get, opt, log) {
+  const DAY = 864e5, iso = t => new Date(t).toISOString().slice(0, 10), br = d => d.split("-").reverse().join("/");
+  const out = { format: "csops-sensedata", v: 1, at: new Date().toISOString(), opt, skipped: [] };
+  const paged = async (path, key, params, label) => {
+    const all = []; let pg = 1;
+    while (pg) {
+      const j = await get(path, Object.assign({}, params, { page: pg }));
+      const items = Array.isArray(j[key]) ? j[key] : [];
+      all.push(...items);
+      log(label + ": " + all.length.toLocaleString("pt-BR") + " registro(s)", "", label);
+      pg = j.next_page && j.next_page > pg && items.length ? j.next_page : 0;
+      if (pg > 5000) break;
+    }
+    return all;
+  };
+  // fontes opcionais: sem permissão ou sem o módulo, a busca segue sem elas
+  const optional = async (label, fn) => { try { return await fn(); } catch (e) { if (e.name === "AbortError") throw e; out.skipped.push(label); log(label + ": não foi possível buscar (" + String(e.message).split(".")[0] + "). Sigo sem esta fonte.", "err", label); return null; } };
+  out.me = await get("/v2/me", {});
+  log("Conectado: " + (out.me.name || out.me.tenant || "SenseData") + (out.me.username ? " (" + out.me.username + ")" : "") + ".", "ok");
+  out.customers = await paged("/v2/customers", "customers", { limit: 1000 }, "Clientes");
+  if (!out.customers.length) throw new Error("A SenseData não devolveu nenhum cliente para este token.");
+  // KPIs: só o último dia de cada mês, dos últimos meses fechados
+  out.kpis = []; const now = new Date();
+  for (let i = 1; i <= (opt.kpiMonths || 12); i++) {
+    const ref = iso(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0));
+    out.kpis.push(...await paged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, "KPIs de " + br(ref)));
+  }
+  if (opt.mrr || opt.signals) out.contracts = await optional("Contratos", () => paged("/v2/contracts", "contracts", { limit: 1000 }, "Contratos"));
+  if (opt.signals) {
+    const from = iso(Date.now() - 548 * DAY);
+    out.tickets = await optional("Tickets", () => paged("/v2/support_tickets", "support_tickets", { "created_on:start": from, limit: 1000 }, "Tickets"));
+    out.nps = await optional("NPS", () => paged("/v2/nps", "nps", { "survey_date:start": from, limit: 1000 }, "NPS"));
+    out.tasks = await optional("Tarefas", () => paged("/v2/tasks", "tasks", { "created_at:start": from, limit: 1000 }, "Tarefas"));
+    out.checkins = await optional("Visitas", () => paged("/v2/tasks_checkin", "tasks_checkin", { "checkin_at:start": from, limit: 1000 }, "Visitas"));
+    out.notes = await optional("Notas", () => paged("/v2/customers_notes", "customers_notes", { "created_on:start": from, deleted: "false", limit: 1000 }, "Notas"));
+    out.usage = await optional("Uso", () => paged("/v2/usage_time", "usage_time", { "ref_date:start": from, limit: 1000 }, "Uso"));
+    out.defaultUsage = await optional("Uso por módulo", () => paged("/v2/default_usage", "default_usage", { "ref_date:start": from, limit: 1000 }, "Uso por módulo"));
+    out.contacts = await optional("Sponsors", () => paged("/v2/contacts", "contacts", { is_main_sponsor: "true", limit: 1000 }, "Sponsors"));
+  }
+  // guarda só os campos que o relatório usa: o pacote fica menor e não leva nomes, e-mails,
+  // telefones, comentários nem texto de notas (o arquivo .json pode ser baixado)
+  const cid = x => x.id_customer != null ? x.id_customer : x.customer ? x.customer.id : x.task && x.task.customer ? x.task.customer.id : null;
+  const keep = (key, fn) => { if (out[key]) out[key] = out[key].map(fn); };
+  keep("customers", c => ({ id: c.id, name: c.name, name_contract: c.name_contract, group: c.group, cnpj: c.cnpj, industry: c.industry, size: c.size, state: c.state, stage: c.stage, cs: c.cs ? { name: c.cs.name || c.cs.username || "" } : null, status: c.status ? { description: c.status.description, enabled: c.status.enabled } : null, dt_register: c.dt_register, dt_cancel: c.dt_cancel, cancel_tag: c.cancel_tag, cancel_description: c.cancel_description }));
+  keep("kpis", k => ({ id_customer: cid(k), ref_date: k.ref_date, value: k.value, type: k.type ? { id: k.type.id, name: k.type.name, description: k.type.description, unit: k.type.unit, inv_proportional: k.type.inv_proportional, active: k.type.active } : null }));
+  keep("contracts", c => ({ id_customer: cid(c), start_date: c.start_date, end_date: c.end_date, monthly_payment: c.monthly_payment, cycle: c.cycle, plan: c.plan, status: c.status ? { description: c.status.description, enabled: c.status.enabled } : null }));
+  keep("tickets", t => ({ id_customer: cid(t), created_on: t.created_on, end_date: t.end_date, expire_date: t.expire_date, priority: t.priority, category: t.category, type: t.type, title: t.title }));
+  keep("nps", n => ({ id_customer: cid(n), survey_date: n.survey_date, ref_date: n.ref_date, score: n.score, role: n.role, tags: n.tags }));
+  keep("tasks", t => ({ id_customer: cid(t), type: t.type ? { description: t.type.description, caption: t.type.caption } : null, created_on: t.created_on, created_at: t.created_at, due_date: t.due_date, end_date: t.end_date, playbook: t.playbook ? { name: t.playbook.name } : null, tags: t.tags }));
+  keep("checkins", v => ({ id_customer: cid(v), checkin_at: v.checkin_at, checkout_at: v.checkout_at }));
+  keep("notes", n => ({ id_customer: cid(n), created_on: n.created_on }));
+  keep("usage", u => ({ id_customer: cid(u), ref_date: u.ref_date, active_users: u.active_users, contracted_users: u.contracted_users, usage_time: u.usage_time }));
+  // uso por ação vira só "quantos módulos cada cliente usou em cada mês"
+  if (out.defaultUsage) {
+    const mods = {};
+    for (const u of out.defaultUsage) { if (!(+u.amount > 0)) continue; const k = cid(u) + "|" + String(u.ref_date || "").slice(0, 7); (mods[k] = mods[k] || {})[(u.product || "") + "/" + (u.module || "")] = 1; }
+    out.modules = Object.keys(mods).map(k => ({ id_customer: k.split("|")[0], month: k.split("|")[1], n: Object.keys(mods[k]).length }));
+    delete out.defaultUsage;
+  }
+  keep("contacts", c => ({ id_customer: cid(c), is_main_sponsor: c.is_main_sponsor, is_active: c.is_active, created_at: c.created_at }));
   return out;
 }
-async function sdImport(token, base, withMrr, withSignals) {
-  sd.ctrl = new AbortController(); const signal = sd.ctrl.signal;
-  const me = await sdGet("/v2/me", {}, token, base, signal);
-  sdLog(`Conectado: ${me.name || me.tenant || "SenseData"}${me.username ? ` (${me.username})` : ""}.`, "ok");
-  const customers = await sdPaged("/v2/customers", "customers", { limit: 1000 }, token, base, signal, "Clientes");
-  if (!customers.length) throw new Error("A SenseData não devolveu nenhum cliente para este token.");
-  const kpis = [], now = new Date();
-  for (let i = 1; i <= SD_KPI_MONTHS; i++) {
-    const d = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0), ref = sdDay(d);
-    kpis.push(...await sdPaged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, token, base, signal, `KPIs de ${fmtDate(d)}`));
-  }
-  let mrrOf = null, mrr12Of = null, contractRows = null;
-  const contracts = withMrr || withSignals ? await sdOptional("Contratos", () => sdPaged("/v2/contracts", "contracts", { limit: 1000 }, token, base, signal, "Contratos")) : null;
-  if (contracts && withSignals) contractRows = contracts.map(c => ({ id_customer: idOf(c), start_date: String(c.start_date || "").slice(0, 10), end_date: String(c.end_date || "").slice(0, 10), monthly_payment: c.monthly_payment, cycle: c.cycle || "", plan: c.plan || "", status: (c.status && c.status.description) || "" })).filter(r => r.id_customer != null && r.start_date);
-  if (withMrr && contracts) {
-    // MRR de cada cliente: contratos vigentes hoje (ativos) ou na véspera do cancelamento (cancelados)
+const idOf = x => x.id_customer ?? (x.customer && x.customer.id) ?? (x.task && x.task.customer && x.task.customer.id);
+// Transforma o pacote da API nas tabelas do relatório e carrega
+function sdApply(B) {
+  if (!B || B.format !== "csops-sensedata" || !Array.isArray(B.customers)) throw new Error("Este arquivo não é uma exportação da SenseData feita pelo relatório.");
+  const opt = B.opt || {}, day = v => String(v || "").slice(0, 10), at0 = Date.parse(B.at) || Date.now();
+  let mrrOf = null, mrr12Of = null;
+  const contracts = B.contracts || null;
+  if (opt.mrr && contracts) {
+    // MRR de cada cliente: contratos vigentes na data da busca (ativos) ou na véspera do cancelamento (cancelados)
     const byCust = new Map();
-    for (const c of contracts) { const id = c.id_customer ?? (c.customer && c.customer.id); if (id == null) continue; if (!byCust.has(id)) byCust.set(id, []); byCust.get(id).push(c); }
+    for (const c of contracts) { const id = idOf(c); if (id == null) continue; if (!byCust.has(id)) byCust.set(id, []); byCust.get(id).push(c); }
     mrrOf = cust => {
       const list = byCust.get(cust.id) || []; if (!list.length) return "";
-      const at = cust.dt_cancel ? sdDay(toDate(cust.dt_cancel) - 864e5) : sdDay(Date.now());
-      const live = list.filter(c => (!c.start_date || String(c.start_date).slice(0, 10) <= at) && (!c.end_date || String(c.end_date).slice(0, 10) >= at));
+      const at = cust.dt_cancel ? sdDay(toDate(cust.dt_cancel) - 864e5) : sdDay(at0);
+      const live = list.filter(c => (!c.start_date || day(c.start_date) <= at) && (!c.end_date || day(c.end_date) >= at));
       const v = (live.length ? live : list.filter(c => !c.status || c.status.enabled !== false)).reduce((t, c) => t + (Number(c.monthly_payment) || 0), 0);
       return v ? v.toFixed(2) : "";
     };
-    const t0 = sdDay(Date.now() - 365 * 864e5);
+    const t0 = sdDay(at0 - 365 * 864e5);
     mrr12Of = cust => {
-      if (!cust.dt_register || String(cust.dt_register).slice(0, 10) > t0) return "";
-      const live = (byCust.get(cust.id) || []).filter(c => (!c.start_date || String(c.start_date).slice(0, 10) <= t0) && (!c.end_date || String(c.end_date).slice(0, 10) >= t0));
+      if (!cust.dt_register || day(cust.dt_register) > t0) return "";
+      const live = (byCust.get(cust.id) || []).filter(c => (!c.start_date || day(c.start_date) <= t0) && (!c.end_date || day(c.end_date) >= t0));
       const v = live.reduce((t, c) => t + (Number(c.monthly_payment) || 0), 0);
       return v ? v.toFixed(2) : "";
     };
   }
-  const sig = withSignals ? await sdSignals(token, base, signal) : {};
+  const sig = {};
+  if (opt.signals) {
+    if (contracts) sig.contratos = contracts.map(c => ({ id_customer: idOf(c), start_date: day(c.start_date), end_date: day(c.end_date), monthly_payment: c.monthly_payment, cycle: c.cycle || "", plan: c.plan || "", status: (c.status && c.status.description) || "" })).filter(r => r.id_customer != null && r.start_date);
+    if (B.tickets) sig.tickets = B.tickets.map(t => ({ id_customer: idOf(t), created_on: day(t.created_on), end_date: day(t.end_date), expire_date: day(t.expire_date), priority: t.priority || "", category: t.category || "", type: t.type || "", title: t.title || "" })).filter(r => r.id_customer != null);
+    if (B.nps) sig.nps = B.nps.map(n => ({ id_customer: idOf(n), survey_date: day(n.survey_date || n.ref_date), score: n.score, role: n.role || "", tags: n.tags || "" })).filter(r => r.id_customer != null && r.score != null);
+    const ta = [];
+    for (const t of B.tasks || []) ta.push({ id_customer: idOf(t), kind: "tarefa", type: (t.type && (t.type.description || t.type.caption)) || "", created_on: day(t.created_on || t.created_at), due_date: day(t.due_date), end_date: day(t.end_date), playbook: (t.playbook && t.playbook.name) || "", tags: t.tags || "" });
+    for (const v of B.checkins || []) ta.push({ id_customer: idOf(v), kind: "visita", type: "Visita", created_on: day(v.checkin_at), due_date: "", end_date: day(v.checkout_at || v.checkin_at), playbook: "", tags: "" });
+    for (const n of B.notes || []) ta.push({ id_customer: idOf(n), kind: "nota", type: "Nota", created_on: day(n.created_on), due_date: "", end_date: "", playbook: "", tags: "" });
+    if (ta.length) sig.tarefas = ta.filter(r => r.id_customer != null);
+    // módulos usados por cliente e mês, a partir do uso por ação
+    const mods = new Map((B.modules || []).map(m => [m.id_customer + "|" + m.month, m.n]));
+    if (B.usage && B.usage.length) sig.uso = B.usage.map(u => ({ id_customer: idOf(u), ref_date: day(u.ref_date), active_users: u.active_users, contracted_users: u.contracted_users, usage_time: u.usage_time, modules: mods.get(idOf(u) + "|" + day(u.ref_date).slice(0, 7)) || "" })).filter(r => r.id_customer != null);
+    else if (mods.size) sig.uso = [...mods].map(([k, n]) => ({ id_customer: k.split("|")[0], ref_date: k.split("|")[1] + "-28", active_users: "", contracted_users: "", usage_time: "", modules: n }));
+    // sponsor atual: data de cadastro do contato marcado como sponsor principal
+    if (B.contacts) { sig.sponsor = new Map(); for (const c of B.contacts) { if (c.is_active === false || !c.is_main_sponsor) continue; const id = idOf(c), d = day(c.created_at); if (id != null && d && (!sig.sponsor.get(id) || d > sig.sponsor.get(id))) sig.sponsor.set(id, d); } }
+  }
   sdLog("Montando o relatório…");
-  const custRows = customers.map(c => ({
+  const custRows = B.customers.map(c => ({
     id: c.id, name: c.name || c.name_contract || "", name_contract: c.name_contract || "", group: c.group || "", cnpj: c.cnpj || "",
     industry: c.industry || "", size: c.size || "", state: c.state || "", stage: c.stage || "", cs_owner: userName(c.cs), status: c.status && c.status.description || "",
-    dt_register: String(c.dt_register || "").slice(0, 10), dt_cancel: String(c.dt_cancel || "").slice(0, 10), cancel_tag: c.cancel_tag || "", cancel_description: c.cancel_description || "",
+    dt_register: day(c.dt_register), dt_cancel: day(c.dt_cancel), cancel_tag: c.cancel_tag || "", cancel_description: c.cancel_description || "",
     mrr: mrrOf ? mrrOf(c) : "", mrr_12m_atras: mrr12Of ? mrr12Of(c) : "", sponsor_desde: sig.sponsor ? sig.sponsor.get(c.id) || "" : ""
   }));
   const seen = new Set(), kpiRows = [];
-  for (const k of kpis) {
+  for (const k of B.kpis || []) {
     const t = k.type || {}; if (t.active === false) continue;
-    const id = k.id_customer ?? (k.customer && k.customer.id), ref = String(k.ref_date || "").slice(0, 10), key = `${id}|${t.id}|${ref}`;
+    const id = idOf(k), ref = day(k.ref_date), key = `${id}|${t.id}|${ref}`;
     if (id == null || seen.has(key)) continue; seen.add(key);
     kpiRows.push({ id_customer: id, ref_date: ref, type: t.id ?? t.name, kpi_name: t.description || t.name || "", inv_proportional: t.inv_proportional == null ? "" : String(t.inv_proportional), unit: t.unit || "", value: k.value });
   }
-  if (!withMrr) custRows.forEach(r => delete r.mrr);
+  if (!opt.mrr) custRows.forEach(r => delete r.mrr);
   // a importação substitui todas as fontes (inclusive um CSV de cancelamentos anexado antes)
   if (!state.isSample) { state.raw = EMPTY_RAW(); state.map = EMPTY_MAP(); }
   loadText("clientes", Papa.unparse(custRows));
   if (kpiRows.length) loadText("kpis", Papa.unparse(kpiRows), false);
-  if (contractRows && contractRows.length) sig.contratos = contractRows;
   for (const k of SIG_SRC) if (sig[k] && sig[k].length) loadText(k, Papa.unparse(sig[k]), false);
-  state.source = { name: "SenseData", tenant: me.name || me.tenant || "", at: Date.now() };
+  const me = B.me || {};
+  state.source = { name: "SenseData", tenant: me.name || me.tenant || "", at: at0 };
   renderInputs();
   const extra = SIG_SRC.filter(k => sig[k] && sig[k].length).map(k => `${fmtInt(sig[k].length)} ${SOURCES[k].title.toLowerCase()}`);
   sdLog(`Pronto: ${fmtInt(custRows.length)} clientes e ${fmtInt(kpiRows.length)} leituras de KPI importados${extra.length ? `, mais ${extra.join(", ")}` : ""}.`, "ok");
   return { customers: custRows.length, kpis: kpiRows.length };
 }
+const sdOpts = () => ({ kpiMonths: SD_KPI_MONTHS, mrr: $("#sdMrr").checked, signals: $("#sdSig").checked });
+async function sdImport(token, base) {
+  sd.ctrl = new AbortController(); const signal = sd.ctrl.signal;
+  const B = await sdCollect((path, params) => sdGet(path, params, token, base, signal), sdOpts(), sdLog);
+  return sdApply(B);
+}
+
+/* ---------- favorito "Importar SenseData": funciona em PC corporativo, sem instalar nada ---------- */
+// Roda dentro de uma página de *.sensedata.io. Lá a API responde na mesma origem, então não há CORS.
+// O token é digitado na própria aba da SenseData; os dados voltam para esta aba (postMessage) ou viram um .json.
+function sdBookmarklet() {
+  const back = /^https?:$/.test(location.protocol) ? location.origin : null;
+  const code = `(async()=>{
+if(!/(^|\\.)sensedata\\.io$/.test(location.hostname)){alert("Abra a página da API da SenseData (https://api.sensedata.io/v2/redoc) e clique de novo no favorito.");return;}
+const OPT=${JSON.stringify(sdOpts())},BACK=${JSON.stringify(back)};
+const token=(prompt("Token da API da SenseData. Ele fica só nesta aba.")||"").trim().replace(/^Bearer\\s+/i,"");if(!token)return;
+const box=document.createElement("div");box.style.cssText="position:fixed;z-index:2147483647;right:16px;bottom:16px;width:380px;max-height:70vh;overflow:auto;background:#1d2140;color:#fff;font:13px/1.45 system-ui,sans-serif;padding:14px 16px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,.45)";
+box.innerHTML="<b>Relatório de churn: buscando dados</b><ol style='margin:8px 0 0;padding-left:18px'></ol>";document.body.appendChild(box);
+const ol=box.querySelector("ol"),L={};
+const log=(m,c,k)=>{let li=k&&L[k];if(!li){li=document.createElement("li");ol.appendChild(li);if(k)L[k]=li;}li.textContent=m;li.style.color=c==="err"?"#ffb4b4":c==="ok"?"#9df0c0":"";box.scrollTop=1e9;};
+const get=async(path,params)=>{const qs=new URLSearchParams();for(const[k,v]of Object.entries(params||{}))if(v!=null&&v!=="")qs.append(k,v);for(let a=0;a<6;a++){const r=await fetch(path+(qs.toString()?"?"+qs:""),{headers:{authorization:"Bearer "+token,accept:"application/json"},cache:"no-store"});if(r.status===429){const w=Math.min(60,+r.headers.get("retry-after")||2**(a+1));log("A SenseData pediu uma pausa: "+w+" s","","429");await new Promise(x=>setTimeout(x,w*1000));continue;}if(r.status===401||r.status===403)throw new Error("Token recusado pela SenseData ("+r.status+")");if(!r.ok)throw new Error("A SenseData respondeu "+r.status+" em "+path);return r.json();}throw new Error("A SenseData continuou limitando as requisições");};
+const done=(b)=>{const x=document.createElement("button");x.textContent="Fechar";x.style.cssText="margin-top:10px;margin-left:8px;padding:5px 12px;border-radius:8px;border:1px solid #b9bdd6;background:none;color:#fff;cursor:pointer";x.onclick=()=>box.remove();box.appendChild(x);};
+try{
+const collect=${sdCollect.toString()};
+const bundle=await collect(get,OPT,log);
+const name="sensedata-"+bundle.at.slice(0,10)+".json",a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(bundle)],{type:"application/json"}));a.download=name;a.textContent="Baixar "+name;a.style.cssText="display:inline-block;margin-top:10px;color:#b3acff";box.appendChild(a);
+let ok=false;
+if(window.opener&&BACK){const ack=new Promise(res=>{const h=e=>{if(e.origin===BACK&&e.data&&e.data.csopsAck){removeEventListener("message",h);res(true);}};addEventListener("message",h);setTimeout(()=>res(false),4000);});try{window.opener.postMessage(bundle,BACK);ok=await ack;}catch(e){}}
+if(ok)log("Pronto: os dados já estão no relatório. Pode voltar para a aba dele.","ok");else{log("Pronto. O arquivo foi baixado: anexe em Integrações → SenseData → Anexar arquivo .json.","ok");a.click();}
+}catch(e){log("Erro: "+e.message,"err");}
+done();
+})();`;
+  // as quebras de linha ficam: os comentários do código dependem delas (viram %0A no endereço)
+  return "javascript:" + encodeURIComponent(code);
+}
+function sdRefreshBookmarklet() { const a = $("#sdBookmarklet"); if (a) a.href = sdBookmarklet(); }
+// pacote enviado pela aba da SenseData
+window.addEventListener("message", e => {
+  if (!/^https:\/\/([a-z0-9-]+\.)*sensedata\.io$/.test(e.origin)) return;
+  const B = e.data; if (!B || B.format !== "csops-sensedata") return;
+  try { e.source && e.source.postMessage({ csopsAck: true }, e.origin); } catch (err) {}
+  if ($("#sdModal").hidden) openSenseData(null);
+  try { sdApply(B); toast("Dados da SenseData importados pelo favorito."); setTimeout(closeSenseData, 1200); } catch (err) { sdLog(err.message, "err"); }
+});
 document.addEventListener("click", e => {
   const t = e.target;
   const mb = t.closest && t.closest("#btnIntegr");
@@ -3555,6 +3675,23 @@ document.addEventListener("click", e => {
   if (t.id === "sdClose") closeSenseData();
   if (t.id === "sdCancel" && sd.ctrl) sd.ctrl.abort();
   if (t.id === "sdTest") sdRun(true);
+  const mb2 = t.closest && t.closest("[data-sdmode]"); if (mb2) sdMode(mb2.dataset.sdmode);
+  if (t.id === "sdOpenApi") {
+    const base = sdValidBase(sdBase()) || "https://api.sensedata.io";
+    // sem "noopener": a aba da SenseData precisa da referência a esta para devolver os dados
+    const w = window.open(base + "/v2/redoc", "csops-sensedata");
+    sdLog(w ? "Aba da SenseData aberta. Clique no favorito Importar SenseData lá." : "O navegador bloqueou a nova aba. Abra https://api.sensedata.io/v2/redoc manualmente; os dados virão como arquivo .json.", w ? "" : "err", "open");
+  }
+  if (t.id === "sdBookmarklet") { e.preventDefault(); sdLog("Este botão é para arrastar até a barra de favoritos e usar na aba da SenseData.", "", "bm"); }
+  if (t.id === "sdCopyBm") { const code = sdBookmarklet(); try { navigator.clipboard.writeText(code).then(() => toast("Código do favorito copiado. Cole no endereço de um favorito novo."), () => toast("Não consegui copiar.")); } catch (err) { toast("Não consegui copiar."); } }
+});
+document.addEventListener("change", e => {
+  if (e.target.id === "sdMrr" || e.target.id === "sdSig") sdRefreshBookmarklet();
+  if (e.target.id !== "sdFile") return;
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => { try { sdApply(JSON.parse(rd.result)); toast("Dados da SenseData importados do arquivo."); setTimeout(closeSenseData, 1200); } catch (err) { sdLog(err.message.startsWith("Unexpected") ? "O arquivo não é um JSON válido." : err.message, "err"); } e.target.value = ""; };
+  rd.readAsText(f, "utf-8");
 });
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
@@ -3577,7 +3714,7 @@ async function sdRun(testOnly) {
       sdLog(`Token válido: ${me.name || me.tenant || "SenseData"}${me.username ? ` (${me.username})` : ""}. Clientes acessíveis: sim${c.customers && c.customers.length ? "" : " (nenhum retornado)"}.`, "ok");
     } else {
       sdLog("Importando da SenseData…");
-      await sdImport(token, base, $("#sdMrr").checked, $("#sdSig").checked);
+      await sdImport(token, base);
       toast("Dados da SenseData importados. O relatório já usa esses clientes.");
       setTimeout(closeSenseData, 900);
     }
@@ -3599,12 +3736,12 @@ const TOUR_STEPS = {
   dados: { area: "dados", el: "#inputs .srcbar", title: "Seus dados", text: "Anexe ou cole os CSVs, ou importe da SenseData em <b>Integrações</b>. O modelo de planilha está na barra lateral." },
   filtros: { area: "inicio", el: "#filtros", title: "Recorte, nível e visões", text: "Analise por produto, organização ou grupo e filtre qualquer perfil. <b>Salvar esta visão</b> guarda o recorte para a próxima vez." },
   achados: { area: "inicio", el: "#resumo .highlights", title: "Comece por aqui", text: "Os principais achados resumem o relatório numa leitura, com links para a seção de cada um." },
-  tiles: { area: "inicio", el: "#resumo .tiles", title: "Números com tendência", text: "Cada cartão mostra os últimos 12 meses e a variação contra o mês anterior. Vermelho é piora." },
+  tiles: { area: "inicio", el: "#resumo .tiles .tile:nth-child(4)", title: "Números com tendência", text: "Cada cartão mostra os últimos 12 meses e a variação contra o mês anterior. Vermelho é piora." },
   mercado: { area: "inicio", el: "#mercado .mk-grid, #mercado .empty", title: "Você x mercado", text: "Seu churn, GRR e NRR ao lado de empresas B2B SaaS do mesmo segmento e ticket." },
-  quadro: { area: "carteira", el: "#quadro .kanban", title: "Quadro de risco", text: "Quem está em alto risco entra em <b>A abordar</b>. Arraste ou use o seletor do cartão; parado há mais de 7 dias fica em vermelho." },
+  quadro: { area: "carteira", el: "#quadro .kcol[data-col=abordar] .kcard", title: "Quadro de risco", text: "Quem está em alto risco entra em <b>A abordar</b>. Arraste ou use o seletor do cartão; parado há mais de 7 dias fica em vermelho." },
   risco: { area: "carteira", el: "#risco .cuts", title: "Quem precisa de atenção agora", text: "Clientes ativos parecidos com quem já cancelou. <b>Experimente:</b> arraste os cortes para ajustar a lista ao tamanho do time." },
   cliente: { area: "carteira", el: "#risco tbody tr:first-child td:first-child", title: "Ficha do cliente", text: "Clique no nome para ver o que puxa o score, os indicadores mês a mês e anotar o próximo passo." },
-  coortes: { area: "retencao", el: "#coortes table.heat", title: "Retenção por safra", text: "Cada linha é um período de entrada; cada coluna, um mês de vida. Clique numa célula para ver quem saiu." },
+  coortes: { area: "retencao", el: "#coortes table.heat tbody tr:first-child", title: "Retenção por safra", text: "Cada linha é um período de entrada; cada coluna, um mês de vida. Clique numa célula para ver quem saiu." },
   motivos: { area: "retencao", el: "#motivos .bars", title: "Motivos e momento", text: "Clique num motivo para ver os casos. Picos perto de 12 ou 24 meses costumam ser renovação." },
   perfil: { area: "diagnostico", el: "#perfil .bars", title: "Onde está o churn", text: "Grupos com ▲ cancelam acima do que o acaso explica. Clique numa barra para filtrar o relatório inteiro." },
   indicadores: { area: "diagnostico", el: "#indicadores table", title: "O que antecipou o churn", text: "Os KPIs do topo são os que mais separam quem saiu de quem ficou. Clique no nome para ver a distribuição." },
@@ -3641,20 +3778,22 @@ function startUsing(path) {
   window.scrollTo({ top: 0 });
   const f = state.area === "dados" ? $("#co-nome") : $("#areaTitle"); if (f) setTimeout(() => f.focus({ preventScroll: true }), 50);
 }
+// o Driver.js nem sempre rola quando a área acaba de ser trocada: rola antes, no centro, sem animação
+function bringIntoView(sel) { const el = document.querySelector(sel); if (!el) return; const r = el.getBoundingClientRect(); if (r.top < 8 || r.bottom > innerHeight - 8) el.scrollIntoView({ block: r.height > innerHeight * 0.7 ? "start" : "center", behavior: "auto" }); }
 function runTour(keys, path, trail = 1) {
   const D = window.driver && window.driver.js && window.driver.js.driver;
   if (!D) { toast("O tour não carregou: verifique a conexão com cdn.jsdelivr.net."); return; }
   const list = tourAvailable(keys).map(k => TOUR_STEPS[k]);
   // o tour troca de área sozinho antes de cada passo (Driver.js só aceita seletor, então a troca acontece no "Entendi")
   const steps = list.map(st => ({ element: st.el, area: st.area, popover: { title: st.title, description: st.text } }));
-  const endEl = document.querySelector("#checklist .check") ? "#checklist .check" : "#areaNav";
+  const endEl = document.querySelector("#checklist .check") ? "#checklist .check-h" : "#areaNav";
   if (trail === 1) steps.push({ element: endEl, popover: { title: "Agora é com você", description: "Os primeiros passos ficam aqui na barra lateral: perfil da empresa, seus dados, abrir um cliente e exportar. Para rever o tour, use <b>Ver tour</b>." } });
   else steps.push({ element: endEl, popover: { title: "Pronto", description: "Você viu todas as seções. Siga os primeiros passos na barra lateral." } });
   let ended = null;
   const tour = D({
     steps, showProgress: true, progressText: "{{current}} de {{total}}", showButtons: ["next"],
     nextBtnText: "Entendi", doneBtnText: "Começar a usar", allowClose: true, allowKeyboardControl: true,
-    smoothScroll: MOTION_OK, animate: false, overlayColor: "#0b1210", overlayOpacity: 0.62, stagePadding: 8, stageRadius: 10, popoverClass: "csops-tour",
+    smoothScroll: false, animate: false, overlayColor: "#0b1210", overlayOpacity: 0.62, stagePadding: 8, stageRadius: 10, popoverClass: "csops-tour",
     onPopoverRender: (pop, { state: st }) => {
       const last = st.activeIndex === steps.length - 1;
       pop.wrapper.setAttribute("role", "dialog"); pop.wrapper.setAttribute("aria-modal", "true");
@@ -3678,6 +3817,7 @@ function runTour(keys, path, trail = 1) {
       if (tour.isLastStep()) { ended = "done"; tour.destroy(); finish(ended); return; }
       const nx = steps[tour.getActiveIndex() + 1];
       if (nx && nx.area && state.area !== nx.area) setArea(nx.area, { focus: false });
+      if (nx) bringIntoView(nx.element);
       tour.moveNext();
     },
     // o Driver.js só chama onDestroyed quando o elemento do passo ainda está registrado; finish() cobre os dois caminhos
@@ -3693,6 +3833,7 @@ function runTour(keys, path, trail = 1) {
       else if (tourOpener && document.body.contains(tourOpener)) tourOpener.focus();
   }
   if (steps[0] && steps[0].area && state.area !== steps[0].area) setArea(steps[0].area, { focus: false });
+  if (steps[0]) bringIntoView(steps[0].element);
   tour.drive();
 }
 document.addEventListener("click", e => {

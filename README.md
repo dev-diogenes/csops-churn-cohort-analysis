@@ -22,7 +22,7 @@ Os nomes de coluna são reconhecidos sozinhos (PT ou EN) e podem ser trocados em
 
 ## Integração com a SenseData
 
-No topo do relatório, **Integrações → SenseData** importa os dados direto da API v2 da SenseData (SenseConnect), informando só a URL da API e o token:
+No topo do relatório, **Integrações → SenseData** importa os dados direto da API v2 da SenseData (SenseConnect) com o token, por um favorito do navegador (sem instalar nada) ou pelo servidor do projeto:
 
 | Endpoint | O que vira no relatório |
 |---|---|
@@ -37,6 +37,19 @@ No topo do relatório, **Integrações → SenseData** importa os dados direto d
 Fonte sem permissão ou sem o módulo contratado é pulada com um aviso; o resto da importação segue.
 
 O nome, a unidade e a direção (`inv_proportional`) de cada KPI já vêm no objeto `type` de cada leitura. A paginação segue `next_page`; respostas 429 (limite de requisições) são repetidas respeitando `retry-after`. Referência: [api.sensedata.io/v2/redoc](https://api.sensedata.io/v2/redoc).
+
+### Sem instalar nada (PC corporativo)
+
+Em **Integrações → SenseData → Sem instalar nada**, o relatório busca os dados por um favorito do navegador, sem Node, sem servidor e sem permissão de administrador:
+
+1. **Uma vez só:** arraste o botão **Importar SenseData** para a barra de favoritos (Ctrl+Shift+B mostra a barra). Se o arraste não funcionar, use **Copiar código do favorito**, crie um favorito qualquer e cole o código no campo do endereço.
+2. Clique em **Abrir a SenseData**: abre `https://api.sensedata.io/v2/redoc` numa aba nova.
+3. Nessa aba, clique no favorito e informe o token. O favorito roda dentro da página da própria SenseData, onde a API responde sem bloqueio de CORS, e mostra o progresso no canto da tela.
+4. Os dados voltam sozinhos para a aba do relatório. Se a aba não tiver sido aberta pelo relatório (ou o navegador bloquear), um arquivo `sensedata-AAAA-MM-DD.json` é baixado: anexe em **Anexar arquivo .json**.
+
+O token é digitado na aba da SenseData e só vai para a própria SenseData; não passa pelo relatório, não é salvo e não entra no arquivo. O pacote guarda só os campos usados no relatório: sem nomes, e-mails ou telefones de contatos e responsáveis, sem comentários de NPS e sem o texto das notas. O relatório só aceita o pacote quando ele vem de um endereço `https://*.sensedata.io`. Funciona no GitHub Pages e no `index.html` aberto direto do disco (neste caso, pelo arquivo `.json`). Se a política da empresa bloquear favoritos com código (`javascript:`), use o caminho do servidor abaixo.
+
+### Pelo servidor do projeto
 
 **Por que precisa de um servidor:** a API da SenseData não aceita chamadas feitas direto do navegador (não libera CORS), e o link publicado como Artifact bloqueia chamadas externas. Por isso a página chama `/api/sensedata/...` no próprio servidor do relatório, que repassa só leituras (GET), só para `https://*.sensedata.io`, com o token informado na página. O token fica na memória da aba e não é salvo.
 
