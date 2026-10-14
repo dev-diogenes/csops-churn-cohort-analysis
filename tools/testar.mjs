@@ -84,6 +84,26 @@ check("KPIs compactos e tipo inativo fora", kc.rows === kc.want && kc.types === 
 check("cancelado antigo: última leitura antes da saída, só até 3 anos", kc.old, 1);
 check("pacote sem a lista antiga de KPIs", kc.semKpis, true);
 
+// qualidade de dados (casos vistos numa base real)
+const q = run(`(() => {
+  const keep = { raw: state.raw, map: state.map };
+  state.raw = EMPTY_RAW(); state.map = EMPTY_MAP();
+  const C = ["id,dt_register,dt_cancel,cancel_tag,status", "1,2024-01-01,2026-03-15,Preço,Inativo", "2,2024-01-01,2026-03-15,preco,Inativo", "3,2024-01-01,,,Ativo", "4,2024-01-01,,,Intercompany", "5,2024-01-01,,,Inativo"].join(String.fromCharCode(10));
+  const K = ["id_customer,ref_date,type,kpi_name,value", "1,2026-02-28,1,Uso,10", "1,2026-04-30,1,Uso,0", "2,2026-04-30,1,Uso,0", "3,2026-04-30,1,Uso,50", "4,2026-04-30,1,Uso,99"].join(String.fromCharCode(10));
+  for (const [k, t] of [["clientes", C], ["kpis", K]]) { state.raw[k] = parseCSV(t); autoMap(k); }
+  const M0 = build(), by = id => M0.clients.find(c => c.id === id), r = {
+    clientes: M0.clients.length, uso1: by("1").kpi.Uso, uso2: by("2").kpi.Uso, motivos: [...new Set(M0.clients.filter(c => c.motivo).map(c => c.motivo))].length,
+    avisoPos: M0.warnings.some(w => /depois do cancelamento/.test(w)), avisoInativo: M0.warnings.some(w => /status inativo/.test(w)), nota: M0.notes.some(n => /interna/.test(n)),
+    decimal: numOut(4.988) === "4,988" && toNum(numOut(4.988)) === 4.988
+  };
+  state.raw = keep.raw; state.map = keep.map;
+  return r; })()`);
+check("conta intercompany fora", q.clientes, 4);
+check("KPI de depois do cancelamento ignorado", [q.uso1, q.uso2 === undefined, q.avisoPos], [10, true, true]);
+check("motivos com grafias diferentes unificados", q.motivos, 1);
+check("aviso de inativo sem data e nota de conta interna", q.avisoInativo && q.nota, true);
+check("decimal da API não vira milhar", q.decimal, true);
+
 // hierarquia: linhas de grupo/organização não contam como cliente
 check("linhas de hierarquia ignoradas", run("build().notes.length"), 1);
 // cortes: mexer no corte reclassifica sem reprocessar os arquivos

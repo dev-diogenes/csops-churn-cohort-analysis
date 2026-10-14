@@ -865,6 +865,7 @@ const SOURCES = {
       canc: { label: "Data de cancelamento", syn: ["dt_cancel", "data_cancelamento", "cancel_date", "churn_date", "data_churn", "cancelado_em"] },
       motivo: { label: "Motivo (tag)", syn: ["cancel_tag", "motivo", "motivo_cancelamento", "motivo_churn", "churn_reason"] },
       descricao: { label: "Descrição do motivo", syn: ["cancel_description", "descricao_cancelamento", "motivo_descricao", "cancel_reason_description"] },
+      status: { label: "Status do cliente", syn: ["status", "situacao", "status_cliente", "customer_status"] },
       mrr: { label: "MRR", syn: ["mrr", "receita_mensal", "valor_mensal", "mensalidade", "receita"] },
       mrr12: { label: "MRR há 12 meses", syn: ["mrr_12m_atras", "mrr_12m", "mrr_12_meses", "mrr_ha_12_meses", "mrr_ano_anterior", "mrr_previous_year"] },
       sponsorDesde: { label: "Sponsor atual desde", syn: ["sponsor_desde", "sponsor_since", "dt_sponsor", "data_sponsor"] }
@@ -1145,6 +1146,8 @@ document.addEventListener("input", e => {
 
 /* ---------- modelo ---------- */
 // Colunas de customer que nunca viram perfil: identificação, contato, datas, texto livre, campos de cancelamento.
+// status de contas que não são clientes de verdade
+const INTERNAL_RE = /intercompany|interno|interna|\bteste?\b|\btest\b|\bdemo\b|sandbox|homolog/i;
 const NOT_DIM = /^(status|id_legacy|cnpj|cpf|name_contract|customer_sponsor.*|sponsor.*|.*phone.*|.*email.*|.*telefone.*|address.*|endereco.*|custom_fields|created_at|updated_at|updated_by|dt_.*|cancel_.*|country|pais|city|cidade)$/;
 // Colunas numéricas que ainda assim são categorias (ex.: cs_owner guarda o ID do usuário).
 const NUMERIC_DIM = /(owner|csm|responsavel|group|grupo|size|porte|stage|etapa|segment|industry|setor|plano|plan|tier|regiao|region|state|uf|carteira)/;
@@ -1164,7 +1167,7 @@ function buildFresh() {
   const mC = state.map.clientes, mK = state.map.kpis, mX = state.map.cancel;
   const okC = C && C.rows.length && mC.id, okK = K && K.rows.length && mK.id, okX = X && X.rows.length && mX.id;
   if (!okC && !okK && !okX) return null;
-  const clients = new Map(), warnings = [], notes = [];
+  const clients = new Map(), warnings = [], notes = [], excluded = new Set();
   const nid = v => String(v ?? "").trim().toLowerCase();
   const mk = (id, label) => ({ id, label: label || id, nome: "", inicio: null, mrr: NaN, attrs: {}, churned: false, dataCanc: null, motivo: "", descricao: "", mrrPerdido: NaN, kpi: {}, kpiDate: null, hist: {} });
   // histórico mensal de cada KPI (último valor de cada mês), usado na ficha do cliente
@@ -1172,9 +1175,13 @@ function buildFresh() {
   const dims = [];
 
   if (okC) {
-    let dup = 0;
+    let dup = 0, inactiveNoDate = 0, cancBeforeStart = 0;
     for (const r of C.rows) {
       const raw = String(r[mC.id] ?? "").trim(), id = nid(raw); if (!id) continue;
+      // contas internas, de teste ou intercompany não são clientes: ficam fora de todas as análises
+      const st = mC.status ? String(r[mC.status] ?? "").trim() : "";
+      if (st && INTERNAL_RE.test(st)) { excluded.add(id); continue; }
+      if (st && /^(inativ|cancel|churn|encerrad)/i.test(norm(st)) && !(mC.canc && toDate(r[mC.canc]) != null)) inactiveNoDate++;
       if (clients.has(id)) { dup++; continue; }
       const c = mk(id, raw);
       c.nome = mC.nome ? String(r[mC.nome] ?? "").trim() : "";
@@ -1188,10 +1195,14 @@ function buildFresh() {
         c.motivo = mC.motivo ? String(r[mC.motivo] ?? "").trim() : "";
         c.descricao = mC.descricao ? String(r[mC.descricao] ?? "").trim() : "";
       }
+      if (c.dataCanc != null && c.inicio != null && c.dataCanc < c.inicio) cancBeforeStart++;
       c.row = r;
       clients.set(id, c);
     }
     if (dup) warnings.push(`${dup} linha(s) repetida(s) em Clientes foram ignoradas (mesmo ID).`);
+    if (excluded.size) notes.push(`${fmtInt(excluded.size)} conta(s) interna(s), de teste ou intercompany (pelo status) ficaram fora da análise.`);
+    if (inactiveNoDate) warnings.push(`${fmtInt(inactiveNoDate)} cliente(s) com status inativo ou cancelado não têm data de cancelamento e contam como ativos. Preencha dt_cancel na origem.`);
+    if (cancBeforeStart) warnings.push(`${fmtInt(cancBeforeStart)} cliente(s) com data de cancelamento anterior à data de início. Confira dt_register e dt_cancel na origem.`);
 
     // hierarquia: ids de grupo, organização e produto, e o tipo de cada linha
     if (mC.grupo || mC.organizacao || mC.produto) {
@@ -1233,7 +1244,8 @@ function buildFresh() {
       const dateLike = vals.filter(v => toDate(v) != null).length / vals.length;
       if (dateLike > 0.8) continue;
       if (numeric > 0.8 && !(NUMERIC_DIM.test(norm(f)) && vals.every(v => /^-?\d+$/.test(v)))) continue;
-      if (distinct.size < 2 || distinct.size > 40 || distinct.size > Math.max(6, n * 0.5)) continue;
+      const owner = /owner|csm|responsavel|^cs$/.test(norm(f)), maxD = owner ? 100 : 40;
+      if (distinct.size < 2 || distinct.size > maxD || distinct.size > Math.max(6, n * (owner ? 0.8 : 0.5))) continue;
       dims.push(f);
     }
     // produto é hierarquia e também perfil de comparação
@@ -1247,6 +1259,7 @@ function buildFresh() {
     let orphan = 0;
     for (const r of X.rows) {
       const raw = String(r[mX.id] ?? "").trim(), id = nid(raw); if (!id) continue;
+      if (excluded.has(id)) continue;
       let c = clients.get(id);
       if (!c) { c = mk(id, raw); for (const d of dims) c.attrs[d] = "(sem cadastro)"; clients.set(id, c); if (okC) orphan++; }
       c.churned = true;
@@ -1259,6 +1272,33 @@ function buildFresh() {
     if (orphan) warnings.push(`${orphan} cancelamento(s) com ID que não está em Clientes. Eles entram na conta como "(sem cadastro)".`);
   }
   for (const c of clients.values()) if (c.churned && !Number.isFinite(c.mrrPerdido)) c.mrrPerdido = c.mrr;
+  // perfil que parece atualizado só para ativos (ex.: todo cancelado ficou com o valor antigo)
+  {
+    for (const d of dims) {
+      if (!/owner|csm|responsavel|^cs$/.test(norm(d))) continue;
+      const by = new Map(); for (const c of clients.values()) { const o = by.get(c.attrs[d]) || [0, 0]; o[0]++; if (c.churned) o[1]++; by.set(c.attrs[d], o); }
+      const only = [...by.values()].filter(([n, k]) => n >= 3 && n === k).length;
+      if (only >= 5 && only / by.size >= 0.3) warnings.push(`"${pretty(d)}": ${only} de ${by.size} responsáveis só têm clientes cancelados (provavelmente saíram do time). O campo guarda o responsável atual, então a comparação mistura carteira atual e histórica.`);
+    }
+  }
+  {
+    const all = [...clients.values()], ch = all.filter(c => c.churned), act = all.filter(c => !c.churned);
+    if (ch.length >= 20 && act.length >= 20) for (const d of dims) {
+      const cc = new Map(), ca = new Map();
+      for (const c of ch) cc.set(c.attrs[d], (cc.get(c.attrs[d]) || 0) + 1);
+      for (const c of act) ca.set(c.attrs[d], (ca.get(c.attrs[d]) || 0) + 1);
+      for (const [v, n] of cc) if (n / ch.length >= 0.95 && (ca.get(v) || 0) / act.length <= 0.6)
+        warnings.push(`Perfil "${pretty(d)}": ${fmtPct(n / ch.length, 0)} dos cancelados estão em "${v}", contra ${fmtPct((ca.get(v) || 0) / act.length, 0)} dos ativos. Pode ser um campo atualizado só para clientes ativos; leia a comparação por esse perfil com cuidado.`);
+    }
+  }
+  {
+    const by = new Map();
+    for (const c of clients.values()) if (c.motivo) { const k = norm(c.motivo); if (!by.has(k)) by.set(k, new Map()); const m = by.get(k); m.set(c.motivo, (m.get(c.motivo) || 0) + 1); }
+    let merged = 0; const canon = new Map();
+    for (const [k, m] of by) { const best = [...m].sort((a, b) => b[1] - a[1])[0][0]; canon.set(k, best); if (m.size > 1) merged += m.size - 1; }
+    for (const c of clients.values()) if (c.motivo) c.motivo = canon.get(norm(c.motivo));
+    if (merged) notes.push(`${merged} grafia(s) de motivo diferentes (maiúsculas, acentos, espaços) foram unificadas.`);
+  }
 
   // nome e direção de cada tipo de KPI, quando o export de kpi traz as colunas de kpi_type (join)
   const tcol = mK.tipo || mK.nomeKpi;
@@ -1275,10 +1315,11 @@ function buildFresh() {
   }
 
   let kpiCols = [];
-  const kpiMeta = {};
+  const kpiMeta = {}, postOnly = new Set();
   if (okK) {
     let orphan = 0;
     const target = id => {
+      if (excluded.has(id)) return null;
       if (clients.has(id)) return clients.get(id);
       if (okC) { orphan++; return null; }
       const c = mk(id, id); clients.set(id, c); return c;
@@ -1303,12 +1344,14 @@ function buildFresh() {
         const c = target(id); if (!c) continue;
         const col = colOf(t), d = mK.data ? toDate(r[mK.data]) : null, key = id + "|" + col;
         pushHist(c, col, d, v);
-        const lim = c.dataCanc ?? Infinity, inWin = d == null || d < lim;
+        // só vale leitura de antes do cancelamento: depois da saída a plataforma pode seguir calculando
+        // (uso zerado, MRR zero, "dias sem atualizar" crescendo) e isso entregaria a resposta ao modelo
+        const lim = c.dataCanc ?? Infinity;
+        if (d != null && d >= lim) { postOnly.add(id); continue; }
         const prev = best.get(key);
-        // prefere leituras antes do cancelamento; entre elas, a mais recente
-        if (!prev || (inWin && !prev.inWin) || (inWin === prev.inWin && (d ?? -Infinity) >= (prev.d ?? -Infinity))) best.set(key, { c, col, v, d, inWin });
+        if (!prev || (d ?? -Infinity) >= (prev.d ?? -Infinity)) best.set(key, { c, col, v, d });
       }
-      for (const b of best.values()) { b.c.kpi[b.col] = b.v; if (b.d != null && (b.c.kpiDate == null || b.d > b.c.kpiDate)) b.c.kpiDate = b.d; }
+      for (const b of best.values()) { b.c.kpi[b.col] = b.v; postOnly.delete(b.c.id); if (b.d != null && (b.c.kpiDate == null || b.d > b.c.kpiDate)) b.c.kpiDate = b.d; }
       kpiCols = [...cols.values()];
     } else {
       // formato largo: uma coluna por indicador
@@ -1332,8 +1375,8 @@ function buildFresh() {
           const lim = c.dataCanc ?? Infinity;
           const dated = rows.map(r => [toDate(r[mK.data]), r]).filter(([d]) => d != null);
           for (const [d, r] of dated) for (const k of kpiCols) { const v = toNum(r[k]); if (Number.isFinite(v)) pushHist(c, k, d, v); }
-          let pickRows = dated.filter(([d]) => d < lim);
-          if (!pickRows.length) pickRows = dated;
+          const pickRows = dated.filter(([d]) => d < lim);
+          if (!pickRows.length && dated.length) { postOnly.add(id); continue; }
           if (pickRows.length) {
             pickRows.sort((a, b) => b[0] - a[0]);
             c.kpiDate = pickRows[0][0];
@@ -1345,6 +1388,30 @@ function buildFresh() {
       }
     }
     if (orphan) warnings.push(`${orphan} linha(s) de Indicadores com ID que não está em Clientes foram ignoradas.`);
+    // KPIs globais (mesmo valor para todos os clientes na mesma data, como cotação do dólar) não descrevem o cliente
+    {
+      const byCol = new Map();
+      for (const c of clients.values()) for (const col in c.hist) for (const [d, v] of c.hist[col].values()) { if (!byCol.has(col)) byCol.set(col, new Map()); const m = byCol.get(col); if (!m.has(d)) m.set(d, new Map()); const vm = m.get(d); vm.set(v, (vm.get(v) || 0) + 1); }
+      const globals = [], constants = [];
+      for (const [col, dates] of byCol) {
+        const allVals = new Set(); for (const vm of dates.values()) for (const v of vm.keys()) allVals.add(v);
+        if (allVals.size <= 1) { constants.push(col); continue; }
+        const big = [...dates.values()].filter(vm => [...vm.values()].reduce((a, b) => a + b, 0) >= 10);
+        const glob = big.filter(vm => { const tot = [...vm.values()].reduce((a, b) => a + b, 0), [mv, mn] = [...vm].sort((a, b) => b[1] - a[1])[0]; return mn / tot >= 0.9 && mv !== 0; });
+        if (big.length >= 2 && glob.length / big.length >= 0.9) globals.push(col);
+      }
+      if (constants.length) {
+        kpiCols = kpiCols.filter(k => !constants.includes(k));
+        for (const c of clients.values()) for (const g of constants) { delete c.kpi[g]; delete c.hist[g]; }
+        notes.push(`${constants.length} KPI(s) sem nenhuma variação (mesmo valor em todas as leituras) ficaram fora: ${constants.slice(0, 5).join(", ")}${constants.length > 5 ? "…" : ""}.`);
+      }
+      if (globals.length) {
+        kpiCols = kpiCols.filter(k => !globals.includes(k));
+        for (const c of clients.values()) for (const g of globals) { delete c.kpi[g]; delete c.hist[g]; }
+        notes.push(`${globals.length} KPI(s) com o mesmo valor para quase todos os clientes em cada data ficaram fora, porque não descrevem o cliente (ex.: cotação): ${globals.slice(0, 5).join(", ")}${globals.length > 5 ? "…" : ""}.`);
+      }
+    }
+    if (postOnly.size) warnings.push(`${fmtInt(postOnly.size)} cancelado(s) só têm leituras de KPI de depois do cancelamento. Elas foram ignoradas, porque depois da saída a plataforma segue calculando valores de cliente inativo; esses clientes ficam fora das análises de indicadores e do score. Para incluí-los, é preciso o histórico de KPIs de antes da saída.`);
     if (mK.tipo && mK.valor && !mK.nomeKpi) warnings.push(`O arquivo de Indicadores não tem o nome do KPI (kpi_name), então eles aparecem como "KPI 1", "KPI 2"…`);
     if (tcol && mK.valor && !mK.inverso) warnings.push(`Sem a coluna inv_proportional, a direção de cada KPI (maior ou menor é melhor) é deduzida dos dados.`);
   }
@@ -2803,7 +2870,7 @@ document.addEventListener("click", e => { if (e.target.id === "usageReset") { tr
 const DAYMS = 864e5;
 // registros que são consequência da decisão de sair: não contam como sinal
 const EXIT_RE = /cancel|churn|rescis|reten|distrato|encerramento de contrato/i;
-const MEET_RE = /reuni|meeting|call|qbr|ebr|alinhament|visita|kick ?off|follow/i;
+const MEET_RE = /reuni|meeting|call|phone|telefon|liga[cç]|qbr|ebr|alinhament|visita|kick ?off|follow/i;
 const SPONSOR_RE = /sponsor|decisor|diretor|ceo|c-level|dono|s[oó]cio|gestor/i;
 const HIGH_RE = /alt|high|urgent|crit/i;
 const FEAT = {
@@ -2819,7 +2886,7 @@ const FEAT = {
   rel_reuniao: ["Relacionamento", "Dias desde a última reunião"], rel_atrasadas: ["Relacionamento", "Tarefas atrasadas"],
   rel_visitas: ["Relacionamento", "Visitas em 90 dias"], rel_notas: ["Relacionamento", "Notas em 90 dias"],
   ct_mrr_d90: ["Contrato", "MRR contratado: variação em 90 dias (%)"], ct_reducao: ["Contrato", "Teve redução de valor em 90 dias"],
-  ct_encerrados: ["Contrato", "Contratos encerrados em 90 dias"], ct_renov: ["Contrato", "Dias até a próxima renovação"]
+  ct_encerrados: ["Contrato", "Contratos encerrados ou renovados em 90 dias"], ct_renov: ["Contrato", "Dias até a próxima renovação"]
 };
 const FAMILIES = ["Uso", "Suporte", "Voz do cliente", "Relacionamento", "Contrato", "Indicadores", "Estrutura"];
 // ciclo de renovação em meses a partir do texto do contrato (12 quando não informado)
@@ -2851,7 +2918,16 @@ function signalSources() {
   });
   const ct = eventsBy("contratos", (r, m) => { const d = toDate(r[m.inicio]); if (d == null) return null; return { d, end: m.fim ? toDate(r[m.fim]) : null, v: m.valor ? toNum(r[m.valor]) : NaN, cyc: cycleMonths(m.ciclo ? r[m.ciclo] : "") }; });
   const us = eventsBy("uso", (r, m) => { const d = toDate(r[m.data]); if (d == null) return null; return { d, act: m.ativos ? toNum(r[m.ativos]) : NaN, con: m.contratados ? toNum(r[m.contratados]) : NaN, time: m.tempo ? toNum(r[m.tempo]) : NaN, mod: m.modulos ? toNum(r[m.modulos]) : NaN }; });
-  return { tk, np, ta, us, ct };
+  // início da cobertura de cada fonte: o primeiro mês com volume perto do normal. Antes disso, "nenhum registro"
+  // quer dizer "sem dado", não "zero" (ex.: a importação da SenseData busca só os últimos 18 meses)
+  const coverOf = m => {
+    if (!m) return Infinity;
+    const by = new Map(); for (const a of m.values()) for (const e of a) { const k = Math.floor(e.d / (30.44 * DAYMS)); by.set(k, (by.get(k) || 0) + 1); }
+    const ks = [...by.keys()].sort((a, b) => a - b), vals = ks.map(k => by.get(k)).sort((a, b) => a - b), med = vals[vals.length >> 1] || 0;
+    const k0 = ks.find(k => by.get(k) >= med * 0.2); return k0 == null ? Infinity : k0 * 30.44 * DAYMS;
+  };
+  const cover = { tk: coverOf(tk), np: coverOf(np), ta: coverOf(ta), us: coverOf(us) };
+  return { tk, np, ta, us, ct, cover };
 }
 const medianOf = a => { if (!a.length) return NaN; const b = a.slice().sort((x, y) => x - y), h = b.length >> 1; return b.length % 2 ? b[h] : (b[h - 1] + b[h]) / 2; };
 const rel = (x, base) => Number.isFinite(x) && Number.isFinite(base) ? (Math.abs(base) > 1e-9 ? (x - base) / Math.abs(base) * 100 : x - base) : NaN;
@@ -2867,7 +2943,8 @@ function featuresAt(c, T, S, orgLines, kpiCols) {
     for (const [d, v] of h) { if (d > T) break; if (d > T - 45 * DAYMS) last = v; else if (d > T - 135 * DAYMS) prev.push(v); }
     if (last != null) { f[col] = last; if (prev.length) f[col + " · d3"] = rel(last, mean(prev)); }
   }
-  if (S.us) {
+  const cov = S.cover || {};
+  if (S.us && T - 135 * DAYMS >= (cov.us ?? -Infinity)) {
     const u = (S.us.get(id) || []).filter(e => e.d <= T); const cur = u.filter(e => e.d > T - 45 * DAYMS).pop(), prev = u.filter(e => e.d <= T - 45 * DAYMS && e.d > T - 135 * DAYMS);
     if (cur) {
       const lic = e => e.con > 0 ? e.act / e.con * 100 : NaN;
@@ -2875,17 +2952,17 @@ function featuresAt(c, T, S, orgLines, kpiCols) {
       if (prev.length) { const pl = prev.map(lic).filter(Number.isFinite); if (pl.length) f.lic_d3 = f.lic - mean(pl); f.tempo_d3 = rel(cur.time, mean(prev.map(e => e.time).filter(Number.isFinite))); const pm = prev.map(e => e.mod).filter(Number.isFinite); if (pm.length && Number.isFinite(cur.mod)) f.mod_d3 = cur.mod - mean(pm); }
     }
   }
-  if (S.tk) {
+  if (S.tk && T - W >= (cov.tk ?? -Infinity)) {
     const t = (S.tk.get(id) || []).filter(e => !e.exit && e.d <= T), w = t.filter(e => e.d > T - W), w0 = t.filter(e => e.d <= T - W && e.d > T - 2 * W);
-    f.tk90 = w.length; f.tk_razao = (w.length + 1) / (w0.length + 1); f.tk_alta = w.filter(e => e.high).length;
+    f.tk90 = w.length; if (T - 2 * W >= (cov.tk ?? -Infinity)) f.tk_razao = (w.length + 1) / (w0.length + 1); f.tk_alta = w.filter(e => e.high).length;
     f.tk_vencidos = t.filter(e => (e.close == null || e.close > T) && e.due != null && e.due < T).length;
     const rs = w.filter(e => e.close != null && e.close <= T).map(e => (e.close - e.d) / DAYMS); if (rs.length) f.tk_resol = medianOf(rs);
   }
-  if (S.np) {
+  if (S.np && T - W >= (cov.np ?? -Infinity)) {
     const n = (S.np.get(id) || []).filter(e => e.d <= T);
     if (n.length) { const a = n[n.length - 1]; f.nps = a.v; f.nps_det = a.v <= 6 ? 1 : 0; f.nps_sem = (T - a.d) / DAYMS; if (n.length > 1) f.nps_delta = a.v - n[n.length - 2].v; }
   }
-  if (S.ta) {
+  if (S.ta && T - W >= (cov.ta ?? -Infinity)) {
     const t = (S.ta.get(id) || []).filter(e => !e.exit && e.d <= T);
     const meets = t.filter(e => e.meet && (e.done ?? e.d) <= T); if (meets.length) f.rel_reuniao = (T - Math.max(...meets.map(e => e.done ?? e.d))) / DAYMS; else if (t.length) f.rel_reuniao = 365;
     f.rel_atrasadas = t.filter(e => e.kind === "tarefa" && e.due != null && e.due < T && (e.done == null || e.done > T)).length;
@@ -3616,9 +3693,9 @@ function sdApply(B) {
   }
   const sig = {};
   if (opt.signals) {
-    if (contracts) sig.contratos = contracts.map(c => ({ id_customer: idOf(c), start_date: day(c.start_date), end_date: day(c.end_date), monthly_payment: c.monthly_payment, cycle: c.cycle || "", plan: c.plan || "", status: (c.status && c.status.description) || "" })).filter(r => r.id_customer != null && r.start_date);
+    if (contracts) sig.contratos = contracts.map(c => ({ id_customer: idOf(c), start_date: day(c.start_date), end_date: day(c.end_date), monthly_payment: numOut(c.monthly_payment), cycle: c.cycle || "", plan: c.plan || "", status: (c.status && c.status.description) || "" })).filter(r => r.id_customer != null && r.start_date);
     if (B.tickets) sig.tickets = B.tickets.map(t => ({ id_customer: idOf(t), created_on: day(t.created_on), end_date: day(t.end_date), expire_date: day(t.expire_date), priority: t.priority || "", category: t.category || "", type: t.type || "", title: t.title || "" })).filter(r => r.id_customer != null);
-    if (B.nps) sig.nps = B.nps.map(n => ({ id_customer: idOf(n), survey_date: day(n.survey_date || n.ref_date), score: n.score, role: n.role || "", tags: n.tags || "" })).filter(r => r.id_customer != null && r.score != null);
+    if (B.nps) sig.nps = B.nps.map(n => ({ id_customer: idOf(n), survey_date: day(n.survey_date || n.ref_date), score: numOut(n.score), role: n.role || "", tags: n.tags || "" })).filter(r => r.id_customer != null && r.score != null);
     const ta = [];
     for (const t of B.tasks || []) ta.push({ id_customer: idOf(t), kind: "tarefa", type: (t.type && (t.type.description || t.type.caption)) || "", created_on: day(t.created_on || t.created_at), due_date: day(t.due_date), end_date: day(t.end_date), playbook: (t.playbook && t.playbook.name) || "", tags: t.tags || "" });
     for (const v of B.checkins || []) ta.push({ id_customer: idOf(v), kind: "visita", type: "Visita", created_on: day(v.checkin_at), due_date: "", end_date: day(v.checkout_at || v.checkin_at), playbook: "", tags: "" });
@@ -3626,7 +3703,7 @@ function sdApply(B) {
     if (ta.length) sig.tarefas = ta.filter(r => r.id_customer != null);
     // módulos usados por cliente e mês, a partir do uso por ação
     const mods = new Map((B.modules || []).map(m => [m.id_customer + "|" + m.month, m.n]));
-    if (B.usage && B.usage.length) sig.uso = B.usage.map(u => ({ id_customer: idOf(u), ref_date: day(u.ref_date), active_users: u.active_users, contracted_users: u.contracted_users, usage_time: u.usage_time, modules: mods.get(idOf(u) + "|" + day(u.ref_date).slice(0, 7)) || "" })).filter(r => r.id_customer != null);
+    if (B.usage && B.usage.length) sig.uso = B.usage.map(u => ({ id_customer: idOf(u), ref_date: day(u.ref_date), active_users: numOut(u.active_users), contracted_users: numOut(u.contracted_users), usage_time: numOut(u.usage_time), modules: mods.get(idOf(u) + "|" + day(u.ref_date).slice(0, 7)) || "" })).filter(r => r.id_customer != null);
     else if (mods.size) sig.uso = [...mods].map(([k, n]) => ({ id_customer: k.split("|")[0], ref_date: k.split("|")[1] + "-28", active_users: "", contracted_users: "", usage_time: "", modules: n }));
     // sponsor atual: data de cadastro do contato marcado como sponsor principal
     if (B.contacts) { sig.sponsor = new Map(); for (const c of B.contacts) { if (c.is_active === false || !c.is_main_sponsor) continue; const id = idOf(c), d = day(c.created_at); if (id != null && d && (!sig.sponsor.get(id) || d > sig.sponsor.get(id))) sig.sponsor.set(id, d); } }
@@ -3646,7 +3723,7 @@ function sdApply(B) {
     if (t.active === false) continue;
     const key = `${id}|${tid}|${ref}`;
     if (id == null || seen.has(key)) continue; seen.add(key);
-    kpiRows.push({ id_customer: id, ref_date: ref, type: tid, kpi_name: t.description || t.name || "", inv_proportional: t.inv_proportional == null ? "" : String(t.inv_proportional), unit: t.unit || "", value });
+    kpiRows.push({ id_customer: id, ref_date: ref, type: tid, kpi_name: t.description || t.name || "", inv_proportional: t.inv_proportional == null ? "" : String(t.inv_proportional), unit: t.unit || "", value: numOut(value) });
   }
   if (!opt.mrr) custRows.forEach(r => delete r.mrr);
   // a importação substitui todas as fontes (inclusive um CSV de cancelamentos anexado antes)
@@ -3661,6 +3738,8 @@ function sdApply(B) {
   sdLog(`Pronto: ${fmtInt(custRows.length)} clientes e ${fmtInt(kpiRows.length)} leituras de KPI importados${extra.length ? `, mais ${extra.join(", ")}` : ""}.`, "ok");
   return { customers: custRows.length, kpis: kpiRows.length };
 }
+// número da API vai para o CSV com vírgula decimal: "4.988" seria lido como quatro mil novecentos e oitenta e oito
+const numOut = v => typeof v === "number" && Number.isFinite(v) && !Number.isInteger(v) ? String(v).replace(".", ",") : v;
 const sdOpts = () => ({ kpiMonths: +$("#sdKpiMonths").value || SD_KPI_MONTHS, oldCancel: !!$("#sdOld").checked, mrr: !!$("#sdMrr").checked, signals: !!$("#sdSig").checked });
 async function sdImport(token, base) {
   sd.ctrl = new AbortController(); const signal = sd.ctrl.signal;

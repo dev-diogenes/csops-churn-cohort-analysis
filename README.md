@@ -126,6 +126,18 @@ No modelo, o cabeçalho vermelho é obrigatório, o amarelo é opcional mas impo
 - Separador `,` `;` ou tab; datas `AAAA-MM-DD` (com ou sem hora), `DD/MM/AAAA` ou `MM/AAAA`; números em formato BR ou US.
 - Para regenerar o modelo depois de mudar colunas: `python tools/gerar_modelo.py` (requer `openpyxl`). Mantenha a constante `TEMPLATE` de `index.html` igual.
 
+## Qualidade dos dados
+
+O relatório confere os dados ao carregar e mostra avisos no topo:
+
+- **KPIs de depois do cancelamento são ignorados.** Algumas plataformas seguem calculando KPIs de clientes inativos (uso zerado, MRR zero). Usar essas leituras compararia "cliente que saiu" com "cliente ativo" pelo resultado, não pelo aviso. Cancelados sem leitura anterior à saída ficam fora das análises de indicadores e do score, com um aviso dizendo quantos.
+- **KPIs sem variação** (o mesmo valor em todas as leituras) e **KPIs globais** (o mesmo valor para quase todos os clientes em cada data, como uma cotação) ficam fora.
+- **Contas internas** (status com intercompany, interno, teste, demo, sandbox ou homologação) ficam fora de todas as análises.
+- **Motivos com grafias diferentes** ("Falta de maturidade" e "falta_de_maturidade") viram um só, com a grafia mais usada.
+- Avisos para status inativo sem data de cancelamento, cancelamento antes do início, perfil que parece atualizado só para ativos (ex.: todo cancelado no mesmo porte) e campo de responsável com muitos responsáveis que só têm cancelados.
+- Nas fotos mensais, tickets, NPS, tarefas e uso só contam a partir do início da cobertura de cada fonte; antes disso a variável fica vazia, não zero.
+- Na importação da SenseData, números com casas decimais vão com vírgula, para "4.988" não ser lido como milhar.
+
 ## Hierarquia e filtros
 
 A hierarquia usa IDs: `id_group` (grupo econômico), `id_org` (organização, o próprio cliente) e `id_product` (produto contratado), com os nomes em `group`, `name` e `product`. `hierarchy_type` diz o que cada linha de `customer` representa: `grupo`, `organizacao` ou `produto`.
