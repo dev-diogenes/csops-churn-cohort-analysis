@@ -409,6 +409,7 @@ td.dcell { font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(
 .menu-note { font-size: 0.76rem; color: var(--muted); padding: 6px 12px 4px; border-top: 1px solid var(--line); }
 .pm.sd { width: min(640px, 100%); overflow: auto; }
 .sd-opts { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.sd-opts select { padding: 3px 6px; border: 1px solid var(--ctl); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font-size: var(--fs-sm); }
 #sdMode { align-self: start; }
 .sd-steps { margin: 0; padding-left: 20px; display: grid; gap: 12px; font-size: var(--fs-sm); }
 .sd-steps li { padding-left: 2px; }
@@ -731,8 +732,10 @@ details.more summary { color: var(--accent); }
       <div><span class="eyebrow">Integrações</span><h3 id="sdTitle">Conectar à SenseData</h3></div>
       <button type="button" class="fx" id="sdClose" aria-label="Fechar">×</button>
     </header>
-    <p class="note" id="sdDesc">Busca clientes, KPIs do último dia de cada um dos últimos 12 meses e, se marcado, MRR dos contratos e sinais de churn (tickets, NPS, tarefas, uso, contratos e sponsor dos últimos 18 meses).</p>
+    <p class="note" id="sdDesc">Busca clientes e os KPIs do último dia de cada mês do período (ativos e cancelados; tipos inativos ficam de fora) e, se marcado, MRR dos contratos e sinais de churn (tickets, NPS, tarefas, uso, contratos e sponsor dos últimos 18 meses).</p>
     <div class="sd-opts">
+      <label class="sd-check" for="sdKpiMonths">KPIs dos últimos <select id="sdKpiMonths"><option value="12" selected>12 meses</option><option value="6">6 meses (mais leve)</option></select></label>
+      <label class="sd-check" for="sdOld"><input id="sdOld" type="checkbox" checked> KPIs de quem cancelou antes do período (até 3 anos; uma consulta por cliente)</label>
       <label class="sd-check" for="sdMrr"><input id="sdMrr" type="checkbox" checked> MRR dos contratos</label>
       <label class="sd-check" for="sdSig"><input id="sdSig" type="checkbox" checked> Sinais de churn</label>
     </div>
@@ -3486,7 +3489,7 @@ async function sdPaged(path, key, params, token, base, signal, label) {
 }
 const sdDay = t => new Date(t).toISOString().slice(0, 10);
 const userName = u => u && typeof u === "object" ? (u.name || u.username || u.email || "") : (u || "");
-// KPIs: só o último dia de cada mês, dos últimos 12 meses fechados
+// KPIs: o último dia de cada mês fechado; 12 meses por padrão (6 na opção mais leve)
 const SD_KPI_MONTHS = 12;
 // Busca na API v2. Autocontida de propósito: o mesmo código roda aqui (pela ponte do servidor) e dentro
 // da página da SenseData pelo favorito "Importar SenseData" (get = fetch na mesma origem, sem CORS).
@@ -3511,12 +3514,46 @@ async function sdCollect(get, opt, log) {
   log("Conectado: " + (out.me.name || out.me.tenant || "SenseData") + (out.me.username ? " (" + out.me.username + ")" : "") + ".", "ok");
   out.customers = await paged("/v2/customers", "customers", { limit: 1000 }, "Clientes");
   if (!out.customers.length) throw new Error("A SenseData não devolveu nenhum cliente para este token.");
-  // KPIs: só o último dia de cada mês, dos últimos meses fechados
-  out.kpis = []; const now = new Date();
-  for (let i = 1; i <= (opt.kpiMonths || 12); i++) {
-    const ref = iso(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0));
-    out.kpis.push(...await paged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, "KPIs de " + br(ref)));
+  // KPIs em formato compacto: os tipos vão uma vez só e cada leitura vira [cliente, data, tipo, valor].
+  // Tipos inativos na SenseData ficam de fora. Cada dia é convertido assim que chega, para não acumular objetos.
+  const kid = x => x.id_customer != null ? x.id_customer : x.customer ? x.customer.id : null;
+  const types = {}, krows = [];
+  const addK = arr => {
+    for (const k of arr) {
+      const t = k.type || {}; if (t.active === false) continue;
+      const tid = t.id != null ? t.id : t.name; if (tid == null || kid(k) == null) continue;
+      if (!types[tid]) types[tid] = { name: t.name, description: t.description, unit: t.unit, inv_proportional: t.inv_proportional };
+      krows.push([kid(k), String(k.ref_date || "").slice(0, 10), tid, k.value]);
+    }
+  };
+  // ativos e cancelados: o último dia de cada mês fechado do período escolhido
+  const now = new Date(), months = opt.kpiMonths || 12;
+  let oldest = null;
+  for (let i = 1; i <= months; i++) {
+    const ref = iso(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i + 1, 0)); oldest = ref;
+    addK(await paged("/v2/kpis", "kpis", { "ref_date:start": ref, "ref_date:end": ref, limit: 10000 }, "KPIs de " + br(ref)));
   }
+  // cancelados antes do período (até 3 anos): a última leitura de cada tipo nos 45 dias antes da saída,
+  // uma consulta por cliente, para que eles também entrem na comparação entre quem ficou e quem saiu
+  if (opt.oldCancel) {
+    const lim = iso(Date.now() - 3 * 365 * DAY), day = v => String(v || "").slice(0, 10);
+    const old = out.customers.filter(c => c.dt_cancel && day(c.dt_cancel) < oldest && day(c.dt_cancel) >= lim);
+    let n = 0, got = 0, fail = 0;
+    for (const c of old) {
+      n++;
+      const end = Date.parse(day(c.dt_cancel)), last = {};
+      try {
+        const arr = await paged("/v2/kpis", "kpis", { id_customer: c.id, "ref_date:start": iso(end - 45 * DAY), "ref_date:end": iso(end - DAY), limit: 10000 }, "kpi-old");
+        for (const k of arr) { const t = k.type || {}, tid = t.id != null ? t.id : t.name, d = String(k.ref_date || ""); if (!last[tid] || d > String(last[tid].ref_date || "")) last[tid] = k; }
+        const pick = Object.keys(last).map(x => last[x]); if (pick.length) got++;
+        addK(pick);
+      } catch (e) { if (e.name === "AbortError" || /Token recusado/.test(e.message)) throw e; fail++; }
+      log("Cancelados antes do período: " + n + " de " + old.length + " clientes (" + got + " com KPI" + (fail ? ", " + fail + " com erro" : "") + ")", fail ? "err" : "", "kpi-old");
+    }
+    if (!old.length) log("Cancelados antes do período: nenhum nos últimos 3 anos.", "", "kpi-old");
+  }
+  out.kpiTypes = types; out.kpiRows = krows;
+  log("KPIs: " + krows.length.toLocaleString("pt-BR") + " leituras de " + Object.keys(types).length + " tipos ativos.", "ok", "kpi-total");
   if (opt.mrr || opt.signals) out.contracts = await optional("Contratos", () => paged("/v2/contracts", "contracts", { limit: 1000 }, "Contratos"));
   if (opt.signals) {
     const from = iso(Date.now() - 548 * DAY);
@@ -3534,7 +3571,6 @@ async function sdCollect(get, opt, log) {
   const cid = x => x.id_customer != null ? x.id_customer : x.customer ? x.customer.id : x.task && x.task.customer ? x.task.customer.id : null;
   const keep = (key, fn) => { if (out[key]) out[key] = out[key].map(fn); };
   keep("customers", c => ({ id: c.id, name: c.name, name_contract: c.name_contract, group: c.group, cnpj: c.cnpj, industry: c.industry, size: c.size, state: c.state, stage: c.stage, cs: c.cs ? { name: c.cs.name || c.cs.username || "" } : null, status: c.status ? { description: c.status.description, enabled: c.status.enabled } : null, dt_register: c.dt_register, dt_cancel: c.dt_cancel, cancel_tag: c.cancel_tag, cancel_description: c.cancel_description }));
-  keep("kpis", k => ({ id_customer: cid(k), ref_date: k.ref_date, value: k.value, type: k.type ? { id: k.type.id, name: k.type.name, description: k.type.description, unit: k.type.unit, inv_proportional: k.type.inv_proportional, active: k.type.active } : null }));
   keep("contracts", c => ({ id_customer: cid(c), start_date: c.start_date, end_date: c.end_date, monthly_payment: c.monthly_payment, cycle: c.cycle, plan: c.plan, status: c.status ? { description: c.status.description, enabled: c.status.enabled } : null }));
   keep("tickets", t => ({ id_customer: cid(t), created_on: t.created_on, end_date: t.end_date, expire_date: t.expire_date, priority: t.priority, category: t.category, type: t.type, title: t.title }));
   keep("nps", n => ({ id_customer: cid(n), survey_date: n.survey_date, ref_date: n.ref_date, score: n.score, role: n.role, tags: n.tags }));
@@ -3603,11 +3639,14 @@ function sdApply(B) {
     mrr: mrrOf ? mrrOf(c) : "", mrr_12m_atras: mrr12Of ? mrr12Of(c) : "", sponsor_desde: sig.sponsor ? sig.sponsor.get(c.id) || "" : ""
   }));
   const seen = new Set(), kpiRows = [];
-  for (const k of B.kpis || []) {
-    const t = k.type || {}; if (t.active === false) continue;
-    const id = idOf(k), ref = day(k.ref_date), key = `${id}|${t.id}|${ref}`;
+  // formato compacto (kpiTypes + kpiRows); pacotes antigos ainda trazem kpis com o tipo em cada linha
+  const kin = B.kpiRows ? B.kpiRows.map(([id, ref, tid, value]) => ({ id, ref: day(ref), tid, value, t: (B.kpiTypes || {})[tid] || {} }))
+    : (B.kpis || []).map(k => { const t = k.type || {}; return { id: idOf(k), ref: day(k.ref_date), tid: t.id ?? t.name, value: k.value, t }; });
+  for (const { id, ref, tid, value, t } of kin) {
+    if (t.active === false) continue;
+    const key = `${id}|${tid}|${ref}`;
     if (id == null || seen.has(key)) continue; seen.add(key);
-    kpiRows.push({ id_customer: id, ref_date: ref, type: t.id ?? t.name, kpi_name: t.description || t.name || "", inv_proportional: t.inv_proportional == null ? "" : String(t.inv_proportional), unit: t.unit || "", value: k.value });
+    kpiRows.push({ id_customer: id, ref_date: ref, type: tid, kpi_name: t.description || t.name || "", inv_proportional: t.inv_proportional == null ? "" : String(t.inv_proportional), unit: t.unit || "", value });
   }
   if (!opt.mrr) custRows.forEach(r => delete r.mrr);
   // a importação substitui todas as fontes (inclusive um CSV de cancelamentos anexado antes)
@@ -3622,7 +3661,7 @@ function sdApply(B) {
   sdLog(`Pronto: ${fmtInt(custRows.length)} clientes e ${fmtInt(kpiRows.length)} leituras de KPI importados${extra.length ? `, mais ${extra.join(", ")}` : ""}.`, "ok");
   return { customers: custRows.length, kpis: kpiRows.length };
 }
-const sdOpts = () => ({ kpiMonths: SD_KPI_MONTHS, mrr: $("#sdMrr").checked, signals: $("#sdSig").checked });
+const sdOpts = () => ({ kpiMonths: +$("#sdKpiMonths").value || SD_KPI_MONTHS, oldCancel: !!$("#sdOld").checked, mrr: !!$("#sdMrr").checked, signals: !!$("#sdSig").checked });
 async function sdImport(token, base) {
   sd.ctrl = new AbortController(); const signal = sd.ctrl.signal;
   const B = await sdCollect((path, params) => sdGet(path, params, token, base, signal), sdOpts(), sdLog);
@@ -3686,7 +3725,7 @@ document.addEventListener("click", e => {
   if (t.id === "sdCopyBm") { const code = sdBookmarklet(); try { navigator.clipboard.writeText(code).then(() => toast("Código do favorito copiado. Cole no endereço de um favorito novo."), () => toast("Não consegui copiar.")); } catch (err) { toast("Não consegui copiar."); } }
 });
 document.addEventListener("change", e => {
-  if (e.target.id === "sdMrr" || e.target.id === "sdSig") sdRefreshBookmarklet();
+  if (["sdMrr", "sdSig", "sdKpiMonths", "sdOld"].includes(e.target.id)) sdRefreshBookmarklet();
   if (e.target.id !== "sdFile") return;
   const f = e.target.files[0]; if (!f) return;
   const rd = new FileReader();

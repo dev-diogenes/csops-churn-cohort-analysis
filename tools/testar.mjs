@@ -64,6 +64,26 @@ check("contrato aparece em corte de custos", sg.corte.some(x => x.startsWith("Co
 check("fim do contrato vigente não vaza a saída", sg.semVazamento, true);
 check("casos para entrevista por motivo", sg.casos >= 3, true);
 
+// SenseData: KPIs compactos, tipos inativos fora e cancelados antigos com a última leitura antes da saída
+const kc = await run(`(async () => {
+  const now = new Date(), iso = t => new Date(t).toISOString().slice(0, 10), D = 864e5;
+  const me = iso(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 0)), oc = iso(Date.now() - 500 * D);
+  const d1 = iso(Date.parse(oc) - 10 * D), d2 = iso(Date.parse(oc) - 30 * D), calls = [];
+  const get = async (path, p) => {
+    calls.push(path + "?" + JSON.stringify(p));
+    if (path === "/v2/me") return { name: "t" };
+    if (path === "/v2/customers") return { customers: [{ id: 1 }, { id: 2, dt_cancel: oc }, { id: 3, dt_cancel: iso(Date.now() - 5000 * D) }] };
+    if (path === "/v2/kpis" && p.id_customer) return { kpis: [{ id_customer: 2, ref_date: d2, type: { id: 7, name: "hs" }, value: 10 }, { id_customer: 2, ref_date: d1, type: { id: 7, name: "hs" }, value: 20 }] };
+    if (path === "/v2/kpis") return { kpis: p["ref_date:start"] === me ? [{ id_customer: 1, ref_date: me, type: { id: 7, name: "hs", description: "Health" }, value: 50 }, { id_customer: 1, ref_date: me, type: { id: 8, name: "x", active: false }, value: 1 }] : [] };
+    return {};
+  };
+  const B = await sdCollect(get, { kpiMonths: 12, oldCancel: true }, () => {});
+  return { rows: JSON.stringify(B.kpiRows), want: JSON.stringify([[1, me, 7, 50], [2, d1, 7, 20]]), types: Object.keys(B.kpiTypes).join(","), old: calls.filter(c => c.includes("id_customer")).length, semKpis: !("kpis" in B), size: JSON.stringify(B).length };
+})()`);
+check("KPIs compactos e tipo inativo fora", kc.rows === kc.want && kc.types === "7", true);
+check("cancelado antigo: última leitura antes da saída, só até 3 anos", kc.old, 1);
+check("pacote sem a lista antiga de KPIs", kc.semKpis, true);
+
 // hierarquia: linhas de grupo/organização não contam como cliente
 check("linhas de hierarquia ignoradas", run("build().notes.length"), 1);
 // cortes: mexer no corte reclassifica sem reprocessar os arquivos

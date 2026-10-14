@@ -106,7 +106,8 @@ function mock(res, rest, q) {
   if (rest === "/v2/kpis/last") return page(res, "kpis", D.kpis.filter(k => k.ref_date === D.last), q);
   if (rest === "/v2/kpis") {
     const a = q.get("ref_date:start") || "0000", b = q.get("ref_date:end") || "9999";
-    return page(res, "kpis", D.kpis.filter(k => k.ref_date >= a && k.ref_date <= b), q);
+    const idc = q.get("id_customer");
+    return page(res, "kpis", D.kpis.filter(k => k.ref_date >= a && k.ref_date <= b && (!idc || String(k.id_customer) === idc)), q);
   }
   json(res, 404, { errors: [{ msg: "Endpoint não simulado." }] });
 }

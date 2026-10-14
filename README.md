@@ -28,7 +28,8 @@ No topo do relatório, **Integrações → SenseData** importa os dados direto d
 |---|---|
 | `GET /v2/me` | Teste do token (nome da plataforma e usuário) |
 | `GET /v2/customers` | `customer`: id, nome, grupo econômico (`group`), organização (`cnpj`), setor, porte, UF, fase, CS, `dt_register`, `dt_cancel`, `cancel_tag`, `cancel_description` |
-| `GET /v2/kpis?ref_date:start=&ref_date:end=` | Só o último dia de cada um dos últimos 12 meses fechados (uma chamada por dia). Para clientes ativos, a leitura mais recente é a do fim do mês passado |
+| `GET /v2/kpis?ref_date:start=&ref_date:end=` | Só o último dia de cada mês fechado do período (12 meses, ou 6 na opção mais leve), uma chamada por dia, para ativos e cancelados. Tipos de KPI inativos ficam de fora |
+| `GET /v2/kpis?id_customer=&ref_date:start=&ref_date:end=` (opcional) | Quem cancelou antes do período, até 3 anos: a última leitura de cada KPI nos 45 dias antes da saída, uma chamada por cliente, para entrar na comparação entre quem ficou e quem saiu |
 | `GET /v2/contracts` (opcional) | MRR: soma de `monthly_payment` dos contratos vigentes hoje (ativos) ou na véspera do cancelamento |
 | `GET /v2/support_tickets`, `/v2/nps`, `/v2/tasks`, `/v2/tasks_checkin`, `/v2/customers_notes`, `/v2/usage_time`, `/v2/default_usage` (opcional) | Sinais de churn dos últimos 18 meses: tickets, NPS, tarefas, visitas, notas (só a data) e uso por mês |
 | `GET /v2/contracts` com sinais ligados | Contratos: `start_date`, `end_date`, `monthly_payment`, `cycle` |
@@ -36,7 +37,7 @@ No topo do relatório, **Integrações → SenseData** importa os dados direto d
 
 Fonte sem permissão ou sem o módulo contratado é pulada com um aviso; o resto da importação segue.
 
-O nome, a unidade e a direção (`inv_proportional`) de cada KPI já vêm no objeto `type` de cada leitura. A paginação segue `next_page`; respostas 429 (limite de requisições) são repetidas respeitando `retry-after`. Referência: [api.sensedata.io/v2/redoc](https://api.sensedata.io/v2/redoc).
+O nome, a unidade e a direção (`inv_proportional`) de cada KPI já vêm no objeto `type` de cada leitura. No pacote, os tipos vão uma vez só e cada leitura vira `[cliente, data, tipo, valor]`: com 2.000 clientes, 10 KPIs e 12 meses, o pacote de KPIs cai de cerca de 40 MB para 6 MB. A paginação segue `next_page`; respostas 429 (limite de requisições) são repetidas respeitando `retry-after`. Referência: [api.sensedata.io/v2/redoc](https://api.sensedata.io/v2/redoc).
 
 ### Sem instalar nada (PC corporativo)
 
