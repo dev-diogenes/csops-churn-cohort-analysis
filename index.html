@@ -400,6 +400,14 @@ td.dcell { font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(
 .c360-box.match { border: 1px solid var(--st-warn); border-radius: var(--r); padding: var(--sp-3); background: color-mix(in srgb, var(--st-warn) 10%, transparent); }
 
 .guide { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+/* entradas x saídas */
+.flow-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--sp-3); }
+.flow-kpis > div { display: grid; gap: 2px; }
+.flow-kpis .k { font-size: var(--fs-sm); color: var(--muted); font-weight: 600; }
+.flow-kpis b { font-size: var(--fs-xl); font-weight: 800; font-variant-numeric: tabular-nums; }
+.flow-kpis b.neg { color: var(--crit); } .flow-kpis b.pos { color: var(--good); }
+.flow-kpis .s { font-size: var(--fs-xs); color: var(--muted); }
+.flowchart { width: 100%; min-width: 560px; height: auto; display: block; }
 /* menu de integrações e conexão SenseData */
 .menu { position: relative; }
 .menu-pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, 86vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--sh-2); padding: 6px; display: grid; gap: 2px; }
@@ -1169,7 +1177,7 @@ function buildFresh() {
   if (!okC && !okK && !okX) return null;
   const clients = new Map(), warnings = [], notes = [], excluded = new Set();
   const nid = v => String(v ?? "").trim().toLowerCase();
-  const mk = (id, label) => ({ id, label: label || id, nome: "", inicio: null, mrr: NaN, attrs: {}, churned: false, dataCanc: null, motivo: "", descricao: "", mrrPerdido: NaN, kpi: {}, kpiDate: null, hist: {} });
+  const mk = (id, label) => ({ id, label: label || id, nome: "", inicio: null, mrr: NaN, attrs: {}, churned: false, dataCanc: null, motivo: "", descricao: "", mrrPerdido: NaN, kpi: {}, kpiDate: null, kpiAt: {}, hist: {} });
   // histórico mensal de cada KPI (último valor de cada mês), usado na ficha do cliente
   const pushHist = (c, col, d, v) => { if (d == null) return; const m = Math.floor(d / 864e5 / 30.44); const h = c.hist[col] || (c.hist[col] = new Map()); const o = h.get(m); if (!o || d >= o[0]) h.set(m, [d, v]); };
   const dims = [];
@@ -1351,7 +1359,7 @@ function buildFresh() {
         const prev = best.get(key);
         if (!prev || (d ?? -Infinity) >= (prev.d ?? -Infinity)) best.set(key, { c, col, v, d });
       }
-      for (const b of best.values()) { b.c.kpi[b.col] = b.v; postOnly.delete(b.c.id); if (b.d != null && (b.c.kpiDate == null || b.d > b.c.kpiDate)) b.c.kpiDate = b.d; }
+      for (const b of best.values()) { b.c.kpi[b.col] = b.v; b.c.kpiAt[b.col] = b.d; postOnly.delete(b.c.id); if (b.d != null && (b.c.kpiDate == null || b.d > b.c.kpiDate)) b.c.kpiDate = b.d; }
       kpiCols = [...cols.values()];
     } else {
       // formato largo: uma coluna por indicador
@@ -1380,7 +1388,7 @@ function buildFresh() {
           if (pickRows.length) {
             pickRows.sort((a, b) => b[0] - a[0]);
             c.kpiDate = pickRows[0][0];
-            for (const k of kpiCols) c.kpi[k] = toNum(pickRows[0][1][k]);
+            for (const k of kpiCols) { c.kpi[k] = toNum(pickRows[0][1][k]); c.kpiAt[k] = c.kpiDate; }
             continue;
           }
         }
@@ -1428,6 +1436,39 @@ function buildFresh() {
   return { clients: list, dims, fdims, hier, kpiCols, kpiMeta, ref, warnings, notes };
 }
 
+// Leituras de quem estava ativo em cada mês. O cancelado é comparado com os ativos do mês da leitura dele:
+// assim, uma mudança da base ao longo do tempo (ou um KPI que só passou a existir) não vira "sinal de churn".
+// inversa da normal padrão (aproximação de Acklam)
+function probit(p) {
+  const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239], b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572], c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783], d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416];
+  const q = p < 0.02425 ? Math.sqrt(-2 * Math.log(p)) : p > 1 - 0.02425 ? Math.sqrt(-2 * Math.log(1 - p)) : null;
+  if (q != null) { const v = (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); return p < 0.5 ? v : -v; }
+  const r = (p - 0.5) * (p - 0.5), t = p - 0.5;
+  return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * t / (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+}
+const monthKey = t => { const d = new Date(t); return d.getUTCFullYear() * 12 + d.getUTCMonth(); };
+function activeByMonth(M) {
+  if (M.__abm) return M.__abm;
+  const out = {};
+  for (const c of M.lines) for (const col in c.hist) for (const [d, v] of c.hist[col]) {
+    if (c.churned && c.dataCanc != null && c.dataCanc <= d) continue;
+    const m = monthKey(d), o = out[col] || (out[col] = {}); (o[m] || (o[m] = [])).push(v);
+  }
+  for (const col in out) {
+    // só vale mês com a base inteira medida (pelo menos metade do maior mês); em meses antigos às vezes só há
+    // a leitura de quem cancelou depois, e comparar cancelado com futuro cancelado esconderia o sinal
+    const big = Math.max(...Object.values(out[col]).map(a => a.length));
+    for (const m in out[col]) { const a = out[col][m].sort((x, y) => x - y); out[col][m] = a.length >= Math.max(8, big * 0.5) ? { arr: a, m: mean(a), sd: Math.sqrt(variance(a)) } : null; }
+  }
+  return (M.__abm = out);
+}
+// mês da leitura; se ele não tiver a base inteira, o mês completo mais próximo (até 3 meses)
+const sameMonth = (M, col, at) => {
+  if (at == null) return null; const o = activeByMonth(M)[col]; if (!o) return null;
+  const k = monthKey(at);
+  for (const dk of [0, 1, -1, 2, -2, 3, -3]) { const x = o[k + dk]; if (x && x.sd > 0) return x; }
+  return null;
+};
 function kpiStats(M) {
   const act = M.clients.filter(c => !c.churned), ch = M.clients.filter(c => c.churned);
   return M.kpiCols.map(col => {
@@ -1438,10 +1479,17 @@ function kpiStats(M) {
       const sp = Math.sqrt(((a.length - 1) * variance(a) + (b.length - 1) * variance(b)) / (a.length + b.length - 2));
       d = sp > 0 ? (mean(b) - mean(a)) / sp : 0;
     }
+    // mesma data: posição (percentil) de cada cancelado entre os ativos do mês da leitura dele. A média das
+    // posições é a probabilidade de um cancelado ficar acima de um ativo; vira d pela normal (d = √2·Φ⁻¹(A)).
+    // Por posição, valores extremos não distorcem o efeito.
+    const ps = [];
+    for (const c of ch) { const x = c.kpi[col], ref = sameMonth(M, col, c.kpiAt && c.kpiAt[col]); if (Number.isFinite(x) && ref) ps.push(pctRank(ref.arr, x)); }
+    const matched = ps.length >= 3 && ps.length >= b.length * 0.6;
+    if (matched) d = Math.SQRT2 * probit(Math.min(0.995, Math.max(0.005, mean(ps))));
     const meta = M.kpiMeta[col] || {};
     // inv_proportional = true: valor maior é pior, então cancelados deveriam ter d > 0
     const contrary = meta.inv != null && Number.isFinite(d) && Math.abs(d) >= 0.2 && Math.sign(d) !== (meta.inv ? 1 : -1);
-    return { col, a, b, d, inv: meta.inv ?? null, unit: meta.unit || "", contrary, ma: a.length ? mean(a) : NaN, mb: b.length ? mean(b) : NaN };
+    return { col, a, b, d, matched, inv: meta.inv ?? null, unit: meta.unit || "", contrary, ma: a.length ? mean(a) : NaN, mb: b.length ? mean(b) : NaN };
   });
 }
 
@@ -1462,7 +1510,8 @@ function computeRisk(M, stats, peerDim) {
     c.peerLabel = peerDim ? (groups.has(keyOf(c)) ? keyOf(c) : "base inteira") : "base inteira";
     let sw = 0, sc = 0; const drv = [];
     for (const s of sig) {
-      const x = c.kpi[s.col], arr = g[s.col];
+      const ref = c.churned ? sameMonth(M, s.col, c.kpiAt && c.kpiAt[s.col]) : null;
+      const x = c.kpi[s.col], arr = ref ? ref.arr : g[s.col];
       if (!Number.isFinite(x) || !arr || arr.length < 5) continue;
       const p = pctRank(arr, x), comp = s.d < 0 ? 1 - p : p, w = Math.min(Math.abs(s.d), 2);
       sw += w; sc += w * comp;
@@ -1543,7 +1592,8 @@ function view(M) {
       };
       for (const d of M.dims) e.attrs[d] = mixOf(arr.map(c => c.attrs[d]));
       for (const d of M.fdims) e.f[d] = mixOf(arr.map(c => c.f[d]));
-      for (const col of M.kpiCols) { const v = src.map(c => c.kpi[col]).filter(Number.isFinite); e.kpi[col] = v.length ? mean(v) : NaN; }
+      e.kpiAt = {};
+      for (const col of M.kpiCols) { const v = src.map(c => c.kpi[col]).filter(Number.isFinite); e.kpi[col] = v.length ? mean(v) : NaN; const ds = src.map(c => c.kpiAt && c.kpiAt[col]).filter(d => d != null); if (ds.length) e.kpiAt[col] = Math.max(...ds); }
       e.tenure = e.inicio != null ? Math.max(0, monthsBetween(e.inicio, e.churned && e.dataCanc ? e.dataCanc : M.ref)) : NaN;
       return e;
     });
@@ -1801,7 +1851,7 @@ function indicators(M, stats) {
           <td class="n">${Number.isFinite(s.d) ? s.d.toFixed(2).replace(".", ",") : "—"}</td><td><span class="chip ${k}"><i aria-hidden="true">${i}</i>${t}</span></td></tr>${open ? `<tr class="kpi-x"><td colspan="6">${kpiHist(s)}<p class="note">Barras azuis: % dos ativos em cada faixa; laranja: % dos cancelados. Quanto menos as duas distribuições se sobrepõem, mais o KPI separa quem fica de quem sai.</p></td></tr>` : ""}`;
       }).join("")}</tbody>
     </table></div>
-    ${more("Como ler", `Efeito (d de Cohen) mede a distância entre as médias de cancelados e ativos em desvios-padrão. Acima de 0,5 o indicador separa bem os dois grupos e pesa mais no score de risco. "Contrário ao configurado" quer dizer que os cancelados se saíram melhor nesse KPI do que o <span class="mono">inv_proportional</span> do kpi_type prevê. Esse KPI fica fora do score e vale revisar a configuração dele.`)}
+    ${more("Como ler", `Cada cancelado é comparado com os clientes que estavam ativos no mês da leitura dele, para que mudanças da base ao longo do tempo não pareçam sinal. Efeito (d de Cohen) mede a distância entre as médias de cancelados e ativos em desvios-padrão. Acima de 0,5 o indicador separa bem os dois grupos e pesa mais no score de risco. "Contrário ao configurado" quer dizer que os cancelados se saíram melhor nesse KPI do que o <span class="mono">inv_proportional</span> do kpi_type prevê. Esse KPI fica fora do score e vale revisar a configuração dele.`)}
   </div>`;
   return sec("indicadores", "Indicadores", "Ativos x cancelados", "O que diferencia quem saiu de quem ficou.", body);
 }
@@ -2458,7 +2508,7 @@ const ICON = {
 };
 const svgIcon = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
 const AREAS = [
-  { id: "inicio", label: "Visão geral", hint: "Resumo e comparação com o mercado", sections: [["resumo", ctx => summary(ctx.M, ctx)], ["mercado", ({ M }) => market(M)]] },
+  { id: "inicio", label: "Visão geral", hint: "Resumo e comparação com o mercado", sections: [["resumo", ctx => summary(ctx.M, ctx)], ["fluxo", ({ M }) => flow(M)], ["mercado", ({ M }) => market(M)]] },
   { id: "carteira", label: "Carteira", hint: "Quem precisa de atenção agora", sections: [["quadro", ctx => board(ctx.M)], ["risco", ctx => atRisk(ctx.M, ctx.sig, ctx)]] },
   { id: "retencao", label: "Retenção", hint: "Safras, motivos e momento da saída", sections: [["coortes", ({ M }) => cohort(M)], ["motivos", ({ M }) => reasons(M)]] },
   { id: "diagnostico", label: "Diagnóstico", hint: "Onde está o churn e o que o antecipa", sections: [["perfil", ({ M }) => profile(M)], ["indicadores", ({ M, stats }) => indicators(M, stats)], ["anormal", ({ M, sig }) => anomaly(M, sig)], ["assinaturas", ctx => signatures(ctx.M, ctx)]] },
@@ -2584,20 +2634,56 @@ document.addEventListener("submit", e => {
   renderReport(); toast(`Visão "${name}" salva neste navegador.`);
 });
 
+
+/* ---------- entradas x saídas: a base cresce ou encolhe? ---------- */
+const MES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const mesLabel = t => { const d = new Date(t); return `${MES[d.getUTCMonth()]}/${String(d.getUTCFullYear()).slice(2)}`; };
+function flow(M) {
+  const ser = monthlySeries(M, 24);
+  if (!ser.some(x => x.novos || x.ch)) return "";
+  const W = 760, H = 230, pad = { l: 34, r: 8, t: 14, b: 26 }, y0 = pad.t + (H - pad.t - pad.b) / 2, half = (H - pad.t - pad.b) / 2 - 4;
+  const max = Math.max(1, ...ser.map(x => Math.max(x.novos, x.ch))), bw = (W - pad.l - pad.r) / ser.length, sc = v => v / max * half;
+  const n = M.noun[1].toLowerCase();
+  const bars = ser.map((x, i) => {
+    const xx = pad.l + i * bw + bw * 0.18, w = bw * 0.64, tip = `${mesLabel(x.t)}: ${x.novos} entrada(s), ${x.ch} saída(s), saldo ${x.novos - x.ch >= 0 ? "+" : ""}${x.novos - x.ch}`;
+    return `<g data-tip="${esc(tip)}" tabindex="-1"><rect x="${pad.l + i * bw}" y="${pad.t}" width="${bw}" height="${H - pad.t - pad.b}" fill="transparent"/>
+      ${x.novos ? `<rect x="${xx}" y="${y0 - sc(x.novos)}" width="${w}" height="${sc(x.novos)}" rx="2" fill="var(--st-good)"/>` : ""}
+      ${x.ch ? `<rect x="${xx}" y="${y0}" width="${w}" height="${sc(x.ch)}" rx="2" fill="var(--s-canc)"/>` : ""}
+      ${i % 3 === 0 ? `<text x="${pad.l + i * bw + bw / 2}" y="${H - 8}" text-anchor="middle">${mesLabel(x.t)}</text>` : ""}</g>`;
+  }).join("");
+  const axis = `<line x1="${pad.l}" x2="${W - pad.r}" y1="${y0}" y2="${y0}" stroke="var(--ctl)" stroke-width="1"/>
+    <text x="${pad.l - 6}" y="${y0 - half + 4}" text-anchor="end">${max}</text><text x="${pad.l - 6}" y="${y0 + 4}" text-anchor="end">0</text><text x="${pad.l - 6}" y="${y0 + half + 4}" text-anchor="end">${max}</text>`;
+  const last = ser.slice(-12), ent = last.reduce((t, x) => t + x.novos, 0), sai = last.reduce((t, x) => t + x.ch, 0), base0 = last[0].start, base1 = last[last.length - 1].end;
+  const prev = ser.slice(0, 12), ent0 = prev.reduce((t, x) => t + x.novos, 0), sai0 = prev.reduce((t, x) => t + x.ch, 0);
+  const body = `<div class="panel">
+    <div class="flow-kpis">
+      <div><span class="k">Entradas (12 meses)</span><b>${fmtInt(ent)}</b><span class="s">${ent0 ? `${ent >= ent0 ? "▲" : "▼"} ${fmtInt(Math.abs(ent - ent0))} vs 12 meses anteriores` : ""}</span></div>
+      <div><span class="k">Saídas (12 meses)</span><b>${fmtInt(sai)}</b><span class="s">${sai0 ? `${sai >= sai0 ? "▲" : "▼"} ${fmtInt(Math.abs(sai - sai0))} vs 12 meses anteriores` : ""}</span></div>
+      <div><span class="k">Saldo</span><b class="${ent - sai < 0 ? "neg" : "pos"}">${ent - sai >= 0 ? "+" : ""}${fmtInt(ent - sai)}</b><span class="s">${fmtInt(base0)} → ${fmtInt(base1)} ${esc(n)} ativ${M.noun[3]}s</span></div>
+      <div><span class="k">Para a base não encolher</span><b>${nf1.format(sai / 12)}</b><span class="s">entradas por mês (média de saídas)</span></div>
+    </div>
+    <span class="legend" style="margin:10px 0 4px"><span><span class="sw" style="background:var(--st-good)"></span>Entradas (início no mês)</span><span><span class="sw" style="background:var(--s-canc)"></span>Saídas (cancelamentos)</span></span>
+    <div class="scroll"><svg class="flowchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Entradas e saídas por mês nos últimos 24 meses">${axis}${bars}</svg></div>
+    ${more("Ver como tabela", `<div class="scroll"><table class="dense"><thead><tr><th>Mês</th><th class="n">Ativos no início</th><th class="n">Entradas</th><th class="n">Saídas</th><th class="n">Saldo</th></tr></thead><tbody>${ser.slice().reverse().map(x => `<tr><td>${mesLabel(x.t)}</td><td class="n">${fmtInt(x.start)}</td><td class="n">${x.novos}</td><td class="n">${x.ch}</td><td class="n">${x.novos - x.ch >= 0 ? "+" : ""}${x.novos - x.ch}</td></tr>`).join("")}</tbody></table></div>`)}
+  </div>`;
+  return sec("fluxo", "Visão geral", "Entradas e saídas", "A base cresce ou encolhe: clientes novos contra cancelamentos, mês a mês.", body);
+}
+
 /* ---------- V2: série mensal para os cartões com tendência ---------- */
 function monthlySeries(M, months = 12) {
   const ref = new Date(M.ref), out = [];
   for (let i = months - 1; i >= 0; i--) {
     const a = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth() - i, 1), b = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth() - i + 1, 1);
-    let start = 0, ch = 0, lost = 0, end = 0;
+    let start = 0, ch = 0, lost = 0, end = 0, novos = 0;
     for (const c of M.clients) {
       if (c.inicio == null) continue;
+      if (c.inicio >= a && c.inicio < b) novos++;
       const canc = c.churned ? c.dataCanc : null;
       if (c.inicio < a && (canc == null || canc >= a)) start++;
       if (c.inicio < b && (canc == null || canc >= b)) end++;
       if (canc != null && canc >= a && canc < b) { ch++; lost += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; }
     }
-    out.push({ t: a, start, end, ch, rate: start ? ch / start : NaN, lost });
+    out.push({ t: a, start, end, ch, novos, rate: start ? ch / start : NaN, lost });
   }
   return out;
 }
@@ -2760,7 +2846,7 @@ function exportTables() {
   for (const d of M.dims) { const g = new Map(); for (const c of M.clients) { const k = c.attrs[d]; const o = g.get(k) || { n: 0, ch: 0, lost: 0 }; o.n++; if (c.churned) { o.ch++; o.lost += Number.isFinite(c.mrrPerdido) ? c.mrrPerdido : 0; } g.set(k, o); } for (const [k, o] of g) prof.push({ perfil: pretty(d), grupo: k, clientes: o.n, cancelados: o.ch, taxa_churn: r4(o.ch / o.n), media_base: r4(p), mrr_perdido: r1(o.lost) }); }
   if (prof.length) out["churn-por-perfil.csv"] = prof;
   if (stats.length) out["indicadores.csv"] = stats.map(s => ({ indicador: pretty(s.col), unidade: s.unit, media_ativos: r4(s.ma), media_cancelados: r4(s.mb), efeito_cohen_d: r4(s.d), entra_no_score: sig.includes(s) ? "sim" : "não", direcao_contraria: s.contrary ? "sim" : "não" }));
-  out["serie-mensal.csv"] = monthlySeries(M, 24).map(x => ({ mes: isoD(x.t).slice(0, 7), ativos_inicio: x.start, cancelamentos: x.ch, taxa_churn: r4(x.rate), mrr_perdido: r1(x.lost), ativos_fim: x.end }));
+  out["serie-mensal.csv"] = monthlySeries(M, 24).map(x => ({ mes: isoD(x.t).slice(0, 7), ativos_inicio: x.start, entradas: x.novos, cancelamentos: x.ch, taxa_churn: r4(x.rate), mrr_perdido: r1(x.lost), ativos_fim: x.end }));
   const mc = monthlyChurn(M), g = grr12(M.lines, M.ref), nrr = nrr12(M.lines, M.ref), co2 = state.company || {};
   out["mercado.csv"] = [
     { metrica: "Churn de logos ao mês", valor: r4(mc && mc.m), referencia: co2.segmento && BENCH.logo[co2.segmento] ? BENCH.logo[co2.segmento].map(v => r4(v)).join(" a ") : "" },

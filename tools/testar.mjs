@@ -33,7 +33,7 @@ check("churn mensal", d.kpis.monthly, 0.0148, 0.0001);
 check("anormais", d.kpis.anormal, 7);
 check("alto risco", d.kpis.alto, 27);
 check("MRR alto risco", d.kpis.altoMrr, 77790);
-check("AUC na base", d.quality.auc, 0.779, 0.002);
+check("AUC na base", d.quality.auc, 0.772, 0.002);
 check("teste no tempo existe", !!d.backtest, true);
 if (d.backtest) check("teste no tempo antecipa (AUC > 0,6)", d.backtest.auc > 0.6, true);
 

@@ -136,6 +136,7 @@ O relatório confere os dados ao carregar e mostra avisos no topo:
 - **Motivos com grafias diferentes** ("Falta de maturidade" e "falta_de_maturidade") viram um só, com a grafia mais usada.
 - Avisos para status inativo sem data de cancelamento, cancelamento antes do início, perfil que parece atualizado só para ativos (ex.: todo cancelado no mesmo porte) e campo de responsável com muitos responsáveis que só têm cancelados.
 - Nas fotos mensais, tickets, NPS, tarefas e uso só contam a partir do início da cobertura de cada fonte; antes disso a variável fica vazia, não zero.
+- **Comparação na mesma data.** Em Indicadores e no score, cada cancelado é comparado com os clientes que estavam ativos no mês da leitura dele, e não com a base de hoje. Só valem meses com a base inteira medida; se o mês da leitura não tiver, usa o mês completo mais próximo (até 3 meses). O efeito pareado vem da posição de cada cancelado entre os ativos daquele mês (d = √2·Φ⁻¹ da posição média), o que não é distorcido por valores extremos.
 - Na importação da SenseData, números com casas decimais vão com vírgula, para "4.988" não ser lido como milhar.
 
 ## Hierarquia e filtros
@@ -152,7 +153,7 @@ A barra lateral divide o relatório em cinco áreas, cada uma com uma pergunta (
 
 | Área | Seções |
 |---|---|
-| **Visão geral** | Principais achados; cartões com tendência de 12 meses e variação contra o mês anterior; seu churn, GRR e NRR x mercado |
+| **Visão geral** | Principais achados; cartões com tendência de 12 meses e variação contra o mês anterior; entradas e saídas por mês (24 meses, saldo e quantas entradas mantêm a base); seu churn, GRR e NRR x mercado |
 | **Carteira** | Quadro de risco (A abordar, Em contato, Plano de ação, Resolvido) e Ativos em risco (score ≥ 70 alto, 55–70 atenção) |
 | **Retenção** | Retenção por coorte; motivos (`cancel_tag` + `cancel_description`) e tempo de casa no cancelamento |
 | **Diagnóstico** | Churn por perfil (teste z), Indicadores (d de Cohen) e Churn esperado x anormal (score < 50) |
